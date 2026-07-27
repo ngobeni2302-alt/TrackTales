@@ -1,0 +1,316 @@
+{
+  "routes": [
+    {
+      "id": 1,
+      "name": "Pretoria – Cape Town Trans-Karoo Express",
+      "code": "PRT-CPT",
+      "origin": "Pretoria Park Station",
+      "destination": "Cape Town Station",
+      "distance_km": 1598.0,
+      "description": "South Africa's iconic 1,600km rail corridor traversing highveld grasslands, diamond capital Kimberley, the vast semi-desert Great Karoo, hex river vineyards, and arriving beneath Table Mountain.",
+      "polyline_coordinates": [
+        [-25.7588, 28.1887],
+        [-26.1963, 28.0406],
+        [-26.8667, 27.1000],
+        [-27.9833, 26.7333],
+        [-28.7386, 24.7586],
+        [-29.6500, 24.3833],
+        [-31.4167, 23.1167],
+        [-32.3567, 22.5833],
+        [-33.2325, 20.5822],
+        [-33.6450, 19.4447],
+        [-33.7342, 18.9622],
+        [-33.9211, 18.4239]
+      ]
+    }
+  ],
+  "stops": [
+    {
+      "id": 101,
+      "route_id": 1,
+      "name": "Pretoria Railway Station",
+      "code": "PRT",
+      "latitude": -25.7588,
+      "longitude": 28.1887,
+      "distance_along_route_km": 0.0,
+      "geofence_radius_km": 6.0,
+      "sequence_order": 1,
+      "description": "Designed by Sir Herbert Baker and opened in 1912, Pretoria Station stands as a grand neo-classical stone gateway to the Jacaranda City.",
+      "image_url": "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "id": 102,
+      "route_id": 1,
+      "name": "Johannesburg Park Station",
+      "code": "JHB",
+      "latitude": -26.1963,
+      "longitude": 28.0406,
+      "distance_along_route_km": 60.0,
+      "geofence_radius_km": 8.0,
+      "sequence_order": 2,
+      "description": "The largest railway complex in Africa, born during the 1880s Witwatersrand Gold Rush and transformed into a modern transit hub.",
+      "image_url": "https://images.unsplash.com/photo-1577985070849-636c2a307977?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "id": 103,
+      "route_id": 1,
+      "name": "Kimberley Station & Big Hole",
+      "code": "KIM",
+      "latitude": -28.7386,
+      "longitude": 24.7586,
+      "distance_along_route_km": 605.0,
+      "geofence_radius_km": 7.0,
+      "sequence_order": 3,
+      "description": "The Diamond City where Cecil Rhodes made his empire. Home to the legendary Big Hole, the hand-dug diamond pit visible from space.",
+      "image_url": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "id": 104,
+      "route_id": 1,
+      "name": "Beaufort West Station",
+      "code": "BFW",
+      "latitude": -32.3567,
+      "longitude": 22.5833,
+      "distance_along_route_km": 1092.0,
+      "geofence_radius_km": 6.5,
+      "sequence_order": 4,
+      "description": "Capital of the Great Karoo semi-desert, birthplace of heart transplant pioneer Dr. Christiaan Barnard, framed by the Nuweveld Mountains.",
+      "image_url": "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "id": 105,
+      "route_id": 1,
+      "name": "Matjiesfontein Victorian Village",
+      "code": "MJF",
+      "latitude": -33.2325,
+      "longitude": 20.5822,
+      "distance_along_route_km": 1340.0,
+      "geofence_radius_km": 5.0,
+      "sequence_order": 5,
+      "description": "A frozen-in-time 1880s Victorian railway outpost founded by James Logan. Famed for the Lord Milner Hotel, ghost stories, and crisp Karoo air.",
+      "image_url": "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "id": 106,
+      "route_id": 1,
+      "name": "Worcester & Hex River Valley",
+      "code": "WOR",
+      "latitude": -33.6450,
+      "longitude": 19.4447,
+      "distance_along_route_km": 1475.0,
+      "geofence_radius_km": 6.0,
+      "sequence_order": 6,
+      "description": "Framed by snow-capped winter peaks, this fertile valley is the grape-growing heartland leading through the Breede River basin.",
+      "image_url": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "id": 107,
+      "route_id": 1,
+      "name": "Cape Town Central Station",
+      "code": "CPT",
+      "latitude": -33.9211,
+      "longitude": 18.4239,
+      "distance_along_route_km": 1598.0,
+      "geofence_radius_km": 8.0,
+      "sequence_order": 7,
+      "description": "The terminus of the transcontinental rail journey nestled directly beneath the majestic shadow of Table Mountain.",
+      "image_url": "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=1200&q=80"
+    }
+  ],
+  "stories": [
+    {
+      "id": 201,
+      "stop_id": 101,
+      "title": "Architectural Elegance: Herbert Baker's Pretoria Station",
+      "subtitle": "How sandstone columns created the capital's grand entrance",
+      "content": "When Sir Herbert Baker designed Pretoria station in 1910, he selected local golden sandstone and red roof tiles to mirror Mediterranean villas. The station stood as a symbol of the newly formed Union of South Africa, hosting royal visits and international dignitaries.",
+      "category": "history",
+      "reading_time_mins": 3,
+      "author": "Dr. Thabo Mokoena",
+      "tags": ["Architecture", "Heritage", "Pretoria"]
+    },
+    {
+      "id": 202,
+      "stop_id": 103,
+      "title": "Diamonds & Dynamite: The 1871 Kimberley Rush",
+      "subtitle": "Digging the world's deepest hand-dug excavation",
+      "content": "In July 1871, prospectors discovered sparkling stones on Colesberg Kopje. Within months, 30,000 miners descended with picks and shovels, removing 22.5 million tonnes of earth to unearth 2,722 kilograms (14.5 million carats) of diamonds, giving birth to De Beers.",
+      "category": "history",
+      "reading_time_mins": 4,
+      "author": "Kimberley Mine Museum",
+      "tags": ["Diamonds", "Gold Rush", "Colonial History"]
+    },
+    {
+      "id": 203,
+      "stop_id": 103,
+      "title": "The Kimberley Ghost Walk: Whispers in the Saloon",
+      "subtitle": "Eerie encounters in South Africa's oldest pub",
+      "content": "Step off the train at Kimberley station and enter The Star of the West, opened in 1870. Local legend tells of a Victorian sea captain who lost his life in a card game and still haunts the mahogany bar counter when the midnight train whistle blows.",
+      "category": "hidden_gem",
+      "reading_time_mins": 2,
+      "author": "TrackTales Folklore Team",
+      "tags": ["Ghosts", "Pubs", "Legends"]
+    },
+    {
+      "id": 204,
+      "stop_id": 104,
+      "title": "Karoo Silence & Stargazing in Beaufort West",
+      "subtitle": "Where the skies reveal the Milky Way in full brilliance",
+      "content": "As night settles over Beaufort West, the Great Karoo experiences near-zero light pollution. The indigenous San peoples navigated these desert plains by tracking the Southern Cross and the Celestial Eland thousands of years before rail lines crossed the terrain.",
+      "category": "culture",
+      "reading_time_mins": 3,
+      "author": "Astronomy SA",
+      "tags": ["Stargazing", "Karoo", "San Heritage"]
+    },
+    {
+      "id": 205,
+      "stop_id": 104,
+      "title": "Karoo Lamb: The Flavor of Wild Fynbos & Bossies",
+      "subtitle": "Why Karoo mutton is a certified geographical culinary treasure",
+      "content": "Free-roaming Karoo sheep feed on fragrant aromatic shrubs such as Anchor Karoo Bush and Kapokbos. This natural herbal diet infuses the meat with a distinctive, delicate savory flavor celebrated by Michelin-starred chefs across Africa.",
+      "category": "food",
+      "reading_time_mins": 2,
+      "author": "Chef Jan Hendrik",
+      "tags": ["Culinary", "Karoo Lamb", "Gastronomy"]
+    },
+    {
+      "id": 206,
+      "stop_id": 105,
+      "title": "James Logan & the Miracle Oasis of Matjiesfontein",
+      "subtitle": "How a Scottish rail clerk built a oasis for British Royalty",
+      "content": "Arriving in 1883 with severe chest ailments, Scottish railway clerk James Logan found the crisp Karoo air cured his lungs. He purchased land, built the Lord Milner Hotel, installed South Africa's first private electric lighting, and hosted Lord Randolph Churchill and Olive Schreiner.",
+      "category": "history",
+      "reading_time_mins": 4,
+      "author": "Heritage SA",
+      "tags": ["Victorian", "Lord Milner", "Rail History"]
+    },
+    {
+      "id": 207,
+      "stop_id": 106,
+      "title": "The Witch of Hex River: The Legend of Lucida",
+      "subtitle": "A tragic romance written into the rock faces of Matroosberg",
+      "content": "High above Worcester in the Hex River Valley lies the legend of Eliza Meiring, a 1700s beauty who demanded her suitors retrieve a rare red orchid from the sheer cliffs of Matroosberg. Her favored lover fell to his death, leaving her spirit wandering the misty valleys.",
+      "category": "culture",
+      "reading_time_mins": 3,
+      "author": "Cape Folklore Society",
+      "tags": ["Folklore", "Hex River", "Romance"]
+    },
+    {
+      "id": 208,
+      "stop_id": 107,
+      "title": "Table Mountain's Cloud Blanket: The Tablecloth",
+      "subtitle": "Van Hunks and the Devil's pipe-smoking duel",
+      "content": "When a thick white tablecloth of cloud spills over Table Mountain, locals remember the tale of pirate Jan van Hunks, who engaged in a pipe-smoking contest with the Devil on Devil's Peak. The smoke filled the sky, creating the famous meteorological phenomenon.",
+      "category": "culture",
+      "reading_time_mins": 3,
+      "author": "Cape Town Heritage Trust",
+      "tags": ["Cape Town", "Table Mountain", "Legends"]
+    }
+  ],
+  "operators": [
+    {
+      "id": 301,
+      "name": "The Blue Train",
+      "code": "BLUE_TRAIN",
+      "brand_color": "#0F2A4A",
+      "tagline": "A 5-Star Hotel on Wheels",
+      "description": "South Africa's premier luxury train since 1946. Features butler service, marble bathrooms with bathtubs, fine wine pairings, and gourmet 5-course dining cars.",
+      "base_price_zar": 38500.0,
+      "amenities": ["Personal Butler", "Full En-Suite Bath", "5-Course Gourmet Dining", "Open Bar", "Cigar & Cognac Lounge", "Wi-Fi Satellite"],
+      "schedule_info": {
+        "departure_day": "Mondays & Wednesdays",
+        "duration_hours": 31,
+        "stops_schedule": [
+          {"stop_code": "PRT", "arr": "15:00", "dep": "16:00"},
+          {"stop_code": "KIM", "arr": "09:30", "dep": "12:30", "excursion": "Kimberley Mine Museum Tour"},
+          {"stop_code": "MJF", "arr": "22:15", "dep": "22:45"},
+          {"stop_code": "CPT", "arr": "10:30", "dep": "End"}
+        ]
+      }
+    },
+    {
+      "id": 302,
+      "name": "Rovos Rail",
+      "code": "ROVOS_RAIL",
+      "brand_color": "#1B3626",
+      "tagline": "The Most Luxurious Train in the World",
+      "description": "Wood-paneled vintage coaches restored to 1920s Edwardian grandeur. Features an open-air observation balcony, fine silverware, and Victorian elegance.",
+      "base_price_zar": 42000.0,
+      "amenities": ["Vintage Edwardian Suites", "Open-Air Balcony", "Formal Dress Code Dinners", "24/7 Room Service", "Library & Lounge"],
+      "schedule_info": {
+        "departure_day": "Fridays & Sundays",
+        "duration_hours": 48,
+        "stops_schedule": [
+          {"stop_code": "PRT", "arr": "09:00", "dep": "10:00"},
+          {"stop_code": "KIM", "arr": "14:30", "dep": "18:00", "excursion": "Diamond Mine Excursion"},
+          {"stop_code": "MJF", "arr": "08:30", "dep": "10:30", "excursion": "Lord Milner Historic Tour"},
+          {"stop_code": "CPT", "arr": "17:30", "dep": "End"}
+        ]
+      }
+    },
+    {
+      "id": 303,
+      "name": "Shosholoza Meyl (Premier Classe)",
+      "code": "SHOSHOLOZA",
+      "brand_color": "#8B261D",
+      "tagline": "Connecting the People of South Africa",
+      "description": "Accessible, scenic trans-country sleeper rail service connecting major South African metros with comfortable berths, dining cars, and scenic views.",
+      "base_price_zar": 3800.0,
+      "amenities": ["Sleeper Berths", "Dining Car Service", "Shower Facilities", "Lounge Car", "Family Compartments"],
+      "schedule_info": {
+        "departure_day": "Daily",
+        "duration_hours": 26,
+        "stops_schedule": [
+          {"stop_code": "PRT", "arr": "11:30", "dep": "12:30"},
+          {"stop_code": "JHB", "arr": "14:00", "dep": "15:00"},
+          {"stop_code": "KIM", "arr": "22:30", "dep": "23:00"},
+          {"stop_code": "BFW", "arr": "05:00", "dep": "05:20"},
+          {"stop_code": "WOR", "arr": "11:10", "dep": "11:30"},
+          {"stop_code": "CPT", "arr": "14:30", "dep": "End"}
+        ]
+      }
+    }
+  ],
+  "sponsors": [
+    {
+      "id": 401,
+      "stop_id": 103,
+      "business_name": "The Star of the West Tavern (Est. 1870)",
+      "category": "Historic Pub & Grill",
+      "description": "South Africa's second-oldest licensed pub. Hand-carved teak bar shipped from London during the diamond rush.",
+      "promo_offer": "Free local draft beer with any main Karoo meal for TrackTales rail passengers!",
+      "website_url": "https://starofthewest.co.za",
+      "contact_email": "info@starofthewest.co.za"
+    },
+    {
+      "id": 402,
+      "stop_id": 104,
+      "business_name": "Karoo Crafters & Roastery",
+      "category": "Artisan Coffee & Craft Bakery",
+      "description": "Freshly roasted single-origin coffees and homemade roosterkoek warm off the Karoo wood coals.",
+      "promo_offer": "15% off artisan roasted beans upon showing your TrackTales journey pass",
+      "website_url": "https://karoocrafters.co.za",
+      "contact_email": "hello@karoocrafters.co.za"
+    },
+    {
+      "id": 403,
+      "stop_id": 105,
+      "business_name": "Lord Milner Hotel & Laird's Arms",
+      "category": "Heritage Hotel & Dining",
+      "description": "Historic Victorian hotel featuring red carpet hospitality, traditional high tea, and London bus tours.",
+      "promo_offer": "Complimentary sherry welcome glass on arrival in Matjiesfontein",
+      "website_url": "https://matjiesfontein.com",
+      "contact_email": "reservations@matjiesfontein.com"
+    },
+    {
+      "id": 404,
+      "stop_id": 106,
+      "business_name": "Hex River Valley Wine Estate",
+      "category": "Wine & Vineyard Tour",
+      "description": "Award-winning table grape and boutique Shiraz estate surrounded by dramatic granite cliffs.",
+      "promo_offer": "Buy 2 bottles, get 1 free cellar-door tasting voucher",
+      "website_url": "https://hexriverwines.co.za",
+      "contact_email": "tastings@hexriverwines.co.za"
+    }
+  ]
+}
