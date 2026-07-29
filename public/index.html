@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- SEO Best Practices -->
+  <title>TrackTales | South Africa Railway Journeys & Stories</title>
+  <meta name="description" content="Explore South Africa's legendary train routes from Pretoria to Cape Town: The Blue Train, Rovos Rail, and Shosholoza Meyl. Discover stopover attractions, rail folklore, audio soundscapes, and souvenir boarding passes.">
+  <meta name="keywords" content="South Africa Train, Blue Train, Rovos Rail, Shosholoza Meyl, Pretoria to Cape Town railway, Kimberley Big Hole, Matjiesfontein, Karoo train travel">
+  <meta property="og:title" content="TrackTales - South Africa Railway Stories & Journeys">
+  <meta property="og:description" content="Journey across Mzansi from Pretoria to Cape Town on The Blue Train, Rovos Rail, and Shosholoza Meyl. Discover stop attractions & vintage rail folklore.">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon & Stylesheet -->
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <!-- Fallback direct CSS link if static endpoint isn't used -->
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar" id="navbar">
+    <div class="container">
+      <a href="#hero" class="logo" id="nav-logo-link">
+        <div class="logo-icon">🚂</div>
+        <span>Track<span class="text-gradient-green">Tales</span></span>
+      </a>
+
+      <nav>
+        <ul class="nav-links" id="nav-menu">
+          <li><a href="#route-map" id="link-route-map">Route Map</a></li>
+          <li><a href="#trains" id="link-trains">The 3 Trains</a></li>
+          <li><a href="#attractions" id="link-attractions">Stop Attractions</a></li>
+          <li><a href="#soundscape" id="link-soundscape">Rail Soundscape</a></li>
+          <li><a href="#ticket-generator" id="link-ticket-generator">Boarding Pass</a></li>
+          <li><a href="#lore" id="link-lore">Rail Lore</a></li>
+        </ul>
+      </nav>
+
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <a href="#ticket-generator" class="nav-btn" id="btn-get-ticket">Generate Ticket</a>
+        <button class="mobile-toggle" id="mobile-toggle-btn" aria-label="Toggle menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="hero-backdrop"></div>
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="badge badge-green">
+          <span>📍 South Africa Rail Corridor</span>
+        </div>
+        <h1 style="margin-top: 1rem;">
+          Journey Through the Heart of <span class="text-gradient-blue">Mzansi’s Rails</span>
+        </h1>
+        <p>
+          From the Jacaranda avenues of Pretoria, across the golden plains of Kimberley and the vast starry Karoo desert, to the coastal splendor of Cape Town. Experience the magic of <strong>The Blue Train</strong>, <strong>Rovos Rail</strong>, and <strong>Shosholoza Meyl</strong>.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#route-map" class="btn-primary" id="hero-btn-explore">
+            <span>Explore Pretoria ➔ Cape Town Line</span>
+            <span>➔</span>
+          </a>
+          <button class="btn-secondary" id="hero-btn-sound">
+            <span>🔊 Listen to Rail Soundscape</span>
+          </button>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <h4>1,600 km</h4>
+            <p>Rail Distance</p>
+          </div>
+          <div class="stat-item">
+            <h4>3 Trains</h4>
+            <p>Iconic Experiences</p>
+          </div>
+          <div class="stat-item">
+            <h4>6 Major Stops</h4>
+            <p>Historic Attractions</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-card-preview">
+        <img src="https://images.unsplash.com/photo-1541447271487-09612b3f49f7?auto=format&fit=crop&w=1000&q=80" alt="The Blue Train traveling across South Africa" class="preview-image">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <span class="badge badge-gold">Featured Express</span>
+            <h3 style="margin-top: 0.4rem; font-size: 1.4rem;">The Blue Train</h3>
+            <p style="font-size: 0.88rem; color: #94a3b8; margin: 0;">Pretoria ➔ Kimberley ➔ Cape Town</p>
+          </div>
+          <a href="#trains" class="badge badge-blue" style="text-decoration: none;">View Specs</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Route Map Section -->
+  <section class="section" id="route-map">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge badge-blue">Interactive Journey Map</span>
+        <h2 style="margin-top: 0.8rem;">Pretoria to Cape Town <span class="text-gradient-green">Route Explorer</span></h2>
+        <p>Select a train line below to highlight its journey stops, distances, travel speeds, and regional attractions across South Africa.</p>
+      </div>
+
+      <div class="route-map-wrapper">
+        <div class="route-train-selector">
+          <button class="train-select-btn active" data-train-filter="all" id="filter-all-trains">
+            <span>🚆 All Trains</span>
+          </button>
+          <button class="train-select-btn" data-train-filter="blue-train" id="filter-blue-train">
+            <span>💎 The Blue Train</span>
+          </button>
+          <button class="train-select-btn" data-train-filter="rovos-rail" id="filter-rovos-rail">
+            <span>👑 Rovos Rail</span>
+          </button>
+          <button class="train-select-btn" data-train-filter="shosholoza-meyl" id="filter-shosholoza">
+            <span>🇿🇦 Shosholoza Meyl</span>
+          </button>
+        </div>
+
+        <!-- Route Timeline Graph -->
+        <div class="route-timeline">
+          <div class="route-line-bg"></div>
+          <div class="route-line-active" id="route-line-active"></div>
+
+          <div class="stop-node active" data-stop-id="pretoria">
+            <div class="stop-dot">1</div>
+            <div class="stop-label">Pretoria<br><small style="color: var(--green-mint);">0 km</small></div>
+          </div>
+
+          <div class="stop-node" data-stop-id="johannesburg">
+            <div class="stop-dot">2</div>
+            <div class="stop-label">Johannesburg<br><small style="color: var(--text-muted);">60 km</small></div>
+          </div>
+
+          <div class="stop-node" data-stop-id="kimberley">
+            <div class="stop-dot">3</div>
+            <div class="stop-label">Kimberley<br><small style="color: var(--text-muted);">645 km</small></div>
+          </div>
+
+          <div class="stop-node" data-stop-id="matjiesfontein">
+            <div class="stop-dot">4</div>
+            <div class="stop-label">Matjiesfontein<br><small style="color: var(--text-muted);">1,300 km</small></div>
+          </div>
+
+          <div class="stop-node" data-stop-id="worcester">
+            <div class="stop-dot">5</div>
+            <div class="stop-label">Worcester<br><small style="color: var(--text-muted);">1,480 km</small></div>
+          </div>
+
+          <div class="stop-node" data-stop-id="cape-town">
+            <div class="stop-dot">6</div>
+            <div class="stop-label">Cape Town<br><small style="color: var(--green-mint);">1,600 km</small></div>
+          </div>
+        </div>
+
+        <!-- Stop Detail Inspector Card -->
+        <div class="stop-detail-card" id="stop-detail-display">
+          <div class="stop-info">
+            <div style="display: flex; gap: 0.6rem; margin-bottom: 0.6rem;">
+              <span class="badge badge-green" id="stop-province">Gauteng Province</span>
+              <span class="badge badge-gold" id="stop-distance">0 km from Pretoria</span>
+            </div>
+            <h3 id="stop-name">Pretoria (Capital Park & Park Station)</h3>
+            <p id="stop-desc" style="margin-top: 0.8rem;">
+              The Jacaranda City and northern terminus of the Pretoria to Cape Town rail corridor. Home to historic Victorian rail yards and grand sandstone architecture.
+            </p>
+
+            <div class="stop-meta">
+              <div><strong>Calling Trains:</strong> <span id="stop-calling-trains">The Blue Train, Rovos Rail, Shosholoza Meyl</span></div>
+              <div><strong>Suggested Stay:</strong> <span id="stop-stay">1-2 Days Departure Hub</span></div>
+            </div>
+
+            <div class="stop-cuisine-box">
+              🍷 <strong>Regional Taste & Wine Pairing:</strong> <span id="stop-cuisine">Gauteng Style Braai & Chakalaka paired with Craft Lager</span>
+            </div>
+          </div>
+
+          <div>
+            <img id="stop-img" src="https://images.unsplash.com/photo-1577971132997-c10be9372519?auto=format&fit=crop&w=600&q=80" alt="Pretoria Union Buildings" style="width: 100%; height: 220px; object-fit: cover; border-radius: var(--radius-md); border: 1px solid var(--glass-border);">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The 3 Iconic Trains Section -->
+  <section class="section" id="trains" style="background: rgba(0, 0, 0, 0.2);">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge badge-gold">South Africa’s Train Trio</span>
+        <h2 style="margin-top: 0.8rem;">Compare <span class="text-gradient-blue">The 3 Legendary Trains</span></h2>
+        <p>Whether you seek 5-star luxury, vintage Edwardian romance, or authentic everyday African travel, each train offers a unique journey.</p>
+      </div>
+
+      <div class="trains-grid" id="trains-container">
+        <!-- Dynamically Rendered via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Stop Attractions Directory Section -->
+  <section class="section" id="attractions">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge badge-green">Sightseeing & Landmarks</span>
+        <h2 style="margin-top: 0.8rem;">Attractions Around <span class="text-gradient-green">Every Stop</span></h2>
+        <p>Explore curated sights, historic museums, natural wonders, and cultural hubs at every station along the route.</p>
+      </div>
+
+      <div class="attractions-filter-bar" id="attraction-city-filters">
+        <button class="filter-btn active" data-city="all">All Stops</button>
+        <button class="filter-btn" data-city="pretoria">Pretoria</button>
+        <button class="filter-btn" data-city="johannesburg">Johannesburg</button>
+        <button class="filter-btn" data-city="kimberley">Kimberley</button>
+        <button class="filter-btn" data-city="matjiesfontein">Matjiesfontein</button>
+        <button class="filter-btn" data-city="worcester">Worcester</button>
+        <button class="filter-btn" data-city="cape-town">Cape Town</button>
+      </div>
+
+      <div class="attractions-grid" id="attractions-container">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Rail Soundscape Audio Section -->
+  <section class="section" id="soundscape">
+    <div class="container">
+      <div class="soundscape-box">
+        <span class="badge badge-blue">Immersive Audio Engine</span>
+        <h2 style="margin-top: 0.8rem;">Sounds of <span class="text-gradient-blue">Mzansi Rails</span></h2>
+        <p style="max-width: 600px; margin: 1rem auto 0;">Experience the rhythmic sound of iron wheels on steel tracks, steam whistles echoing across the Karoo, and gentle lounge jazz ambient audio.</p>
+
+        <div class="sound-controls">
+          <button class="sound-btn" id="audio-play-toggle" aria-label="Toggle rail sound">▶</button>
+          <div style="text-align: left;">
+            <div style="font-weight: 700; font-size: 1.1rem;" id="sound-now-playing">Track Status: Muted</div>
+            <div style="font-size: 0.88rem; color: var(--text-muted);">Web Audio API Synthesizer</div>
+          </div>
+        </div>
+
+        <div class="sound-track-selector" id="audio-preset-buttons">
+          <button class="track-btn active" data-sound="chug">🚂 Karoo Track Chug</button>
+          <button class="track-btn" data-sound="whistle">🔔 Vintage Steam Whistle</button>
+          <button class="track-btn" data-sound="wind">🌌 Karoo Night Wind</button>
+          <button class="track-btn" data-sound="lounge">🎷 Blue Train Lounge Jazz</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Souvenir Ticket & Boarding Pass Generator Section -->
+  <section class="section" id="ticket-generator">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge badge-gold">Interactive Souvenir</span>
+        <h2 style="margin-top: 0.8rem;">Generate Your <span class="text-gradient-gold">Digital Boarding Pass</span></h2>
+        <p>Personalize your virtual train ticket for The Blue Train, Rovos Rail, or Shosholoza Meyl. Print or save your souvenir pass!</p>
+      </div>
+
+      <div class="ticket-wrapper">
+        <!-- Ticket Form -->
+        <div class="ticket-form-card">
+          <form id="ticket-form">
+            <div class="form-group">
+              <label for="input-passenger-name">Passenger Full Name</label>
+              <input type="text" id="input-passenger-name" class="form-control" placeholder="e.g. Thabo Mokoena" required value="Sipho Ndlovu">
+            </div>
+
+            <div class="form-group">
+              <label for="select-train">Choose Train Line</label>
+              <select id="select-train" class="form-control" required>
+                <option value="blue-train">The Blue Train (Ultra Luxury Express)</option>
+                <option value="rovos-rail">Rovos Rail (Vintage Edwardian Safari)</option>
+                <option value="shosholoza-meyl">Shosholoza Meyl (Tourist Sleeper Express)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="select-cabin">Cabin Suite Class</label>
+              <select id="select-cabin" class="form-control" required>
+                <option value="Luxury Grand Suite">Luxury Grand Suite (Marble Bath)</option>
+                <option value="De Luxe Suite">De Luxe Twin Suite</option>
+                <option value="Tourist 2-Berth Sleeper">Tourist 2-Berth Sleeper Compartment</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="input-date">Travel Date</label>
+              <input type="date" id="input-date" class="form-control" required value="2026-09-15">
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+              <button type="submit" class="btn-primary" style="flex: 1; justify-content: center;" id="btn-generate-ticket">
+                <span>🎫 Generate Ticket</span>
+              </button>
+              <button type="button" class="btn-secondary" onclick="window.print()" id="btn-print-ticket">
+                <span>🖨️ Print Pass</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Rendered Boarding Pass Display -->
+        <div class="boarding-pass" id="boarding-pass-card">
+          <div class="pass-header">
+            <div class="pass-title">
+              <span class="badge badge-gold">TrackTales Railway Pass</span>
+              <h4 id="pass-train-title" style="margin-top: 0.4rem;">The Blue Train</h4>
+            </div>
+            <div style="font-size: 2rem;">🇿🇦</div>
+          </div>
+
+          <div class="pass-body">
+            <div class="pass-grid">
+              <div class="pass-field">
+                <span class="label">PASSENGER NAME</span>
+                <span class="value" id="pass-name">Sipho Ndlovu</span>
+              </div>
+              <div class="pass-field">
+                <span class="label">TICKET ID</span>
+                <span class="value" id="pass-id" style="color: var(--accent-gold);">TT-89A4B2C</span>
+              </div>
+              <div class="pass-field">
+                <span class="label">ROUTE</span>
+                <span class="value">Pretoria ➔ Cape Town</span>
+              </div>
+              <div class="pass-field">
+                <span class="label">CABIN SELECTION</span>
+                <span class="value" id="pass-cabin">Luxury Grand Suite</span>
+              </div>
+              <div class="pass-field">
+                <span class="label">DEPARTURE DATE</span>
+                <span class="value" id="pass-date">15 SEPT 2026</span>
+              </div>
+              <div class="pass-field">
+                <span class="label">CARRIAGE / SEAT</span>
+                <span class="value" id="pass-seat">CAR-03 / SEAT 14A</span>
+              </div>
+            </div>
+
+            <div class="pass-barcode-area">
+              <div>
+                <span class="label">BOARDING STATUS</span>
+                <span style="color: var(--green-mint); font-weight: 700; font-size: 0.9rem;">CONFIRMED & READY</span>
+              </div>
+              <div class="fake-barcode" id="pass-barcode">||| | |||| | |||</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rail Lore & Stories Section -->
+  <section class="section" id="lore" style="background: rgba(0, 0, 0, 0.2);">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge badge-blue">Heritage & History</span>
+        <h2 style="margin-top: 0.8rem;">Train Tales & <span class="text-gradient-blue">Folklore</span></h2>
+        <p>Step back in time and read stories of how gold, diamonds, and visionaries forged South Africa’s rails.</p>
+      </div>
+
+      <div class="trains-grid" id="stories-container">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Story Reader Modal -->
+  <div class="modal-overlay" id="story-modal">
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close-btn">&times;</button>
+      <span class="badge badge-gold" id="modal-read-time">4 min read</span>
+      <h2 id="modal-title" style="margin: 1rem 0 0.5rem; font-size: 2rem;">Story Title</h2>
+      <div style="font-size: 0.88rem; color: var(--green-light); margin-bottom: 1.5rem;" id="modal-author">By TrackTales Archives</div>
+      <p id="modal-body" style="font-size: 1.1rem; line-height: 1.8; color: #cbd5e1; white-space: pre-line;"></p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#hero" class="logo">
+            <div class="logo-icon">🚂</div>
+            <span>Track<span class="text-gradient-green">Tales</span></span>
+          </a>
+          <p>Celebrating the history, beauty, and luxury of South Africa's legendary rail lines from Pretoria to Cape Town.</p>
+        </div>
+
+        <div class="footer-links">
+          <h4>Explore Trains</h4>
+          <ul>
+            <li><a href="#trains">The Blue Train</a></li>
+            <li><a href="#trains">Rovos Rail</a></li>
+            <li><a href="#trains">Shosholoza Meyl</a></li>
+            <li><a href="#route-map">Route Map & Stops</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>Developer & Deploy</h4>
+          <ul>
+            <li><a href="/api/trains" target="_blank">FastAPI /api/trains</a></li>
+            <li><a href="/api/routes" target="_blank">FastAPI /api/routes</a></li>
+            <li><a href="/api/attractions" target="_blank">FastAPI /api/attractions</a></li>
+            <li><a href="https://vercel.com" target="_blank">Vercel Ready</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 TrackTales South Africa. Created with FastAPI, Vanilla JS, and Vercel Compatibility.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/static/js/app.js"></script>
+  <!-- Fallback direct script if static route is bypassed -->
+  <script src="./js/app.js"></script>
+</body>
+</html>

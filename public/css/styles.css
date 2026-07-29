@@ -1,0 +1,1049 @@
+/* ==========================================================================
+   TrackTales - South Africa Railway Stories & Journeys
+   Color Theme: Blue, Green, and White with Luxury Accents
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,600&display=swap');
+
+:root {
+  /* Theme Colors: Blue, Green, White */
+  --primary-blue: #005691;
+  --blue-dark: #0b192c;
+  --blue-mid: #1e3e62;
+  --blue-light: #00a8ff;
+  --blue-glow: rgba(0, 168, 255, 0.25);
+
+  --primary-green: #059669;
+  --green-dark: #0e382c;
+  --green-mint: #10b981;
+  --green-light: #34d399;
+  --green-glow: rgba(16, 185, 129, 0.25);
+
+  --pure-white: #ffffff;
+  --pearl-white: #f8fafc;
+  --text-muted: #94a3b8;
+
+  --accent-gold: #d4af37;
+  --gold-glow: rgba(212, 175, 55, 0.3);
+
+  /* Glassmorphism & UI Tokens */
+  --bg-gradient: linear-gradient(135deg, #07111e 0%, #0b192c 40%, #0c2b26 100%);
+  --card-bg: rgba(15, 28, 48, 0.75);
+  --card-bg-hover: rgba(24, 43, 71, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-border-highlight: rgba(0, 168, 255, 0.4);
+
+  --font-main: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Playfair Display', Georgia, serif;
+
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+
+  --shadow-card: 0 20px 40px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 30px rgba(0, 168, 255, 0.2);
+
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base Setup */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-main);
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--pearl-white);
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Container */
+.container {
+  width: 90%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  color: var(--pure-white);
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 5vw, 4.2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 700;
+}
+
+h3 {
+  font-size: clamp(1.3rem, 2vw, 1.8rem);
+}
+
+p {
+  color: #cbd5e1;
+  font-size: 1.05rem;
+}
+
+.text-gradient-blue {
+  background: linear-gradient(135deg, #ffffff 0%, #38bdf8 50%, #005691 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-green {
+  background: linear-gradient(135deg, #ffffff 0%, #34d399 50%, #10b981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #fff7ed 0%, #fde047 50%, #d4af37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.badge-blue {
+  background: rgba(0, 86, 145, 0.3);
+  border: 1px solid var(--primary-blue);
+  color: #38bdf8;
+}
+
+.badge-green {
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid var(--primary-green);
+  color: var(--green-light);
+}
+
+.badge-gold {
+  background: rgba(212, 175, 55, 0.2);
+  border: 1px solid var(--accent-gold);
+  color: #fef08a;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(7, 17, 30, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--glass-border);
+  transition: var(--transition-fast);
+}
+
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: var(--pure-white);
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.logo-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--primary-blue), var(--green-mint));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 168, 255, 0.3);
+  font-size: 1.3rem;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #94a3b8;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: var(--transition-fast);
+  position: relative;
+}
+
+.nav-links a:hover, .nav-links a.active {
+  color: var(--pure-white);
+}
+
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--blue-light), var(--green-mint));
+  border-radius: 2px;
+}
+
+.nav-btn {
+  background: linear-gradient(135deg, var(--primary-blue), #0284c7);
+  color: var(--pure-white);
+  padding: 0.6rem 1.4rem;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 14px rgba(0, 86, 145, 0.4);
+  transition: var(--transition-fast);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nav-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 168, 255, 0.5);
+}
+
+.mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--pure-white);
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  padding: 180px 0 100px;
+  overflow: hidden;
+}
+
+.hero-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 30%, rgba(0, 86, 145, 0.35) 0%, transparent 50%),
+              radial-gradient(circle at 80% 70%, rgba(16, 185, 129, 0.25) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.hero-content p {
+  margin: 1.5rem 0 2rem;
+  font-size: 1.2rem;
+  max-width: 620px;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: linear-gradient(135deg, var(--primary-blue), #0284c7);
+  color: var(--pure-white);
+  padding: 0.95rem 2.2rem;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 86, 145, 0.5);
+  transition: var(--transition-fast);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(0, 168, 255, 0.6);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--pure-white);
+  padding: 0.95rem 2.2rem;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(8px);
+  transition: var(--transition-fast);
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--green-mint);
+  transform: translateY(-3px);
+}
+
+.hero-stats {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--glass-border);
+}
+
+.stat-item h4 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--pure-white);
+  font-family: var(--font-main);
+}
+
+.stat-item p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hero-card-preview {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-card);
+  animation: floatCard 6s ease-in-out infinite;
+}
+
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.preview-image {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  margin-bottom: 1.2rem;
+}
+
+/* Interactive Route Map Section */
+.section {
+  padding: 100px 0;
+  position: relative;
+}
+
+.section-header {
+  text-align: center;
+  max-width: 750px;
+  margin: 0 auto 4rem;
+}
+
+.section-header p {
+  margin-top: 1rem;
+}
+
+/* Visual Map Container */
+.route-map-wrapper {
+  background: var(--card-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 3rem 2rem;
+  backdrop-filter: blur(16px);
+  box-shadow: var(--shadow-card);
+  position: relative;
+}
+
+.route-train-selector {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.train-select-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  color: var(--text-muted);
+  padding: 0.75rem 1.8rem;
+  border-radius: var(--radius-full);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.train-select-btn:hover {
+  border-color: var(--blue-light);
+  color: var(--pure-white);
+}
+
+.train-select-btn.active {
+  background: linear-gradient(135deg, var(--primary-blue), var(--green-mint));
+  color: var(--pure-white);
+  border-color: transparent;
+  box-shadow: 0 6px 20px rgba(0, 168, 255, 0.4);
+}
+
+/* Route Timeline Line */
+.route-timeline {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 3rem 0 4rem;
+  padding: 0 2rem;
+}
+
+.route-line-bg {
+  position: absolute;
+  top: 50%;
+  left: 2rem;
+  right: 2rem;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.route-line-active {
+  position: absolute;
+  top: 50%;
+  left: 2rem;
+  width: 60%;
+  height: 6px;
+  background: linear-gradient(90deg, var(--primary-blue), var(--green-mint), var(--accent-gold));
+  border-radius: 3px;
+  transform: translateY(-50%);
+  z-index: 2;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 15px var(--green-mint);
+}
+
+.stop-node {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.stop-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--blue-dark);
+  border: 3px solid var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--pure-white);
+  transition: var(--transition-fast);
+}
+
+.stop-node:hover .stop-dot, .stop-node.active .stop-dot {
+  background: var(--green-mint);
+  border-color: var(--pure-white);
+  transform: scale(1.3);
+  box-shadow: 0 0 20px var(--green-mint);
+}
+
+.stop-label {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-align: center;
+  max-width: 120px;
+  transition: var(--transition-fast);
+}
+
+.stop-node:hover .stop-label, .stop-node.active .stop-label {
+  color: var(--pure-white);
+}
+
+/* Stop Detail Display Card */
+.stop-detail-card {
+  background: rgba(7, 17, 30, 0.85);
+  border: 1px solid var(--glass-border-highlight);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.stop-info h3 {
+  margin-bottom: 0.5rem;
+}
+
+.stop-meta {
+  display: flex;
+  gap: 1.5rem;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  color: var(--green-light);
+}
+
+.stop-cuisine-box {
+  background: rgba(255, 255, 255, 0.04);
+  border-left: 3px solid var(--accent-gold);
+  padding: 0.8rem 1.2rem;
+  border-radius: var(--radius-sm);
+  margin-top: 1.2rem;
+  font-size: 0.95rem;
+}
+
+/* 3 Iconic Trains Section */
+.trains-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2rem;
+}
+
+.train-card {
+  background: var(--card-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+}
+
+.train-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--glass-border-highlight);
+  box-shadow: var(--shadow-card), var(--shadow-glow);
+}
+
+.train-card-img-wrap {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+
+.train-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.train-card:hover .train-card-img {
+  transform: scale(1.08);
+}
+
+.train-card-overlay {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+
+.train-card-body {
+  padding: 1.8rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.train-card-body h3 {
+  margin-bottom: 0.4rem;
+}
+
+.train-card-body p {
+  font-size: 0.98rem;
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+.train-specs-list {
+  list-style: none;
+  margin-bottom: 1.5rem;
+}
+
+.train-specs-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  margin-bottom: 0.5rem;
+}
+
+.train-specs-list li span.icon {
+  color: var(--green-mint);
+}
+
+/* Stop Attractions Directory Section */
+.attractions-filter-bar {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  color: var(--text-muted);
+  padding: 0.6rem 1.4rem;
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.filter-btn:hover, .filter-btn.active {
+  background: var(--primary-green);
+  color: var(--pure-white);
+  border-color: var(--green-mint);
+}
+
+.attractions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.attraction-card {
+  background: var(--card-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: var(--transition-normal);
+}
+
+.attraction-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--green-light);
+}
+
+.attraction-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.attraction-body {
+  padding: 1.4rem;
+}
+
+.attraction-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+  font-size: 0.8rem;
+  color: var(--green-light);
+  font-weight: 600;
+}
+
+.attraction-title {
+  font-size: 1.2rem;
+  margin-bottom: 0.6rem;
+}
+
+.attraction-desc {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  margin-bottom: 1rem;
+}
+
+/* Audio Railway Soundscape Section */
+.soundscape-box {
+  background: linear-gradient(135deg, rgba(11, 25, 44, 0.9), rgba(14, 56, 44, 0.9));
+  border: 1px solid var(--glass-border-highlight);
+  border-radius: var(--radius-lg);
+  padding: 3rem;
+  text-align: center;
+  backdrop-filter: blur(16px);
+  position: relative;
+  overflow: hidden;
+}
+
+.sound-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.sound-btn {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-blue), var(--green-mint));
+  border: none;
+  color: var(--pure-white);
+  font-size: 1.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 25px rgba(0, 168, 255, 0.4);
+  transition: var(--transition-fast);
+}
+
+.sound-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 15px 35px rgba(16, 185, 129, 0.6);
+}
+
+.sound-track-selector {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.track-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--glass-border);
+  color: var(--pearl-white);
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.track-btn.active {
+  background: var(--primary-blue);
+  border-color: var(--blue-light);
+}
+
+/* Souvenir Ticket Generator Section */
+.ticket-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.ticket-form-card {
+  background: var(--card-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 2.2rem;
+  backdrop-filter: blur(16px);
+}
+
+.form-group {
+  margin-bottom: 1.4rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--pearl-white);
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.85rem 1.2rem;
+  background: rgba(7, 17, 30, 0.7);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  color: var(--pure-white);
+  font-family: var(--font-main);
+  font-size: 1rem;
+  transition: var(--transition-fast);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--blue-light);
+  box-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
+}
+
+/* Ticket Boarding Pass Card Render */
+.boarding-pass {
+  background: linear-gradient(135deg, #0b192c, #0e382c);
+  border: 2px solid var(--accent-gold);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+.pass-header {
+  background: linear-gradient(90deg, var(--primary-blue), var(--green-dark));
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed var(--accent-gold);
+}
+
+.pass-title h4 {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  color: var(--accent-gold);
+}
+
+.pass-body {
+  padding: 2rem;
+}
+
+.pass-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.pass-field span.label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.pass-field span.value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--pure-white);
+}
+
+.pass-barcode-area {
+  border-top: 1px dashed rgba(255, 255, 255, 0.2);
+  padding-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fake-barcode {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 900;
+  font-size: 1.8rem;
+  letter-spacing: 4px;
+  color: var(--pure-white);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+}
+
+/* Modal Popup */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(12px);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-content {
+  background: var(--blue-dark);
+  border: 1px solid var(--glass-border-highlight);
+  border-radius: var(--radius-lg);
+  max-width: 700px;
+  width: 100%;
+  padding: 2.5rem;
+  position: relative;
+  box-shadow: var(--shadow-card);
+}
+
+.modal-close {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  color: var(--pure-white);
+}
+
+/* Footer */
+.footer {
+  background: rgba(5, 12, 22, 0.95);
+  border-top: 1px solid var(--glass-border);
+  padding: 80px 0 40px;
+  margin-top: 100px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 4rem;
+}
+
+.footer-brand p {
+  margin-top: 1rem;
+  max-width: 400px;
+  font-size: 0.95rem;
+}
+
+.footer-links h4 {
+  font-size: 1.1rem;
+  margin-bottom: 1.2rem;
+}
+
+.footer-links ul {
+  list-style: none;
+}
+
+.footer-links ul li {
+  margin-bottom: 0.6rem;
+}
+
+.footer-links ul li a {
+  text-decoration: none;
+  color: var(--text-muted);
+  transition: var(--transition-fast);
+}
+
+.footer-links ul li a:hover {
+  color: var(--green-mint);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 992px) {
+  .hero-grid, .ticket-wrapper, .stop-detail-card {
+    grid-template-columns: 1fr;
+  }
+  .route-timeline {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+  .route-line-bg, .route-line-active {
+    display: none;
+  }
+  .mobile-toggle {
+    display: block;
+  }
+  .nav-links {
+    position: fixed;
+    top: 80px;
+    left: -100%;
+    width: 100%;
+    height: calc(100vh - 80px);
+    background: var(--blue-dark);
+    flex-direction: column;
+    justify-content: center;
+    transition: var(--transition-normal);
+  }
+  .nav-links.active {
+    left: 0;
+  }
+}
+
+/* Print Styles for Souvenir Boarding Pass */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #boarding-pass-card, #boarding-pass-card * {
+    visibility: visible;
+  }
+  #boarding-pass-card {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}

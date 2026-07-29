@@ -1,0 +1,23 @@
+{
+  "name": "tracktales-south-africa-railway",
+  "version": "1.0.0",
+  "description": "Stories and journeys of South Africa's iconic trains: The Blue Train, Rovos Rail, and Shosholoza Meyl from Pretoria to Cape Town.",
+  "main": "main.py",
+  "scripts": {
+    "start": "./start.sh",
+    "dev:python": "./venv/bin/python3 main.py",
+    "dev:node": "npx serve public -p 8000"
+  },
+  "keywords": [
+    "railway",
+    "south-africa",
+    "the-blue-train",
+    "rovos-rail",
+    "shosholoza-meyl",
+    "pretoria-to-cape-town",
+    "fastapi",
+    "vercel"
+  ],
+  "author": "TrackTales Team",
+  "license": "MIT"
+}
