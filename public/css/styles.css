@@ -665,10 +665,19 @@ p {
   transition: var(--transition-fast);
 }
 
-.filter-btn:hover, .filter-btn.active {
-  background: var(--primary-green);
+.filter-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
   color: var(--pure-white);
-  border-color: var(--green-mint);
+  border-color: var(--glass-border-highlight);
+  transform: translateY(-2px);
+}
+
+.filter-btn.active {
+  background: linear-gradient(135deg, var(--primary-green), var(--green-mint));
+  color: var(--pure-white);
+  border-color: var(--green-light);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+  transform: translateY(-2px);
 }
 
 .attractions-grid {
@@ -833,7 +842,27 @@ p {
   box-shadow: 0 0 15px rgba(0, 168, 255, 0.3);
 }
 
-/* Ticket Boarding Pass Card Render */
+/* Ticket Boarding Pass Card Render (3D Flippable) */
+.ticket-flip-container {
+  perspective: 1500px;
+  width: 100%;
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+.ticket-flip-inner {
+  position: relative;
+  width: 100%;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  cursor: pointer;
+  min-height: 480px;
+}
+
+.ticket-flip-inner.flipped {
+  transform: rotateY(180deg);
+}
+
 .boarding-pass {
   background: linear-gradient(135deg, #0b192c, #0e382c);
   border: 2px solid var(--accent-gold);
@@ -841,6 +870,31 @@ p {
   overflow: hidden;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
   position: relative;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ticket-flip-container:hover .boarding-pass {
+  border-color: var(--accent-gold);
+  box-shadow: 0 30px 60px rgba(0, 168, 255, 0.15), 0 0 30px rgba(212, 175, 55, 0.2);
+}
+
+.pass-front {
+  z-index: 2;
+  transform: rotateY(0deg);
+}
+
+.pass-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
 }
 
 .pass-header {
@@ -860,6 +914,18 @@ p {
 
 .pass-body {
   padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100% - 85px); /* Height minus header */
+}
+
+.back-body {
+  padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100% - 85px);
 }
 
 .pass-grid {
@@ -885,7 +951,7 @@ p {
 
 .pass-barcode-area {
   border-top: 1px dashed rgba(255, 255, 255, 0.2);
-  padding-top: 1.5rem;
+  padding-top: 1.2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -900,6 +966,137 @@ p {
   background: rgba(255, 255, 255, 0.1);
   padding: 0.4rem 1rem;
   border-radius: 4px;
+}
+
+/* Back Side Specific Layout */
+.back-details {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.qr-code-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 0 0 140px;
+}
+
+.qr-code-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  background: #ffffff;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.qr-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: repeating-conic-gradient(from 45deg, #000 0% 25%, transparent 0% 50%) 50% / 12px 12px,
+              repeating-conic-gradient(from 0deg, #000 0% 25%, #fff 0% 50%) 50% / 6px 6px;
+  opacity: 0.95;
+}
+
+.qr-corner {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background: #000;
+  border: 3px solid #fff;
+}
+.qr-top-left { top: 0; left: 0; }
+.qr-top-right { top: 0; right: 0; }
+.qr-bottom-left { bottom: 0; left: 0; }
+
+.qr-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #000;
+}
+.qr-center-dot {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.qr-scanner-line {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: var(--green-mint);
+  left: 0;
+  top: 0;
+  box-shadow: 0 0 8px var(--green-mint);
+  animation: scanQR 3s infinite ease-in-out;
+  z-index: 10;
+}
+
+@keyframes scanQR {
+  0% { top: 0%; }
+  50% { top: 100%; }
+  100% { top: 0%; }
+}
+
+.qr-code-text {
+  font-family: monospace;
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  word-break: break-all;
+  text-align: center;
+  max-width: 140px;
+  line-height: 1.2;
+}
+
+.boarding-rules {
+  flex: 1;
+}
+
+.boarding-rules h5 {
+  font-size: 0.85rem;
+  color: var(--accent-gold);
+  margin-bottom: 0.4rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.boarding-rules ul {
+  list-style: none;
+  font-size: 0.75rem;
+  color: var(--pearl-white);
+  padding: 0;
+}
+
+.boarding-rules ul li {
+  margin-bottom: 0.4rem;
+  position: relative;
+  padding-left: 0.8rem;
+  line-height: 1.3;
+}
+
+.boarding-rules ul li::before {
+  content: "•";
+  color: var(--green-mint);
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+.pass-flip-hint {
+  border-top: 1px dashed rgba(255, 255, 255, 0.15);
+  padding-top: 0.6rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+  letter-spacing: 0.02em;
 }
 
 /* Modal Popup */
@@ -1037,13 +1234,795 @@ p {
   body * {
     visibility: hidden;
   }
-  #boarding-pass-card, #boarding-pass-card * {
+  .pass-front, .pass-front * {
     visibility: visible;
   }
-  #boarding-pass-card {
+  .pass-front {
     position: absolute;
     left: 0;
     top: 0;
     width: 100%;
+    border: 2px solid #000000 !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .pass-front * {
+    color: #000000 !important;
+  }
+  .fake-barcode {
+    background: #eeeeee !important;
+    color: #000000 !important;
   }
 }
+
+/* Ticket Generation Pulse Animation */
+@keyframes ticketPulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 rgba(212, 175, 55, 0);
+  }
+  50% {
+    transform: scale(1.03);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* ==========================================================================
+   Light Mode Theme Variables & Custom Accents
+   ========================================================================== */
+[data-theme="light"] {
+  --bg-gradient: linear-gradient(135deg, #FAF6F0 0%, #F3EAE0 60%, #EADDC9 100%);
+  --card-bg: rgba(255, 250, 242, 0.75);
+  --card-bg-hover: rgba(255, 250, 242, 0.9);
+  --blue-dark: #2C221A;
+  --glass-border: rgba(44, 34, 26, 0.08);
+  --glass-border-highlight: rgba(180, 83, 9, 0.25);
+  --pearl-white: #3A2F28;
+  --pure-white: #1C1510;
+  --text-muted: #837265;
+  --accent-gold: #B45309;
+}
+
+[data-theme="light"] body {
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--pearl-white);
+}
+
+[data-theme="light"] .section {
+  background: transparent !important;
+}
+
+[data-theme="light"] .navbar {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+[data-theme="light"] .boarding-pass {
+  background: linear-gradient(135deg, #0b192c, #0e382c) !important;
+}
+
+[data-theme="light"] .boarding-pass * {
+  color: #f8fafc !important;
+}
+
+[data-theme="light"] .boarding-pass .text-gold, 
+[data-theme="light"] .boarding-pass #pass-id,
+[data-theme="light"] .boarding-pass .badge-gold,
+[data-theme="light"] .boarding-pass .boarding-rules h5,
+[data-theme="light"] .boarding-pass .seat-map-visual h5 {
+  color: #d4af37 !important;
+}
+
+[data-theme="light"] .boarding-pass .fake-barcode {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="light"] .boarding-pass .seat-node.active {
+  background: #d4af37 !important;
+  color: #000000 !important;
+}
+
+[data-theme="light"] .form-control {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid rgba(15, 23, 42, 0.15) !important;
+  color: var(--pure-white) !important;
+}
+
+[data-theme="light"] .form-control::placeholder {
+  color: #94a3b8;
+}
+
+[data-theme="light"] .form-control:focus {
+  border-color: var(--primary-blue) !important;
+  box-shadow: 0 0 15px rgba(0, 86, 145, 0.2) !important;
+}
+
+[data-theme="light"] .modal-content {
+  background: #ffffff !important;
+  border: 1px solid rgba(15, 23, 42, 0.15) !important;
+}
+
+[data-theme="light"] .modal-content * {
+  color: var(--pure-white) !important;
+}
+
+[data-theme="light"] .modal-content .badge {
+  background: rgba(180, 83, 9, 0.1) !important;
+  color: #b45309 !important;
+}
+
+[data-theme="light"] .modal-close {
+  color: #64748b !important;
+}
+
+[data-theme="light"] .modal-close:hover {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] p {
+  color: #3A2F28 !important;
+}
+
+[data-theme="light"] .train-specs-list li {
+  color: #3A2F28 !important;
+}
+
+[data-theme="light"] .nav-links a {
+  color: #837265 !important;
+}
+
+[data-theme="light"] .nav-links a:hover, 
+[data-theme="light"] .nav-links a.active {
+  color: #1C1510 !important;
+}
+
+[data-theme="light"] .mobile-toggle {
+  color: #1C1510 !important;
+}
+
+/* Soundscape box keeps its dark luxury theme so the audio visualizer looks stunning */
+[data-theme="light"] .soundscape-box {
+  background: linear-gradient(135deg, #0b192c, #0e382c) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme="light"] .soundscape-box * {
+  color: #f8fafc !important;
+}
+
+[data-theme="light"] .soundscape-box .badge {
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #34d399 !important;
+}
+
+[data-theme="light"] .soundscape-box .track-btn {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #cbd5e1 !important;
+}
+
+[data-theme="light"] .soundscape-box .track-btn.active {
+  background: var(--primary-blue) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .attraction-back-face {
+  background: linear-gradient(135deg, #FAF6F0 0%, #F3EAE0 100%) !important;
+  border: 1px solid rgba(44, 34, 26, 0.15) !important;
+}
+
+[data-theme="light"] .attraction-card-back-content p {
+  color: #3A2F28 !important;
+}
+
+[data-theme="light"] .attraction-back-face span {
+  color: #3A2F28 !important;
+}
+
+/* ==========================================================================
+   Screen Reader Only & Theme Toggle Button Styles
+   ========================================================================== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.theme-toggle-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  color: var(--pearl-white);
+  font-size: 1.25rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.05);
+}
+
+/* Keyboard accessibility outline */
+#boarding-pass-inner:focus-visible {
+  outline: 3px solid var(--accent-gold);
+  outline-offset: 4px;
+}
+
+/* ==========================================================================
+   Web Audio Waveform Visualizer
+   ========================================================================== */
+.visualizer-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 1.5rem auto 0;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  height: 70px;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.visualizer-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ==========================================================================
+   Skeleton Shimmer Loader Screen
+   ========================================================================== */
+.skeleton-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0b192c, #0e382c);
+  z-index: 100;
+  padding: 2.5rem;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.skeleton-overlay.active {
+  display: flex;
+}
+
+.skeleton-line {
+  width: 100%;
+  height: 1.25rem;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.15) 37%, rgba(255, 255, 255, 0.05) 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: var(--radius-sm);
+}
+
+.skeleton-header-shimmer {
+  height: 3rem;
+  margin-bottom: 2rem;
+}
+
+.skeleton-grid-shimmer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  flex-grow: 1;
+  margin-bottom: 2rem;
+}
+
+.skeleton-footer-shimmer {
+  height: 4rem;
+}
+
+@keyframes shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ==========================================================================
+   Carriage Seat Map Visuals
+   ========================================================================== */
+.boarding-rules-n-seat {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  flex: 1;
+}
+
+.seat-map-visual {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 0.8rem;
+}
+
+.seat-map-visual h5 {
+  font-size: 0.8rem;
+  color: var(--accent-gold);
+  margin-bottom: 0.4rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.seat-map-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 3px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.seat-node {
+  font-size: 0.5rem;
+  padding: 3px 0;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.25);
+  border-radius: 2px;
+  user-select: none;
+  font-weight: 600;
+}
+
+.seat-node.active {
+  background: var(--accent-gold) !important;
+  color: #000000 !important;
+  font-weight: 800;
+  box-shadow: 0 0 8px var(--accent-gold);
+  animation: seatPulse 1.5s infinite ease-in-out;
+}
+
+@keyframes seatPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+}
+
+/* ==========================================================================
+   Attractions 3D Hover-Flip Cards
+   ========================================================================== */
+.attraction-flip-container {
+  perspective: 1200px;
+  height: 380px;
+  width: 100%;
+}
+
+.attraction-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.attraction-flip-container:hover .attraction-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.attraction-card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg);
+  transition: border-color var(--transition-fast);
+}
+
+.attraction-flip-container:hover .attraction-card-face {
+  border-color: var(--glass-border-highlight);
+}
+
+.attraction-front-face {
+  transform: rotateY(0deg);
+  z-index: 2;
+}
+
+.attraction-back-face {
+  transform: rotateY(180deg);
+  z-index: 1;
+  padding: 2rem;
+  justify-content: space-between;
+  background: linear-gradient(135deg, var(--blue-dark) 0%, #0d2721 100%);
+}
+
+.attraction-img-wrap {
+  width: 100%;
+  height: 210px;
+  overflow: hidden;
+}
+
+.attraction-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.attraction-flip-container:hover img {
+  transform: scale(1.08);
+}
+
+.attraction-card-info {
+  padding: 1.25rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.attraction-card-back-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.attraction-card-back-content h4 {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  color: var(--accent-gold);
+}
+
+.attraction-card-back-content p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* QR Code sizing details */
+#pass-qr-code {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#pass-qr-code img {
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================================================
+   Lucide SVG Icon Uniform Styling
+   ========================================================================== */
+.lucide {
+  width: 1.25em;
+  height: 1.25em;
+  stroke: currentColor;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  display: inline-block;
+  vertical-align: -0.2em; /* Align perfectly with text */
+}
+
+/* Custom sizes for buttons and special features */
+.logo-icon .lucide {
+  width: 2rem;
+  height: 2rem;
+  color: var(--accent-gold);
+}
+
+.theme-toggle-btn .lucide {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.btn-primary .lucide, .btn-secondary .lucide {
+  width: 1.1rem;
+  height: 1.1rem;
+  vertical-align: middle;
+}
+
+.badge .lucide {
+  width: 0.9rem;
+  height: 0.9rem;
+  margin-right: 0.35rem;
+  vertical-align: middle;
+}
+
+.sound-btn .lucide {
+  width: 1.4rem;
+  height: 1.4rem;
+  vertical-align: middle;
+}
+
+.track-btn .lucide {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.4rem;
+  vertical-align: middle;
+}
+
+.pass-flip-hint .lucide {
+  width: 0.9rem;
+  height: 0.9rem;
+  margin-right: 0.3rem;
+  vertical-align: middle;
+}
+
+.train-specs-list .lucide {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-right: 0.5rem;
+  color: var(--green-mint);
+  vertical-align: middle;
+}
+
+/* ==========================================================================
+   Digital Journey Passport Styling
+   ========================================================================== */
+.passport-modal-content {
+  max-width: 750px !important;
+  text-align: center;
+}
+
+.passport-header h2 {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  margin-bottom: 0.2rem;
+}
+
+.passport-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 1.8rem 0;
+  text-align: left;
+}
+
+.passport-sec-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .passport-sec-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Stamp Items: Dynamic rubber ink look */
+.stamp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 0.8rem;
+}
+
+.stamp-item {
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: 2px dashed rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--text-muted);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: help;
+  padding: 0.5rem;
+}
+
+.stamp-item .lock-icon {
+  font-size: 1rem;
+  opacity: 0.4;
+  margin-bottom: 0.2rem;
+}
+
+.stamp-item-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+/* Stamp codes: Pretoria, JHB, Kimberley, Matjiesfontein, Worcester, Cape Town */
+.stamp-item-code {
+  display: none;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  margin: 0.1rem 0;
+  line-height: 1;
+}
+
+.stamp-item-date {
+  display: none;
+  font-size: 0.55rem;
+  letter-spacing: 0.02em;
+  opacity: 0.8;
+  margin-top: 0.1rem;
+}
+
+/* Stamp Unlocked Active State */
+.stamp-item.active {
+  border: 3px double currentColor;
+  transform: rotate(-10deg) scale(1.05);
+  background: rgba(255, 255, 255, 0.02);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  animation: stampPop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.stamp-item.active .lock-icon {
+  display: none;
+}
+
+.stamp-item.active .stamp-item-code,
+.stamp-item.active .stamp-item-date {
+  display: block;
+}
+
+.stamp-item.active .stamp-item-label {
+  font-size: 0.55rem;
+  opacity: 0.9;
+}
+
+/* Rubber Stamp Inked Color Variants */
+.stamp-item.stamp-pretoria.active { color: #38bdf8; }       /* Blue */
+.stamp-item.stamp-johannesburg.active { color: #f59e0b; }   /* Gold/Amber */
+.stamp-item.stamp-kimberley.active { color: #10b981; }      /* Emerald */
+.stamp-item.stamp-matjiesfontein.active { color: #a855f7; } /* Purple */
+.stamp-item.stamp-worcester.active { color: #f43f5e; }       /* Rose */
+.stamp-item.stamp-cape-town.active { color: #06b6d4; }      /* Cyan */
+
+@keyframes stampPop {
+  0% {
+    transform: rotate(0deg) scale(2);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: rotate(-10deg) scale(1.05);
+    opacity: 1;
+  }
+}
+
+/* Story/Sound Tracker Mini items */
+.stamp-grid-mini {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stamp-mini-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.8rem;
+  font-size: 0.85rem;
+  color: var(--pearl-white);
+  transition: var(--transition-fast);
+}
+
+.stamp-mini-item.active {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.stamp-mini-item .mini-check {
+  color: var(--text-muted);
+}
+
+.stamp-mini-item.active .mini-check {
+  color: var(--green-mint);
+  animation: checkPop 0.3s ease-out;
+}
+
+@keyframes checkPop {
+  0% { transform: scale(0.5); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+/* Reward Box styling */
+.passport-reward-box {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.05), rgba(180, 83, 9, 0.08));
+  border: 1px dashed var(--accent-gold);
+  border-radius: var(--radius-md);
+  padding: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-top: 1.5rem;
+  transition: all 0.4s ease;
+}
+
+.passport-reward-box.completed {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(180, 83, 9, 0.25));
+  border: 1px solid #ffd700;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.25);
+  transform: translateY(-2px);
+}
+
+.passport-reward-box.completed .reward-icon-wrap {
+  animation: rewardPulse 2s infinite ease-in-out;
+}
+
+@keyframes rewardPulse {
+  0% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(212, 175, 55, 0.4)); }
+  50% { transform: scale(1.15); filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.8)); }
+  100% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(212, 175, 55, 0.4)); }
+}
+
+/* Reward Boarding Pass Border Payoff */
+.boarding-pass.pass-front.gold-border {
+  border: 4px double #ffd700 !important;
+  box-shadow: 0 0 35px rgba(212, 175, 55, 0.65), var(--shadow-card) !important;
+}
+
+.boarding-pass.pass-front.gold-border::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 15px rgba(212, 175, 55, 0.4);
+  pointer-events: none;
+}
+
+/* Light theme overrides for passport stamps book */
+[data-theme="light"] .passport-modal-content {
+  background: #FAF6F0 !important;
+  border-color: rgba(44, 34, 26, 0.15) !important;
+}
+
+[data-theme="light"] .passport-modal-content * {
+  color: #3A2F28 !important;
+}
+
+[data-theme="light"] .stamp-item {
+  background: rgba(44, 34, 26, 0.04);
+  border-color: rgba(44, 34, 26, 0.1);
+}
+
+[data-theme="light"] .stamp-mini-item {
+  background: rgba(44, 34, 26, 0.03);
+  border-color: rgba(44, 34, 26, 0.08);
+}
+
+[data-theme="light"] .stamp-mini-item.active {
+  background: rgba(16, 185, 129, 0.08) !important;
+  border-color: rgba(16, 185, 129, 0.2) !important;
+}
+
+[data-theme="light"] .stamp-mini-item.active * {
+  color: var(--green-dark) !important;
+}
+
+[data-theme="light"] .stamp-item.active {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+
+

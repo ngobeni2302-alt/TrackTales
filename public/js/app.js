@@ -7,6 +7,9 @@
 (function () {
   'use strict';
 
+  if (window.TrackTalesAppInitialized) return;
+  window.TrackTalesAppInitialized = true;
+
   // --- Fallback Data (Guarantees app works offline or when opened directly in browser) ---
   const FALLBACK_TRAINS = [
     {
@@ -169,15 +172,27 @@
     stories: FALLBACK_STORIES
   };
 
+  // --- Passport State ---
+  let passportData = {
+    stops: {},
+    stories: {},
+    sounds: {}
+  };
+
   // --- Initialize App ---
   document.addEventListener('DOMContentLoaded', () => {
+    loadPassport();
     fetchApiData();
     setupNavigation();
     setupRouteMapControls();
     setupAttractionFilters();
     setupSoundEngine();
     setupTicketForm();
+    setupTicketFlip();
+    setupThemeToggle();
+    setupDownloadTicket();
     setupStoryModal();
+    setupPassportModal();
   });
 
   // --- Fetch API Data with Fallback ---
@@ -225,6 +240,9 @@
     renderTrains();
     renderAttractions('all');
     renderStories();
+    if (window.lucide) {
+      lucide.createIcons();
+    }
   }
 
   // --- Navigation Controls ---
@@ -322,6 +340,8 @@
     if (stopObj.img) {
       document.getElementById('stop-img').src = stopObj.img;
     }
+
+    collectStamp('stops', stopId);
   }
 
   // --- Render 3 Trains ---
@@ -345,9 +365,9 @@
           <p>${train.description}</p>
           
           <ul class="train-specs-list">
-            <li><span class="icon">⚡</span> <strong>Speed:</strong> ${train.speed}</li>
-            <li><span class="icon">⏱️</span> <strong>Journey:</strong> ${train.duration}</li>
-            <li><span class="icon">📍</span> <strong>Route:</strong> ${train.route_summary}</li>
+            <li><span class="icon"><i data-lucide="zap"></i></span> <strong>Speed:</strong> ${train.speed}</li>
+            <li><span class="icon"><i data-lucide="clock"></i></span> <strong>Journey:</strong> ${train.duration}</li>
+            <li><span class="icon"><i data-lucide="map-pin"></i></span> <strong>Route:</strong> ${train.route_summary}</li>
           </ul>
 
           <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
@@ -387,16 +407,40 @@
     }
 
     container.innerHTML = items.map(item => `
-      <div class="attraction-card">
-        <img src="${item.img || item.image_url}" alt="${item.title}" class="attraction-img">
-        <div class="attraction-body">
-          <div class="attraction-meta">
-            <span>📍 ${item.city.toUpperCase()}</span>
-            <span>⭐ ${item.rating || '4.9'}</span>
+      <div class="attraction-flip-container" tabindex="0" role="button" aria-label="${item.title}. Hover or focus to reveal details.">
+        <div class="attraction-flip-inner">
+          
+          <!-- FRONT FACE: Photo and Basic Info -->
+          <div class="attraction-card-face attraction-front-face">
+            <div class="attraction-img-wrap">
+              <img src="${item.img || item.image_url}" alt="${item.title}">
+            </div>
+            <div class="attraction-card-info">
+              <div class="attraction-meta" style="margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; color: var(--green-mint); display: inline-flex; align-items: center; gap: 0.2rem;"><i data-lucide="map-pin" style="width: 12px; height: 12px;"></i> ${item.city.toUpperCase()}</span>
+                <span style="font-size: 0.75rem; color: var(--accent-gold); display: inline-flex; align-items: center; gap: 0.2rem;"><i data-lucide="star" style="width: 12px; height: 12px; fill: var(--accent-gold); stroke: var(--accent-gold);"></i> ${item.rating || '4.9'}</span>
+              </div>
+              <h4 class="attraction-title" style="font-size: 1.15rem; margin-bottom: 0.4rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: var(--font-heading);">${item.title}</h4>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+                <span class="badge badge-blue" style="font-size: 0.7rem; padding: 0.2rem 0.6rem;">${item.category}</span>
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-style: italic; display: inline-flex; align-items: center; gap: 0.2rem;">Hover to Flip <i data-lucide="arrow-right" style="width: 10px; height: 10px;"></i></span>
+              </div>
+            </div>
           </div>
-          <h4 class="attraction-title">${item.title}</h4>
-          <p class="attraction-desc">${item.desc || item.description}</p>
-          <span class="badge badge-blue" style="font-size: 0.75rem;">${item.category}</span>
+          
+          <!-- BACK FACE: Blurb/Details -->
+          <div class="attraction-card-face attraction-back-face">
+            <div class="attraction-card-back-content">
+              <span class="badge badge-gold" style="align-self: flex-start; font-size: 0.7rem; margin-bottom: 0.5rem;">${item.category}</span>
+              <h4>${item.title}</h4>
+              <p>${item.desc || item.description}</p>
+            </div>
+            <div style="border-top: 1px dashed rgba(255, 255, 255, 0.15); padding-top: 0.8rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--green-light);">
+              <span style="display: inline-flex; align-items: center; gap: 0.2rem;"><i data-lucide="star" style="width: 12px; height: 12px; fill: var(--accent-gold); stroke: var(--accent-gold);"></i> Rating: ${item.rating || '4.9'} / 5.0</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted); font-style: italic;">Roll off to Flip back</span>
+            </div>
+          </div>
+
         </div>
       </div>
     `).join('');
@@ -416,9 +460,91 @@
     let gainNode = null;
     let intervalId = null;
 
+    let analyserNode = null;
+    const canvas = document.getElementById('sound-visualizer');
+    const canvasCtx = canvas ? canvas.getContext('2d') : null;
+    let drawVisualId = null;
+
+    // Render static silent line initially
+    if (canvas && canvasCtx) {
+      setTimeout(drawInitialFlatline, 100);
+      window.addEventListener('resize', drawInitialFlatline);
+    }
+
+    function drawInitialFlatline() {
+      if (!canvas || !canvasCtx) return;
+      const width = canvas.width = canvas.offsetWidth;
+      const height = canvas.height = canvas.offsetHeight;
+      canvasCtx.fillStyle = '#0f1c30';
+      canvasCtx.fillRect(0, 0, width, height);
+      canvasCtx.lineWidth = 2;
+      canvasCtx.strokeStyle = 'rgba(0, 168, 255, 0.4)';
+      canvasCtx.beginPath();
+      canvasCtx.moveTo(0, height / 2);
+      canvasCtx.lineTo(width, height / 2);
+      canvasCtx.stroke();
+    }
+
+    function drawVisualizer() {
+      if (!canvas || !canvasCtx) return;
+      const bufferLength = analyserNode.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+      
+      const width = canvas.width = canvas.offsetWidth;
+      const height = canvas.height = canvas.offsetHeight;
+
+      function draw() {
+        if (!isPlaying) {
+          drawInitialFlatline();
+          drawVisualId = requestAnimationFrame(draw);
+          return;
+        }
+
+        drawVisualId = requestAnimationFrame(draw);
+        analyserNode.getByteTimeDomainData(dataArray);
+
+        canvasCtx.fillStyle = '#0f1c30';
+        canvasCtx.fillRect(0, 0, width, height);
+
+        canvasCtx.lineWidth = 3;
+        const gradient = canvasCtx.createLinearGradient(0, 0, width, 0);
+        gradient.addColorStop(0, '#00a8ff');
+        gradient.addColorStop(0.5, '#10b981');
+        gradient.addColorStop(1, '#00a8ff');
+        canvasCtx.strokeStyle = gradient;
+
+        canvasCtx.beginPath();
+        const sliceWidth = width * 1.0 / bufferLength;
+        let x = 0;
+
+        for (let i = 0; i < bufferLength; i++) {
+          const v = dataArray[i] / 128.0;
+          const y = v * height / 2;
+
+          if (i === 0) {
+            canvasCtx.moveTo(x, y);
+          } else {
+            canvasCtx.lineTo(x, y);
+          }
+          x += sliceWidth;
+        }
+
+        canvasCtx.lineTo(width, height / 2);
+        canvasCtx.stroke();
+      }
+
+      draw();
+    }
+
     function initAudio() {
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        analyserNode = audioCtx.createAnalyser();
+        analyserNode.fftSize = 256;
+        analyserNode.connect(audioCtx.destination);
+        if (canvas && canvasCtx) {
+          drawVisualizer();
+        }
       }
     }
 
@@ -429,7 +555,8 @@
       }
 
       isPlaying = true;
-      playBtn.textContent = '⏸';
+      playBtn.innerHTML = '<i data-lucide="pause"></i>';
+      if (window.lucide) lucide.createIcons();
       nowPlayingLabel.textContent = `Status: Playing (${currentPreset.toUpperCase()})`;
 
       if (currentPreset === 'chug') {
@@ -441,11 +568,14 @@
       } else {
         playLoungeEffect();
       }
+
+      collectStamp('sounds', currentPreset);
     }
 
     function stopSound() {
       isPlaying = false;
-      playBtn.textContent = '▶';
+      playBtn.innerHTML = '<i data-lucide="play"></i>';
+      if (window.lucide) lucide.createIcons();
       nowPlayingLabel.textContent = 'Status: Muted';
       if (intervalId) clearInterval(intervalId);
       if (gainNode) gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
@@ -489,7 +619,7 @@
         gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
         osc.connect(gain);
-        gain.connect(audioCtx.destination);
+        gain.connect(analyserNode || audioCtx.destination);
         osc.start();
         osc.stop(audioCtx.currentTime + 0.12);
         count++;
@@ -511,7 +641,7 @@
 
       osc1.connect(gain);
       osc2.connect(gain);
-      gain.connect(audioCtx.destination);
+      gain.connect(analyserNode || audioCtx.destination);
 
       osc1.start();
       osc2.start();
@@ -528,7 +658,7 @@
       gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
       gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 3.0);
       osc.connect(gain);
-      gain.connect(audioCtx.destination);
+      gain.connect(analyserNode || audioCtx.destination);
       osc.start();
       osc.stop(audioCtx.currentTime + 3.0);
     }
@@ -545,7 +675,7 @@
         gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.6);
         osc.connect(gain);
-        gain.connect(audioCtx.destination);
+        gain.connect(analyserNode || audioCtx.destination);
         osc.start();
         osc.stop(audioCtx.currentTime + 0.6);
         idx++;
@@ -611,21 +741,227 @@
   }
 
   function updateBoardingPassUI(ticket) {
-    document.getElementById('pass-train-title').textContent = ticket.train_name;
-    document.getElementById('pass-name').textContent = ticket.passenger_name;
-    document.getElementById('pass-id').textContent = ticket.ticket_id;
-    document.getElementById('pass-cabin').textContent = ticket.cabin_type;
-    document.getElementById('pass-date').textContent = ticket.travel_date;
-    document.getElementById('pass-seat').textContent = ticket.seat_number || 'CAR-02 / SEAT 08B';
-    document.getElementById('pass-barcode').textContent = `||| ${ticket.ticket_id} |||`;
+    const skeleton = document.getElementById('skeleton-overlay');
+    const announcer = document.getElementById('boarding-pass-announcer');
 
-    const card = document.getElementById('boarding-pass-card');
-    card.style.animation = 'none';
-    card.offsetHeight; // trigger reflow
-    card.style.animation = 'floatCard 0.6s ease';
+    if (skeleton) {
+      skeleton.classList.add('active');
+    }
+    if (announcer) {
+      announcer.textContent = "Processing and generating your souvenir boarding ticket. Please wait.";
+    }
+
+    setTimeout(() => {
+      // Populate fields
+      document.getElementById('pass-train-title').textContent = ticket.train_name;
+      document.getElementById('pass-name').textContent = ticket.passenger_name;
+      document.getElementById('pass-id').textContent = ticket.ticket_id;
+      document.getElementById('pass-cabin').textContent = ticket.cabin_type;
+      document.getElementById('pass-date').textContent = ticket.travel_date;
+      document.getElementById('pass-seat').textContent = ticket.seat_number || 'CAR-02 / SEAT 08B';
+      document.getElementById('pass-barcode').textContent = `||| ${ticket.ticket_id} |||`;
+
+      // Update Back of Card QR Data Text
+      const qrData = ticket.qr_code_data || `TRACKTALES:${ticket.ticket_id}:${ticket.train_id || 'blue-train'}:${ticket.passenger_name}`;
+      const qrTextElement = document.getElementById('pass-qr-data');
+      if (qrTextElement) {
+        qrTextElement.textContent = qrData;
+      }
+
+      // Generate real scannable QR code via qrcode.js
+      const qrContainer = document.getElementById('pass-qr-code');
+      if (qrContainer && window.QRCode) {
+        qrContainer.innerHTML = '';
+        new QRCode(qrContainer, {
+          text: qrData,
+          width: 120,
+          height: 120,
+          colorDark: '#0b192c',
+          colorLight: '#ffffff',
+          correctLevel: QRCode.CorrectLevel.H
+        });
+      }
+
+      // Render seat map carriage grid visualizer
+      renderSeatMap(ticket.seat_number || 'CAR-02 / SEAT 08B');
+
+      // Hide loading skeleton
+      if (skeleton) {
+        skeleton.classList.remove('active');
+      }
+      
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+      
+      if (announcer) {
+        announcer.textContent = `Boarding pass generated successfully for ${ticket.passenger_name}. Showing front of ticket.`;
+      }
+
+      // Pulse animation
+      const container = document.getElementById('boarding-pass-container');
+      if (container) {
+        container.style.animation = 'none';
+        container.offsetHeight; // trigger reflow
+        container.style.animation = 'ticketPulse 0.5s ease-out';
+      }
+
+      // Settle details, make sure it is showing front first
+      const inner = document.getElementById('boarding-pass-inner');
+      if (inner) {
+        inner.classList.remove('flipped');
+        
+        // Auto-flip reveal sequence: wait 800ms, flip to back, wait 1800ms, flip to front
+        setTimeout(() => {
+          inner.classList.add('flipped');
+          if (announcer) {
+            announcer.textContent = "Auto-flipping ticket to reveal scannable boarding QR code and carriage seat allocation.";
+          }
+          
+          setTimeout(() => {
+            inner.classList.remove('flipped');
+            if (announcer) {
+              announcer.textContent = "Auto-flipping ticket back to main front details.";
+            }
+          }, 2000);
+        }, 800);
+      }
+    }, 1000); // 1 second loading delay simulation
   }
 
-  // --- Render Stories & Modal ---
+  // --- Ticket Card Flip Controller & A11y ---
+  function setupTicketFlip() {
+    const container = document.getElementById('boarding-pass-container');
+    const inner = document.getElementById('boarding-pass-inner');
+    const announcer = document.getElementById('boarding-pass-announcer');
+    
+    if (container && inner) {
+      const toggleFlip = () => {
+        const willBeFlipped = !inner.classList.contains('flipped');
+        inner.classList.toggle('flipped');
+        if (announcer) {
+          announcer.textContent = willBeFlipped 
+            ? "Flipped boarding pass card. Showing transit verification rules and scannable QR code on the back." 
+            : "Flipped boarding pass card. Showing main ticket details on the front.";
+        }
+      };
+
+      container.addEventListener('click', (e) => {
+        if (e.target.tagName.toLowerCase() === 'button' || e.target.closest('button')) {
+          return;
+        }
+        toggleFlip();
+      });
+
+      inner.addEventListener('keydown', (e) => {
+        if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault(); // Prevent page scrolling
+          toggleFlip();
+        }
+      });
+    }
+  }
+
+  // --- Render Carriage Seat Map Grid ---
+  function renderSeatMap(selectedSeat) {
+    const grid = document.getElementById('seat-map-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    
+    let targetSeat = '';
+    if (selectedSeat) {
+      const match = selectedSeat.match(/SEAT\s+(\d+[A-Z])/i);
+      if (match) {
+        targetSeat = match[1].toUpperCase();
+      } else {
+        const directMatch = selectedSeat.match(/(\d+[A-Z])/i);
+        if (directMatch) {
+          targetSeat = directMatch[1].toUpperCase();
+        }
+      }
+    }
+    
+    // Generate rows 1-12, seats A & B
+    for (let row = 1; row <= 12; row++) {
+      ['A', 'B'].forEach(col => {
+        const seatId = `${row}${col}`;
+        const node = document.createElement('div');
+        node.className = 'seat-node';
+        node.textContent = seatId;
+        if (seatId === targetSeat) {
+          node.className = 'seat-node active';
+        }
+        grid.appendChild(node);
+      });
+    }
+  }
+
+  // --- Light / Dark Theme Toggler ---
+  function setupThemeToggle() {
+    const toggleBtn = document.getElementById('theme-toggle');
+    if (!toggleBtn) return;
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    toggleBtn.innerHTML = savedTheme === 'light' 
+      ? '<i data-lucide="moon"></i>' 
+      : '<i data-lucide="sun"></i>';
+    if (window.lucide) lucide.createIcons();
+
+    toggleBtn.addEventListener('click', () => {
+      const nowTheme = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', nowTheme);
+      localStorage.setItem('theme', nowTheme);
+      toggleBtn.innerHTML = nowTheme === 'light' 
+        ? '<i data-lucide="moon"></i>' 
+        : '<i data-lucide="sun"></i>';
+      if (window.lucide) lucide.createIcons();
+    });
+  }
+
+  // --- HTML2Canvas Ticket Exporter ---
+  function setupDownloadTicket() {
+    const downloadBtn = document.getElementById('btn-download-ticket');
+    if (!downloadBtn) return;
+
+    downloadBtn.addEventListener('click', () => {
+      const inner = document.getElementById('boarding-pass-inner');
+      if (!inner || !window.html2canvas) return;
+
+      const wasFlipped = inner.classList.contains('flipped');
+      inner.classList.remove('flipped');
+      
+      const frontElement = inner.querySelector('.pass-front');
+      if (!frontElement) return;
+
+      // Wait brief moment for flip back transition to end before capture
+      setTimeout(() => {
+        html2canvas(frontElement, {
+          backgroundColor: null,
+          scale: 2,
+          logging: false,
+          useCORS: true
+        }).then(canvas => {
+          const image = canvas.toDataURL('image/png');
+          const link = document.createElement('a');
+          const passengerName = (document.getElementById('pass-name').textContent || 'Souvenir').replace(/\s+/g, '_');
+          link.download = `TrackTales_BoardingPass_${passengerName}.png`;
+          link.href = image;
+          link.click();
+          
+          if (wasFlipped) {
+            inner.classList.add('flipped');
+          }
+        }).catch(err => {
+          console.error("html2canvas export failed:", err);
+          if (wasFlipped) {
+            inner.classList.add('flipped');
+          }
+        });
+      }, 300);
+    });
+  }
+
   function renderStories() {
     const container = document.getElementById('stories-container');
     if (!container) return;
@@ -637,10 +973,14 @@
           <h3>${story.title}</h3>
           <p style="font-size: 0.88rem; color: var(--green-light); margin-bottom: 0.8rem;">By ${story.author}</p>
           <p>${story.summary}</p>
-          <span class="badge badge-blue" style="margin-top: 1rem; align-self: flex-start;">Read Full Tale ➔</span>
+          <span class="badge badge-blue" style="margin-top: 1rem; align-self: flex-start; display: inline-flex; align-items: center; gap: 0.4rem;">
+            <span>Read Full Tale</span>
+            <i data-lucide="arrow-right"></i>
+          </span>
         </div>
       </div>
     `).join('');
+    if (window.lucide) lucide.createIcons();
   }
 
   function setupStoryModal() {
@@ -664,7 +1004,179 @@
       document.getElementById('modal-body').textContent = story.content;
 
       modal.classList.add('active');
+      collectStamp('stories', storyId);
     };
+  }
+
+  // --- Passport System Functions ---
+  const STOPS_STAMP_CONFIG = {
+    'pretoria': { code: 'PRY', name: 'Pretoria' },
+    'johannesburg': { code: 'JHB', name: 'Jo\'burg' },
+    'kimberley': { code: 'KIM', name: 'Kimberley' },
+    'matjiesfontein': { code: 'MJF', name: 'Matjies' },
+    'worcester': { code: 'WOC', name: 'Worcester' },
+    'cape-town': { code: 'CPT', name: 'Cape Town' }
+  };
+
+  function loadPassport() {
+    try {
+      const data = localStorage.getItem('tracktales_passport');
+      if (data) {
+        passportData = JSON.parse(data);
+      }
+    } catch (e) {
+      console.error("Failed to load passport storage:", e);
+    }
+  }
+
+  function savePassport() {
+    try {
+      localStorage.setItem('tracktales_passport', JSON.stringify(passportData));
+    } catch (e) {
+      console.error("Failed to save passport storage:", e);
+    }
+  }
+
+  function collectStamp(type, id) {
+    if (!passportData[type]) passportData[type] = {};
+    if (passportData[type][id]) return; // Already collected
+    
+    // Set formatted date
+    const dateStr = new Date().toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    }).toUpperCase();
+    
+    passportData[type][id] = dateStr;
+    savePassport();
+    renderPassportUI();
+
+    // Trigger visual checks and completions
+    if (type === 'stops') {
+      checkPassportCompletion();
+    }
+  }
+
+  function renderPassportUI() {
+    // 1. Render Route Stops Stamps
+    const stopsGrid = document.getElementById('stamp-grid-stops');
+    if (stopsGrid) {
+      stopsGrid.innerHTML = Object.keys(STOPS_STAMP_CONFIG).map(stopId => {
+        const conf = STOPS_STAMP_CONFIG[stopId];
+        const isCollected = passportData.stops && passportData.stops[stopId];
+        const dateVal = isCollected ? passportData.stops[stopId] : '';
+        
+        return `
+          <div class="stamp-item stamp-${stopId} ${isCollected ? 'active' : ''}" title="${isCollected ? 'Collected on ' + dateVal : 'Stop locked. Visit this stop on the Route Map to stamp your passport.'}">
+            <div class="lock-icon"><i data-lucide="lock"></i></div>
+            <div class="stamp-item-label">${conf.name}</div>
+            <div class="stamp-item-code">${conf.code}</div>
+            <div class="stamp-item-date">${dateVal}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 2. Render Stories counters
+    const storiesGrid = document.getElementById('stamp-grid-stories');
+    if (storiesGrid) {
+      storiesGrid.innerHTML = appData.stories.map(story => {
+        const isCollected = passportData.stories && passportData.stories[story.id];
+        return `
+          <div class="stamp-mini-item ${isCollected ? 'active' : ''}">
+            <span>${story.title}</span>
+            <span class="mini-check"><i data-lucide="${isCollected ? 'check-circle' : 'circle'}"></i></span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // 3. Render Sounds counters
+    const soundsGrid = document.getElementById('stamp-grid-sounds');
+    if (soundsGrid) {
+      const soundLabels = {
+        'chug': 'Karoo Track Chug',
+        'whistle': 'Steam Whistle',
+        'wind': 'Karoo Night Wind',
+        'lounge': 'Lounge Jazz ambient'
+      };
+      soundsGrid.innerHTML = Object.keys(soundLabels).map(soundId => {
+        const isCollected = passportData.sounds && passportData.sounds[soundId];
+        return `
+          <div class="stamp-mini-item ${isCollected ? 'active' : ''}">
+            <span>${soundLabels[soundId]}</span>
+            <span class="mini-check"><i data-lucide="${isCollected ? 'check-circle' : 'circle'}"></i></span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Check completion and update reward panel
+    const totalStops = Object.keys(STOPS_STAMP_CONFIG).length;
+    const collectedStops = Object.keys(passportData.stops || {}).length;
+    const rewardBox = document.getElementById('passport-reward');
+    const rewardStatus = document.getElementById('passport-reward-status');
+
+    if (collectedStops === totalStops) {
+      if (rewardBox) rewardBox.classList.add('completed');
+      if (rewardStatus) {
+        rewardStatus.innerHTML = `<strong>Passport complete!</strong> You've unlocked the golden ticket border reward. Check your Boarding Pass display!`;
+      }
+      
+      const passFrontElement = document.querySelector('.boarding-pass.pass-front');
+      if (passFrontElement) {
+        passFrontElement.classList.add('gold-border');
+      }
+    } else {
+      if (rewardBox) rewardBox.classList.remove('completed');
+      if (rewardStatus) {
+        rewardStatus.textContent = `Collect stamps at all ${totalStops} route stops to unlock a Golden Boarding Ticket frame and completion glow! (${collectedStops}/${totalStops} collected)`;
+      }
+      const passFrontElement = document.querySelector('.boarding-pass.pass-front');
+      if (passFrontElement) {
+        passFrontElement.classList.remove('gold-border');
+      }
+    }
+
+    if (window.lucide) lucide.createIcons();
+  }
+
+  function checkPassportCompletion() {
+    const totalStops = Object.keys(STOPS_STAMP_CONFIG).length;
+    const collectedStops = Object.keys(passportData.stops || {}).length;
+    if (collectedStops === totalStops) {
+      // Trigger Completion animation on Boarding pass
+      const container = document.getElementById('boarding-pass-container');
+      if (container) {
+        container.style.animation = 'none';
+        container.offsetHeight; // trigger reflow
+        container.style.animation = 'ticketPulse 0.8s ease-out';
+      }
+    }
+  }
+
+  function setupPassportModal() {
+    const modal = document.getElementById('passport-modal');
+    const openBtn = document.getElementById('btn-open-passport');
+    const closeBtn = document.getElementById('passport-close-btn');
+
+    if (openBtn && modal) {
+      openBtn.addEventListener('click', () => {
+        renderPassportUI();
+        modal.classList.add('active');
+      });
+    }
+
+    if (closeBtn && modal) {
+      closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('active');
+      });
+    }
+    
+    // Initial UI render on app boot
+    renderPassportUI();
   }
 
 })();

@@ -15,6 +15,10 @@
   <link rel="stylesheet" href="/static/css/styles.css">
   <!-- Fallback direct CSS link if static endpoint isn't used -->
   <link rel="stylesheet" href="./css/styles.css">
+  <!-- External CDN Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
 
@@ -22,7 +26,7 @@
   <header class="navbar" id="navbar">
     <div class="container">
       <a href="#hero" class="logo" id="nav-logo-link">
-        <div class="logo-icon">🚂</div>
+        <div class="logo-icon"><i data-lucide="train"></i></div>
         <span>Track<span class="text-gradient-green">Tales</span></span>
       </a>
 
@@ -38,6 +42,7 @@
       </nav>
 
       <div style="display: flex; align-items: center; gap: 1rem;">
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle light/dark theme"><i data-lucide="moon"></i></button>
         <a href="#ticket-generator" class="nav-btn" id="btn-get-ticket">Generate Ticket</a>
         <button class="mobile-toggle" id="mobile-toggle-btn" aria-label="Toggle menu">☰</button>
       </div>
@@ -50,7 +55,8 @@
     <div class="container hero-grid">
       <div class="hero-content">
         <div class="badge badge-green">
-          <span>📍 South Africa Rail Corridor</span>
+          <i data-lucide="map-pin"></i>
+          <span>South Africa Rail Corridor</span>
         </div>
         <h1 style="margin-top: 1rem;">
           Journey Through the Heart of <span class="text-gradient-blue">Mzansi’s Rails</span>
@@ -61,11 +67,12 @@
 
         <div class="hero-actions">
           <a href="#route-map" class="btn-primary" id="hero-btn-explore">
-            <span>Explore Pretoria ➔ Cape Town Line</span>
-            <span>➔</span>
+            <span>Explore Pretoria to Cape Town Line</span>
+            <i data-lucide="arrow-right"></i>
           </a>
           <button class="btn-secondary" id="hero-btn-sound">
-            <span>🔊 Listen to Rail Soundscape</span>
+            <i data-lucide="volume-2"></i>
+            <span>Listen to Rail Soundscape</span>
           </button>
         </div>
 
@@ -111,16 +118,16 @@
       <div class="route-map-wrapper">
         <div class="route-train-selector">
           <button class="train-select-btn active" data-train-filter="all" id="filter-all-trains">
-            <span>🚆 All Trains</span>
+            <i data-lucide="train"></i> <span>All Trains</span>
           </button>
           <button class="train-select-btn" data-train-filter="blue-train" id="filter-blue-train">
-            <span>💎 The Blue Train</span>
+            <i data-lucide="gem"></i> <span>The Blue Train</span>
           </button>
           <button class="train-select-btn" data-train-filter="rovos-rail" id="filter-rovos-rail">
-            <span>👑 Rovos Rail</span>
+            <i data-lucide="crown"></i> <span>Rovos Rail</span>
           </button>
           <button class="train-select-btn" data-train-filter="shosholoza-meyl" id="filter-shosholoza">
-            <span>🇿🇦 Shosholoza Meyl</span>
+            <i data-lucide="map-pinned"></i> <span>Shosholoza Meyl</span>
           </button>
         </div>
 
@@ -178,7 +185,7 @@
             </div>
 
             <div class="stop-cuisine-box">
-              🍷 <strong>Regional Taste & Wine Pairing:</strong> <span id="stop-cuisine">Gauteng Style Braai & Chakalaka paired with Craft Lager</span>
+              <i data-lucide="wine"></i> <strong>Regional Taste & Wine Pairing:</strong> <span id="stop-cuisine">Gauteng Style Braai & Chakalaka paired with Craft Lager</span>
             </div>
           </div>
 
@@ -239,18 +246,23 @@
         <p style="max-width: 600px; margin: 1rem auto 0;">Experience the rhythmic sound of iron wheels on steel tracks, steam whistles echoing across the Karoo, and gentle lounge jazz ambient audio.</p>
 
         <div class="sound-controls">
-          <button class="sound-btn" id="audio-play-toggle" aria-label="Toggle rail sound">▶</button>
+          <button class="sound-btn" id="audio-play-toggle" aria-label="Toggle rail sound"><i data-lucide="play"></i></button>
           <div style="text-align: left;">
             <div style="font-weight: 700; font-size: 1.1rem;" id="sound-now-playing">Track Status: Muted</div>
             <div style="font-size: 0.88rem; color: var(--text-muted);">Web Audio API Synthesizer</div>
           </div>
         </div>
 
+        <!-- Waveform Visualizer Canvas -->
+        <div class="visualizer-container">
+          <canvas id="sound-visualizer" class="visualizer-canvas"></canvas>
+        </div>
+
         <div class="sound-track-selector" id="audio-preset-buttons">
-          <button class="track-btn active" data-sound="chug">🚂 Karoo Track Chug</button>
-          <button class="track-btn" data-sound="whistle">🔔 Vintage Steam Whistle</button>
-          <button class="track-btn" data-sound="wind">🌌 Karoo Night Wind</button>
-          <button class="track-btn" data-sound="lounge">🎷 Blue Train Lounge Jazz</button>
+          <button class="track-btn active" data-sound="chug"><i data-lucide="train"></i> Karoo Track Chug</button>
+          <button class="track-btn" data-sound="whistle"><i data-lucide="bell"></i> Vintage Steam Whistle</button>
+          <button class="track-btn" data-sound="wind"><i data-lucide="wind"></i> Karoo Night Wind</button>
+          <button class="track-btn" data-sound="lounge"><i data-lucide="music"></i> Blue Train Lounge Jazz</button>
         </div>
       </div>
     </div>
@@ -297,62 +309,144 @@
               <input type="date" id="input-date" class="form-control" required value="2026-09-15">
             </div>
 
-            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+            <div style="display: flex; gap: 0.5rem; margin-top: 2rem; flex-wrap: wrap;">
               <button type="submit" class="btn-primary" style="flex: 1; justify-content: center;" id="btn-generate-ticket">
-                <span>🎫 Generate Ticket</span>
+                <i data-lucide="ticket"></i>
+                <span>Generate Ticket</span>
+              </button>
+              <button type="button" class="btn-secondary" id="btn-open-passport">
+                <i data-lucide="book-open"></i>
+                <span>Passport</span>
               </button>
               <button type="button" class="btn-secondary" onclick="window.print()" id="btn-print-ticket">
-                <span>🖨️ Print Pass</span>
+                <i data-lucide="printer"></i>
+                <span>Print</span>
+              </button>
+              <button type="button" class="btn-secondary" id="btn-download-ticket">
+                <i data-lucide="download"></i>
+                <span>Save PNG</span>
               </button>
             </div>
           </form>
         </div>
 
-        <!-- Rendered Boarding Pass Display -->
-        <div class="boarding-pass" id="boarding-pass-card">
-          <div class="pass-header">
-            <div class="pass-title">
-              <span class="badge badge-gold">TrackTales Railway Pass</span>
-              <h4 id="pass-train-title" style="margin-top: 0.4rem;">The Blue Train</h4>
-            </div>
-            <div style="font-size: 2rem;">🇿🇦</div>
-          </div>
+        <!-- Accessible Screen Reader Announcer -->
+        <div id="boarding-pass-announcer" class="sr-only" aria-live="polite"></div>
 
-          <div class="pass-body">
-            <div class="pass-grid">
-              <div class="pass-field">
-                <span class="label">PASSENGER NAME</span>
-                <span class="value" id="pass-name">Sipho Ndlovu</span>
+        <!-- Rendered Boarding Pass Display (3D Flippable Ticket) -->
+        <div class="ticket-flip-container" id="boarding-pass-container">
+          <div class="ticket-flip-inner" id="boarding-pass-inner" tabindex="0" role="button" aria-label="Souvenir boarding pass ticket. Press Space or Enter to flip card.">
+            
+            <!-- FRONT SIDE -->
+            <div class="boarding-pass pass-front">
+              <!-- Shimmer Loading Overlay -->
+              <div class="skeleton-overlay" id="skeleton-overlay">
+                <div class="skeleton-line skeleton-header-shimmer"></div>
+                <div class="skeleton-grid-shimmer">
+                  <div class="skeleton-line"></div>
+                  <div class="skeleton-line"></div>
+                  <div class="skeleton-line"></div>
+                  <div class="skeleton-line"></div>
+                  <div class="skeleton-line"></div>
+                  <div class="skeleton-line"></div>
+                </div>
+                <div class="skeleton-line skeleton-footer-shimmer"></div>
               </div>
-              <div class="pass-field">
-                <span class="label">TICKET ID</span>
-                <span class="value" id="pass-id" style="color: var(--accent-gold);">TT-89A4B2C</span>
+
+              <div class="pass-header">
+                <div class="pass-title">
+                  <span class="badge badge-gold">TrackTales Railway Pass</span>
+                  <h4 id="pass-train-title" style="margin-top: 0.4rem;">The Blue Train</h4>
+                </div>
+                <div class="pass-airline-logo" style="color: var(--accent-gold); font-size: 1.5rem; display: flex; align-items: center;"><i data-lucide="globe"></i></div>
               </div>
-              <div class="pass-field">
-                <span class="label">ROUTE</span>
-                <span class="value">Pretoria ➔ Cape Town</span>
-              </div>
-              <div class="pass-field">
-                <span class="label">CABIN SELECTION</span>
-                <span class="value" id="pass-cabin">Luxury Grand Suite</span>
-              </div>
-              <div class="pass-field">
-                <span class="label">DEPARTURE DATE</span>
-                <span class="value" id="pass-date">15 SEPT 2026</span>
-              </div>
-              <div class="pass-field">
-                <span class="label">CARRIAGE / SEAT</span>
-                <span class="value" id="pass-seat">CAR-03 / SEAT 14A</span>
+
+              <div class="pass-body">
+                <div class="pass-grid">
+                  <div class="pass-field">
+                    <span class="label">PASSENGER NAME</span>
+                    <span class="value" id="pass-name">Sipho Ndlovu</span>
+                  </div>
+                  <div class="pass-field">
+                    <span class="label">TICKET ID</span>
+                    <span class="value" id="pass-id" style="color: var(--accent-gold);">TT-89A4B2C</span>
+                  </div>
+                  <div class="pass-field">
+                    <span class="label">ROUTE</span>
+                    <span class="value">Pretoria ➔ Cape Town</span>
+                  </div>
+                  <div class="pass-field">
+                    <span class="label">CABIN SELECTION</span>
+                    <span class="value" id="pass-cabin">Luxury Grand Suite</span>
+                  </div>
+                  <div class="pass-field">
+                    <span class="label">DEPARTURE DATE</span>
+                    <span class="value" id="pass-date">15 SEPT 2026</span>
+                  </div>
+                  <div class="pass-field">
+                    <span class="label">CARRIAGE / SEAT</span>
+                    <span class="value" id="pass-seat">CAR-03 / SEAT 14A</span>
+                  </div>
+                </div>
+
+                <div class="pass-barcode-area">
+                  <div>
+                    <span class="label">BOARDING STATUS</span>
+                    <span style="color: var(--green-mint); font-weight: 700; font-size: 0.9rem;">CONFIRMED & READY</span>
+                  </div>
+                  <div class="fake-barcode" id="pass-barcode">||| | |||| | |||</div>
+                </div>
+                
+                <div class="pass-flip-hint">
+                  <i data-lucide="refresh-cw"></i> <span>Click or Press Space to flip & view scannable QR / Seat Map</span>
+                </div>
               </div>
             </div>
 
-            <div class="pass-barcode-area">
-              <div>
-                <span class="label">BOARDING STATUS</span>
-                <span style="color: var(--green-mint); font-weight: 700; font-size: 0.9rem;">CONFIRMED & READY</span>
+            <!-- BACK SIDE -->
+            <div class="boarding-pass pass-back">
+              <div class="pass-header">
+                <div class="pass-title">
+                  <span class="badge badge-green">Transit Verification</span>
+                  <h4 style="margin-top: 0.4rem;">Security & Rules</h4>
+                </div>
+                <div class="pass-airline-logo" style="color: var(--green-mint); font-size: 1.5rem; display: flex; align-items: center;"><i data-lucide="shield-check"></i></div>
               </div>
-              <div class="fake-barcode" id="pass-barcode">||| | |||| | |||</div>
+
+              <div class="pass-body back-body">
+                <div class="back-details">
+                  <div class="qr-code-wrapper">
+                    <div class="qr-code-container" id="pass-qr-code">
+                      <!-- Rendered dynamically by qrcode.js -->
+                    </div>
+                    <span class="qr-code-text" id="pass-qr-data">TRACKTALES:TT-89A4B2C:blue-train:Sipho Ndlovu</span>
+                  </div>
+
+                  <div class="boarding-rules-n-seat">
+                    <div class="boarding-rules">
+                      <h5><i data-lucide="info" style="width: 14px; height: 14px; vertical-align: middle; margin-right: 0.2rem; display: inline-block;"></i> TRAVEL REQUIREMENTS</h5>
+                      <ul>
+                        <li>Check-in closes 60 minutes before departure.</li>
+                        <li>Formal dinner dress code required on luxury express lines.</li>
+                        <li>Present this ticket on your device or printed at boarding.</li>
+                      </ul>
+                    </div>
+
+                    <div class="seat-map-visual">
+                      <h5><i data-lucide="armchair" style="width: 14px; height: 14px; vertical-align: middle; margin-right: 0.2rem; display: inline-block;"></i> CARRIAGE SEAT MAP</h5>
+                      <div class="seat-map-grid" id="seat-map-grid">
+                        <!-- Seats 1A to 24A generated dynamically via JS -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pass-flip-hint">
+                  <i data-lucide="refresh-cw"></i> <span>Click or Press Space to flip back</span>
+                </div>
+              </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -377,11 +471,64 @@
   <!-- Story Reader Modal -->
   <div class="modal-overlay" id="story-modal">
     <div class="modal-content">
-      <button class="modal-close" id="modal-close-btn">&times;</button>
+      <button class="modal-close" id="modal-close-btn" aria-label="Close modal"><i data-lucide="x"></i></button>
       <span class="badge badge-gold" id="modal-read-time">4 min read</span>
       <h2 id="modal-title" style="margin: 1rem 0 0.5rem; font-size: 2rem;">Story Title</h2>
       <div style="font-size: 0.88rem; color: var(--green-light); margin-bottom: 1.5rem;" id="modal-author">By TrackTales Archives</div>
       <p id="modal-body" style="font-size: 1.1rem; line-height: 1.8; color: #cbd5e1; white-space: pre-line;"></p>
+    </div>
+  </div>
+
+  <!-- Digital Journey Passport Modal -->
+  <div class="modal-overlay" id="passport-modal">
+    <div class="modal-content passport-modal-content">
+      <button class="modal-close" id="passport-close-btn" aria-label="Close passport"><i data-lucide="x"></i></button>
+      <div class="passport-header">
+        <div style="color: var(--accent-gold); font-size: 2.2rem; margin-bottom: 0.6rem;"><i data-lucide="globe"></i></div>
+        <h2>Mzansi Journey <span class="text-gradient-gold">Passport</span></h2>
+        <p style="margin-top: 0.4rem; font-size: 0.95rem; color: var(--text-muted);">Explore stops, read folklore stories, and play ambient rails soundscape tracks to collect your official journey stamps.</p>
+      </div>
+      
+      <div class="passport-sections">
+        <!-- Stop Stamps Grid -->
+        <div class="passport-sec">
+          <h4 style="display: flex; align-items: center; gap: 0.4rem; font-size: 1.1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.4rem; margin-bottom: 1rem; color: var(--accent-gold);">
+            <i data-lucide="map-pin" style="width: 16px; height: 16px;"></i> Route Stop Stamps
+          </h4>
+          <div class="stamp-grid" id="stamp-grid-stops">
+            <!-- Pretoria, JHB, Kimberley, Matjiesfontein, Worcester, Cape Town stamps dynamically generated -->
+          </div>
+        </div>
+        
+        <!-- Story & Sound Counters Split -->
+        <div class="passport-sec-split">
+          <div class="passport-sec">
+            <h4 style="display: flex; align-items: center; gap: 0.4rem; font-size: 1.1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.4rem; margin-bottom: 1rem; color: var(--green-mint);">
+              <i data-lucide="book-open" style="width: 16px; height: 16px;"></i> Stories Read
+            </h4>
+            <div class="stamp-grid-mini" id="stamp-grid-stories">
+              <!-- Story checkboxes dynamic -->
+            </div>
+          </div>
+          <div class="passport-sec">
+            <h4 style="display: flex; align-items: center; gap: 0.4rem; font-size: 1.1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.4rem; margin-bottom: 1rem; color: var(--blue-light);">
+              <i data-lucide="music" style="width: 16px; height: 16px;"></i> Sounds Played
+            </h4>
+            <div class="stamp-grid-mini" id="stamp-grid-sounds">
+              <!-- Sound checkboxes dynamic -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Golden Ticket Reward Box -->
+      <div class="passport-reward-box" id="passport-reward">
+        <div class="reward-icon-wrap" style="color: var(--accent-gold); font-size: 2rem;"><i data-lucide="award"></i></div>
+        <div style="text-align: left;">
+          <h4 style="color: var(--accent-gold); margin-bottom: 0.2rem;">Golden Journey Reward</h4>
+          <p id="passport-reward-status" style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">Collect stamps at all 6 route stops to unlock a Golden Boarding Ticket frame and completion glow!</p>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -391,7 +538,7 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="#hero" class="logo">
-            <div class="logo-icon">🚂</div>
+            <div class="logo-icon"><i data-lucide="train"></i></div>
             <span>Track<span class="text-gradient-green">Tales</span></span>
           </a>
           <p>Celebrating the history, beauty, and luxury of South Africa's legendary rail lines from Pretoria to Cape Town.</p>

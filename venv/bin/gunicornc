@@ -1,4 +1,4 @@
-#!/home/mlambya/Desktop/TrackTales/venv/bin/python3
+#!/home/wethinkcode/Documents/TrackTales/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
