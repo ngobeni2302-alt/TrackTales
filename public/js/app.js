@@ -190,7 +190,6 @@
     setupGamesEngine();
     setupRouteMapControls();
     setupAttractionFilters();
-    setupSoundEngine();
     setupTicketForm();
     setupTicketFlip();
     setupThemeToggle();
@@ -448,243 +447,6 @@
         </div>
       </div>
     `).join('');
-  }
-
-  // --- Web Audio API Rail Sound Engine ---
-  function setupSoundEngine() {
-    const playBtn = document.getElementById('audio-play-toggle');
-    const nowPlayingLabel = document.getElementById('sound-now-playing');
-    const presetBtns = document.querySelectorAll('.track-btn');
-    const heroBtnSound = document.getElementById('hero-btn-sound');
-
-    let audioCtx = null;
-    let isPlaying = false;
-    let currentPreset = 'chug';
-    let oscillator = null;
-    let gainNode = null;
-    let intervalId = null;
-
-    let analyserNode = null;
-    const canvas = document.getElementById('sound-visualizer');
-    const canvasCtx = canvas ? canvas.getContext('2d') : null;
-    let drawVisualId = null;
-
-    // Render static silent line initially
-    if (canvas && canvasCtx) {
-      setTimeout(drawInitialFlatline, 100);
-      window.addEventListener('resize', drawInitialFlatline);
-    }
-
-    function drawInitialFlatline() {
-      if (!canvas || !canvasCtx) return;
-      const width = canvas.width = canvas.offsetWidth;
-      const height = canvas.height = canvas.offsetHeight;
-      canvasCtx.fillStyle = '#0f1c30';
-      canvasCtx.fillRect(0, 0, width, height);
-      canvasCtx.lineWidth = 2;
-      canvasCtx.strokeStyle = 'rgba(0, 168, 255, 0.4)';
-      canvasCtx.beginPath();
-      canvasCtx.moveTo(0, height / 2);
-      canvasCtx.lineTo(width, height / 2);
-      canvasCtx.stroke();
-    }
-
-    function drawVisualizer() {
-      if (!canvas || !canvasCtx) return;
-      const bufferLength = analyserNode.frequencyBinCount;
-      const dataArray = new Uint8Array(bufferLength);
-      
-      const width = canvas.width = canvas.offsetWidth;
-      const height = canvas.height = canvas.offsetHeight;
-
-      function draw() {
-        if (!isPlaying) {
-          drawInitialFlatline();
-          drawVisualId = requestAnimationFrame(draw);
-          return;
-        }
-
-        drawVisualId = requestAnimationFrame(draw);
-        analyserNode.getByteTimeDomainData(dataArray);
-
-        canvasCtx.fillStyle = '#0f1c30';
-        canvasCtx.fillRect(0, 0, width, height);
-
-        canvasCtx.lineWidth = 3;
-        const gradient = canvasCtx.createLinearGradient(0, 0, width, 0);
-        gradient.addColorStop(0, '#00a8ff');
-        gradient.addColorStop(0.5, '#10b981');
-        gradient.addColorStop(1, '#00a8ff');
-        canvasCtx.strokeStyle = gradient;
-
-        canvasCtx.beginPath();
-        const sliceWidth = width * 1.0 / bufferLength;
-        let x = 0;
-
-        for (let i = 0; i < bufferLength; i++) {
-          const v = dataArray[i] / 128.0;
-          const y = v * height / 2;
-
-          if (i === 0) {
-            canvasCtx.moveTo(x, y);
-          } else {
-            canvasCtx.lineTo(x, y);
-          }
-          x += sliceWidth;
-        }
-
-        canvasCtx.lineTo(width, height / 2);
-        canvasCtx.stroke();
-      }
-
-      draw();
-    }
-
-    function initAudio() {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        analyserNode = audioCtx.createAnalyser();
-        analyserNode.fftSize = 256;
-        analyserNode.connect(audioCtx.destination);
-        if (canvas && canvasCtx) {
-          drawVisualizer();
-        }
-      }
-    }
-
-    function playSound() {
-      initAudio();
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
-
-      isPlaying = true;
-      playBtn.innerHTML = '<i data-lucide="pause"></i>';
-      if (window.lucide) lucide.createIcons();
-      nowPlayingLabel.textContent = `Status: Playing (${currentPreset.toUpperCase()})`;
-
-      if (currentPreset === 'chug') {
-        playChugEffect();
-      } else if (currentPreset === 'whistle') {
-        playWhistleEffect();
-      } else if (currentPreset === 'wind') {
-        playWindEffect();
-      } else {
-        playLoungeEffect();
-      }
-
-      collectStamp('sounds', currentPreset);
-    }
-
-    function stopSound() {
-      isPlaying = false;
-      playBtn.innerHTML = '<i data-lucide="play"></i>';
-      if (window.lucide) lucide.createIcons();
-      nowPlayingLabel.textContent = 'Status: Muted';
-      if (intervalId) clearInterval(intervalId);
-      if (gainNode) gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-    }
-
-    playBtn.addEventListener('click', () => {
-      if (isPlaying) stopSound();
-      else playSound();
-    });
-
-    if (heroBtnSound) {
-      heroBtnSound.addEventListener('click', () => {
-        document.getElementById('soundscape').scrollIntoView({ behavior: 'smooth' });
-        if (!isPlaying) playSound();
-      });
-    }
-
-    presetBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        presetBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentPreset = btn.getAttribute('data-sound');
-
-        if (isPlaying) {
-          stopSound();
-          playSound();
-        }
-      });
-    });
-
-    // Synthesized sound effects using Web Audio API
-    function playChugEffect() {
-      if (intervalId) clearInterval(intervalId);
-      let count = 0;
-      intervalId = setInterval(() => {
-        if (!isPlaying) return;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(count % 2 === 0 ? 90 : 60, audioCtx.currentTime);
-        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
-        osc.connect(gain);
-        gain.connect(analyserNode || audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.12);
-        count++;
-      }, 250);
-    }
-
-    function playWhistleEffect() {
-      if (intervalId) clearInterval(intervalId);
-      const osc1 = audioCtx.createOscillator();
-      const osc2 = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-
-      osc1.frequency.setValueAtTime(520, audioCtx.currentTime);
-      osc2.frequency.setValueAtTime(650, audioCtx.currentTime);
-
-      gain.gain.setValueAtTime(0.01, audioCtx.currentTime);
-      gain.gain.linearRampToValueAtTime(0.2, audioCtx.currentTime + 0.3);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 2.5);
-
-      osc1.connect(gain);
-      osc2.connect(gain);
-      gain.connect(analyserNode || audioCtx.destination);
-
-      osc1.start();
-      osc2.start();
-      osc1.stop(audioCtx.currentTime + 2.5);
-      osc2.stop(audioCtx.currentTime + 2.5);
-    }
-
-    function playWindEffect() {
-      if (intervalId) clearInterval(intervalId);
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(140, audioCtx.currentTime);
-      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-      gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 3.0);
-      osc.connect(gain);
-      gain.connect(analyserNode || audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + 3.0);
-    }
-
-    function playLoungeEffect() {
-      if (intervalId) clearInterval(intervalId);
-      const notes = [261.63, 329.63, 392.00, 523.25]; // C major chord notes
-      let idx = 0;
-      intervalId = setInterval(() => {
-        if (!isPlaying) return;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.frequency.setValueAtTime(notes[idx % notes.length], audioCtx.currentTime);
-        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.6);
-        osc.connect(gain);
-        gain.connect(analyserNode || audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.6);
-        idx++;
-      }, 500);
-    }
   }
 
   // --- Ticket Generator Form Logic ---
@@ -1411,7 +1173,7 @@
     function renderPuzzleTabs() {
       puzzleTabsContainer.innerHTML = SIGHT_PUZZLES.map((puzzle, idx) => `
         <button class="puzzle-tab-btn ${idx === currentPuzzleIdx ? 'active' : ''} ${solvedPuzzles.has(puzzle.id) ? 'solved' : ''}" data-puzzle-idx="${idx}">
-          ${solvedPuzzles.has(puzzle.id) ? '✓ ' : ''}Sight ${idx + 1}
+          ${solvedPuzzles.has(puzzle.id) ? '[Solved] ' : ''}Sight ${idx + 1}
         </button>
       `).join('');
 
@@ -1443,7 +1205,7 @@
         if (overlay) {
           overlay.style.opacity = '1';
           overlay.classList.add('solved');
-          overlay.innerHTML = `<span>✓ Sight Solved!</span>`;
+          overlay.innerHTML = `<span>Sight Solved!</span>`;
         }
       } else {
         if (overlay) {
@@ -1474,7 +1236,7 @@
             if (overlay) {
               overlay.style.opacity = '1';
               overlay.classList.add('solved');
-              overlay.innerHTML = `<span>✓ Sight Solved!</span>`;
+              overlay.innerHTML = `<span>Sight Solved!</span>`;
             }
 
             // Trigger DID YOU KNOW? Pop-Up Modal

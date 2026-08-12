@@ -2092,13 +2092,165 @@ p {
   color: #0284c7 !important;
 }
 
-/* 60% White, 30% Light Blue (Sky Blue), 10% Baby Blue Refinements */
+/* ==========================================================================
+   Comprehensive Dual Theme Engine (Dark & Light Mode High Contrast Visibility)
+   ========================================================================== */
+
+/* DARK THEME DEFINITIONS (Default or data-theme="dark") */
+[data-theme="dark"], :root:not([data-theme="light"]) {
+  --bg-gradient: linear-gradient(180deg, #0b1329 0%, #0f172a 50%, #070d19 100%);
+  --card-bg: #1e293b;
+  --card-bg-hover: #334155;
+  --blue-dark: #0f172a;
+  --glass-border: rgba(56, 189, 248, 0.2);
+  --glass-border-highlight: rgba(56, 189, 248, 0.5);
+  --pearl-white: #f8fafc;
+  --pure-white: #ffffff;
+  --text-muted: #94a3b8;
+  --accent-gold: #38bdf8;
+}
+
+[data-theme="dark"] body {
+  background: #0b1329;
+  color: #f8fafc;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6 {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] li {
+  color: #e2e8f0;
+}
+
+[data-theme="dark"] .text-muted,
+[data-theme="dark"] small {
+  color: #94a3b8 !important;
+}
+
+[data-theme="dark"] label {
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .form-control {
+  background: #0f172a !important;
+  color: #ffffff !important;
+  border-color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .form-control::placeholder {
+  color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .form-control option {
+  background: #0f172a !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .navbar {
+  background: rgba(11, 19, 41, 0.95) !important;
+  border-bottom: 1px solid #1e293b;
+}
+
+[data-theme="dark"] .nav-links a {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .nav-links a:hover,
+[data-theme="dark"] .nav-links a.active {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .about-card {
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .hero-card-preview {
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .flagship-card {
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .game-dashboard {
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .stop-detail-card {
+  background: #0f172a !important;
+  border: 1px solid #38bdf8 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .ticket-form-card {
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .modal-content {
+  background: #0f172a !important;
+  color: #ffffff !important;
+  border: 1px solid #38bdf8 !important;
+}
+
+[data-theme="dark"] .modal-close {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .dyk-modal-content {
+  background: #0f172a !important;
+  border: 2px solid #38bdf8 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .dyk-fact-box {
+  background: rgba(56, 189, 248, 0.1) !important;
+  border-left-color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .dyk-fact-text {
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .text-gradient-blue {
+  background: linear-gradient(135deg, #ffffff 0%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-theme="dark"] .text-gradient-green {
+  background: linear-gradient(135deg, #ffffff 0%, #34d399 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-theme="dark"] .text-gradient-gold {
+  background: linear-gradient(135deg, #7dd3fc 0%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* LIGHT THEME DEFINITIONS (data-theme="light") */
 [data-theme="light"] {
   --bg-gradient: linear-gradient(180deg, #ffffff 0%, #f0f9ff 50%, #e0f2fe 100%);
   --card-bg: #ffffff;
   --card-bg-hover: #f0f9ff;
   --blue-dark: #0f172a;
-  --glass-border: rgba(2, 132, 199, 0.15);
+  --glass-border: rgba(2, 132, 199, 0.18);
   --glass-border-highlight: rgba(56, 189, 248, 0.5);
   --pearl-white: #1e293b;
   --pure-white: #0f172a;
@@ -2111,10 +2263,62 @@ p {
   color: #0f172a;
 }
 
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] h4,
+[data-theme="light"] h5,
+[data-theme="light"] h6 {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] p,
+[data-theme="light"] span,
+[data-theme="light"] li {
+  color: #1e293b;
+}
+
+[data-theme="light"] .text-muted,
+[data-theme="light"] small {
+  color: #475569 !important;
+}
+
+[data-theme="light"] label {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .form-control {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #0284c7 !important;
+}
+
+[data-theme="light"] .form-control::placeholder {
+  color: #64748b !important;
+}
+
+[data-theme="light"] .form-control option {
+  background: #ffffff !important;
+  color: #0f172a !important;
+}
+
 [data-theme="light"] .navbar {
   background: rgba(224, 242, 254, 0.95) !important;
   border-bottom: 1px solid #bae6fd;
-  box-shadow: 0 4px 15px rgba(2, 132, 199, 0.06);
+  box-shadow: 0 4px 15px rgba(2, 132, 199, 0.08);
+}
+
+[data-theme="light"] .logo {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .nav-links a {
+  color: #334155 !important;
+}
+
+[data-theme="light"] .nav-links a:hover,
+[data-theme="light"] .nav-links a.active {
+  color: #0284c7 !important;
 }
 
 [data-theme="light"] .section-bordered {
@@ -2124,17 +2328,85 @@ p {
 }
 
 [data-theme="light"] .about-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: var(--radius-md);
-  padding: 2rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+  background: #ffffff !important;
+  border: 1px solid #bae6fd !important;
+  color: #0f172a !important;
+  box-shadow: 0 4px 20px rgba(2, 132, 199, 0.06);
 }
 
 [data-theme="light"] .hero-card-preview {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  background: #ffffff !important;
+  border: 1px solid #bae6fd !important;
+  color: #0f172a !important;
+  box-shadow: 0 20px 40px rgba(2, 132, 199, 0.1);
+}
+
+[data-theme="light"] .flagship-card {
+  background: #ffffff !important;
+  border: 1px solid #bae6fd !important;
+}
+
+[data-theme="light"] .flagship-desc {
+  color: #334155 !important;
+}
+
+[data-theme="light"] .game-dashboard {
+  background: #ffffff !important;
+  border: 1px solid #bae6fd !important;
+}
+
+[data-theme="light"] .stop-detail-card {
+  background: #f0f9ff !important;
+  border: 1px solid #bae6fd !important;
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .ticket-form-card {
+  background: #ffffff !important;
+  border: 1px solid #bae6fd !important;
+}
+
+[data-theme="light"] .modal-content {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid #bae6fd !important;
+}
+
+[data-theme="light"] .modal-close {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .dyk-modal-content {
+  background: #ffffff !important;
+  border: 2px solid #0284c7 !important;
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .dyk-fact-box {
+  background: #f0f9ff !important;
+  border-left: 4px solid #0284c7 !important;
+}
+
+[data-theme="light"] .dyk-fact-text {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .text-gradient-blue {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-theme="light"] .text-gradient-green {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-theme="light"] .text-gradient-gold {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Animated Train Loading Splash Screen */
