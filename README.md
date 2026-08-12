@@ -1,39 +1,49 @@
-# 🚂 TrackTales - South Africa Railway Journeys & Stories
+# 🚂 TrackTales - South Africa Railway Journeys, Tourism & Interactive Stories
 
-**TrackTales** is a modern, visually stunning web application celebrating South Africa’s legendary rail lines traveling from **Pretoria to Cape Town**:
-1. **The Blue Train** – The five-star luxury express ("Window to the Soul of South Africa").
+**TrackTales** is a modern, inclusive, and visually stunning web application celebrating South Africa’s legendary rail transportation history and scenic tourism corridors from **Pretoria to Cape Town**:
+1. **The Blue Train** – The five-star ultra luxury express ("Window to the Soul of South Africa").
 2. **Rovos Rail** – The world's most opulent vintage Edwardian train safari.
-3. **Shosholoza Meyl** – The passionate, authentic passenger train connecting communities across Mzansi.
+3. **Shosholoza Meyl** – The passionate, authentic passenger express connecting communities across Mzansi.
 
-Built with a curated **Blue, Green, and White** color theme, **FastAPI** backend, and seamless **Vercel** serverless readiness.
-
----
-
-## 🎨 Color Palette & Design System
-
-The application design is built around three core primary tones representing South Africa's natural beauty and rail heritage:
-- **Blue (`#005691`, `#0b192c`)**: Represents the iconic royal blue carriages of The Blue Train, coastal ocean views of Cape Town, and deep twilight skies of the Karoo.
-- **Green (`#0e382c`, `#10b981`)**: Represents the lush Highveld, emerald Jacaranda leaves of Pretoria, winelands of the Hex River Valley, and safari wilderness.
-- **White (`#ffffff`, `#f8fafc`)**: Crisp, modern typography, glassmorphic cards, and clean UI contrast.
-- **Gold (`#d4af37`)**: Luxury accents for five-star suites, heritage badges, and souvenir boarding passes.
+Built with a **FastAPI** Python backend, **Vanilla JavaScript & CSS**, a **White-Dominant WCAG AAA Accessible Design System**, and seamless **Vercel** serverless readiness.
 
 ---
 
-## ✨ Features & Highlights
+## 🎨 60-30-10 Color Coordination & Accessibility Design System
 
-- **🗺️ Interactive Pretoria to Cape Town Route Map**:
-  - Live timeline node graph tracking the **1,600 km corridor**.
-  - Train line filter (The Blue Train, Rovos Rail, Shosholoza Meyl) highlighting specific stopovers.
-  - Interactive stop inspector displaying station history, calling trains, distance, and **regional food & wine pairings** (e.g. Karoo Lamb in Matjiesfontein, Pinotage in Winelands).
-- **🏛️ Stop Attractions Directory**:
-  - Detailed attraction cards around every major stop (**Pretoria, Johannesburg, Kimberley, Matjiesfontein, Worcester, Cape Town**).
-  - Highlights landmarks like Kimberley’s **Big Hole Mine Museum**, Union Buildings, Lord Milner Hotel, Table Mountain, and Constitution Hill.
-- **🔊 Railway Soundscape Synthesizer ("Sounds of Mzansi Rails")**:
-  - Built-in Web Audio API sound engine synthesizing real-time steam whistles, rhythmic Karoo track chugs, night desert wind, and Blue Train lounge jazz.
-- **🎫 Souvenir Digital Boarding Pass Generator**:
-  - Customize and generate printable/downloadable souvenir tickets with passenger name, train choice, cabin suite, date, carriage, seat number, and barcode.
-- **📖 Rail Folklore & Heritage Reader**:
-  - Modal viewer featuring historical stories of how gold, diamonds, and visionaries forged South Africa’s rail network.
+The application interface is built using a strict **60-30-10 color balance rule** designed for visual elegance, accessibility, young and elderly users, and individuals with color perception needs or sensitive eyes:
+- **60% Dominant (Pure White `#ffffff` & `#f8fafc`)**: Dominant canvas, section backgrounds, and card containers providing clean contrast and WCAG AAA readability.
+- **30% Secondary (Light Blue / Sky Blue `#38bdf8`, `#e0f2fe`, `#0284c7`)**: Secondary structural elements, navigation bar tinting, station cards, headers, section borders, and route map track connectors.
+- **10% Accent (Baby Blue `#bae6fd`, `#7dd3fc`, `#a5f3fc`)**: Interactive action buttons, active navigation indicators, game score badges, micro-animations, and high-visibility focus rings (`:focus-visible`).
+- **Light & Dark Mode Support**: Includes persistent theme toggle for low-light environments.
+
+---
+
+## ✨ Key Pages & Features
+
+### 1. 🏠 Home Page (About TrackTales, SA Tourism & Rail History)
+- **TrackTales Mission**: Explains the platform's vision connecting heritage rail history with modern digital travel.
+- **South Africa Tourism & Rail Transportation**: History of how the 1870s diamond rush in Kimberley and gold rush in Johannesburg established Mzansi's rail network.
+- **Interactive Pretoria to Cape Town Route Map**: Live node graph tracking the **1,600 km corridor** across 6 major station stops (**Pretoria, Johannesburg, Kimberley, Matjiesfontein, Worcester, Cape Town**).
+- **Railway Soundscape Synthesizer ("Sounds of Mzansi Rails")**: Built-in Web Audio API sound engine synthesizing steam whistles, Karoo track chugs, night wind, and lounge jazz.
+- **Souvenir Digital Boarding Pass Generator**: Generate, print, or download personalized souvenir tickets with scannable QR code and 3D flippable seat allocation map.
+
+### 2. 🚂 Flagship Trains Page (Advertising Luxury Trains)
+- **Dedicated Showcase**: Displays in-depth luxury advertisements for South Africa's 2 flagship trains: **The Blue Train** (Ultra Luxury Express) and **Rovos Rail** (Vintage Edwardian Safari).
+- **Luxury Specs & Highlights**: Speed, travel duration, 24/7 butler service, open balcony observation car, and fine dining details.
+- **Reserved Backend Integration Space**: Clear, structured containers reserved for the backend team to dynamically stream live trail feeds, stop schedules, and cabin availability.
+
+### 3. 🏛️ Attractions Directory Page
+- Curated landmark directory showcasing South Africa's sights along the rail line (e.g. Kimberley Big Hole, Union Buildings, Lord Milner Hotel, Table Mountain, Hex River Valley Winelands).
+- Interactive city filter buttons (Pretoria, Johannesburg, Kimberley, Matjiesfontein, Worcester, Cape Town) and 3D flippable attraction cards.
+
+### 4. 🎮 Interactive Games Page (Mzansi Sight Solver & "Did You Know?" Pop-ups)
+- **Interactive Sight Puzzles**: Solve trivia and landmark puzzles about South African rail stops (+100 PTS score tracker & progress bar).
+- **"Did You Know?" Pop-Up Modal**: Correctly solving a sight puzzle triggers an educational pop-up revealing fascinating South African tourism, geography, and rail folklore facts.
+
+### 5. 🚂 Animated Train Loading Splash & Login Modal
+- **Animated Loading Train Splash**: On initial application load, an animated steam train glides across glowing tracks with chugging smoke clouds and a progress bar (`#train-loading-splash`).
+- **Animated Train Login Modal**: Interactive passenger portal login form with demo autofill, animated train header, and authentication confirmation.
 
 ---
 
@@ -51,9 +61,9 @@ Simply run:
 
 ---
 
-### Option 1: FastAPI Python Backend Manual Launch
+### Option 1: FastAPI Python Backend Launch
 
-A Python virtual environment (`venv`) with all required packages (`fastapi`, `uvicorn`, `pydantic`) has already been set up for you in the project directory!
+A Python virtual environment (`venv`) with all required packages (`fastapi`, `uvicorn`, `pydantic`) is pre-installed in the project directory:
 
 #### Method A (Using the pre-installed Virtual Environment):
 ```bash
@@ -65,64 +75,44 @@ source venv/bin/activate
 python3 main.py
 ```
 
-#### Method B (Setting up a new environment or global install):
-If creating a fresh virtual environment:
-```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-python3 main.py
-```
-
-*Or installing packages directly with system pip:*
+#### Method B (Using system pip):
 ```bash
 pip3 install -r requirements.txt --break-system-packages
 python3 main.py
 ```
 
 #### Accessing the App:
-- Open your web browser and navigate to: **`http://localhost:8000`**
+- Web Application: **`http://localhost:8000`**
 - Interactive API Documentation (Swagger UI): **`http://localhost:8000/docs`**
 
 ---
 
 ### Option 2: Node.js / JavaScript Server
 
-If you prefer Node.js / JavaScript tooling:
-
-1. **Start Local Static Server**:
-   ```bash
-   npm run dev:node
-   ```
-   *or using npx:*
-   ```bash
-   npx serve public -p 8000
-   ```
-
-2. **Access the App**:
-   Open **`http://localhost:8000`** in your browser.
+```bash
+npm run dev:node
+```
+*or using npx:*
+```bash
+npx serve public -p 8000
+```
 
 ---
 
-### Option 3: Direct Browser Launch (Offline Mode)
+### Option 3: Direct Browser Launch (Offline Fallback Mode)
 
-TrackTales includes built-in offline client fallback data. You can simply double-click or open **`public/index.html`** directly in any modern web browser without running any terminal server!
+TrackTales includes client-side fallback data. Double-click or open **`public/index.html`** directly in any modern browser without running a terminal server!
 
 ---
 
 ## ⚡ Deployment to Vercel
 
-TrackTales is pre-configured for 1-click deployment on **Vercel**:
+TrackTales is pre-configured for serverless deployment on **Vercel**:
 
-1. **Vercel CLI**:
-   ```bash
-   npm install -g vercel
-   vercel
-   ```
-2. **Git Integration**:
-   - Push this repository to GitHub / GitLab.
-   - Import the repository in [Vercel Dashboard](https://vercel.com).
-   - Vercel will automatically detect `vercel.json` and deploy both the Python serverless API (`api/index.py`) and static frontend files (`public/`).
+```bash
+vercel
+```
+Or connect this repository to the [Vercel Dashboard](https://vercel.com). Vercel will automatically detect `vercel.json` and deploy both the Python serverless API (`api/index.py`) and static frontend files (`public/`).
 
 ---
 
@@ -130,32 +120,32 @@ TrackTales is pre-configured for 1-click deployment on **Vercel**:
 
 ```
 TrackTales/
-├── main.py              # FastAPI server entry point & REST endpoints
+├── main.py              # FastAPI server entry point & REST endpoints (/api/trains, /api/routes, etc.)
 ├── api/
-│   └── index.py         # Vercel Python serverless handler
+│   └── index.py         # Vercel Python serverless entry point
 ├── public/
-│   ├── index.html       # Single-page HTML application layout
+│   ├── index.html       # Multi-page layout (Home, Flagship Trains, Attractions, Games)
 │   ├── css/
-│   │   └── styles.css   # Custom CSS design system (Blue, Green, White)
+│   │   └── styles.css   # WCAG AAA Light/Dark design system & CSS keyframe animations
 │   └── js/
-│       └── app.js       # Client app logic, route map, audio engine & ticket generator
+│       └── app.js       # Page router, train loader splash, games engine, login modal & soundscape
 ├── requirements.txt     # Python backend dependencies
-├── venv/                # Python virtual environment (pre-configured)
-├── vercel.json          # Vercel deployment routes and build config
-├── package.json         # NPM scripts and metadata
-└── README.md            # Project documentation and guide
+├── start.sh             # 1-Click launcher script
+├── vercel.json          # Vercel deployment routing config
+├── package.json         # NPM scripts and project metadata
+└── README.md            # Project documentation
 ```
 
 ---
 
-## 🚂 Featured Trains Summary
+## 🚂 Flagship Trains Summary
 
-| Train Line | Category | Speed / Duration | Key Route Stops | Signature Highlight |
+| Train Line | Category | Speed / Duration | Key Route Stops | Signature Luxury Highlight |
 | :--- | :--- | :--- | :--- | :--- |
 | **The Blue Train** | Ultra Luxury Express | 90 km/h (31 Hours) | Pretoria ➔ Kimberley ➔ Cape Town | 24/7 Butler Service & Marble En-suite Baths |
-| **Rovos Rail** | Vintage Edwardian Safari | 60 km/h (48 Hours) | Pretoria ➔ Matjiesfontein ➔ Cape Town | Open Balcony Observation Car & Gala Dinners |
-| **Shosholoza Meyl** | Passenger & Tourist Rail | 80 km/h (26 Hours) | Pretoria ➔ Jo'burg ➔ Kimberley ➔ Cape Town | Authentic Mzansi Hospitality & Sleeper Berths |
+| **Rovos Rail** | Vintage Edwardian Safari | 60 km/h (48 Hours) | Pretoria ➔ Matjiesfontein ➔ Cape Town | Open Balcony Observation Terrace & Gala Dinners |
+| **Shosholoza Meyl** | Passenger & Tourist Express | 80 km/h (26 Hours) | Pretoria ➔ Jo'burg ➔ Kimberley ➔ Cape Town | Authentic Mzansi Hospitality & Sleeper Compartments |
 
 ---
 
-*Created with ❤️ for South African railway enthusiasts and travelers.*
+*Built with ❤️ for South African railway history, tourism, and travel enthusiasts.*

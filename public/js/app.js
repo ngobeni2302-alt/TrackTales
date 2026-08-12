@@ -181,9 +181,13 @@
 
   // --- Initialize App ---
   document.addEventListener('DOMContentLoaded', () => {
+    setupLoadingSplash();
     loadPassport();
     fetchApiData();
     setupNavigation();
+    setupPageNavigation();
+    setupLoginModal();
+    setupGamesEngine();
     setupRouteMapControls();
     setupAttractionFilters();
     setupSoundEngine();
@@ -1179,4 +1183,369 @@
     renderPassportUI();
   }
 
+  // --- 1. Animated Train Loading Splash Screen ---
+  function setupLoadingSplash() {
+    const splash = document.getElementById('train-loading-splash');
+    const fill = document.getElementById('splash-progress-fill');
+    if (!splash || !fill) return;
+
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += 15;
+      if (progress > 100) progress = 100;
+      fill.style.width = progress + '%';
+      if (progress >= 100) {
+        clearInterval(interval);
+        setTimeout(() => {
+          splash.classList.add('fade-out');
+          setTimeout(() => {
+            splash.style.display = 'none';
+          }, 500);
+        }, 300);
+      }
+    }, 100);
+  }
+
+  // --- 2. Page Router Navigation ---
+  function setupPageNavigation() {
+    const pageViews = document.querySelectorAll('.page-view');
+    const navLinks = document.querySelectorAll('.nav-page-link');
+
+    function switchPage(pageId) {
+      let targetPage = pageId.replace('#', '');
+      if (!targetPage || !document.getElementById('page-' + targetPage)) {
+        targetPage = 'home';
+      }
+
+      pageViews.forEach(page => {
+        if (page.id === 'page-' + targetPage) {
+          page.classList.add('active');
+        } else {
+          page.classList.remove('active');
+        }
+      });
+
+      navLinks.forEach(link => {
+        const linkPage = link.getAttribute('data-page');
+        if (linkPage === targetPage) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        const target = link.getAttribute('data-page');
+        if (target) {
+          e.preventDefault();
+          switchPage(target);
+          window.location.hash = target;
+        }
+      });
+    });
+
+    if (window.location.hash) {
+      switchPage(window.location.hash);
+    }
+
+    window.addEventListener('hashchange', () => {
+      if (window.location.hash) {
+        switchPage(window.location.hash);
+      }
+    });
+  }
+
+  // --- 3. Animated Train Login Modal ---
+  function setupLoginModal() {
+    const modal = document.getElementById('login-modal');
+    const openBtn = document.getElementById('btn-open-login');
+    const closeBtn = document.getElementById('login-modal-close');
+    const form = document.getElementById('login-form');
+    const demoBtn = document.getElementById('btn-demo-login');
+
+    if (openBtn && modal) {
+      openBtn.addEventListener('click', () => modal.classList.add('active'));
+    }
+    if (closeBtn && modal) {
+      closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('active');
+      });
+    }
+
+    if (demoBtn) {
+      demoBtn.addEventListener('click', () => {
+        const emailInput = document.getElementById('login-email');
+        const ticketInput = document.getElementById('login-ticket-id');
+        const passInput = document.getElementById('login-password');
+        if (emailInput) emailInput.value = 'sipho.ndlovu@tracktales.co.za';
+        if (ticketInput) ticketInput.value = 'TT-89A4B2C';
+        if (passInput) passInput.value = 'tracktales2026';
+      });
+    }
+
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const label = document.getElementById('login-btn-label');
+        if (label) label.textContent = "Authenticating Passenger...";
+        setTimeout(() => {
+          modal.classList.remove('active');
+          if (label) label.textContent = "Sign In to TrackTales";
+          if (openBtn) openBtn.innerHTML = '<i data-lucide="user-check"></i> <span>Welcome, Sipho!</span>';
+          if (window.lucide) lucide.createIcons();
+          alert("Welcome aboard TrackTales Passenger Portal, Sipho Ndlovu! Ticket reference TT-89A4B2C verified.");
+        }, 800);
+      });
+    }
+  }
+
+  // --- 4. Interactive Sight Solver Puzzles & "Did You Know?" Pop-Up Modal ---
+  const SIGHT_PUZZLES = [
+    {
+      id: "puzzle-1",
+      city: "Kimberley Sight Solver",
+      points: 100,
+      title: "Sight Puzzle 1: The Giant Hand-Dug Excavation",
+      prompt: "Which world-famous diamond mining crater in Kimberley was hand-dug by 50,000 miners between 1871 and 1914?",
+      img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80",
+      options: [
+        "The Big Hole (Kimberley Mine Museum)",
+        "Cullinan Diamond Gorge",
+        "Pilanesberg Volcanic Crater",
+        "Ookiep Copper Pit"
+      ],
+      correctIndex: 0,
+      location: "Kimberley, Northern Cape",
+      fact: "Did you know? The Big Hole in Kimberley produced 2,722 kilograms (14.5 million carats) of diamonds, including the world-famous 83.5-carat 'Star of South Africa'!"
+    },
+    {
+      id: "puzzle-2",
+      city: "Pretoria Sight Solver",
+      points: 100,
+      title: "Sight Puzzle 2: Grand Sandstone Seat of Power",
+      prompt: "Which sandstone architectural masterpiece in Pretoria serves as the official seat of the South African government?",
+      img: "https://images.unsplash.com/photo-1577971132997-c10be9372519?auto=format&fit=crop&w=800&q=80",
+      options: [
+        "Voortrekker Heritage Monument",
+        "The Union Buildings & Mandela Statue",
+        "Freedom Park Sanctuary",
+        "Melrose House Palace"
+      ],
+      correctIndex: 1,
+      location: "Pretoria, Gauteng",
+      fact: "Did you know? Designed by Sir Herbert Baker in 1913, the Union Buildings feature a 9-metre bronze statue of Nelson Mandela with open arms symbolizing national unity!"
+    },
+    {
+      id: "puzzle-3",
+      city: "Matjiesfontein Sight Solver",
+      points: 100,
+      title: "Sight Puzzle 3: Karoo Victorian Rail Oasis",
+      prompt: "Which Victorian rail outpost in the Karoo desert boasts a 19th-century hotel frequented by Cecil Rhodes and Olive Schreiner?",
+      img: "https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=800&q=80",
+      options: [
+        "Lord Milner Hotel (Matjiesfontein)",
+        "Prince Albert Karoo Manor",
+        "Beaufort West Station Lodge",
+        "Touws River Railway Depot"
+      ],
+      correctIndex: 0,
+      location: "Matjiesfontein, Western Cape",
+      fact: "Did you know? Matjiesfontein was the first village in South Africa to have electric streetlamps in 1890 and served as a British military headquarters during the Boer War!"
+    },
+    {
+      id: "puzzle-4",
+      city: "Cape Town Sight Solver",
+      points: 100,
+      title: "Sight Puzzle 4: World Heritage Flat Mountain",
+      prompt: "Which iconic flat-topped mountain overlooking Table Bay and Table Mountain National Park is one of the New 7 Wonders of Nature?",
+      img: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=800&q=80",
+      options: [
+        "Lion's Head Peak",
+        "Devil's Peak Crest",
+        "Table Mountain & Cableway",
+        "Chapman's Peak Cliff"
+      ],
+      correctIndex: 2,
+      location: "Cape Town, Western Cape",
+      fact: "Did you know? Table Mountain is estimated to be 260 million years old—six times older than the Himalayas—and hosts over 2,200 unique plant species!"
+    },
+    {
+      id: "puzzle-5",
+      city: "Worcester Sight Solver",
+      points: 100,
+      title: "Sight Puzzle 5: Valley of Table Grapes",
+      prompt: "Which lush Western Cape valley along the rail line is world-renowned for its table grapes, wine estates, and snow-capped winter peaks?",
+      img: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=80",
+      options: [
+        "Hex River Valley Winelands",
+        "Franschhoek Pass",
+        "Breedekloof Valley",
+        "Paarl Rock Corridor"
+      ],
+      correctIndex: 0,
+      location: "Worcester, Western Cape",
+      fact: "Did you know? The Hex River Valley produces over 70% of South Africa's export table grapes and is famous for the local folklore legend of the Hex River Witch!"
+    }
+  ];
+
+  let gameScore = 0;
+  let currentPuzzleIdx = 0;
+  const solvedPuzzles = new Set();
+
+  function setupGamesEngine() {
+    const puzzleTabsContainer = document.getElementById('game-puzzle-buttons');
+    const optionsContainer = document.getElementById('game-options-grid');
+    const dykModal = document.getElementById('did-you-know-modal');
+    const dykClose = document.getElementById('dyk-modal-close');
+    const dykNextBtn = document.getElementById('dyk-btn-next-puzzle');
+    const resetBtn = document.getElementById('btn-reset-game');
+
+    if (!puzzleTabsContainer || !optionsContainer) return;
+
+    // Render puzzle selection tabs
+    function renderPuzzleTabs() {
+      puzzleTabsContainer.innerHTML = SIGHT_PUZZLES.map((puzzle, idx) => `
+        <button class="puzzle-tab-btn ${idx === currentPuzzleIdx ? 'active' : ''} ${solvedPuzzles.has(puzzle.id) ? 'solved' : ''}" data-puzzle-idx="${idx}">
+          ${solvedPuzzles.has(puzzle.id) ? '✓ ' : ''}Sight ${idx + 1}
+        </button>
+      `).join('');
+
+      puzzleTabsContainer.querySelectorAll('.puzzle-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          currentPuzzleIdx = parseInt(btn.getAttribute('data-puzzle-idx'), 10);
+          renderActivePuzzle();
+          renderPuzzleTabs();
+        });
+      });
+    }
+
+    // Render active puzzle sight card
+    function renderActivePuzzle() {
+      const puzzle = SIGHT_PUZZLES[currentPuzzleIdx];
+      if (!puzzle) return;
+
+      document.getElementById('game-sight-city').textContent = puzzle.city;
+      document.getElementById('game-sight-pts').textContent = `+${puzzle.points} PTS`;
+      document.getElementById('game-sight-img').src = puzzle.img;
+      document.getElementById('game-question-title').textContent = puzzle.title;
+      document.getElementById('game-question-prompt').textContent = puzzle.prompt;
+
+      const overlay = document.getElementById('game-sight-status-overlay');
+      const feedbackMsg = document.getElementById('game-feedback-msg');
+      if (feedbackMsg) feedbackMsg.textContent = '';
+
+      if (solvedPuzzles.has(puzzle.id)) {
+        if (overlay) {
+          overlay.style.opacity = '1';
+          overlay.classList.add('solved');
+          overlay.innerHTML = `<span>✓ Sight Solved!</span>`;
+        }
+      } else {
+        if (overlay) {
+          overlay.style.opacity = '0';
+          overlay.classList.remove('solved');
+        }
+      }
+
+      optionsContainer.innerHTML = puzzle.options.map((opt, optIdx) => `
+        <button class="game-opt-btn" data-opt-idx="${optIdx}" ${solvedPuzzles.has(puzzle.id) ? 'disabled' : ''}>
+          <span>${opt}</span>
+          <i data-lucide="chevron-right"></i>
+        </button>
+      `).join('');
+
+      if (window.lucide) lucide.createIcons();
+
+      optionsContainer.querySelectorAll('.game-opt-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const chosenIdx = parseInt(btn.getAttribute('data-opt-idx'), 10);
+          if (chosenIdx === puzzle.correctIndex) {
+            btn.classList.add('correct');
+            solvedPuzzles.add(puzzle.id);
+            gameScore += puzzle.points;
+            updateScoreUI();
+            renderPuzzleTabs();
+
+            if (overlay) {
+              overlay.style.opacity = '1';
+              overlay.classList.add('solved');
+              overlay.innerHTML = `<span>✓ Sight Solved!</span>`;
+            }
+
+            // Trigger DID YOU KNOW? Pop-Up Modal
+            setTimeout(() => {
+              openDidYouKnowModal(puzzle);
+            }, 500);
+
+          } else {
+            btn.classList.add('wrong');
+            if (feedbackMsg) {
+              feedbackMsg.textContent = "Not quite! Give it another try.";
+              feedbackMsg.style.color = "#ef4444";
+            }
+          }
+        });
+      });
+    }
+
+    function updateScoreUI() {
+      const scoreEl = document.getElementById('game-score');
+      const countEl = document.getElementById('game-solved-count');
+      if (scoreEl) scoreEl.textContent = gameScore;
+      if (countEl) countEl.textContent = solvedPuzzles.size;
+    }
+
+    function openDidYouKnowModal(puzzle) {
+      if (!dykModal) return;
+      document.getElementById('dyk-fact-text').textContent = puzzle.fact;
+      const metaInfo = document.getElementById('dyk-meta-info');
+      if (metaInfo) {
+        metaInfo.innerHTML = `
+          <div><i data-lucide="map-pin" style="width: 14px; height: 14px; color: var(--primary-green);"></i> <strong>Location:</strong> ${puzzle.location}</div>
+          <div><i data-lucide="train" style="width: 14px; height: 14px; color: var(--primary-blue);"></i> <strong>Rail Status:</strong> Verified Sight Attraction</div>
+        `;
+      }
+      dykModal.classList.add('active');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    if (dykClose && dykModal) {
+      dykClose.addEventListener('click', () => dykModal.classList.remove('active'));
+      dykModal.addEventListener('click', (e) => {
+        if (e.target === dykModal) dykModal.classList.remove('active');
+      });
+    }
+
+    if (dykNextBtn && dykModal) {
+      dykNextBtn.addEventListener('click', () => {
+        dykModal.classList.remove('active');
+        if (currentPuzzleIdx < SIGHT_PUZZLES.length - 1) {
+          currentPuzzleIdx++;
+          renderActivePuzzle();
+          renderPuzzleTabs();
+        }
+      });
+    }
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        gameScore = 0;
+        solvedPuzzles.clear();
+        currentPuzzleIdx = 0;
+        updateScoreUI();
+        renderPuzzleTabs();
+        renderActivePuzzle();
+      });
+    }
+
+    renderPuzzleTabs();
+    renderActivePuzzle();
+  }
+
 })();
+
