@@ -464,36 +464,39 @@
         </div>
 
         <!-- Deep Dive Tourism & Heritage Box -->
-        <div class="about-card" style="margin-bottom: 3rem; background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%); border: 1px solid #bae6fd;">
-          <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+        <div class="about-card why-rail-card" style="margin-bottom: 3rem;">
+          <div class="why-rail-header">
             <div class="logo-icon"><i data-lucide="train"></i></div>
             <div>
-              <h3 style="margin: 0; color: #0f172a;">Why Travel South Africa By Rail?</h3>
-              <p style="margin: 0; font-size: 0.9rem; color: var(--text-muted);">A timeless journey across 1,600 kilometers of Mzansi heritage</p>
+              <h3>Why Travel South Africa By Rail?</h3>
+              <p class="why-rail-subtitle">A timeless journey across 1,600 kilometers of Mzansi heritage</p>
             </div>
           </div>
-          <p style="margin-bottom: 1rem; line-height: 1.8;">
+          <p class="why-rail-desc">
             Railway transportation in South Africa represents over 150 years of engineering marvels and human passion. As your train travels across the vast Highveld plains, through the mountain tunnels of the Hex River Valley, and down to the Atlantic coastline of Cape Town, you experience the changing topography and rich cultural tapestry of nine provinces.
           </p>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; border-top: 1px solid #bae6fd; padding-top: 1.5rem;">
+          <div class="why-rail-highlights">
             <div>
-              <h4 style="color: #0284c7; font-size: 1.1rem; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.4rem;"><i data-lucide="landmark" style="width: 18px; height: 18px;"></i> Cultural Preserved Stops</h4>
-              <p style="font-size: 0.9rem; margin: 0;">Explore historical Victorian stations like Matjiesfontein, preserved in time since 1884.</p>
+              <h4><i data-lucide="landmark"></i> Cultural Preserved Stops</h4>
+              <p>Explore historical Victorian stations like Matjiesfontein, preserved in time since 1884.</p>
             </div>
             <div>
-              <h4 style="color: #0284c7; font-size: 1.1rem; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.4rem;"><i data-lucide="utensils" style="width: 18px; height: 18px;"></i> Culinary & Wine Pairings</h4>
-              <p style="font-size: 0.9rem; margin: 0;">Savor regional delicacies from Karoo Lamb and biltong to award-winning Western Cape Pinotage wines.</p>
+              <h4><i data-lucide="utensils"></i> Culinary & Wine Pairings</h4>
+              <p>Savor regional delicacies from Karoo Lamb and biltong to award-winning Western Cape Pinotage wines.</p>
             </div>
             <div>
-              <h4 style="color: #0284c7; font-size: 1.1rem; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.4rem;"><i data-lucide="leaf" style="width: 18px; height: 18px;"></i> Eco-Friendly Travel</h4>
-              <p style="font-size: 0.9rem; margin: 0;">Passenger rail offers a sustainable, low-carbon alternative to explore South Africa’s wilderness.</p>
+              <h4><i data-lucide="leaf"></i> Eco-Friendly Travel</h4>
+              <p>Passenger rail offers a sustainable, low-carbon alternative to explore South Africa’s wilderness.</p>
+            </div>
+          </div>
+        </div>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Interactive Route Map Section -->
-      <section class="section" id="route-map" style="background: #f8fafc; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
+      <section class="section" id="route-map">
         <div class="container">
           <div class="section-header">
             <span class="badge badge-blue">Interactive Journey Map</span>
@@ -771,6 +774,34 @@
 
           <div class="trains-grid" id="stories-container">
             <!-- Rendered via JS -->
+=======
+      <!-- Rail Soundscape Audio Section -->
+      <section class="section" id="soundscape">
+        <div class="container">
+          <div class="soundscape-box">
+            <span class="badge badge-blue">Immersive Audio Engine</span>
+            <h2 style="margin-top: 0.8rem;">Sounds of <span class="text-gradient-blue">Mzansi Rails</span></h2>
+            <p style="max-width: 600px; margin: 1rem auto 0;">Experience the rhythmic sound of iron wheels on steel tracks, steam whistles echoing across the Karoo, and gentle lounge jazz ambient audio.</p>
+
+            <div class="sound-controls">
+              <button class="sound-btn" id="audio-play-toggle" aria-label="Toggle rail sound"><i data-lucide="play"></i></button>
+              <div style="text-align: left;">
+                <div style="font-weight: 700; font-size: 1.1rem;" id="sound-now-playing">Track Status: Muted</div>
+                <div style="font-size: 0.88rem; color: var(--text-muted);">Web Audio API Synthesizer</div>
+              </div>
+            </div>
+
+            <div class="visualizer-container">
+              <canvas id="sound-visualizer" class="visualizer-canvas"></canvas>
+            </div>
+
+            <div class="sound-track-selector" id="audio-preset-buttons">
+              <button class="track-btn active" data-sound="chug"><i data-lucide="train"></i> Karoo Track Chug</button>
+              <button class="track-btn" data-sound="whistle"><i data-lucide="bell"></i> Vintage Steam Whistle</button>
+              <button class="track-btn" data-sound="wind"><i data-lucide="wind"></i> Karoo Night Wind</button>
+              <button class="track-btn" data-sound="lounge"><i data-lucide="music"></i> Blue Train Lounge Jazz</button>
+            </div>
+            </div>
           </div>
         </div>
       </section>
@@ -943,10 +974,10 @@
 
         <div class="footer-links">
           <h4>Geekulcha Hackathon Webapp</h4>
-          <p style="font-size: 0.9rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0.8rem;">
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 0.8rem;">
             TrackTales is a <strong>Geekulcha motivated hackathon web application</strong> created for the upcoming <strong>Geekulcha Annual Hackathon 2026</strong> (25–27 September 2026).
           </p>
-          <p style="font-size: 0.85rem; line-height: 1.5; color: var(--text-muted);">
+          <p style="font-size: 0.85rem; line-height: 1.5;">
             Aligned with the <em>"Build for Use"</em> initiative—focusing on digital tourism solutions, open-source tech, and community heritage.
           </p>
         </div>

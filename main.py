@@ -100,47 +100,6 @@ TRAINS_DATA = [
             }
         ],
         "image_url": "https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=1000&q=80"
-    },
-    {
-        "id": "shosholoza-meyl",
-        "name": "Shosholoza Meyl",
-        "tagline": "The Soul of Mzansi Passenger Express",
-        "category": "Authentic Passenger & Tourist Rail",
-        "speed": "80 km/h (Scenic Express)",
-        "duration": "26 Hours (Direct Corridor)",
-        "frequency": "Regular Scheduled Service",
-        "route_summary": "Pretoria -> Johannesburg -> Kroonstad -> Kimberley -> Beaufort West -> Worcester -> Cape Town",
-        "primary_color": "#0088cc",
-        "secondary_color": "#10b981",
-        "description": "Named after the iconic South African folk song 'Shosholoza' (meaning 'moving forward'), Shosholoza Meyl connects everyday South Africans and curious travelers across 1,600 kilometers of spectacular countryside. It provides affordable sleeper berths, friendly communal dining cars serving traditional South African home meals like Chakalaka, Pap, and Bobotie, and unforgettable human warmth.",
-        "highlights": [
-            "Affordable Tourist Class 2-berth and 4-berth sleeper compartments",
-            "Communal dining car serving authentic local South African dishes",
-            "Breathtaking day and night vistas of the Great Karoo desert plateau",
-            "Friendly local hospitality and cultural storytelling amongst passengers",
-            "Connects major cultural hubs from Gauteng to the Mother City"
-        ],
-        "suites": [
-            {
-                "name": "Tourist Class 2-Berth Compartment",
-                "bed_type": "Bunk beds (Upper & Lower)",
-                "size": "Private Private Cabin",
-                "amenities": "Washbasin, power outlets, privacy lock, large view window"
-            },
-            {
-                "name": "Tourist Class 4-Berth Compartment",
-                "bed_type": "Quad Bunks",
-                "size": "Family / Group Cabin",
-                "amenities": "Washbasin, foldable table, window seat, shared bathroom facilities on car"
-            },
-            {
-                "name": "Economy Reclining Seat",
-                "bed_type": "High-back Recliner",
-                "size": "Standard Carriage Seat",
-                "amenities": "Footrest, overhead luggage rack, access to dining car"
-            }
-        ],
-        "image_url": "https://images.unsplash.com/photo-1515165562839-978bbcf18277?auto=format&fit=crop&w=1000&q=80"
     }
 ]
 
@@ -153,67 +112,31 @@ ROUTE_STOPS = [
         "distance_km": 0,
         "coordinates": {"lat": -25.7479, "lng": 28.1878},
         "description": "The Jacaranda City and northern terminus of the Pretoria to Cape Town rail corridor. Home to historic Victorian rail yards and grand sandstone architecture.",
-        "train_calls": ["The Blue Train", "Rovos Rail", "Shosholoza Meyl"],
+        "train_calls": ["The Blue Train", "Rovos Rail"],
         "recommended_stay": "Departure Hub / 1-2 Days",
         "local_dish": "Gauteng Style Braai & Chakalaka paired with Craft Lager"
     },
     {
-        "id": "johannesburg",
-        "stop_number": 2,
-        "name": "Johannesburg (Egoli / City of Gold)",
-        "province": "Gauteng",
-        "distance_km": 60,
-        "coordinates": {"lat": -26.2041, "lng": 28.0473},
-        "description": "South Africa's economic powerhouse born during the 1886 gold rush. A vibrant metropolis of art, history, and urban energy.",
-        "train_calls": ["Shosholoza Meyl"],
-        "recommended_stay": "1 Day Transit",
-        "local_dish": "Kota (Spatlo) & Rooibos Iced Tea"
-    },
-    {
         "id": "kimberley",
-        "stop_number": 3,
+        "stop_number": 2,
         "name": "Kimberley (The Diamond City)",
         "province": "Northern Cape",
         "distance_km": 645,
         "coordinates": {"lat": -28.7282, "lng": 24.7499},
         "description": "Famous worldwide for the 1870s Diamond Rush. Home to 'The Big Hole'—the largest hand-dug excavation on earth—and vintage tramways.",
-        "train_calls": ["The Blue Train", "Rovos Rail", "Shosholoza Meyl"],
+        "train_calls": ["The Blue Train", "Rovos Rail"],
         "recommended_stay": "Stopover Tour (3-4 Hours)",
         "local_dish": "Northern Cape Biltong & Kalahari Truffle Tart"
     },
     {
-        "id": "matjiesfontein",
-        "stop_number": 4,
-        "name": "Matjiesfontein (Karoo Oasis)",
-        "province": "Western Cape",
-        "distance_km": 1300,
-        "coordinates": {"lat": -33.2307, "lng": 20.5824},
-        "description": "A fairytale Victorian village frozen in time in the Great Karoo desert. Founded in 1884 as a railway refreshment stop.",
-        "train_calls": ["The Blue Train", "Rovos Rail"],
-        "recommended_stay": "Excursion Stop (2-3 Hours)",
-        "local_dish": "Karoo Roast Lamb with Rosemary & Port Wine"
-    },
-    {
-        "id": "worcester",
-        "stop_number": 5,
-        "name": "Worcester & Hex River Valley",
-        "province": "Western Cape",
-        "distance_km": 1480,
-        "coordinates": {"lat": -33.6465, "lng": 19.4459},
-        "description": "Gateway to the Cape Winelands nestled beneath majestic mountain peaks and lush table grape vineyards.",
-        "train_calls": ["Shosholoza Meyl"],
-        "recommended_stay": "Scenic Valley Transit",
-        "local_dish": "Cape Winelands Pinotage & Dried Fruit Platter"
-    },
-    {
         "id": "cape-town",
-        "stop_number": 6,
+        "stop_number": 3,
         "name": "Cape Town (The Mother City)",
         "province": "Western Cape",
         "distance_km": 1600,
         "coordinates": {"lat": -33.9249, "lng": 18.4241},
         "description": "The spectacular coastal terminus. Framed by Table Mountain, Atlantic oceans, colorful heritage quarters, and world-class culinary scenes.",
-        "train_calls": ["The Blue Train", "Rovos Rail", "Shosholoza Meyl"],
+        "train_calls": ["The Blue Train", "Rovos Rail"],
         "recommended_stay": "Final Destination / 3-5 Days",
         "local_dish": "Traditional Cape Malay Bobotie & Snoek Braai with Chenin Blanc"
     }
@@ -243,28 +166,6 @@ ATTRACTIONS_DATA = [
         "highlights": "Wall of Names, Sanctuary, Eternal Flame"
     },
     {
-        "id": "gold-reef-city",
-        "stop_id": "johannesburg",
-        "city": "Johannesburg",
-        "title": "Gold Reef City Heritage Underground Mine",
-        "category": "History & Adventure",
-        "rating": 4.7,
-        "description": "Experience gold fever at an authentic historic gold mine shaft with live gold pouring demonstrations and Victorian era streets.",
-        "image_url": "https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&w=600&q=80",
-        "highlights": "Underground Mine Tour, Gold Pouring, Museum"
-    },
-    {
-        "id": "constitution-hill",
-        "stop_id": "johannesburg",
-        "city": "Johannesburg",
-        "title": "Constitution Hill & Constitutional Court",
-        "category": "History & Human Rights",
-        "rating": 4.9,
-        "description": "A former prison complex that incarcerated Nelson Mandela and Mahatma Gandhi, now transformed into the highest court of South Africa.",
-        "image_url": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80",
-        "highlights": "Number Four Prison, Flame of Democracy, Contemporary Art"
-    },
-    {
         "id": "big-hole-kimberley",
         "stop_id": "kimberley",
         "city": "Kimberley",
@@ -285,50 +186,6 @@ ATTRACTIONS_DATA = [
         "description": "Located right inside Kimberley Station, showcasing steam locomotives, historic dining cars, telegraph equipment, and railway nostalgia.",
         "image_url": "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=600&q=80",
         "highlights": "Restored Steam Engines, Royal Carriage relics, Ticket Machines"
-    },
-    {
-        "id": "lord-milner-hotel",
-        "stop_id": "matjiesfontein",
-        "city": "Matjiesfontein",
-        "title": "Historic Lord Milner Hotel & Red Bus Tour",
-        "category": "Victorian Heritage",
-        "rating": 4.8,
-        "description": "Built in 1899, this majestic hotel hosted Lord Randolph Churchill and Olive Schreiner. Features a humorous 10-minute tour on a London red double-decker bus.",
-        "image_url": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80",
-        "highlights": "Victorian Salon, Laird's Arms Pub, Red Bus Tour, Karoo Stargazing"
-    },
-    {
-        "id": "karoo-transport-museum",
-        "stop_id": "matjiesfontein",
-        "city": "Matjiesfontein",
-        "title": "Matjiesfontein Car & Rail Museum",
-        "category": "Vintage Motors & Rail",
-        "rating": 4.7,
-        "description": "An impressive private collection of vintage cars from the 1920s-1950s, steam engines, and historic royal carriages parked beside the station tracks.",
-        "image_url": "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80",
-        "highlights": "Vintage Cadillacs, Steam Locomotives, Antique Bicycles"
-    },
-    {
-        "id": "hex-river-valley",
-        "stop_id": "worcester",
-        "city": "Worcester",
-        "title": "Hex River Valley Wine Route & Mountain Pass",
-        "category": "Wine & Nature",
-        "rating": 4.8,
-        "description": "The train winds through dramatic mountain passes lined with crimson grape leaves in autumn, surrounded by snow-capped peaks in winter.",
-        "image_url": "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=600&q=80",
-        "highlights": "Table Grape Farms, Brandy Distilleries, Panoramic Rail Pass"
-    },
-    {
-        "id": "karoo-botanical-garden",
-        "stop_id": "worcester",
-        "city": "Worcester",
-        "title": "Karoo Desert National Botanical Garden",
-        "category": "Botany & Nature",
-        "rating": 4.7,
-        "description": "A unique 154-hectare garden at the foot of the Brandwacht Mountains showcasing semi-arid succulents, aloes, and rare desert flora.",
-        "image_url": "https://images.unsplash.com/photo-1463936575829-25148e1db1b8?auto=format&fit=crop&w=600&q=80",
-        "highlights": "Desert Aloe Display, Hiking Trails, Succulent Greenhouse"
     },
     {
         "id": "table-mountain",
