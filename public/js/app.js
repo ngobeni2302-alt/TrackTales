@@ -32,24 +32,11 @@
       category: "Vintage Edwardian Safari",
       speed: "60 km/h",
       duration: "48 Hours",
-      route_summary: "Pretoria ➔ Highveld ➔ Matjiesfontein ➔ Cape Town",
+      route_summary: "Pretoria ➔ Kimberley ➔ Cape Town",
       primary_color: "#0e382c",
       description: "Recapturing the romance of a bygone era with restored 1920s Edwardian wood-paneled suites, open observation cars, and formal gala dinners.",
-      highlights: ["Open Balcony Carriage", "Formal Dress Dinners", "Matjiesfontein Excursion", "High Tea Lounge"],
+      highlights: ["Open Balcony Carriage", "Formal Dress Dinners", "High Tea Lounge"],
       image_url: "https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=800&q=80"
-    },
-    {
-      id: "shosholoza-meyl",
-      name: "Shosholoza Meyl",
-      tagline: "The Soul of Mzansi Passenger Express",
-      category: "Authentic Passenger & Tourist Rail",
-      speed: "80 km/h",
-      duration: "26 Hours",
-      route_summary: "Pretoria ➔ Johannesburg ➔ Kimberley ➔ Worcester ➔ Cape Town",
-      primary_color: "#0088cc",
-      description: "Connecting everyday South Africans and curious travelers across Mzansi with comfortable sleeper compartments and authentic local cuisine.",
-      highlights: ["Affordable Sleeper Berths", "Communal Dining Car", "Karoo Vistas", "Warm Mzansi Hospitality"],
-      image_url: "https://images.unsplash.com/photo-1515165562839-978bbcf18277?auto=format&fit=crop&w=800&q=80"
     }
   ];
 
@@ -61,67 +48,31 @@
       province: "Gauteng Province",
       distance_km: 0,
       description: "The Jacaranda City and northern terminus of the Pretoria to Cape Town rail corridor. Home to historic Victorian rail yards and grand sandstone architecture.",
-      train_calls: "The Blue Train, Rovos Rail, Shosholoza Meyl",
+      train_calls: "The Blue Train, Rovos Rail",
       stay: "1-2 Days Departure Hub",
       local_dish: "Gauteng Style Braai & Chakalaka paired with Craft Lager",
       img: "https://images.unsplash.com/photo-1577971132997-c10be9372519?auto=format&fit=crop&w=600&q=80"
     },
     {
-      id: "johannesburg",
-      stop_number: 2,
-      name: "Johannesburg (Egoli / City of Gold)",
-      province: "Gauteng Province",
-      distance_km: 60,
-      description: "South Africa's economic powerhouse born during the 1886 gold rush. A vibrant metropolis of art, history, and urban energy.",
-      train_calls: "Shosholoza Meyl",
-      stay: "1 Day Transit",
-      local_dish: "Kota (Spatlo) & Rooibos Iced Tea",
-      img: "https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&w=600&q=80"
-    },
-    {
       id: "kimberley",
-      stop_number: 3,
+      stop_number: 2,
       name: "Kimberley (The Diamond City)",
       province: "Northern Cape Province",
       distance_km: 645,
       description: "Famous worldwide for the 1870s Diamond Rush. Home to 'The Big Hole'—the largest hand-dug excavation on earth—and vintage tramways.",
-      train_calls: "The Blue Train, Rovos Rail, Shosholoza Meyl",
+      train_calls: "The Blue Train, Rovos Rail",
       stay: "Stopover Tour (3-4 Hours)",
       local_dish: "Northern Cape Biltong & Kalahari Truffle Tart",
       img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80"
     },
     {
-      id: "matjiesfontein",
-      stop_number: 4,
-      name: "Matjiesfontein (Karoo Oasis)",
-      province: "Western Cape Province",
-      distance_km: 1300,
-      description: "A fairytale Victorian village frozen in time in the Great Karoo desert. Founded in 1884 as a railway refreshment stop.",
-      train_calls: "The Blue Train, Rovos Rail",
-      stay: "Excursion Stop (2-3 Hours)",
-      local_dish: "Karoo Roast Lamb with Rosemary & Port Wine",
-      img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      id: "worcester",
-      stop_number: 5,
-      name: "Worcester & Hex River Valley",
-      province: "Western Cape Province",
-      distance_km: 1480,
-      description: "Gateway to the Cape Winelands nestled beneath majestic mountain peaks and lush table grape vineyards.",
-      train_calls: "Shosholoza Meyl",
-      stay: "Scenic Valley Transit",
-      local_dish: "Cape Winelands Pinotage & Dried Fruit Platter",
-      img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=600&q=80"
-    },
-    {
       id: "cape-town",
-      stop_number: 6,
+      stop_number: 3,
       name: "Cape Town (The Mother City)",
       province: "Western Cape Province",
       distance_km: 1600,
       description: "The spectacular coastal terminus. Framed by Table Mountain, Atlantic oceans, colorful heritage quarters, and world-class culinary scenes.",
-      train_calls: "The Blue Train, Rovos Rail, Shosholoza Meyl",
+      train_calls: "The Blue Train, Rovos Rail",
       stay: "Final Destination / 3-5 Days",
       local_dish: "Traditional Cape Malay Bobotie & Snoek Braai with Chenin Blanc",
       img: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=600&q=80"
@@ -130,10 +81,7 @@
 
   const FALLBACK_ATTRACTIONS = [
     { id: "a1", city: "pretoria", title: "Union Buildings & Mandela Statue", category: "History & Heritage", rating: 4.9, desc: "Terraced gardens overlooking Pretoria with a 9m statue of Nelson Mandela.", img: "https://images.unsplash.com/photo-1577971132997-c10be9372519?auto=format&fit=crop&w=600&q=80" },
-    { id: "a2", city: "johannesburg", title: "Constitution Hill", category: "Human Rights", rating: 4.9, desc: "Former prison holding Mandela, now South Africa's highest court.", img: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80" },
     { id: "a3", city: "kimberley", title: "The Big Hole & Mine Museum", category: "Landmark", rating: 4.9, desc: "World's largest hand-dug diamond crater with original vaults.", img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80" },
-    { id: "a4", city: "matjiesfontein", title: "Lord Milner Hotel & Red Bus", category: "Victorian Heritage", rating: 4.8, desc: "Historic 1899 hotel and Karoo stargazing haven.", img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80" },
-    { id: "a5", city: "worcester", title: "Hex River Valley Wine Route", category: "Wine & Nature", rating: 4.8, desc: "Breathtaking autumn vineyards and mountain rail pass.", img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=600&q=80" },
     { id: "a6", city: "cape-town", title: "Table Mountain Aerial Cableway", category: "Natural Wonder", rating: 5.0, desc: "Ascend to Table Mountain summit in a 360-degree rotating cable car.", img: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=600&q=80" }
   ];
 
