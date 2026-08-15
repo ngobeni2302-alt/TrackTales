@@ -835,21 +835,12 @@
     if (collectedStops === totalStops) {
       if (rewardBox) rewardBox.classList.add('completed');
       if (rewardStatus) {
-        rewardStatus.innerHTML = `<strong>Passport complete!</strong> You've unlocked the golden ticket border reward. Check your Boarding Pass display!`;
-      }
-      
-      const passFrontElement = document.querySelector('.boarding-pass.pass-front');
-      if (passFrontElement) {
-        passFrontElement.classList.add('gold-border');
+        rewardStatus.innerHTML = `<strong>Passport complete!</strong> Congratulations! You've collected all 6 South Africa route stamps!`;
       }
     } else {
       if (rewardBox) rewardBox.classList.remove('completed');
       if (rewardStatus) {
-        rewardStatus.textContent = `Collect stamps at all ${totalStops} route stops to unlock a Golden Boarding Ticket frame and completion glow! (${collectedStops}/${totalStops} collected)`;
-      }
-      const passFrontElement = document.querySelector('.boarding-pass.pass-front');
-      if (passFrontElement) {
-        passFrontElement.classList.remove('gold-border');
+        rewardStatus.textContent = `Collect stamps at all ${totalStops} route stops to complete your South Africa Tourist Passport! (${collectedStops}/${totalStops} collected)`;
       }
     }
 
@@ -860,13 +851,7 @@
     const totalStops = Object.keys(STOPS_STAMP_CONFIG).length;
     const collectedStops = Object.keys(passportData.stops || {}).length;
     if (collectedStops === totalStops) {
-      // Trigger Completion animation on Boarding pass
-      const container = document.getElementById('boarding-pass-container');
-      if (container) {
-        container.style.animation = 'none';
-        container.offsetHeight; // trigger reflow
-        container.style.animation = 'ticketPulse 0.8s ease-out';
-      }
+      console.log("Passport complete! All stamps collected.");
     }
   }
 
@@ -893,33 +878,175 @@
     renderPassportUI();
   }
 
-  // --- 1. Animated Train Loading Splash Screen ---
+  // --- 1. Video Loading Splash Screen Controller ---
   function setupLoadingSplash() {
     const splash = document.getElementById('train-loading-splash');
     const fill = document.getElementById('splash-progress-fill');
-    if (!splash || !fill) return;
+    const video = document.getElementById('splash-video');
+    const audioBtn = document.getElementById('splash-audio-toggle');
+    const skipBtn = document.getElementById('splash-skip-btn');
+    const statusText = document.getElementById('splash-status-text');
 
+    if (!splash) return;
+
+    // Trigger video play safely (handle browser autoplay policies)
+    if (video) {
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(err => {
+          console.log("Video autoplay initialized in muted state or waiting for user interaction:", err);
+        });
+      }
+    }
+
+    // Sound toggle control handler
+    if (audioBtn && video) {
+      audioBtn.addEventListener('click', () => {
+        video.muted = !video.muted;
+        if (!video.muted) {
+          video.play().catch(e => console.log("Play on unmute:", e));
+        }
+        if (video.muted) {
+          audioBtn.innerHTML = '<i data-lucide="volume-x"></i> <span>Sound Off</span>';
+        } else {
+          audioBtn.innerHTML = '<i data-lucide="volume-2"></i> <span>Sound On</span>';
+        }
+        if (window.lucide) lucide.createIcons();
+      });
+    }
+
+    // Unmute sound on first click on splash screen during loading if user wants audio
+    const enableAudioOnInteraction = () => {
+      if (video && video.muted && audioBtn) {
+        video.muted = false;
+        video.play().catch(e => console.log("Unmute on interaction:", e));
+        audioBtn.innerHTML = '<i data-lucide="volume-2"></i> <span>Sound On</span>';
+        if (window.lucide) lucide.createIcons();
+      }
+    };
+    splash.addEventListener('click', enableAudioOnInteraction, { once: true });
+
+    let isDismissed = false;
+    const dismissSplash = () => {
+      if (isDismissed) return;
+      isDismissed = true;
+      
+      // CRITICAL: Stop loading video & mute sound immediately when loading completes
+      if (video) {
+        try {
+          video.pause();
+          video.muted = true;
+          video.currentTime = 0;
+        } catch (e) {
+          console.log("Error pausing loading video:", e);
+        }
+      }
+
+      splash.classList.add('fade-out');
+      setTimeout(() => {
+        splash.style.display = 'none';
+      }, 600);
+    };
+
+    if (skipBtn) {
+      skipBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dismissSplash();
+      });
+    }
+
+    // Dynamic progress bar & status updates over 8 seconds (8,000 ms)
     let progress = 0;
+    const statusMessages = [
+      "Starting TrackTales Locomotive Engine...",
+      "Loading Luxury Express Lines (The Blue Train & Rovos Rail)...",
+      "Fetching South African Landmark Sights & Attractions...",
+      "Preparing TrackTales Railway Portal...",
+      "Ready for TrackTales!"
+    ];
+
+    const TOTAL_DURATION_MS = 8000; // 8 Seconds duration
+    const INTERVAL_MS = 80;
+    const INCREMENT = 100 / (TOTAL_DURATION_MS / INTERVAL_MS); // 1% per 80ms = 8 seconds
+
     const interval = setInterval(() => {
-      progress += 15;
+      progress += INCREMENT;
       if (progress > 100) progress = 100;
-      fill.style.width = progress + '%';
+      if (fill) fill.style.width = progress + '%';
+
+      if (statusText) {
+        const msgIdx = Math.min(Math.floor((progress / 100) * statusMessages.length), statusMessages.length - 1);
+        statusText.textContent = statusMessages[msgIdx];
+      }
+
       if (progress >= 100) {
         clearInterval(interval);
         setTimeout(() => {
-          splash.classList.add('fade-out');
-          setTimeout(() => {
-            splash.style.display = 'none';
-          }, 500);
-        }, 300);
+          dismissSplash();
+        }, 200);
       }
-    }, 100);
+    }, INTERVAL_MS);
   }
 
-  // --- 2. Page Router Navigation ---
+  // --- 2. Page Router Navigation with UI Systems Principles ---
   function setupPageNavigation() {
     const pageViews = document.querySelectorAll('.page-view');
-    const navLinks = document.querySelectorAll('.nav-page-link');
+    const navLinks = document.querySelectorAll('.nav-links a.nav-page-link');
+    const navMenu = document.getElementById('nav-menu');
+    const scrollContainer = document.getElementById('nav-scroll-container');
+    const chevronLeft = document.getElementById('nav-chevron-left');
+    const chevronRight = document.getElementById('nav-chevron-right');
+    
+    // Create sliding active tab indicator element if it doesn't exist
+    let navIndicator = document.getElementById('nav-slider-indicator');
+    if (!navIndicator && navMenu) {
+      navIndicator = document.createElement('div');
+      navIndicator.id = 'nav-slider-indicator';
+      navIndicator.className = 'nav-slider-indicator';
+      navMenu.appendChild(navIndicator);
+    }
+
+    const PAGE_ORDER = ['home', 'trains', 'attractions', 'games', 'about'];
+    let currentPage = 'home';
+
+    function updateNavIndicator(targetPage, isSlow) {
+      if (!navIndicator || !navMenu) return;
+      const activeLink = document.querySelector(`.nav-links a[data-page="${targetPage}"]`);
+      if (activeLink) {
+        const menuRect = navMenu.getBoundingClientRect();
+        const linkRect = activeLink.getBoundingClientRect();
+
+        const offsetLeft = linkRect.left - menuRect.left;
+        const width = linkRect.width;
+
+        // Apply speed class: Left to Right = slow (0.85s), Right to Left = fast (0.22s)
+        if (isSlow) {
+          navIndicator.classList.remove('slide-fast');
+          navIndicator.classList.add('slide-slow');
+        } else {
+          navIndicator.classList.remove('slide-slow');
+          navIndicator.classList.add('slide-fast');
+        }
+
+        navIndicator.style.transform = `translateX(${offsetLeft}px)`;
+        navIndicator.style.width = `${width}px`;
+        navIndicator.style.opacity = '1';
+
+        // Auto-scroll tab into view if cut off
+        if (scrollContainer) {
+          const containerLeft = scrollContainer.scrollLeft;
+          const containerWidth = scrollContainer.clientWidth;
+          const itemLeft = activeLink.offsetLeft;
+          const itemWidth = activeLink.clientWidth;
+
+          if (itemLeft < containerLeft) {
+            scrollContainer.scrollTo({ left: itemLeft - 20, behavior: 'smooth' });
+          } else if (itemLeft + itemWidth > containerLeft + containerWidth) {
+            scrollContainer.scrollTo({ left: itemLeft + itemWidth - containerWidth + 20, behavior: 'smooth' });
+          }
+        }
+      }
+    }
 
     function switchPage(pageId) {
       let targetPage = pageId.replace('#', '');
@@ -927,25 +1054,120 @@
         targetPage = 'home';
       }
 
-      pageViews.forEach(page => {
-        if (page.id === 'page-' + targetPage) {
-          page.classList.add('active');
-        } else {
-          page.classList.remove('active');
-        }
-      });
+      if (targetPage === currentPage) {
+        updateNavIndicator(targetPage, true);
+        return;
+      }
 
-      navLinks.forEach(link => {
+      const prevIndex = PAGE_ORDER.indexOf(currentPage);
+      const targetIndex = PAGE_ORDER.indexOf(targetPage);
+
+      // Determine Direction & Speed:
+      // Moving Left to Right (targetIndex > prevIndex) -> SLOW (0.85s)
+      // Moving Right to Left (targetIndex < prevIndex) -> FAST (0.22s)
+      const isSlow = targetIndex > prevIndex;
+
+      currentPage = targetPage;
+
+      // Update Nav Links active class & ARIA attributes
+      navLinks.forEach((link, idx) => {
         const linkPage = link.getAttribute('data-page');
         if (linkPage === targetPage) {
           link.classList.add('active');
+          link.setAttribute('aria-selected', 'true');
+          link.setAttribute('tabindex', '0');
         } else {
           link.classList.remove('active');
+          link.setAttribute('aria-selected', 'false');
+          link.setAttribute('tabindex', '-1');
         }
       });
 
+      updateNavIndicator(targetPage, isSlow);
+
+      // Rule: "Content never cuts. Fade out. Pause 80 milliseconds. Fade in."
+      const currentActivePage = document.querySelector('.page-view.active');
+      if (currentActivePage) {
+        currentActivePage.style.transition = 'opacity 0.08s ease-out';
+        currentActivePage.style.opacity = '0';
+      }
+
+      setTimeout(() => {
+        pageViews.forEach(page => {
+          page.classList.remove('slide-left-to-right-slow', 'slide-right-to-left-fast');
+          page.style.opacity = '';
+          page.style.transition = '';
+          if (page.id === 'page-' + targetPage) {
+            page.classList.add('active');
+            if (isSlow) {
+              page.classList.add('slide-left-to-right-slow');
+            } else {
+              page.classList.add('slide-right-to-left-fast');
+            }
+          } else {
+            page.classList.remove('active');
+          }
+        });
+      }, 80); // 80ms pause matching video transcription rule
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    // Keyboard Shortcuts ("Arrows move between tabs. Home jumps first, end jumps last.")
+    document.addEventListener('keydown', (e) => {
+      // Only handle if focus is inside nav links
+      if (!document.activeElement || !document.activeElement.classList.contains('nav-page-link')) return;
+
+      const currentIndex = PAGE_ORDER.indexOf(currentPage);
+
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        const nextIndex = (currentIndex + 1) % PAGE_ORDER.length;
+        const targetPage = PAGE_ORDER[nextIndex];
+        const nextLink = document.querySelector(`.nav-links a[data-page="${targetPage}"]`);
+        if (nextLink) nextLink.focus();
+        switchPage(targetPage);
+        window.location.hash = targetPage;
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        const prevIndex = (currentIndex - 1 + PAGE_ORDER.length) % PAGE_ORDER.length;
+        const targetPage = PAGE_ORDER[prevIndex];
+        const prevLink = document.querySelector(`.nav-links a[data-page="${targetPage}"]`);
+        if (prevLink) prevLink.focus();
+        switchPage(targetPage);
+        window.location.hash = targetPage;
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        const targetPage = PAGE_ORDER[0];
+        const firstLink = document.querySelector(`.nav-links a[data-page="${targetPage}"]`);
+        if (firstLink) firstLink.focus();
+        switchPage(targetPage);
+        window.location.hash = targetPage;
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        const targetPage = PAGE_ORDER[PAGE_ORDER.length - 1];
+        const lastLink = document.querySelector(`.nav-links a[data-page="${targetPage}"]`);
+        if (lastLink) lastLink.focus();
+        switchPage(targetPage);
+        window.location.hash = targetPage;
+      }
+    });
+
+    // Desktop Chevrons scroll handlers
+    if (chevronLeft && scrollContainer) {
+      chevronLeft.addEventListener('click', () => {
+        scrollContainer.scrollBy({ left: -140, behavior: 'smooth' });
+      });
+    }
+    if (chevronRight && scrollContainer) {
+      chevronRight.addEventListener('click', () => {
+        scrollContainer.scrollBy({ left: 140, behavior: 'smooth' });
+      });
+    }
+
+    // Initial position on load & window resize listener
+    window.addEventListener('resize', () => updateNavIndicator(currentPage, true));
+    setTimeout(() => updateNavIndicator(currentPage, true), 100);
 
     navLinks.forEach(link => {
       link.addEventListener('click', (e) => {

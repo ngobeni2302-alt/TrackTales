@@ -216,11 +216,62 @@ p {
   font-size: 1.3rem;
 }
 
+.nav-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  max-width: 650px;
+}
+
+/* Horizontal scroll container with edge fades */
+.nav-scroll-container {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE */
+  scroll-behavior: smooth;
+  mask-image: linear-gradient(to right, transparent, black 16px, black calc(100% - 16px), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 16px, black calc(100% - 16px), transparent);
+  padding: 0 0.5rem;
+}
+
+.nav-scroll-container::-webkit-scrollbar {
+  display: none; /* Chrome / Safari */
+}
+
+/* Desktop Chevron Buttons */
+.nav-chevron {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, transform 0.2s ease;
+  z-index: 2;
+  opacity: 0.7;
+}
+
+.nav-chevron:hover {
+  color: var(--pure-white);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.nav-chevron.hidden {
+  display: none;
+}
+
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1.8rem;
   list-style: none;
+  position: relative;
+  white-space: nowrap; /* Don't wrap to second line */
 }
 
 .nav-links a {
@@ -228,23 +279,43 @@ p {
   color: #94a3b8;
   font-weight: 500;
   font-size: 0.95rem;
-  transition: var(--transition-fast);
+  transition: color 0.2s ease;
   position: relative;
+  padding: 0.4rem 0.2rem;
+  border-radius: 4px;
 }
 
 .nav-links a:hover, .nav-links a.active {
   color: var(--pure-white);
 }
 
-.nav-links a.active::after {
-  content: '';
+/* Rule: Focus ring and active state NEVER share a color */
+.nav-links a:focus-visible, .nav-btn:focus-visible {
+  outline: 2px solid #a855f7 !important; /* Distinct Purple Focus Ring */
+  outline-offset: 4px;
+  box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.3) !important;
+}
+
+/* Dynamic sliding underline indicator with direction speed */
+.nav-slider-indicator {
   position: absolute;
-  bottom: -6px;
+  bottom: -4px;
   left: 0;
-  width: 100%;
-  height: 2px;
+  height: 3px;
   background: linear-gradient(90deg, var(--blue-light), var(--green-mint));
-  border-radius: 2px;
+  border-radius: 3px;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.7);
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, width;
+}
+
+.nav-slider-indicator.slide-slow {
+  transition: transform 0.85s cubic-bezier(0.4, 0, 0.2, 1), width 0.85s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.nav-slider-indicator.slide-fast {
+  transition: transform 0.22s cubic-bezier(0.25, 1, 0.5, 1), width 0.22s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
 
 .nav-btn {
@@ -2171,19 +2242,50 @@ p {
    TrackTales Frontend Upgrade - Multi-Page, Games, Loader & Accessibility
    ========================================================================== */
 
-/* Page View Router */
+/* Page View Router with Directional Asymmetric Slide Speeds */
+#main-content {
+  position: relative;
+  overflow-x: hidden;
+}
+
 .page-view {
   display: none;
+  width: 100%;
+  will-change: transform, opacity;
 }
 
 .page-view.active {
   display: block;
-  animation: fadeInPage 0.4s ease-out forwards;
 }
 
-@keyframes fadeInPage {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+.page-view.slide-left-to-right-slow {
+  animation: slideInFromRightSlow 0.85s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.page-view.slide-right-to-left-fast {
+  animation: slideInFromLeftFast 0.22s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes slideInFromRightSlow {
+  0% {
+    opacity: 0;
+    transform: translateX(90px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromLeftFast {
+  0% {
+    opacity: 0;
+    transform: translateX(-90px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* Nav Link Icon & Active State */
@@ -2574,21 +2676,21 @@ p {
   color: #64748b !important;
 }
 
-/* Animated Train Loading Splash Screen */
+/* Video Loading Splash Screen */
 .train-splash-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(15, 23, 42, 0.96);
-  backdrop-filter: blur(16px);
-  z-index: 9999;
+  background: #0b1329;
+  z-index: 99999;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
   padding: 2rem;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .train-splash-overlay.fade-out {
@@ -2596,64 +2698,107 @@ p {
   visibility: hidden;
 }
 
+.splash-video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.splash-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.splash-video-darkener {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(11, 19, 41, 0.45) 0%, rgba(11, 19, 41, 0.82) 100%);
+  backdrop-filter: blur(3px);
+}
+
+.splash-top-controls {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.splash-control-btn {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.splash-control-btn:hover {
+  background: rgba(2, 132, 199, 0.9);
+  border-color: #38bdf8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.3);
+}
+
 .train-splash-card {
-  background: linear-gradient(135deg, #0b192c, #0e382c);
-  border: 2px solid var(--accent-gold);
-  border-radius: var(--radius-lg);
+  position: relative;
+  z-index: 5;
+  background: rgba(11, 25, 44, 0.78);
+  border: 1.5px solid rgba(56, 189, 248, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: var(--radius-lg, 16px);
   padding: 3rem 2.5rem;
   text-align: center;
   max-width: 480px;
   width: 100%;
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
   color: #ffffff;
+  animation: splashCardFadeIn 0.8s ease-out;
 }
 
-.splash-train-anim {
-  position: relative;
-  width: 140px;
-  height: 90px;
-  margin: 0 auto 1.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
+@keyframes splashCardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-.splash-train-engine {
-  color: var(--accent-gold);
-  animation: trainChug 0.4s infinite alternate ease-in-out;
-}
-
-.splash-tracks-line {
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--green-mint), transparent);
-  margin-top: 4px;
-}
-
-.splash-smoke-puff {
-  position: absolute;
-  top: 10px;
-  right: 40px;
-  width: 12px;
-  height: 12px;
-  background: rgba(255, 255, 255, 0.7);
+.splash-badge-logo {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1.2rem;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1.5px solid rgba(56, 189, 248, 0.35);
   border-radius: 50%;
-  animation: smokeRise 1.2s infinite ease-out;
-}
-
-.puff-1 { animation-delay: 0s; }
-.puff-2 { animation-delay: 0.4s; right: 30px; }
-.puff-3 { animation-delay: 0.8s; right: 20px; }
-
-@keyframes trainChug {
-  0% { transform: translateY(0) scaleY(1); }
-  100% { transform: translateY(-4px) scaleY(0.98); }
-}
-
-@keyframes smokeRise {
-  0% { opacity: 0.8; transform: translateY(0) scale(0.5); }
-  100% { opacity: 0; transform: translateY(-35px) scale(2); }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.25);
 }
 
 .splash-title {
@@ -2671,7 +2816,7 @@ p {
 .splash-progress-bar {
   width: 100%;
   height: 6px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 3px;
   overflow: hidden;
 }
@@ -2681,6 +2826,13 @@ p {
   height: 100%;
   background: linear-gradient(90deg, var(--primary-blue), var(--green-mint), var(--accent-gold));
   transition: width 0.2s linear;
+}
+
+.splash-status-text {
+  font-size: 0.82rem;
+  color: #cbd5e1;
+  margin-top: 0.9rem;
+  letter-spacing: 0.3px;
 }
 
 /* About Grid Layout */
@@ -3121,12 +3273,195 @@ p {
 
 /* Accessibility Focus Ring Standards */
 :focus-visible {
-  outline: 3px solid var(--primary-blue) !important;
+  outline: 2px solid #a855f7 !important;
   outline-offset: 3px !important;
 }
 
-[data-theme="dark"] :focus-visible {
-  outline-color: var(--blue-light) !important;
+/* ==========================================================================
+   UNIVERSAL RESPONSIVE BREAKPOINTS (Mobile, Tablet, Laptop, Desktop)
+   ========================================================================== */
+
+/* 1. Large Desktops & Wide Monitors (min-width: 1440px) */
+@media (min-width: 1440px) {
+  .container {
+    max-width: 1360px;
+    margin: 0 auto;
+  }
+  .hero-grid {
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: 4rem;
+  }
+}
+
+/* 2. Standard Laptops & Small Desktops (1025px - 1439px) */
+@media (min-width: 1025px) and (max-width: 1439px) {
+  .container {
+    max-width: 1140px;
+    margin: 0 auto;
+  }
+  .hero-grid {
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 2.5rem;
+  }
+}
+
+/* 3. Tablets & iPads (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container {
+    max-width: 96%;
+    padding: 0 1.5rem;
+  }
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .about-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .flagship-card {
+    grid-template-columns: 1fr;
+  }
+  .nav-wrapper {
+    max-width: 480px;
+  }
+  .modal-content {
+    max-width: 90vw !important;
+  }
+}
+
+/* 4. Mobile Devices & Small Screens (max-width: 768px) */
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+  }
+
+  .container {
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  /* Header & Navigation on Mobile */
+  .header-container {
+    padding: 0.75rem 1rem;
+  }
+
+  .nav-wrapper {
+    max-width: 100%;
+  }
+
+  .nav-links {
+    gap: 1rem;
+    font-size: 0.85rem;
+  }
+
+  /* Hero Section Mobile */
+  .hero-section {
+    padding-top: 100px;
+    padding-bottom: 40px;
+    min-height: auto;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .hero-content h1 {
+    font-size: 2.1rem;
+    line-height: 1.2;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.8rem;
+  }
+
+  .hero-actions button, .hero-actions a {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Section Padding Mobile */
+  .page-view .container {
+    padding-top: 90px !important;
+    padding-bottom: 50px !important;
+  }
+
+  /* Cards & Grids Mobile */
+  .about-grid, .flagship-specs-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.2rem;
+  }
+
+  .about-card, .flagship-content, .game-dashboard {
+    padding: 1.5rem !important;
+  }
+
+  .flagship-media {
+    min-height: 240px;
+  }
+
+  /* Game Dashboard Mobile */
+  .game-card-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .game-sight-media {
+    height: 200px;
+  }
+
+  /* Splash Video Card Mobile */
+  .splash-video-card {
+    width: 94vw !important;
+    padding: 1.5rem 1rem !important;
+  }
+
+  .splash-title-video {
+    font-size: 2rem !important;
+    letter-spacing: 2px !important;
+  }
+
+  /* Modals Mobile */
+  .modal-content {
+    width: 95vw !important;
+    max-width: 95vw !important;
+    padding: 1.5rem !important;
+    margin: 1rem auto;
+  }
+
+  .dyk-fact-box {
+    flex-direction: column;
+    padding: 1rem;
+  }
+}
+
+/* 5. Extra Small Mobile Phones (max-width: 420px) */
+@media (max-width: 420px) {
+  .hero-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .logo span {
+    font-size: 1.3rem;
+  }
+
+  .splash-sound-controls {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .btn-splash-action {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 
