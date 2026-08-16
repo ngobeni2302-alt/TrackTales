@@ -274,7 +274,22 @@ p {
   white-space: nowrap; /* Don't wrap to second line */
 }
 
-.nav-links a {
+.nav-pages-list {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+  list-style: none;
+  position: relative;
+  white-space: nowrap;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-pages-list li {
+  display: inline-flex;
+}
+
+.nav-pages-list a {
   text-decoration: none;
   color: #94a3b8;
   font-weight: 500;
@@ -285,8 +300,12 @@ p {
   border-radius: 4px;
 }
 
-.nav-links a:hover, .nav-links a.active {
+.nav-pages-list a:hover, .nav-pages-list a.active {
   color: var(--pure-white);
+}
+
+.nav-drawer-close, .nav-drawer-footer {
+  display: none;
 }
 
 /* Rule: Focus ring and active state NEVER share a color */
@@ -3432,17 +3451,15 @@ p {
     max-width: 82vw !important;
     height: 100vh !important;
     height: 100dvh !important;
-    background: rgba(7, 17, 30, 0.97) !important;
-    backdrop-filter: blur(24px) !important;
-    -webkit-backdrop-filter: blur(24px) !important;
+    background: #0b192c !important; /* Solid dark background for crisp text contrast */
     border-right: 1.5px solid var(--glass-border-highlight) !important;
     border-left: none !important;
-    box-shadow: 12px 0 40px rgba(0, 0, 0, 0.8) !important;
+    box-shadow: 12px 0 50px rgba(0, 0, 0, 0.9) !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: stretch !important;
     justify-content: space-between !important;
-    padding: 5rem 1.25rem 2rem !important;
+    padding: 4.5rem 1.25rem 2rem !important;
     gap: 1rem !important;
     z-index: 9999 !important;
     transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
