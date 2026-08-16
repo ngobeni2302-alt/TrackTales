@@ -3342,6 +3342,11 @@ p {
   }
 }
 
+/* Mobile Drawer Panel - hidden by default on desktop */
+.mobile-drawer-panel {
+  display: none;
+}
+
 /* ==========================================================================
    PHONE & TABLET RESPONSIVE RULES (max-width: 1024px)
    - Video Containment within phone & tablet width
@@ -3448,47 +3453,54 @@ p {
     border-color: var(--blue-light);
   }
 
-  /* Vertical Side Panel Navigation Drawer (Positioned LEFT) */
-  .nav-links {
+  /* Hide desktop nav-links on mobile/tablet */
+  .desktop-nav-links {
+    display: none !important;
+  }
+
+  /* ====== Mobile Drawer Panel (lives OUTSIDE header) ====== */
+  .mobile-drawer-panel {
     position: fixed !important;
     top: 0 !important;
-    left: -340px !important;
-    right: auto !important;
+    left: 0 !important;
     width: 285px !important;
     max-width: 82vw !important;
     height: 100vh !important;
     height: 100dvh !important;
-    background: #07111e !important; /* Solid dark background for crisp text contrast */
+    background: #07111e !important;
     border-right: 1.5px solid var(--glass-border-highlight) !important;
-    border-left: none !important;
     box-shadow: 12px 0 50px rgba(0, 0, 0, 0.9) !important;
     display: flex !important;
     flex-direction: column !important;
-    align-items: stretch !important;
     justify-content: space-between !important;
     padding: 4.5rem 1.25rem 2rem !important;
     gap: 1rem !important;
     z-index: 99999 !important;
-    transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.35s ease !important;
+    transform: translateX(-100%) !important;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
     overflow-y: auto !important;
-    white-space: normal !important;
     box-sizing: border-box !important;
-    visibility: hidden;
   }
 
-  .nav-links.active {
-    left: 0 !important;
-    right: auto !important;
-    visibility: visible !important;
+  .mobile-drawer-panel.active {
+    transform: translateX(0) !important;
   }
 
-  .nav-links li {
+  .mobile-drawer-links {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+
+  .mobile-drawer-links li {
     width: 100% !important;
     list-style: none !important;
-    display: block !important;
   }
 
-  .nav-links a {
+  .mobile-drawer-links a {
     display: flex !important;
     align-items: center !important;
     gap: 0.85rem !important;
@@ -3502,9 +3514,11 @@ p {
     transition: var(--transition-fast) !important;
     width: 100% !important;
     box-sizing: border-box !important;
+    text-decoration: none !important;
+    touch-action: manipulation;
   }
 
-  .nav-links a:hover, .nav-links a.active {
+  .mobile-drawer-links a:hover, .mobile-drawer-links a.active {
     color: var(--pure-white) !important;
     background: rgba(2, 132, 199, 0.25) !important;
     border-color: var(--glass-border-highlight) !important;

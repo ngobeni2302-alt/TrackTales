@@ -1091,29 +1091,29 @@
   // --- 2. Page Router Navigation with UI Systems Principles ---
   function setupPageNavigation() {
     const pageViews = document.querySelectorAll('.page-view');
-    const navLinks = document.querySelectorAll('.nav-links a.nav-page-link');
-    const navMenu = document.getElementById('nav-menu');
+    const navLinks = document.querySelectorAll('a.nav-page-link');
+    const desktopNavMenu = document.getElementById('nav-menu-desktop');
     const scrollContainer = document.getElementById('nav-scroll-container');
     const chevronLeft = document.getElementById('nav-chevron-left');
     const chevronRight = document.getElementById('nav-chevron-right');
     
-    // Create sliding active tab indicator element if it doesn't exist
+    // Create sliding active tab indicator element if it doesn't exist (desktop only)
     let navIndicator = document.getElementById('nav-slider-indicator');
-    if (!navIndicator && navMenu) {
+    if (!navIndicator && desktopNavMenu) {
       navIndicator = document.createElement('div');
       navIndicator.id = 'nav-slider-indicator';
       navIndicator.className = 'nav-slider-indicator';
-      navMenu.appendChild(navIndicator);
+      desktopNavMenu.appendChild(navIndicator);
     }
 
     const PAGE_ORDER = ['home', 'trains', 'attractions', 'games', 'about'];
     let currentPage = 'home';
 
     function updateNavIndicator(targetPage, isSlow) {
-      if (!navIndicator || !navMenu) return;
-      const activeLink = document.querySelector(`.nav-links a[data-page="${targetPage}"]`);
+      if (!navIndicator || !desktopNavMenu) return;
+      const activeLink = desktopNavMenu.querySelector(`a[data-page="${targetPage}"]`);
       if (activeLink) {
-        const menuRect = navMenu.getBoundingClientRect();
+        const menuRect = desktopNavMenu.getBoundingClientRect();
         const linkRect = activeLink.getBoundingClientRect();
 
         const offsetLeft = linkRect.left - menuRect.left;
@@ -1224,7 +1224,7 @@
         e.preventDefault();
         const nextIndex = (currentIndex + 1) % PAGE_ORDER.length;
         const targetPage = PAGE_ORDER[nextIndex];
-        const nextLink = document.querySelector(`.nav-links a[data-page="${targetPage}"]`);
+        const nextLink = document.querySelector(`a.nav-page-link[data-page="${targetPage}"]`);
         if (nextLink) nextLink.focus();
         switchPage(targetPage);
         window.location.hash = targetPage;
@@ -1232,21 +1232,21 @@
         e.preventDefault();
         const prevIndex = (currentIndex - 1 + PAGE_ORDER.length) % PAGE_ORDER.length;
         const targetPage = PAGE_ORDER[prevIndex];
-        const prevLink = document.querySelector(`.nav-links a[data-page="${targetPage}"]`);
+        const prevLink = document.querySelector(`a.nav-page-link[data-page="${targetPage}"]`);
         if (prevLink) prevLink.focus();
         switchPage(targetPage);
         window.location.hash = targetPage;
       } else if (e.key === 'Home') {
         e.preventDefault();
         const targetPage = PAGE_ORDER[0];
-        const firstLink = document.querySelector(`.nav-links a[data-page="${targetPage}"]`);
+        const firstLink = document.querySelector(`a.nav-page-link[data-page="${targetPage}"]`);
         if (firstLink) firstLink.focus();
         switchPage(targetPage);
         window.location.hash = targetPage;
       } else if (e.key === 'End') {
         e.preventDefault();
         const targetPage = PAGE_ORDER[PAGE_ORDER.length - 1];
-        const lastLink = document.querySelector(`.nav-links a[data-page="${targetPage}"]`);
+        const lastLink = document.querySelector(`a.nav-page-link[data-page="${targetPage}"]`);
         if (lastLink) lastLink.focus();
         switchPage(targetPage);
         window.location.hash = targetPage;
