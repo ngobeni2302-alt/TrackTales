@@ -208,6 +208,7 @@
       if (backdrop) backdrop.classList.add('active');
       if (mobileBtn) mobileBtn.setAttribute('aria-expanded', 'true');
       document.body.style.overflow = 'hidden';
+      if (window.lucide) lucide.createIcons();
     }
 
     function closeSidePanel() {
