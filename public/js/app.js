@@ -196,20 +196,56 @@
     }
   }
 
-  // --- Navigation Controls ---
+  // --- Navigation Controls (Desktop Slider & Mobile/Tablet Side Panel) ---
   function setupNavigation() {
     const mobileBtn = document.getElementById('mobile-toggle-btn');
     const navMenu = document.getElementById('nav-menu');
+    const closeBtn = document.getElementById('nav-drawer-close-btn');
+    const backdrop = document.getElementById('nav-drawer-backdrop');
+
+    function openSidePanel() {
+      if (navMenu) navMenu.classList.add('active');
+      if (backdrop) backdrop.classList.add('active');
+      if (mobileBtn) mobileBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidePanel() {
+      if (navMenu) navMenu.classList.remove('active');
+      if (backdrop) backdrop.classList.remove('active');
+      if (mobileBtn) mobileBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
 
     if (mobileBtn && navMenu) {
       mobileBtn.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-      });
-
-      navMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => navMenu.classList.remove('active'));
+        if (navMenu.classList.contains('active')) {
+          closeSidePanel();
+        } else {
+          openSidePanel();
+        }
       });
     }
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeSidePanel);
+    }
+
+    if (backdrop) {
+      backdrop.addEventListener('click', closeSidePanel);
+    }
+
+    if (navMenu) {
+      navMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeSidePanel);
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navMenu && navMenu.classList.contains('active')) {
+        closeSidePanel();
+      }
+    });
   }
 
   // --- Route Map Interactive Logic ---
@@ -612,25 +648,40 @@
 
   // --- Light / Dark Theme Toggler ---
   function setupThemeToggle() {
-    const toggleBtn = document.getElementById('theme-toggle');
-    if (!toggleBtn) return;
+    const desktopBtn = document.getElementById('theme-toggle');
+    const mobileBtn = document.getElementById('mobile-drawer-theme-btn');
+    const mobileLabel = document.getElementById('mobile-theme-label');
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+
+      if (desktopBtn) {
+        desktopBtn.innerHTML = theme === 'light' 
+          ? '<i data-lucide="moon"></i>' 
+          : '<i data-lucide="sun"></i>';
+      }
+
+      if (mobileBtn) {
+        const icon = theme === 'light' ? 'moon' : 'sun';
+        const labelText = theme === 'light' ? 'Dark Mode' : 'Light Mode';
+        mobileBtn.innerHTML = `<i data-lucide="${icon}"></i> <span>${labelText}</span>`;
+      }
+
+      if (window.lucide) lucide.createIcons();
+    }
 
     const savedTheme = localStorage.getItem('theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    toggleBtn.innerHTML = savedTheme === 'light' 
-      ? '<i data-lucide="moon"></i>' 
-      : '<i data-lucide="sun"></i>';
-    if (window.lucide) lucide.createIcons();
+    applyTheme(savedTheme);
 
-    toggleBtn.addEventListener('click', () => {
-      const nowTheme = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', nowTheme);
-      localStorage.setItem('theme', nowTheme);
-      toggleBtn.innerHTML = nowTheme === 'light' 
-        ? '<i data-lucide="moon"></i>' 
-        : '<i data-lucide="sun"></i>';
-      if (window.lucide) lucide.createIcons();
-    });
+    const handleToggle = () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
+      applyTheme(nextTheme);
+    };
+
+    if (desktopBtn) desktopBtn.addEventListener('click', handleToggle);
+    if (mobileBtn) mobileBtn.addEventListener('click', handleToggle);
   }
 
   // --- HTML2Canvas Ticket Exporter ---
@@ -1195,13 +1246,29 @@
   function setupLoginModal() {
     const modal = document.getElementById('login-modal');
     const openBtn = document.getElementById('btn-open-login');
+    const mobileOpenBtn = document.getElementById('mobile-drawer-login-btn');
     const closeBtn = document.getElementById('login-modal-close');
     const form = document.getElementById('login-form');
     const demoBtn = document.getElementById('btn-demo-login');
 
-    if (openBtn && modal) {
-      openBtn.addEventListener('click', () => modal.classList.add('active'));
+    let isAuthenticated = false;
+
+    function handleOpenLogin() {
+      if (isAuthenticated) {
+        // Sign Out action
+        isAuthenticated = false;
+        if (openBtn) openBtn.innerHTML = '<i data-lucide="user-check"></i> <span>Sign In</span>';
+        if (mobileOpenBtn) mobileOpenBtn.innerHTML = '<i data-lucide="user-check"></i> <span>Sign In</span>';
+        if (window.lucide) lucide.createIcons();
+        alert("You have been signed out of TrackTales Passenger Portal.");
+      } else {
+        if (modal) modal.classList.add('active');
+      }
     }
+
+    if (openBtn) openBtn.addEventListener('click', handleOpenLogin);
+    if (mobileOpenBtn) mobileOpenBtn.addEventListener('click', handleOpenLogin);
+
     if (closeBtn && modal) {
       closeBtn.addEventListener('click', () => modal.classList.remove('active'));
       modal.addEventListener('click', (e) => {
@@ -1227,8 +1294,10 @@
         if (label) label.textContent = "Authenticating Passenger...";
         setTimeout(() => {
           modal.classList.remove('active');
+          isAuthenticated = true;
           if (label) label.textContent = "Sign In to TrackTales";
-          if (openBtn) openBtn.innerHTML = '<i data-lucide="user-check"></i> <span>Welcome, Sipho!</span>';
+          if (openBtn) openBtn.innerHTML = '<i data-lucide="user-check"></i> <span>Welcome, Sipho! (Sign Out)</span>';
+          if (mobileOpenBtn) mobileOpenBtn.innerHTML = '<i data-lucide="log-out"></i> <span>Sign Out (Sipho)</span>';
           if (window.lucide) lucide.createIcons();
           alert("Welcome aboard TrackTales Passenger Portal, Sipho Ndlovu! Ticket reference TT-89A4B2C verified.");
         }, 800);

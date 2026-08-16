@@ -5,7 +5,10 @@
 2. **Rovos Rail** – The world's most opulent vintage Edwardian train safari.
 3. **Shosholoza Meyl** – The passionate, authentic passenger express connecting communities across Mzansi.
 
-Built with a **FastAPI** Python backend, **Vanilla JavaScript & CSS**, a **White-Dominant WCAG AAA Accessible Design System**, and seamless **Vercel** serverless readiness.
+Built with a **FastAPI** Python backend, **Vanilla JavaScript & CSS**, a **White-Dominant WCAG AAA Accessible Design System**, and live deployed production hosting on **Vercel**.
+
+> 🌐 **Live Web Application URL**: **[https://track-tales.vercel.app](https://track-tales.vercel.app)** *(or your Vercel deployment link)*  
+> 💻 **Local Development URL**: **[http://localhost:8000](http://localhost:8000)** (via `./start.sh`)
 
 ---
 
@@ -55,25 +58,37 @@ The site navigation panel is organized in the following order:
 
 ---
 
-## How to Run the Web Application
+## How to Access & Open the Web Application
 
-You can launch TrackTales in **three easy ways**:
-
-### Easiest 1-Click Launch (Recommended)
-
-Simply run:
-```bash
-./start.sh
-```
-*(This starts the server and automatically opens your web browser to `http://localhost:8000`)*
+TrackTales can be accessed directly online via the deployed web application or launched locally for development:
 
 ---
 
-### Option 1: FastAPI Python Backend Launch
+### 🌐 Live Deployed Web Application (Recommended)
 
-A Python virtual environment (`venv`) with all required packages (`fastapi`, `uvicorn`, `pydantic`) is pre-installed in the project directory:
+Now that TrackTales is deployed live on **Vercel**, you can open and use the web application directly in your browser:
 
-#### Method A (Using the pre-installed Virtual Environment):
+1. **Live Deployed Web Link**: **[https://track-tales.vercel.app](https://track-tales.vercel.app)** *(or your Vercel project URL)*
+2. **Cross-Device Access**: Open on any modern desktop browser, tablet, or mobile phone.
+3. **Instant Full Functionality**: Access all flagship train showcases, sights & attractions directory, interactive Mzansi Sight Solver games, and the digital souvenir boarding pass generator directly online.
+
+---
+
+### 💻 Local Development & Launch Options
+
+If you want to run or modify TrackTales locally on your machine, you can launch it using any of the following options:
+
+#### Option 1: Easiest 1-Click Launch (Recommended for Local Dev)
+Simply run the launcher script in your terminal:
+```bash
+./start.sh
+```
+*(Starts the Python server and automatically opens your default web browser to `http://localhost:8000`)*
+
+#### Option 2: FastAPI Python Backend Launch
+A Python virtual environment (`venv`) with all required packages (`fastapi`, `uvicorn`, `pydantic`) is pre-installed in the repository:
+
+##### Method A (Using the pre-installed Virtual Environment):
 ```bash
 ./venv/bin/python3 main.py
 ```
@@ -83,44 +98,37 @@ source venv/bin/activate
 python3 main.py
 ```
 
-#### Method B (Using system pip):
+##### Method B (Using system pip):
 ```bash
 pip3 install -r requirements.txt --break-system-packages
 python3 main.py
 ```
 
-#### Accessing the App:
+##### Accessing Local Server:
 - Web Application: **`http://localhost:8000`**
 - Interactive API Documentation (Swagger UI): **`http://localhost:8000/docs`**
 
----
-
-### Option 2: Node.js / JavaScript Server
-
+#### Option 3: Node.js / JavaScript Server Launch
 ```bash
 npm run dev:node
 ```
-*or using npx:*
+*Or using npx:*
 ```bash
 npx serve public -p 8000
 ```
 
----
-
-### Option 3: Direct Browser Launch (Offline Fallback Mode)
-
-TrackTales includes client-side fallback data. Double-click or open **`public/index.html`** directly in any modern browser without running a terminal server!
+#### Option 4: Direct Browser Offline Launch
+TrackTales includes full client-side fallback data. Double-click or open **`public/index.html`** directly in any web browser without starting a background terminal server!
 
 ---
 
-## Deployment to Vercel
+## Deployment & Hosting Details
 
-TrackTales is pre-configured for serverless deployment on **Vercel**:
+TrackTales is fully configured for serverless production deployment on **Vercel**:
 
-```bash
-vercel
-```
-Or connect this repository to the [Vercel Dashboard](https://vercel.com). Vercel will automatically detect `vercel.json` and deploy both the Python serverless API (`api/index.py`) and static frontend files (`public/`).
+- **Serverless API Engine**: `api/index.py` handles API requests (`/api/trains`, `/api/routes`, etc.) using Vercel Python serverless runtime.
+- **Static Asset Delivery**: `public/` directory assets are served with edge CDN performance and instant caching.
+- **Deploying Updates**: Run `vercel` or `vercel --prod` from the terminal, or connect this repository to your Vercel Dashboard for automatic deployment on push.
 
 ---
 

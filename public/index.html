@@ -73,28 +73,43 @@
       <nav class="nav-wrapper">
         <button class="nav-chevron left" id="nav-chevron-left" aria-label="Scroll navigation tabs left"><i data-lucide="chevron-left"></i></button>
         <div class="nav-scroll-container" id="nav-scroll-container">
-          <ul class="nav-links" id="nav-menu" role="tablist">
-            <li role="presentation"><a href="#home" class="nav-page-link active" data-page="home" id="tab-home" role="tab" aria-selected="true" tabindex="0"><i data-lucide="home" class="nav-icon"></i> Home</a></li>
-            <li role="presentation"><a href="#trains" class="nav-page-link" data-page="trains" id="tab-trains" role="tab" aria-selected="false" tabindex="-1"><i data-lucide="train" class="nav-icon"></i> Flagship Trains</a></li>
-            <li role="presentation"><a href="#attractions" class="nav-page-link" data-page="attractions" id="tab-attractions" role="tab" aria-selected="false" tabindex="-1"><i data-lucide="map-pin" class="nav-icon"></i> Attractions</a></li>
-            <li role="presentation"><a href="#games" class="nav-page-link" data-page="games" id="tab-games" role="tab" aria-selected="false" tabindex="-1"><i data-lucide="gamepad-2" class="nav-icon"></i> Sight Games</a></li>
-            <li role="presentation"><a href="#about" class="nav-page-link" data-page="about" id="tab-about" role="tab" aria-selected="false" tabindex="-1"><i data-lucide="info" class="nav-icon"></i> About</a></li>
-          </ul>
+          <div class="nav-links" id="nav-menu" role="tablist">
+            <button class="nav-drawer-close" id="nav-drawer-close-btn" aria-label="Close navigation menu"><i data-lucide="x"></i></button>
+            <ul class="nav-pages-list">
+              <li role="presentation"><a href="#home" class="nav-page-link active" data-page="home" id="tab-home" role="tab" aria-selected="true" tabindex="0"><i data-lucide="home" class="nav-icon"></i> Home</a></li>
+              <li role="presentation"><a href="#trains" class="nav-page-link" data-page="trains" id="tab-trains" role="tab" aria-selected="false" tabindex="-1"><i data-lucide="train" class="nav-icon"></i> Flagship Trains</a></li>
+              <li role="presentation"><a href="#attractions" class="nav-page-link" data-page="attractions" id="tab-attractions" role="tab" aria-selected="false" tabindex="-1"><i data-lucide="map-pin" class="nav-icon"></i> Attractions</a></li>
+              <li role="presentation"><a href="#games" class="nav-page-link" data-page="games" id="tab-games" role="tab" aria-selected="false" tabindex="-1"><i data-lucide="gamepad-2" class="nav-icon"></i> Sight Games</a></li>
+              <li role="presentation"><a href="#about" class="nav-page-link" data-page="about" id="tab-about" role="tab" aria-selected="false" tabindex="-1"><i data-lucide="info" class="nav-icon"></i> About</a></li>
+            </ul>
+
+            <!-- Lower Section of Mobile/Tablet Left Side Panel Drawer -->
+            <div class="nav-drawer-footer" id="nav-drawer-footer">
+              <button id="mobile-drawer-theme-btn" class="nav-drawer-btn" title="Toggle Light/Dark Theme">
+                <i data-lucide="sun"></i> <span id="mobile-theme-label">Light / Dark Mode</span>
+              </button>
+              <button id="mobile-drawer-login-btn" class="nav-drawer-btn nav-drawer-btn-primary" title="Passenger Sign In / Sign Out">
+                <i data-lucide="user-check"></i> <span id="mobile-login-label">Sign In</span>
+              </button>
+            </div>
+          </div>
         </div>
         <button class="nav-chevron right" id="nav-chevron-right" aria-label="Scroll navigation tabs right"><i data-lucide="chevron-right"></i></button>
       </nav>
 
-      <div style="display: flex; align-items: center; gap: 0.75rem;">
-        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle light/dark theme" title="Switch between Light and Dark Mode">
+      <div class="nav-actions-desktop" style="display: flex; align-items: center; gap: 0.75rem;">
+        <button id="theme-toggle" class="theme-toggle-btn desktop-only-btn" aria-label="Toggle light/dark theme" title="Switch between Light and Dark Mode">
           <i data-lucide="sun"></i>
         </button>
-        <button id="btn-open-login" class="nav-btn nav-btn-outline" title="Passenger Portal Sign In">
-          <i data-lucide="user-check"></i> <span>Sign In</span>
+        <button id="btn-open-login" class="nav-btn nav-btn-outline desktop-only-btn" title="Passenger Portal Sign In">
+          <i data-lucide="user-check"></i> <span id="desktop-login-label">Sign In</span>
         </button>
         <button class="mobile-toggle" id="mobile-toggle-btn" aria-label="Toggle navigation menu"><i data-lucide="menu"></i></button>
       </div>
     </div>
   </header>
+  <!-- Mobile & Tablet Side Panel Backdrop -->
+  <div class="nav-drawer-backdrop" id="nav-drawer-backdrop"></div>
 
   <!-- MAIN CONTENT CONTAINER WITH PAGE VIEWS -->
   <main id="main-content">
