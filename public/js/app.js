@@ -217,6 +217,8 @@
       document.body.style.overflow = '';
     }
 
+    window.closeMobileDrawer = closeSidePanel;
+
     if (mobileBtn && navMenu) {
       mobileBtn.addEventListener('click', () => {
         if (navMenu.classList.contains('active')) {
@@ -690,6 +692,16 @@
     if (desktopBtn) desktopBtn.addEventListener('click', toggleTheme);
     if (mobileCheckbox) {
       mobileCheckbox.addEventListener('change', () => {
+        const nextTheme = mobileCheckbox.checked ? 'light' : 'dark';
+        applyTheme(nextTheme);
+      });
+    }
+
+    const themeRow = document.querySelector('.nav-theme-toggle-row');
+    if (themeRow && mobileCheckbox) {
+      themeRow.addEventListener('click', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.closest('.theme-switch')) return;
+        mobileCheckbox.checked = !mobileCheckbox.checked;
         const nextTheme = mobileCheckbox.checked ? 'light' : 'dark';
         applyTheme(nextTheme);
       });
@@ -1239,6 +1251,9 @@
           e.preventDefault();
           switchPage(target);
           window.location.hash = target;
+          if (window.closeMobileDrawer) {
+            window.closeMobileDrawer();
+          }
         }
       });
     });
@@ -1266,6 +1281,9 @@
     let isAuthenticated = false;
 
     function handleOpenLogin() {
+      if (window.closeMobileDrawer) {
+        window.closeMobileDrawer();
+      }
       if (isAuthenticated) {
         // Sign Out action
         isAuthenticated = false;
