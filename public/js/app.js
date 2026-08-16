@@ -220,8 +220,17 @@
 
     window.closeMobileDrawer = closeSidePanel;
 
+    let lastToggleTime = 0;
+
     function handleToggle(e) {
-      if (e.type === 'touchstart') e.preventDefault();
+      const now = Date.now();
+      if (now - lastToggleTime < 400) return; // Prevent double-trigger from touchstart + click on mobile
+      lastToggleTime = now;
+
+      if (e && e.cancelable && e.type === 'touchstart') {
+        e.preventDefault();
+      }
+
       if (navMenu) {
         if (navMenu.classList.contains('active')) {
           closeSidePanel();
@@ -239,7 +248,7 @@
     if (closeBtn) {
       closeBtn.addEventListener('click', closeSidePanel);
       closeBtn.addEventListener('touchstart', (e) => {
-        e.preventDefault();
+        if (e.cancelable) e.preventDefault();
         closeSidePanel();
       }, { passive: false });
     }
@@ -247,7 +256,7 @@
     if (backdrop) {
       backdrop.addEventListener('click', closeSidePanel);
       backdrop.addEventListener('touchstart', (e) => {
-        e.preventDefault();
+        if (e.cancelable) e.preventDefault();
         closeSidePanel();
       }, { passive: false });
     }
