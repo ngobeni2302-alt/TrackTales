@@ -219,27 +219,42 @@
 
     window.closeMobileDrawer = closeSidePanel;
 
-    if (mobileBtn && navMenu) {
-      mobileBtn.addEventListener('click', () => {
+    function handleToggle(e) {
+      if (e.type === 'touchstart') e.preventDefault();
+      if (navMenu) {
         if (navMenu.classList.contains('active')) {
           closeSidePanel();
         } else {
           openSidePanel();
         }
-      });
+      }
+    }
+
+    if (mobileBtn && navMenu) {
+      mobileBtn.addEventListener('click', handleToggle);
+      mobileBtn.addEventListener('touchstart', handleToggle, { passive: false });
     }
 
     if (closeBtn) {
       closeBtn.addEventListener('click', closeSidePanel);
+      closeBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        closeSidePanel();
+      }, { passive: false });
     }
 
     if (backdrop) {
       backdrop.addEventListener('click', closeSidePanel);
+      backdrop.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        closeSidePanel();
+      }, { passive: false });
     }
 
     if (navMenu) {
       navMenu.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', closeSidePanel);
+        link.addEventListener('touchend', closeSidePanel);
       });
     }
 
