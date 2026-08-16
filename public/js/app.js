@@ -649,8 +649,9 @@
   // --- Light / Dark Theme Toggler ---
   function setupThemeToggle() {
     const desktopBtn = document.getElementById('theme-toggle');
-    const mobileBtn = document.getElementById('mobile-drawer-theme-btn');
-    const mobileLabel = document.getElementById('mobile-theme-label');
+    const mobileCheckbox = document.getElementById('mobile-theme-checkbox');
+    const mobileText = document.getElementById('mobile-theme-text');
+    const mobileIcon = document.getElementById('mobile-theme-icon');
 
     function applyTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
@@ -662,10 +663,16 @@
           : '<i data-lucide="sun"></i>';
       }
 
-      if (mobileBtn) {
-        const icon = theme === 'light' ? 'moon' : 'sun';
-        const labelText = theme === 'light' ? 'Dark Mode' : 'Light Mode';
-        mobileBtn.innerHTML = `<i data-lucide="${icon}"></i> <span>${labelText}</span>`;
+      if (mobileCheckbox) {
+        mobileCheckbox.checked = (theme === 'light');
+      }
+
+      if (mobileText) {
+        mobileText.textContent = theme === 'light' ? 'Light Mode' : 'Dark Mode';
+      }
+
+      if (mobileIcon) {
+        mobileIcon.setAttribute('data-lucide', theme === 'light' ? 'sun' : 'moon');
       }
 
       if (window.lucide) lucide.createIcons();
@@ -674,14 +681,19 @@
     const savedTheme = localStorage.getItem('theme') || 'dark';
     applyTheme(savedTheme);
 
-    const handleToggle = () => {
+    const toggleTheme = () => {
       const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
       const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
       applyTheme(nextTheme);
     };
 
-    if (desktopBtn) desktopBtn.addEventListener('click', handleToggle);
-    if (mobileBtn) mobileBtn.addEventListener('click', handleToggle);
+    if (desktopBtn) desktopBtn.addEventListener('click', toggleTheme);
+    if (mobileCheckbox) {
+      mobileCheckbox.addEventListener('change', () => {
+        const nextTheme = mobileCheckbox.checked ? 'light' : 'dark';
+        applyTheme(nextTheme);
+      });
+    }
   }
 
   // --- HTML2Canvas Ticket Exporter ---
