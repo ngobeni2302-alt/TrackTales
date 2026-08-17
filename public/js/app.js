@@ -1347,7 +1347,7 @@
           if (openBtn) openBtn.innerHTML = '<i data-lucide="user-check"></i> <span>Welcome, Sipho! (Sign Out)</span>';
           if (mobileOpenBtn) mobileOpenBtn.innerHTML = '<i data-lucide="log-out"></i> <span>Sign Out (Sipho)</span>';
           if (window.lucide) lucide.createIcons();
-          alert("Welcome aboard TrackTales Passenger Portal, Sipho Ndlovu! Ticket reference TT-89A4B2C verified.");
+          alert("Welcome aboard TrackTales Passenger Portal, Sipho Ndlovu! Login successful.");
         }, 800);
       });
     }

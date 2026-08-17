@@ -317,7 +317,14 @@ if os.path.exists(static_dir):
 def read_root():
     index_file = os.path.join(static_dir, "index.html")
     if os.path.exists(index_file):
-        return FileResponse(index_file)
+        return FileResponse(
+            index_file,
+            headers={
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Pragma": "no-cache",
+                "Expires": "0"
+            }
+        )
     return JSONResponse({"message": "TrackTales API active. Open /public/index.html or run via uvicorn."})
 
 if __name__ == "__main__":
