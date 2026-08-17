@@ -1656,6 +1656,42 @@ p {
   color: #0284c7 !important;
 }
 
+
+
+/* ====== Desktop Panel / Button Theme Overrides ====== */
+[data-theme="light"] .theme-toggle-btn {
+  background: rgba(15, 23, 42, 0.05) !important;
+  border-color: rgba(2, 132, 199, 0.15) !important;
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .theme-toggle-btn:hover {
+  background: rgba(15, 23, 42, 0.1) !important;
+  color: #0284c7 !important;
+  border-color: #0284c7 !important;
+}
+
+[data-theme="light"] .train-select-btn {
+  background: rgba(15, 23, 42, 0.04) !important;
+  color: #475569 !important;
+  border-color: rgba(2, 132, 199, 0.15) !important;
+}
+
+[data-theme="light"] .train-select-btn:hover {
+  background: rgba(15, 23, 42, 0.08) !important;
+  color: #0f172a !important;
+  border-color: #0284c7 !important;
+}
+
+[data-theme="light"] .train-select-btn.active {
+  background: linear-gradient(135deg, #0284c7, #38bdf8) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 6px 20px rgba(2, 132, 199, 0.25) !important;
+}
+
+
+
 /* ==========================================================================
    Screen Reader Only & Theme Toggle Button Styles
    ========================================================================== */
@@ -3690,7 +3726,82 @@ p {
     visibility: visible !important;
     pointer-events: auto !important;
   }
+
+  /* ====== Mobile Drawer Panel Light Mode Overrides ====== */
+  [data-theme="light"] .mobile-drawer-panel {
+    background: #ffffff !important;
+    border-right: 1.5px solid rgba(2, 132, 199, 0.15) !important;
+    box-shadow: 12px 0 50px rgba(15, 23, 42, 0.15) !important;
+  }
+
+  [data-theme="light"] .nav-drawer-close {
+    background: rgba(15, 23, 42, 0.05) !important;
+    border: 1px solid rgba(15, 23, 42, 0.1) !important;
+    color: #475569 !important;
+  }
+
+  [data-theme="light"] .nav-drawer-close:hover {
+    background: rgba(239, 68, 68, 0.15) !important;
+    border-color: #ef4444 !important;
+    color: #ef4444 !important;
+  }
+
+  [data-theme="light"] .mobile-drawer-links a {
+    color: #475569 !important;
+    background: rgba(15, 23, 42, 0.04) !important;
+  }
+
+  [data-theme="light"] .mobile-drawer-links a:hover,
+  [data-theme="light"] .mobile-drawer-links a.active {
+    color: #0284c7 !important;
+    background: rgba(2, 132, 199, 0.12) !important;
+    border-color: rgba(2, 132, 199, 0.25) !important;
+    box-shadow: 0 4px 15px rgba(2, 132, 199, 0.1) !important;
+  }
+
+  [data-theme="light"] .nav-theme-toggle-row {
+    background: rgba(15, 23, 42, 0.03) !important;
+    border: 1px solid rgba(15, 23, 42, 0.08) !important;
+    color: #0f172a !important;
+  }
+
+  [data-theme="light"] .theme-slider {
+    background-color: rgba(15, 23, 42, 0.12) !important;
+    border: 1px solid rgba(15, 23, 42, 0.1) !important;
+  }
+
+  [data-theme="light"] .theme-slider:before {
+    background-color: #ffffff !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  [data-theme="light"] .theme-switch input:checked + .theme-slider {
+    background-color: #0284c7 !important;
+    border-color: #38bdf8 !important;
+  }
+
+  [data-theme="light"] .nav-drawer-btn {
+    background: rgba(15, 23, 42, 0.04) !important;
+    border: 1px solid rgba(15, 23, 42, 0.08) !important;
+    color: #0f172a !important;
+  }
+
+  [data-theme="light"] .nav-drawer-btn:hover {
+    background: rgba(15, 23, 42, 0.08) !important;
+    border-color: #0284c7 !important;
+  }
+
+  [data-theme="light"] .nav-drawer-btn-primary {
+    background: linear-gradient(135deg, #0284c7, #0369a1) !important;
+    border-color: transparent !important;
+    color: #ffffff !important;
+  }
+
+  [data-theme="light"] .nav-drawer-btn-primary:hover {
+    box-shadow: 0 6px 20px rgba(2, 132, 199, 0.3) !important;
+  }
 }
+
 
 /* 4. Mobile Devices & Small Screens (max-width: 768px) */
 @media (max-width: 768px) {

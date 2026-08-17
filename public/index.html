@@ -12,12 +12,174 @@
   <meta property="og:type" content="website">
 
   <!-- Favicon & Stylesheet -->
-  <link rel="stylesheet" href="/static/css/styles.css">
-  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="/static/css/styles.css?v=1.1">
+  <link rel="stylesheet" href="./css/styles.css?v=1.1">
 
   <!-- External CDN Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+  <!-- Inline overrides to bypass aggressive mobile and desktop browser CSS caching -->
+  <style>
+    [data-theme="light"] .theme-toggle-btn {
+      background: rgba(15, 23, 42, 0.05) !important;
+      border-color: rgba(2, 132, 199, 0.15) !important;
+      color: #0f172a !important;
+    }
+
+    [data-theme="light"] .theme-toggle-btn:hover {
+      background: rgba(15, 23, 42, 0.1) !important;
+      color: #0284c7 !important;
+      border-color: #0284c7 !important;
+    }
+
+    [data-theme="light"] .train-select-btn {
+      background: rgba(15, 23, 42, 0.04) !important;
+      color: #475569 !important;
+      border-color: rgba(2, 132, 199, 0.15) !important;
+    }
+
+    [data-theme="light"] .train-select-btn:hover {
+      background: rgba(15, 23, 42, 0.08) !important;
+      color: #0f172a !important;
+      border-color: #0284c7 !important;
+    }
+
+    [data-theme="light"] .train-select-btn.active {
+      background: linear-gradient(135deg, #0284c7, #38bdf8) !important;
+      color: #ffffff !important;
+      border-color: transparent !important;
+      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.25) !important;
+    }
+
+    @media (max-width: 1024px) {
+      /* Mobile Drawer Panel - Light Mode */
+      [data-theme="light"] .mobile-drawer-panel {
+        background: #ffffff !important;
+        border-right: 1.5px solid rgba(2, 132, 199, 0.15) !important;
+        box-shadow: 12px 0 50px rgba(15, 23, 42, 0.15) !important;
+      }
+
+      /* Mobile Drawer Panel - Dark Mode */
+      [data-theme="dark"] .mobile-drawer-panel {
+        background: #07111e !important;
+        border-right: 1.5px solid rgba(56, 189, 248, 0.5) !important;
+        box-shadow: 12px 0 50px rgba(0, 0, 0, 0.9) !important;
+      }
+
+      /* Close Button */
+      [data-theme="light"] .nav-drawer-close {
+        background: rgba(15, 23, 42, 0.05) !important;
+        border: 1px solid rgba(15, 23, 42, 0.1) !important;
+        color: #475569 !important;
+      }
+      [data-theme="dark"] .nav-drawer-close {
+        background: rgba(255, 255, 255, 0.08) !important;
+        border: 1px solid rgba(56, 189, 248, 0.2) !important;
+        color: #ffffff !important;
+      }
+      .nav-drawer-close:hover {
+        background: rgba(239, 68, 68, 0.15) !important;
+        border-color: #ef4444 !important;
+        color: #ef4444 !important;
+      }
+
+      /* Drawer Links */
+      [data-theme="light"] .mobile-drawer-links a {
+        color: #475569 !important;
+        background: rgba(15, 23, 42, 0.04) !important;
+      }
+      [data-theme="dark"] .mobile-drawer-links a {
+        color: #94a3b8 !important;
+        background: rgba(255, 255, 255, 0.04) !important;
+      }
+      [data-theme="light"] .mobile-drawer-links a:hover,
+      [data-theme="light"] .mobile-drawer-links a.active {
+        color: #0284c7 !important;
+        background: rgba(2, 132, 199, 0.12) !important;
+        border-color: rgba(2, 132, 199, 0.25) !important;
+        box-shadow: 0 4px 15px rgba(2, 132, 199, 0.1) !important;
+      }
+      [data-theme="dark"] .mobile-drawer-links a:hover,
+      [data-theme="dark"] .mobile-drawer-links a.active {
+        color: #ffffff !important;
+        background: rgba(2, 132, 199, 0.25) !important;
+        border-color: rgba(56, 189, 248, 0.5) !important;
+        box-shadow: 0 4px 15px rgba(2, 132, 199, 0.25) !important;
+      }
+
+      /* Toggle Switch Row */
+      [data-theme="light"] .nav-theme-toggle-row {
+        background: rgba(15, 23, 42, 0.03) !important;
+        border: 1px solid rgba(15, 23, 42, 0.08) !important;
+        color: #0f172a !important;
+      }
+      [data-theme="dark"] .nav-theme-toggle-row {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(56, 189, 248, 0.2) !important;
+        color: #ffffff !important;
+      }
+
+      /* Switch Slider */
+      [data-theme="light"] .theme-slider {
+        background-color: rgba(15, 23, 42, 0.12) !important;
+        border: 1px solid rgba(15, 23, 42, 0.1) !important;
+      }
+      [data-theme="dark"] .theme-slider {
+        background-color: rgba(255, 255, 255, 0.15) !important;
+        border: 1px solid rgba(56, 189, 248, 0.2) !important;
+      }
+      .theme-slider:before {
+        background-color: #ffffff !important;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
+      }
+      [data-theme="light"] .theme-switch input:checked + .theme-slider {
+        background-color: #0284c7 !important;
+        border-color: #38bdf8 !important;
+      }
+      [data-theme="dark"] .theme-switch input:checked + .theme-slider {
+        background-color: #0284c7 !important;
+        border-color: #38bdf8 !important;
+      }
+
+      /* Action Buttons */
+      [data-theme="light"] .nav-drawer-btn {
+        background: rgba(15, 23, 42, 0.04) !important;
+        border: 1px solid rgba(15, 23, 42, 0.08) !important;
+        color: #0f172a !important;
+      }
+      [data-theme="dark"] .nav-drawer-btn {
+        background: rgba(255, 255, 255, 0.06) !important;
+        border: 1px solid rgba(56, 189, 248, 0.2) !important;
+        color: #ffffff !important;
+      }
+      [data-theme="light"] .nav-drawer-btn:hover {
+        background: rgba(15, 23, 42, 0.08) !important;
+        border-color: #0284c7 !important;
+      }
+      [data-theme="dark"] .nav-drawer-btn:hover {
+        background: rgba(255, 255, 255, 0.12) !important;
+        border-color: #38bdf8 !important;
+      }
+
+      /* Primary Button */
+      [data-theme="light"] .nav-drawer-btn-primary {
+        background: linear-gradient(135deg, #0284c7, #0369a1) !important;
+        border-color: transparent !important;
+        color: #ffffff !important;
+      }
+      [data-theme="dark"] .nav-drawer-btn-primary {
+        background: linear-gradient(135deg, #0284c7, #0284c7) !important;
+        border-color: rgba(255, 255, 255, 0.2) !important;
+        color: #ffffff !important;
+      }
+      [data-theme="light"] .nav-drawer-btn-primary:hover {
+        box-shadow: 0 6px 20px rgba(2, 132, 199, 0.3) !important;
+      }
+      [data-theme="dark"] .nav-drawer-btn-primary:hover {
+        box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4) !important;
+      }
+    }
+  </style>
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
@@ -108,16 +270,16 @@
     </ul>
 
     <div class="nav-drawer-footer" id="nav-drawer-footer">
-      <div class="nav-theme-toggle-row">
+      <label class="nav-theme-toggle-row" title="Toggle Light/Dark Theme" style="cursor: pointer;">
         <span class="theme-toggle-label">
-          <i data-lucide="moon" id="mobile-theme-icon"></i>
+          <span id="mobile-theme-icon-container"><i data-lucide="moon"></i></span>
           <span id="mobile-theme-text">Dark Mode</span>
         </span>
-        <label class="theme-switch" for="mobile-theme-checkbox" title="Toggle Light/Dark Theme">
+        <span class="theme-switch">
           <input type="checkbox" id="mobile-theme-checkbox">
           <span class="theme-slider"></span>
-        </label>
-      </div>
+        </span>
+      </label>
 
       <button id="mobile-drawer-login-btn" class="nav-drawer-btn nav-drawer-btn-primary" title="Passenger Sign In / Sign Out">
         <i data-lucide="user-check"></i> <span id="mobile-login-label">Sign In</span>
@@ -608,10 +770,7 @@
           <input type="email" id="login-email" class="form-control" placeholder="e.g. sipho.ndlovu@tracktales.co.za" required value="sipho.ndlovu@tracktales.co.za">
         </div>
 
-        <div class="form-group">
-          <label for="login-ticket-id">Ticket ID / Reference (Optional)</label>
-          <input type="text" id="login-ticket-id" class="form-control" placeholder="e.g. TT-89A4B2C" value="TT-89A4B2C">
-        </div>
+
 
         <div class="form-group">
           <label for="login-password">Password</label>
@@ -624,10 +783,7 @@
         </button>
       </form>
 
-      <div class="login-demo-shortcut">
-        <span>Quick Demo Sign In:</span>
-        <button type="button" class="badge badge-green" id="btn-demo-login" style="cursor: pointer; border: 1px solid var(--primary-green);">Autofill Demo Passenger</button>
-      </div>
+
     </div>
   </div>
 
@@ -730,7 +886,7 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="/static/js/app.js"></script>
-  <script src="./js/app.js"></script>
+  <script src="/static/js/app.js?v=1.1"></script>
+  <script src="./js/app.js?v=1.1"></script>
 </body>
 </html>

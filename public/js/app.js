@@ -678,7 +678,7 @@
     const desktopBtn = document.getElementById('theme-toggle');
     const mobileCheckbox = document.getElementById('mobile-theme-checkbox');
     const mobileText = document.getElementById('mobile-theme-text');
-    const mobileIcon = document.getElementById('mobile-theme-icon');
+    const mobileIconContainer = document.getElementById('mobile-theme-icon-container');
 
     function applyTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
@@ -698,8 +698,10 @@
         mobileText.textContent = theme === 'light' ? 'Light Mode' : 'Dark Mode';
       }
 
-      if (mobileIcon) {
-        mobileIcon.setAttribute('data-lucide', theme === 'light' ? 'sun' : 'moon');
+      if (mobileIconContainer) {
+        mobileIconContainer.innerHTML = theme === 'light' 
+          ? '<i data-lucide="sun"></i>' 
+          : '<i data-lucide="moon"></i>';
       }
 
       if (window.lucide) lucide.createIcons();
@@ -722,15 +724,6 @@
       });
     }
 
-    const themeRow = document.querySelector('.nav-theme-toggle-row');
-    if (themeRow && mobileCheckbox) {
-      themeRow.addEventListener('click', (e) => {
-        if (e.target.tagName === 'INPUT' || e.target.closest('.theme-switch')) return;
-        mobileCheckbox.checked = !mobileCheckbox.checked;
-        const nextTheme = mobileCheckbox.checked ? 'light' : 'dark';
-        applyTheme(nextTheme);
-      });
-    }
   }
 
   // --- HTML2Canvas Ticket Exporter ---
