@@ -1364,6 +1364,16 @@
       });
     });
 
+    const initialPrefill = () => {
+      const lastUser = localStorage.getItem('last_user') || 'sipho.ndlovu@tracktales.co.za';
+      const lastPass = localStorage.getItem('last_password') || 'tracktales2026';
+      const emailInput = document.getElementById('login-email');
+      const passInput = document.getElementById('login-password');
+      if (emailInput) emailInput.value = lastUser;
+      if (passInput) passInput.value = lastPass;
+    };
+    initialPrefill();
+
     function handleOpenLogin() {
       if (window.closeMobileDrawer) {
         window.closeMobileDrawer();
@@ -1386,6 +1396,7 @@
         document.querySelectorAll('.btn-toggle-password .eye-icon').forEach(icon => {
           icon.setAttribute('data-lucide', 'eye');
         });
+        initialPrefill();
         if (window.lucide) lucide.createIcons();
         if (modal) modal.classList.add('active');
       }
@@ -1424,17 +1435,16 @@
         // Register new user
         users[email] = password;
         localStorage.setItem('tracktales_users', JSON.stringify(users));
+        localStorage.setItem('last_user', email);
+        localStorage.setItem('last_password', password);
 
         alert("Account created successfully! You are now logged in.");
 
         modal.classList.remove('active');
         isAuthenticated = true;
 
-        const displayName = email.split('@')[0];
-        const formattedName = displayName.charAt(0).toUpperCase() + displayName.slice(1);
-
-        if (openBtn) openBtn.innerHTML = `<i data-lucide="user-check"></i> <span>Welcome, ${formattedName}! (Sign Out)</span>`;
-        if (mobileOpenBtn) mobileOpenBtn.innerHTML = `<i data-lucide="log-out"></i> <span>Sign Out (${formattedName})</span>`;
+        if (openBtn) openBtn.innerHTML = `<i data-lucide="user-check"></i> <span>Sign Out</span>`;
+        if (mobileOpenBtn) mobileOpenBtn.innerHTML = `<i data-lucide="log-out"></i> <span>Sign Out</span>`;
         if (window.lucide) lucide.createIcons();
 
         signupForm.reset();
@@ -1463,15 +1473,15 @@
           modal.classList.remove('active');
           isAuthenticated = true;
 
-          const displayName = email.split('@')[0];
-          const formattedName = displayName.charAt(0).toUpperCase() + displayName.slice(1);
+          localStorage.setItem('last_user', email);
+          localStorage.setItem('last_password', password);
 
           if (label) label.textContent = "Sign In to TrackTales";
-          if (openBtn) openBtn.innerHTML = `<i data-lucide="user-check"></i> <span>Welcome, ${formattedName}! (Sign Out)</span>`;
-          if (mobileOpenBtn) mobileOpenBtn.innerHTML = `<i data-lucide="log-out"></i> <span>Sign Out (${formattedName})</span>`;
+          if (openBtn) openBtn.innerHTML = `<i data-lucide="user-check"></i> <span>Sign Out</span>`;
+          if (mobileOpenBtn) mobileOpenBtn.innerHTML = `<i data-lucide="log-out"></i> <span>Sign Out</span>`;
           if (window.lucide) lucide.createIcons();
           
-          alert(`Welcome aboard TrackTales Passenger Portal, ${formattedName}! Login successful.`);
+          alert(`Welcome aboard TrackTales Passenger Portal! Login successful.`);
         }, 800);
       });
     }
