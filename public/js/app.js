@@ -1376,9 +1376,9 @@
         if (window.lucide) lucide.createIcons();
         alert("You have been signed out of TrackTales Passenger Portal.");
       } else {
-        // Default modal to sign-in section when opening
-        if (loginSection) loginSection.style.display = 'block';
-        if (signupSection) signupSection.style.display = 'none';
+        // Default modal to sign-up section when opening
+        if (loginSection) loginSection.style.display = 'none';
+        if (signupSection) signupSection.style.display = 'block';
         // Reset password input types to password
         document.querySelectorAll('.password-group input').forEach(input => {
           input.type = 'password';
