@@ -201,6 +201,17 @@
         box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4) !important;
       }
     }
+
+    /* Password Toggle Styles */
+    .btn-toggle-password {
+      transition: color 0.2s ease !important;
+    }
+    .btn-toggle-password:hover {
+      color: #38bdf8 !important;
+    }
+    .btn-toggle-password:focus {
+      outline: none !important;
+    }
   </style>
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -778,32 +789,91 @@
     <div class="modal-content login-modal-content">
       <button class="modal-close" id="login-modal-close" aria-label="Close login modal"><i data-lucide="x"></i></button>
 
-      <div class="login-header">
-        <div class="login-train-icon">
-          <i data-lucide="train"></i>
+      <!-- SIGN IN SECTION -->
+      <div id="login-section">
+        <div class="login-header">
+          <div class="login-train-icon">
+            <i data-lucide="train"></i>
+          </div>
+          <h2 id="login-modal-title">TrackTales <span class="text-gradient-green">Passenger Portal</span></h2>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.3rem;">Sign in to access your digital tickets, saved itinerary, and journey passport.</p>
         </div>
-        <h2 id="login-modal-title">TrackTales <span class="text-gradient-green">Passenger Portal</span></h2>
-        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.3rem;">Sign in to access your digital tickets, saved itinerary, and journey passport.</p>
+
+        <form id="login-form" style="margin-top: 1.5rem;">
+          <div class="form-group">
+            <label for="login-email">Passenger Email Address</label>
+            <input type="email" id="login-email" class="form-control" placeholder="e.g. sipho.ndlovu@tracktales.co.za" required value="sipho.ndlovu@tracktales.co.za">
+          </div>
+
+          <div class="form-group password-group" style="position: relative; margin-top: 1rem;">
+            <label for="login-password">Password</label>
+            <div style="position: relative; display: flex; align-items: center;">
+              <input type="password" id="login-password" class="form-control" placeholder="••••••••" required value="tracktales2026" style="padding-right: 2.5rem; width: 100%;">
+              <button type="button" class="btn-toggle-password" style="position: absolute; right: 10px; background: transparent; border: none; color: var(--text-muted); cursor: pointer;" title="Show/Hide Password">
+                <i data-lucide="eye" class="eye-icon"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1.5rem;" id="btn-login-submit">
+            <i data-lucide="log-in"></i>
+            <span id="login-btn-label">Sign In to TrackTales</span>
+          </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 1.2rem; font-size: 0.9rem; color: var(--text-muted);">
+          <span>New passenger? </span>
+          <button type="button" id="toggle-to-signup" style="background: transparent; border: none; color: var(--primary-blue); cursor: pointer; text-decoration: underline; font-weight: 600;">Create Account</button>
+        </div>
       </div>
 
-      <form id="login-form" style="margin-top: 1.5rem;">
-        <div class="form-group">
-          <label for="login-email">Passenger Email Address</label>
-          <input type="email" id="login-email" class="form-control" placeholder="e.g. sipho.ndlovu@tracktales.co.za" required value="sipho.ndlovu@tracktales.co.za">
+      <!-- SIGN UP SECTION (hidden by default) -->
+      <div id="signup-section" style="display: none;">
+        <div class="login-header">
+          <div class="login-train-icon">
+            <i data-lucide="user-plus"></i>
+          </div>
+          <h2>Create Passenger <span class="text-gradient-green">Account</span></h2>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.3rem;">Register your email and password to start your TrackTales journey.</p>
         </div>
 
+        <form id="signup-form" style="margin-top: 1.5rem;">
+          <div class="form-group">
+            <label for="signup-email">Passenger Email Address</label>
+            <input type="email" id="signup-email" class="form-control" placeholder="e.g. passenger@tracktales.co.za" required>
+          </div>
 
+          <div class="form-group password-group" style="position: relative; margin-top: 1rem;">
+            <label for="signup-password">Create Password</label>
+            <div style="position: relative; display: flex; align-items: center;">
+              <input type="password" id="signup-password" class="form-control" placeholder="••••••••" required style="padding-right: 2.5rem; width: 100%;">
+              <button type="button" class="btn-toggle-password" style="position: absolute; right: 10px; background: transparent; border: none; color: var(--text-muted); cursor: pointer;" title="Show/Hide Password">
+                <i data-lucide="eye" class="eye-icon"></i>
+              </button>
+            </div>
+          </div>
 
-        <div class="form-group">
-          <label for="login-password">Password</label>
-          <input type="password" id="login-password" class="form-control" placeholder="••••••••" required value="tracktales2026">
+          <div class="form-group password-group" style="position: relative; margin-top: 1rem;">
+            <label for="signup-confirm-password">Confirm Password</label>
+            <div style="position: relative; display: flex; align-items: center;">
+              <input type="password" id="signup-confirm-password" class="form-control" placeholder="••••••••" required style="padding-right: 2.5rem; width: 100%;">
+              <button type="button" class="btn-toggle-password" style="position: absolute; right: 10px; background: transparent; border: none; color: var(--text-muted); cursor: pointer;" title="Show/Hide Password">
+                <i data-lucide="eye" class="eye-icon"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1.5rem;">
+            <i data-lucide="user-check"></i>
+            <span>Register & Sign In</span>
+          </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 1.2rem; font-size: 0.9rem; color: var(--text-muted);">
+          <span>Already have an account? </span>
+          <button type="button" id="toggle-to-login" style="background: transparent; border: none; color: var(--primary-blue); cursor: pointer; text-decoration: underline; font-weight: 600;">Sign In</button>
         </div>
-
-        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;" id="btn-login-submit">
-          <i data-lucide="log-in"></i>
-          <span id="login-btn-label">Sign In to TrackTales</span>
-        </button>
-      </form>
+      </div>
 
 
     </div>

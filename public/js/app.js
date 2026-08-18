@@ -1316,9 +1316,53 @@
     const mobileOpenBtn = document.getElementById('mobile-drawer-login-btn');
     const closeBtn = document.getElementById('login-modal-close');
     const form = document.getElementById('login-form');
-    const demoBtn = document.getElementById('btn-demo-login');
 
     let isAuthenticated = false;
+
+    // Initialize default credentials in localStorage if not already present
+    if (!localStorage.getItem('tracktales_users')) {
+      const defaultUsers = {
+        'sipho.ndlovu@tracktales.co.za': 'tracktales2026'
+      };
+      localStorage.setItem('tracktales_users', JSON.stringify(defaultUsers));
+    }
+
+    const loginSection = document.getElementById('login-section');
+    const signupSection = document.getElementById('signup-section');
+    const toSignupBtn = document.getElementById('toggle-to-signup');
+    const toLoginBtn = document.getElementById('toggle-to-login');
+
+    if (toSignupBtn && loginSection && signupSection) {
+      toSignupBtn.addEventListener('click', () => {
+        loginSection.style.display = 'none';
+        signupSection.style.display = 'block';
+      });
+    }
+
+    if (toLoginBtn && loginSection && signupSection) {
+      toLoginBtn.addEventListener('click', () => {
+        signupSection.style.display = 'none';
+        loginSection.style.display = 'block';
+      });
+    }
+
+    // Set up password visibility toggling
+    document.querySelectorAll('.btn-toggle-password').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const input = btn.previousElementSibling;
+        const icon = btn.querySelector('.eye-icon');
+        if (input && icon) {
+          if (input.type === 'password') {
+            input.type = 'text';
+            icon.setAttribute('data-lucide', 'eye-off');
+          } else {
+            input.type = 'password';
+            icon.setAttribute('data-lucide', 'eye');
+          }
+          if (window.lucide) lucide.createIcons();
+        }
+      });
+    });
 
     function handleOpenLogin() {
       if (window.closeMobileDrawer) {
@@ -1332,6 +1376,17 @@
         if (window.lucide) lucide.createIcons();
         alert("You have been signed out of TrackTales Passenger Portal.");
       } else {
+        // Default modal to sign-in section when opening
+        if (loginSection) loginSection.style.display = 'block';
+        if (signupSection) signupSection.style.display = 'none';
+        // Reset password input types to password
+        document.querySelectorAll('.password-group input').forEach(input => {
+          input.type = 'password';
+        });
+        document.querySelectorAll('.btn-toggle-password .eye-icon').forEach(icon => {
+          icon.setAttribute('data-lucide', 'eye');
+        });
+        if (window.lucide) lucide.createIcons();
         if (modal) modal.classList.add('active');
       }
     }
@@ -1346,30 +1401,77 @@
       });
     }
 
-    if (demoBtn) {
-      demoBtn.addEventListener('click', () => {
-        const emailInput = document.getElementById('login-email');
-        const ticketInput = document.getElementById('login-ticket-id');
-        const passInput = document.getElementById('login-password');
-        if (emailInput) emailInput.value = 'sipho.ndlovu@tracktales.co.za';
-        if (ticketInput) ticketInput.value = 'TT-89A4B2C';
-        if (passInput) passInput.value = 'tracktales2026';
+    // Sign Up form handler
+    const signupForm = document.getElementById('signup-form');
+    if (signupForm) {
+      signupForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('signup-email').value.trim().toLowerCase();
+        const password = document.getElementById('signup-password').value;
+        const confirmPassword = document.getElementById('signup-confirm-password').value;
+
+        if (password !== confirmPassword) {
+          alert("Passwords do not match! Please check and try again.");
+          return;
+        }
+
+        const users = JSON.parse(localStorage.getItem('tracktales_users') || '{}');
+        if (users[email]) {
+          alert("An account with this email address already exists!");
+          return;
+        }
+
+        // Register new user
+        users[email] = password;
+        localStorage.setItem('tracktales_users', JSON.stringify(users));
+
+        alert("Account created successfully! You are now logged in.");
+
+        modal.classList.remove('active');
+        isAuthenticated = true;
+
+        const displayName = email.split('@')[0];
+        const formattedName = displayName.charAt(0).toUpperCase() + displayName.slice(1);
+
+        if (openBtn) openBtn.innerHTML = `<i data-lucide="user-check"></i> <span>Welcome, ${formattedName}! (Sign Out)</span>`;
+        if (mobileOpenBtn) mobileOpenBtn.innerHTML = `<i data-lucide="log-out"></i> <span>Sign Out (${formattedName})</span>`;
+        if (window.lucide) lucide.createIcons();
+
+        signupForm.reset();
       });
     }
 
+    // Sign In form handler
     if (form) {
       form.addEventListener('submit', (e) => {
         e.preventDefault();
+        const email = document.getElementById('login-email').value.trim().toLowerCase();
+        const password = document.getElementById('login-password').value;
         const label = document.getElementById('login-btn-label');
+
         if (label) label.textContent = "Authenticating Passenger...";
+
         setTimeout(() => {
+          const users = JSON.parse(localStorage.getItem('tracktales_users') || '{}');
+          
+          if (!users[email] || users[email] !== password) {
+            alert("Invalid email or password! Please try again.");
+            if (label) label.textContent = "Sign In to TrackTales";
+            return;
+          }
+
           modal.classList.remove('active');
           isAuthenticated = true;
+
+          const displayName = email.split('@')[0];
+          const formattedName = displayName.charAt(0).toUpperCase() + displayName.slice(1);
+
           if (label) label.textContent = "Sign In to TrackTales";
-          if (openBtn) openBtn.innerHTML = '<i data-lucide="user-check"></i> <span>Welcome, Sipho! (Sign Out)</span>';
-          if (mobileOpenBtn) mobileOpenBtn.innerHTML = '<i data-lucide="log-out"></i> <span>Sign Out (Sipho)</span>';
+          if (openBtn) openBtn.innerHTML = `<i data-lucide="user-check"></i> <span>Welcome, ${formattedName}! (Sign Out)</span>`;
+          if (mobileOpenBtn) mobileOpenBtn.innerHTML = `<i data-lucide="log-out"></i> <span>Sign Out (${formattedName})</span>`;
           if (window.lucide) lucide.createIcons();
-          alert("Welcome aboard TrackTales Passenger Portal, Sipho Ndlovu! Login successful.");
+          
+          alert(`Welcome aboard TrackTales Passenger Portal, ${formattedName}! Login successful.`);
         }, 800);
       });
     }
