@@ -1192,10 +1192,39 @@
           page.style.transition = '';
           if (page.id === 'page-' + targetPage) {
             page.classList.add('active');
-            if (isSlow) {
-              page.classList.add('slide-left-to-right-slow');
+            
+            // Motion One page transition fade-in
+            if (window.motion) {
+              window.motion.animate(page, { opacity: [0, 1], y: [12, 0] }, { duration: 0.35, ease: "ease-out" });
+              
+              // If page is trains, stagger trains card cascade
+              if (targetPage === 'trains') {
+                const trainCards = page.querySelectorAll('.train-card');
+                if (trainCards.length > 0) {
+                  window.motion.animate(
+                    trainCards,
+                    { opacity: [0, 1], y: [20, 0] },
+                    { delay: window.motion.stagger(0.08), duration: 0.45, ease: "ease-out" }
+                  );
+                }
+              }
+              // If page is attractions, stagger attractions card cascade
+              if (targetPage === 'attractions') {
+                const attractionCards = page.querySelectorAll('.attraction-card');
+                if (attractionCards.length > 0) {
+                  window.motion.animate(
+                    attractionCards,
+                    { opacity: [0, 1], y: [20, 0] },
+                    { delay: window.motion.stagger(0.06), duration: 0.45, ease: "ease-out" }
+                  );
+                }
+              }
             } else {
-              page.classList.add('slide-right-to-left-fast');
+              if (isSlow) {
+                page.classList.add('slide-left-to-right-slow');
+              } else {
+                page.classList.add('slide-right-to-left-fast');
+              }
             }
           } else {
             page.classList.remove('active');
@@ -1374,6 +1403,23 @@
     };
     initialPrefill();
 
+    const handleCloseLogin = () => {
+      if (window.motion) {
+        const content = modal.querySelector('.modal-content');
+        Promise.all([
+          window.motion.animate(content, { opacity: 0, scale: 0.94, y: 15 }, { duration: 0.2 }).finished,
+          window.motion.animate(modal, { opacity: 0 }, { duration: 0.18 }).finished
+        ]).then(() => {
+          modal.classList.remove('active');
+          modal.style.opacity = '';
+          content.style.opacity = '';
+          content.style.transform = '';
+        });
+      } else {
+        modal.classList.remove('active');
+      }
+    };
+
     function handleOpenLogin() {
       if (window.closeMobileDrawer) {
         window.closeMobileDrawer();
@@ -1398,7 +1444,19 @@
         });
         initialPrefill();
         if (window.lucide) lucide.createIcons();
-        if (modal) modal.classList.add('active');
+        
+        if (modal) {
+          modal.classList.add('active');
+          if (window.motion) {
+            const content = modal.querySelector('.modal-content');
+            window.motion.animate(modal, { opacity: [0, 1] }, { duration: 0.25 });
+            window.motion.animate(
+              content,
+              { opacity: [0, 1], scale: [0.93, 1], y: [25, 0] },
+              { duration: 0.45, ease: window.motion.spring({ stiffness: 140, damping: 16 }) }
+            );
+          }
+        }
       }
     }
 
@@ -1406,9 +1464,9 @@
     if (mobileOpenBtn) mobileOpenBtn.addEventListener('click', handleOpenLogin);
 
     if (closeBtn && modal) {
-      closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+      closeBtn.addEventListener('click', handleCloseLogin);
       modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.classList.remove('active');
+        if (e.target === modal) handleCloseLogin();
       });
     }
 
@@ -1440,7 +1498,7 @@
 
         alert("Account created successfully! You are now logged in.");
 
-        modal.classList.remove('active');
+        handleCloseLogin();
         isAuthenticated = true;
 
         if (openBtn) openBtn.innerHTML = `<i data-lucide="user-check"></i> <span>Sign Out</span>`;
@@ -1470,7 +1528,7 @@
             return;
           }
 
-          modal.classList.remove('active');
+          handleCloseLogin();
           isAuthenticated = true;
 
           localStorage.setItem('last_user', email);
