@@ -1276,6 +1276,13 @@
       });
     });
 
+    // Redirect clean URL paths (like /about) to hash routes for SPA compatibility
+    const cleanPath = window.location.pathname.replace(/^\/|\/$/g, '');
+    const validPages = ['home', 'trains', 'attractions', 'games', 'about'];
+    if (validPages.includes(cleanPath)) {
+      window.location.hash = '#' + cleanPath;
+    }
+
     if (window.location.hash) {
       switchPage(window.location.hash);
     }
