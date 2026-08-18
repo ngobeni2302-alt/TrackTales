@@ -1276,11 +1276,26 @@
       });
     });
 
-    // Redirect clean URL paths (like /about) to hash routes for SPA compatibility
-    const cleanPath = window.location.pathname.replace(/^\/|\/$/g, '');
-    const validPages = ['home', 'trains', 'attractions', 'games', 'about'];
-    if (validPages.includes(cleanPath)) {
-      window.location.hash = '#' + cleanPath;
+    // Redirect clean URL paths to their corresponding hash routes for SPA compatibility
+    const cleanPath = window.location.pathname.replace(/^\/|\/$/g, '').toLowerCase();
+    const hash = window.location.hash;
+    
+    const validPagesMap = {
+      'home': 'home',
+      'trains': 'trains',
+      'attractions': 'attractions',
+      'games': 'games',
+      'sightgames': 'games',
+      'slightgames': 'games',
+      'about': 'about'
+    };
+
+    if (cleanPath in validPagesMap) {
+      const targetHash = validPagesMap[cleanPath];
+      // If there is no hash, set the correct hash to trigger the SPA router
+      if (!hash) {
+        window.location.hash = '#' + targetHash;
+      }
     }
 
     if (window.location.hash) {
