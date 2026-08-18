@@ -1299,7 +1299,8 @@
           e.preventDefault();
           e.stopPropagation();
           switchPage(target);
-          window.location.hash = target;
+          // Set base SPA hash route (e.g. /#trains instead of keeping subpath)
+          window.location.href = '/#' + target;
           if (window.closeMobileDrawer) {
             window.closeMobileDrawer();
           }
@@ -1307,7 +1308,7 @@
       });
     });
 
-    // Redirect clean URL paths to their corresponding hash routes for SPA compatibility
+    // Redirect clean URL paths to base SPA hash routes for clean navigation
     const cleanPath = window.location.pathname.replace(/^\/|\/$/g, '').toLowerCase();
     const hash = window.location.hash;
     
@@ -1323,9 +1324,9 @@
 
     if (cleanPath in validPagesMap) {
       const targetHash = validPagesMap[cleanPath];
-      // If there is no hash, set the correct hash to trigger the SPA router
-      if (!hash) {
-        window.location.hash = '#' + targetHash;
+      // If we are not already on the base path with the correct hash, redirect
+      if (cleanPath !== '' || hash !== '#' + targetHash) {
+        window.location.replace('/#' + targetHash);
       }
     }
 
