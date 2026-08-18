@@ -1291,11 +1291,13 @@
     window.addEventListener('resize', () => updateNavIndicator(currentPage, true));
     setTimeout(() => updateNavIndicator(currentPage, true), 100);
 
-    navLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        const target = link.getAttribute('data-page');
+    // Bind click events globally to all page links and about-card showcase cards
+    document.querySelectorAll('.nav-page-link, .about-card').forEach(item => {
+      item.addEventListener('click', (e) => {
+        const target = item.getAttribute('data-page');
         if (target) {
           e.preventDefault();
+          e.stopPropagation();
           switchPage(target);
           window.location.hash = target;
           if (window.closeMobileDrawer) {
