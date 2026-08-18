@@ -1365,8 +1365,8 @@
     });
 
     const initialPrefill = () => {
-      const lastUser = localStorage.getItem('last_user') || 'sipho.ndlovu@tracktales.co.za';
-      const lastPass = localStorage.getItem('last_password') || 'tracktales2026';
+      const lastUser = localStorage.getItem('last_user') || '';
+      const lastPass = localStorage.getItem('last_password') || '';
       const emailInput = document.getElementById('login-email');
       const passInput = document.getElementById('login-password');
       if (emailInput) emailInput.value = lastUser;
