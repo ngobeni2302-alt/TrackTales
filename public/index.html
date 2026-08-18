@@ -213,8 +213,11 @@
       outline: none !important;
     }
   </style>
-  <!-- Motion One Animation Library -->
-  <script src="https://cdn.jsdelivr.net/npm/motion@10.16.2/dist/motion.min.js"></script>
+  <!-- Motion One Animation Library Shim -->
+  <script type="module">
+    import { animate, spring, stagger } from "https://cdn.jsdelivr.net/npm/motion@10.18.0/+esm";
+    window.motion = { animate, spring, stagger };
+  </script>
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
