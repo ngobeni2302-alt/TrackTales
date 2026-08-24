@@ -17,26 +17,24 @@
       name: "The Blue Train",
       tagline: "A Window to the Soul of South Africa",
       category: "Ultra Luxury Express",
-      speed: "90 km/h",
-      duration: "31 Hours",
-      route_summary: "Pretoria ➔ Kimberley ➔ Cape Town",
+      speed: "90 km/h (Smooth Luxury Travel)",
+      duration: "31 Hours (1,600 km)",
+      route_summary: "Southbound: Pretoria (Irene/Park) ➔ Kimberley ➔ Cape Town",
       primary_color: "#005691",
-      description: "The Blue Train has been synonymous with luxury rail travel since 1946. Experience 24/7 butler service, marble bathrooms, and gourmet fine dining across 1,600 km.",
-      highlights: ["Butler Service", "Marble En-suite Baths", "5-Course Fine Dining", "Kimberley Big Hole Tour"],
-      image_url: "https://images.unsplash.com/photo-1541447271487-09612b3f49f7?auto=format&fit=crop&w=800&q=80"
+      description: "The Blue Train has been synonymous with luxury rail travel since 1946. On the southbound journey from Pretoria to Cape Town, passengers disembark for a scheduled main off-train excursion in Kimberley, featuring a guided tour of the famous Big Hole and the Open Diamond Mine Museum. (Note: On northbound trips from Cape Town to Pretoria, the train stops at the historic town of Matjiesfontein).",
+      image_url: "/images/blue-train.jpg"
     },
     {
       id: "rovos-rail",
       name: "Rovos Rail",
       tagline: "The Most Luxurious Train in the World",
       category: "Vintage Edwardian Safari",
-      speed: "60 km/h",
-      duration: "48 Hours",
-      route_summary: "Pretoria ➔ Kimberley ➔ Cape Town",
+      speed: "60 km/h (Nostalgic Slow Travel)",
+      duration: "3 Days / 48 Hours (1,600 km)",
+      route_summary: "Capital Park (Pretoria) ➔ Highveld ➔ Kimberley ➔ Karoo ➔ Hex River ➔ Cape Town",
       primary_color: "#0e382c",
-      description: "Recapturing the romance of a bygone era with restored 1920s Edwardian wood-paneled suites, open observation cars, and formal gala dinners.",
-      highlights: ["Open Balcony Carriage", "Formal Dress Dinners", "High Tea Lounge"],
-      image_url: "https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=800&q=80"
+      description: "Established in 1989, Rovos Rail covers 1,600 km over 3 days from Pretoria (Capital Park) to Cape Town. It features two main off-train excursion stops: Kimberley (Big Hole & Mine Museum) and the preserved Victorian village of Matjiesfontein. The route traverses the Highveld grasslands, the Great Karoo semi-desert, and Hex River Valley mountain passes.",
+      image_url: "/images/rovos-rail.jpg"
     }
   ];
 
@@ -59,7 +57,7 @@
       name: "Kimberley (The Diamond City)",
       province: "Northern Cape Province",
       distance_km: 645,
-      description: "Famous worldwide for the 1870s Diamond Rush. Home to 'The Big Hole'—the largest hand-dug excavation on earth—and vintage tramways.",
+      description: "Famous worldwide for the 1870s Diamond Rush. Home to 'The Big Hole', the largest hand-dug excavation on earth, and vintage tramways.",
       train_calls: "The Blue Train, Rovos Rail",
       stay: "Stopover Tour (3-4 Hours)",
       local_dish: "Northern Cape Biltong & Kalahari Truffle Tart",
@@ -144,7 +142,15 @@
     setupDownloadTicket();
     setupStoryModal();
     setupPassportModal();
+    setupHeroVideoControls();
+    setupRoutePreviewModal();
+    setupMobileMenu();
+    setupAnimatedTabs();
+    setupMotionEntranceAnimations();
+    setup3DCanvasGlobe();
   });
+
+
 
   // --- Fetch API Data with Fallback ---
   async function fetchApiData() {
@@ -322,8 +328,7 @@
       } else {
         const trainNameMap = {
           'blue-train': 'The Blue Train',
-          'rovos-rail': 'Rovos Rail',
-          'shosholoza-meyl': 'Shosholoza Meyl'
+          'rovos-rail': 'Rovos Rail'
         };
         const targetTrain = trainNameMap[trainFilter];
         const trainCallsStr = Array.isArray(stopObj.train_calls) ? stopObj.train_calls.join(', ') : stopObj.train_calls;
@@ -502,8 +507,7 @@
       // Offline fallback generator
       const trainMap = {
         'blue-train': 'The Blue Train',
-        'rovos-rail': 'Rovos Rail',
-        'shosholoza-meyl': 'Shosholoza Meyl'
+        'rovos-rail': 'Rovos Rail'
       };
       const mockTicket = {
         ticket_id: `TT-${Math.random().toString(36).substr(2, 7).toUpperCase()}`,
@@ -673,58 +677,14 @@
     }
   }
 
-  // --- Light / Dark Theme Toggler ---
+  // --- Single Light Mode Enforcer ---
   function setupThemeToggle() {
-    const desktopBtn = document.getElementById('theme-toggle');
-    const mobileCheckbox = document.getElementById('mobile-theme-checkbox');
-    const mobileText = document.getElementById('mobile-theme-text');
-    const mobileIconContainer = document.getElementById('mobile-theme-icon-container');
-
-    function applyTheme(theme) {
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
-
-      if (desktopBtn) {
-        desktopBtn.innerHTML = theme === 'light' 
-          ? '<i data-lucide="moon"></i>' 
-          : '<i data-lucide="sun"></i>';
-      }
-
-      if (mobileCheckbox) {
-        mobileCheckbox.checked = (theme === 'light');
-      }
-
-      if (mobileText) {
-        mobileText.textContent = theme === 'light' ? 'Light Mode' : 'Dark Mode';
-      }
-
-      if (mobileIconContainer) {
-        mobileIconContainer.innerHTML = theme === 'light' 
-          ? '<i data-lucide="sun"></i>' 
-          : '<i data-lucide="moon"></i>';
-      }
-
-      if (window.lucide) lucide.createIcons();
-    }
-
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    applyTheme(savedTheme);
-
-    const toggleTheme = () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-      const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
-      applyTheme(nextTheme);
-    };
-
-    if (desktopBtn) desktopBtn.addEventListener('click', toggleTheme);
-    if (mobileCheckbox) {
-      mobileCheckbox.addEventListener('change', () => {
-        const nextTheme = mobileCheckbox.checked ? 'light' : 'dark';
-        applyTheme(nextTheme);
-      });
-    }
-
+    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.classList.remove('dark');
+    document.documentElement.classList.add('light');
+    localStorage.setItem('theme', 'light');
   }
+
 
   // --- HTML2Canvas Ticket Exporter ---
   function setupDownloadTicket() {
@@ -1178,6 +1138,16 @@
 
       updateNavIndicator(targetPage, isSlow);
 
+      // Hero Video Background & "Watch The Journey Unfold" are strictly isolated to "The Route" (#home)
+      const bgVideoLayer = document.getElementById('heroVideoBgLayer');
+      if (bgVideoLayer) {
+        if (targetPage === 'home') {
+          bgVideoLayer.style.display = 'block';
+        } else {
+          bgVideoLayer.style.display = 'none';
+        }
+      }
+
       // Rule: "Content never cuts. Fade out. Pause 80 milliseconds. Fade in."
       const currentActivePage = document.querySelector('.page-view.active');
       if (currentActivePage) {
@@ -1341,7 +1311,7 @@
     });
   }
 
-  // --- 3. Animated Train Login Modal ---
+  // --- 3. Passenger Sign In & Sign Up Modal with Storage Persistence ---
   function setupLoginModal() {
     const modal = document.getElementById('login-modal');
     const openBtn = document.getElementById('btn-open-login');
@@ -1351,13 +1321,27 @@
 
     let isAuthenticated = false;
 
-    // Initialize default credentials in localStorage if not already present
+    // Default registered users seed if not present
     if (!localStorage.getItem('tracktales_users')) {
       const defaultUsers = {
         'sipho.ndlovu@tracktales.co.za': 'tracktales2026'
       };
       localStorage.setItem('tracktales_users', JSON.stringify(defaultUsers));
     }
+
+    // Restore persistent active user session if present
+    const checkActiveSession = () => {
+      const loggedUser = localStorage.getItem('tracktales_logged_user');
+      if (loggedUser) {
+        isAuthenticated = true;
+        const desktopLabel = document.getElementById('desktop-login-label');
+        if (desktopLabel) desktopLabel.textContent = "Sign Out";
+        if (openBtn) openBtn.innerHTML = `<i data-lucide="log-out" class="w-4 h-4 text-[#D99B26]"></i> <span id="desktop-login-label">Sign Out</span>`;
+        if (mobileOpenBtn) mobileOpenBtn.innerHTML = `<i data-lucide="log-out" class="w-4 h-4"></i> <span>Sign Out</span>`;
+        if (window.lucide) lucide.createIcons();
+      }
+    };
+    checkActiveSession();
 
     const loginSection = document.getElementById('login-section');
     const signupSection = document.getElementById('signup-section');
@@ -1366,15 +1350,15 @@
 
     if (toSignupBtn && loginSection && signupSection) {
       toSignupBtn.addEventListener('click', () => {
-        loginSection.style.display = 'none';
-        signupSection.style.display = 'block';
+        loginSection.classList.add('hidden');
+        signupSection.classList.remove('hidden');
       });
     }
 
     if (toLoginBtn && loginSection && signupSection) {
       toLoginBtn.addEventListener('click', () => {
-        signupSection.style.display = 'none';
-        loginSection.style.display = 'block';
+        signupSection.classList.add('hidden');
+        loginSection.classList.remove('hidden');
       });
     }
 
@@ -1404,23 +1388,9 @@
       if (emailInput) emailInput.value = lastUser;
       if (passInput) passInput.value = lastPass;
     };
-    initialPrefill();
 
     const handleCloseLogin = () => {
-      if (window.motion) {
-        const content = modal.querySelector('.modal-content');
-        Promise.all([
-          window.motion.animate(content, { opacity: 0, scale: 0.94, y: 15 }, { duration: 0.2 }).finished,
-          window.motion.animate(modal, { opacity: 0 }, { duration: 0.18 }).finished
-        ]).then(() => {
-          modal.classList.remove('active');
-          modal.style.opacity = '';
-          content.style.opacity = '';
-          content.style.transform = '';
-        });
-      } else {
-        modal.classList.remove('active');
-      }
+      if (modal) modal.classList.add('hidden');
     };
 
     function handleOpenLogin() {
@@ -1430,36 +1400,18 @@
       if (isAuthenticated) {
         // Sign Out action
         isAuthenticated = false;
-        if (openBtn) openBtn.innerHTML = '<i data-lucide="user-check"></i> <span>Sign In</span>';
-        if (mobileOpenBtn) mobileOpenBtn.innerHTML = '<i data-lucide="user-check"></i> <span>Sign In</span>';
+        localStorage.removeItem('tracktales_logged_user');
+        if (openBtn) openBtn.innerHTML = '<i data-lucide="user-check" class="w-4 h-4 text-[#D99B26]"></i> <span id="desktop-login-label">Sign In</span>';
+        if (mobileOpenBtn) mobileOpenBtn.innerHTML = '<i data-lucide="user-check" class="w-4 h-4"></i> <span>Sign In / Account</span>';
         if (window.lucide) lucide.createIcons();
         alert("You have been signed out of TrackTales Passenger Portal.");
       } else {
-        // Default modal to sign-up section when opening
-        if (loginSection) loginSection.style.display = 'none';
-        if (signupSection) signupSection.style.display = 'block';
-        // Reset password input types to password
-        document.querySelectorAll('.password-group input').forEach(input => {
-          input.type = 'password';
-        });
-        document.querySelectorAll('.btn-toggle-password .eye-icon').forEach(icon => {
-          icon.setAttribute('data-lucide', 'eye');
-        });
+        // Default modal to Sign In section when opening
+        if (loginSection) loginSection.classList.remove('hidden');
+        if (signupSection) signupSection.classList.add('hidden');
         initialPrefill();
         if (window.lucide) lucide.createIcons();
-        
-        if (modal) {
-          modal.classList.add('active');
-          if (window.motion) {
-            const content = modal.querySelector('.modal-content');
-            window.motion.animate(modal, { opacity: [0, 1] }, { duration: 0.25 });
-            window.motion.animate(
-              content,
-              { opacity: [0, 1], scale: [0.93, 1], y: [25, 0] },
-              { duration: 0.45, ease: window.motion.spring({ stiffness: 140, damping: 16 }) }
-            );
-          }
-        }
+        if (modal) modal.classList.remove('hidden');
       }
     }
 
@@ -1478,6 +1430,7 @@
     if (signupForm) {
       signupForm.addEventListener('submit', (e) => {
         e.preventDefault();
+        const name = document.getElementById('signup-name').value.trim();
         const email = document.getElementById('signup-email').value.trim().toLowerCase();
         const password = document.getElementById('signup-password').value;
         const confirmPassword = document.getElementById('signup-confirm-password').value;
@@ -1489,23 +1442,26 @@
 
         const users = JSON.parse(localStorage.getItem('tracktales_users') || '{}');
         if (users[email]) {
-          alert("An account with this email address already exists!");
+          alert("An account with this email address already exists! Please Sign In.");
+          if (loginSection) loginSection.classList.remove('hidden');
+          if (signupSection) signupSection.classList.add('hidden');
           return;
         }
 
-        // Register new user
+        // Store new user details into localStorage for persistent login
         users[email] = password;
         localStorage.setItem('tracktales_users', JSON.stringify(users));
+        localStorage.setItem('tracktales_logged_user', JSON.stringify({ name: name || email, email: email }));
         localStorage.setItem('last_user', email);
         localStorage.setItem('last_password', password);
 
-        alert("Account created successfully! You are now logged in.");
+        alert(`Welcome, ${name || email}! Your TrackTales account has been created and saved.`);
 
         handleCloseLogin();
         isAuthenticated = true;
 
-        if (openBtn) openBtn.innerHTML = `<i data-lucide="user-check"></i> <span>Sign Out</span>`;
-        if (mobileOpenBtn) mobileOpenBtn.innerHTML = `<i data-lucide="log-out"></i> <span>Sign Out</span>`;
+        if (openBtn) openBtn.innerHTML = `<i data-lucide="log-out" class="w-4 h-4 text-[#D99B26]"></i> <span id="desktop-login-label">Sign Out</span>`;
+        if (mobileOpenBtn) mobileOpenBtn.innerHTML = `<i data-lucide="log-out" class="w-4 h-4"></i> <span>Sign Out</span>`;
         if (window.lucide) lucide.createIcons();
 
         signupForm.reset();
@@ -1520,33 +1476,36 @@
         const password = document.getElementById('login-password').value;
         const label = document.getElementById('login-btn-label');
 
-        if (label) label.textContent = "Authenticating Passenger...";
+        if (label) label.textContent = "Authenticating...";
 
         setTimeout(() => {
           const users = JSON.parse(localStorage.getItem('tracktales_users') || '{}');
           
           if (!users[email] || users[email] !== password) {
-            alert("Invalid email or password! Please try again.");
-            if (label) label.textContent = "Sign In to TrackTales";
+            alert("Invalid email or password! Please check your credentials or create a new account.");
+            if (label) label.textContent = "Sign In";
             return;
           }
+
+          // Persist active logged in session
+          localStorage.setItem('tracktales_logged_user', JSON.stringify({ email: email }));
+          localStorage.setItem('last_user', email);
+          localStorage.setItem('last_password', password);
 
           handleCloseLogin();
           isAuthenticated = true;
 
-          localStorage.setItem('last_user', email);
-          localStorage.setItem('last_password', password);
-
-          if (label) label.textContent = "Sign In to TrackTales";
-          if (openBtn) openBtn.innerHTML = `<i data-lucide="user-check"></i> <span>Sign Out</span>`;
-          if (mobileOpenBtn) mobileOpenBtn.innerHTML = `<i data-lucide="log-out"></i> <span>Sign Out</span>`;
+          if (label) label.textContent = "Sign In";
+          if (openBtn) openBtn.innerHTML = `<i data-lucide="log-out" class="w-4 h-4 text-[#D99B26]"></i> <span id="desktop-login-label">Sign Out</span>`;
+          if (mobileOpenBtn) mobileOpenBtn.innerHTML = `<i data-lucide="log-out" class="w-4 h-4"></i> <span>Sign Out</span>`;
           if (window.lucide) lucide.createIcons();
           
-          alert(`Welcome aboard TrackTales Passenger Portal! Login successful.`);
-        }, 800);
+          alert(`Welcome back to TrackTales Passenger Portal! Login successful.`);
+        }, 400);
       });
     }
   }
+
 
   // --- 4. Interactive Sight Solver Puzzles & "Did You Know?" Pop-Up Modal ---
   const SIGHT_PUZZLES = [
@@ -1616,7 +1575,7 @@
       ],
       correctIndex: 2,
       location: "Cape Town, Western Cape",
-      fact: "Did you know? Table Mountain is estimated to be 260 million years old—six times older than the Himalayas—and hosts over 2,200 unique plant species!"
+      fact: "Did you know? Table Mountain is estimated to be 260 million years old, six times older than the Himalayas, and hosts over 2,200 unique plant species!"
     },
     {
       id: "puzzle-5",
@@ -1791,5 +1750,382 @@
     renderActivePuzzle();
   }
 
+  // --- Hero Section Background Video Controls & Cinematic Zoom ---
+  function setupHeroVideoControls() {
+    const video = document.getElementById('heroVideo');
+    const muteBtn = document.getElementById('heroMuteBtn');
+    const playBtn = document.getElementById('heroPlayBtn');
+    const muteIcon = document.getElementById('heroMuteIcon');
+    const muteText = document.getElementById('heroMuteText');
+    const playIcon = document.getElementById('heroPlayIcon');
+    const playText = document.getElementById('heroPlayText');
+
+    if (!video) return;
+
+    // Set playbackRate to 0.75 for smooth cinematic ambient feel
+    video.playbackRate = 0.75;
+
+    // Trigger Zoom-in-to-pull-back sequence: remove .zoomed-in after ~100ms
+    setTimeout(() => {
+      video.classList.remove('zoomed-in');
+    }, 100);
+
+    if (muteBtn) {
+      const syncMuteUI = () => {
+        if (muteIcon && muteText) {
+          if (video.muted) {
+            muteIcon.setAttribute('data-lucide', 'volume-x');
+            muteText.textContent = 'UNMUTE';
+          } else {
+            muteIcon.setAttribute('data-lucide', 'volume-2');
+            muteText.textContent = 'MUTE';
+          }
+          if (window.lucide) lucide.createIcons();
+        }
+      };
+
+      // Ensure initial UI matches video state
+      syncMuteUI();
+
+      muteBtn.addEventListener('click', () => {
+        if (video.muted) {
+          video.muted = false;
+          video.volume = 1.0;
+          video.play().catch(e => console.log('Video play on unmute:', e));
+        } else {
+          video.muted = true;
+        }
+        syncMuteUI();
+      });
+    }
+
+    if (playBtn) {
+      playBtn.addEventListener('click', () => {
+        if (video.paused) {
+          video.play();
+          if (playIcon && playText) {
+            playIcon.setAttribute('data-lucide', 'pause');
+            playText.textContent = 'PAUSE';
+          }
+        } else {
+          video.pause();
+          if (playIcon && playText) {
+            playIcon.setAttribute('data-lucide', 'play');
+            playText.textContent = 'PLAY';
+          }
+        }
+        if (window.lucide) lucide.createIcons();
+      });
+    }
+  }
+
+  // --- Route Preview Video Modal Handlers with Escape Dismissal ---
+  function setupRoutePreviewModal() {
+    const modal = document.getElementById('videoModal');
+    const openBtn = document.getElementById('watchRouteBtn');
+    const closeBtn = document.getElementById('closeVideoModal');
+    const modalVideo = document.getElementById('modalVideo');
+    const playJourneyBtn = document.getElementById('playJourneyBtn');
+
+    function openModal() {
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      if (modalVideo) {
+        modalVideo.play().catch(e => console.log('Modal video play:', e));
+      }
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closeModal() {
+      if (!modal) return;
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+      if (modalVideo) {
+        modalVideo.pause();
+      }
+    }
+
+    if (openBtn) openBtn.addEventListener('click', openModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+    }
+
+    // Dismiss modal on Escape key press
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    const scrollToRoute = (e) => {
+      e.preventDefault();
+      const target = document.getElementById('page-attractions') || document.getElementById('main-content');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+
+    if (playJourneyBtn) playJourneyBtn.addEventListener('click', scrollToRoute);
+  }
+
+  // --- Mobile Menu Toggle ---
+  function setupMobileMenu() {
+    const btn = document.getElementById('mobile-toggle-btn');
+    const menu = document.getElementById('mobileMenu');
+    const icon = document.getElementById('mobileMenuIcon');
+
+    if (!btn || !menu) return;
+
+    btn.addEventListener('click', () => {
+      const isHidden = menu.classList.contains('hidden');
+      if (isHidden) {
+        menu.classList.remove('hidden');
+        if (icon) icon.setAttribute('data-lucide', 'x');
+      } else {
+        menu.classList.add('hidden');
+        if (icon) icon.setAttribute('data-lucide', 'menu');
+      }
+      if (window.lucide) lucide.createIcons();
+    });
+
+    menu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menu.classList.add('hidden');
+        if (icon) icon.setAttribute('data-lucide', 'menu');
+        if (window.lucide) lucide.createIcons();
+      });
+    });
+  }
+
+  // --- Animated Nav Tab Indicator ---
+  function setupAnimatedTabs() {
+    const container = document.getElementById('nav-tabs-container');
+    const indicator = document.getElementById('nav-tab-indicator');
+    if (!container || !indicator) return;
+
+    const tabs = container.querySelectorAll('.nav-tab-link');
+
+    function updateIndicator(activeTab) {
+      if (!activeTab) return;
+      const containerRect = container.getBoundingClientRect();
+      const tabRect = activeTab.getBoundingClientRect();
+      const left = tabRect.left - containerRect.left;
+      const width = tabRect.width;
+
+      indicator.style.left = `${left}px`;
+      indicator.style.width = `${width}px`;
+    }
+
+    // Set initial position
+    const initialActive = container.querySelector('.nav-tab-link.active') || tabs[0];
+    if (initialActive) updateIndicator(initialActive);
+
+    tabs.forEach(tab => {
+      tab.addEventListener('mouseenter', () => updateIndicator(tab));
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        updateIndicator(tab);
+      });
+    });
+
+    container.addEventListener('mouseleave', () => {
+      const currentActive = container.querySelector('.nav-tab-link.active');
+      if (currentActive) updateIndicator(currentActive);
+    });
+
+    window.addEventListener('resize', () => {
+      const currentActive = container.querySelector('.nav-tab-link.active');
+      if (currentActive) updateIndicator(currentActive);
+    });
+  }
+
+  // --- Motion One Entrance Animations (Staggered with Video Pull-Back) ---
+  function setupMotionEntranceAnimations() {
+    if (!window.motion || !window.motion.animate) return;
+    const { animate } = window.motion;
+
+    try {
+      // Stagger headline and CTA entrance ~0.3s after camera pull-back starts
+      animate('.hero-typography-col', 
+        { opacity: [0, 1], transform: ['translateY(35px)', 'translateY(0px)'] },
+        { duration: 1.2, delay: 0.3, easing: 'ease-out' }
+      );
+    } catch (e) {
+      console.log('Motion One entrance animation shim fallback:', e);
+    }
+  }
+
+
+  // --- Interactive 3D Canvas Globe Engine ---
+  function setup3DCanvasGlobe() {
+    const canvas = document.getElementById('hero3DCanvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = canvas.offsetWidth || 300;
+    let height = canvas.height = canvas.offsetHeight || 300;
+
+    let rotationAngle = 0;
+    let pulseWave = 0;
+    let isPulsing = false;
+
+    // TrackTales Spectrum Colors
+    const spectrumColors = ['#4a9a63', '#e0a83e', '#dd6a3e', '#b8447a', '#5b64c9', '#22a39a'];
+
+    // Particles array floating in globe
+    const particles = [];
+    for (let i = 0; i < 35; i++) {
+      particles.push({
+        x: (Math.random() - 0.5) * 160,
+        y: (Math.random() - 0.5) * 160,
+        z: (Math.random() - 0.5) * 160,
+        size: Math.random() * 2.5 + 1,
+        color: spectrumColors[Math.floor(Math.random() * spectrumColors.length)]
+      });
+    }
+
+    function render() {
+      ctx.clearRect(0, 0, width, height);
+
+      const centerX = width / 2;
+      const centerY = height / 2;
+      const radius = Math.min(width, height) * 0.38;
+
+      rotationAngle += 0.012;
+
+      // 1. Draw outer ambient glow
+      const outerGlow = ctx.createRadialGradient(centerX, centerY, radius * 0.6, centerX, centerY, radius * 1.3);
+      outerGlow.addColorStop(0, 'rgba(224, 168, 62, 0.15)');
+      outerGlow.addColorStop(0.7, 'rgba(34, 163, 154, 0.08)');
+      outerGlow.addColorStop(1, 'rgba(18, 20, 28, 0)');
+      ctx.fillStyle = outerGlow;
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius * 1.3, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 2. Draw Translucent Glass Sphere Body
+      const sphereGrad = ctx.createRadialGradient(centerX - radius * 0.3, centerY - radius * 0.3, radius * 0.1, centerX, centerY, radius);
+      sphereGrad.addColorStop(0, 'rgba(244, 239, 228, 0.2)');
+      sphereGrad.addColorStop(0.5, 'rgba(224, 168, 62, 0.06)');
+      sphereGrad.addColorStop(0.85, 'rgba(18, 20, 28, 0.4)');
+      sphereGrad.addColorStop(1, 'rgba(224, 168, 62, 0.35)');
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+      ctx.fillStyle = sphereGrad;
+      ctx.fill();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = 'rgba(244, 239, 228, 0.3)';
+      ctx.stroke();
+
+      // 3. Draw Orbiting Spectrum Ring
+      const ringRadiusX = radius * 0.85;
+      const ringRadiusY = radius * 0.3;
+
+      ctx.save();
+      ctx.translate(centerX, centerY);
+      ctx.rotate(0.35); // tilt angle
+
+      const ringGrad = ctx.createLinearGradient(-ringRadiusX, 0, ringRadiusX, 0);
+      ringGrad.addColorStop(0, '#4a9a63');
+      ringGrad.addColorStop(0.2, '#e0a83e');
+      ringGrad.addColorStop(0.4, '#dd6a3e');
+      ringGrad.addColorStop(0.6, '#b8447a');
+      ringGrad.addColorStop(0.8, '#5b64c9');
+      ringGrad.addColorStop(1, '#22a39a');
+
+      ctx.beginPath();
+      ctx.ellipse(0, 0, ringRadiusX, ringRadiusY, 0, 0, Math.PI * 2);
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = ringGrad;
+      ctx.shadowColor = 'rgba(224, 168, 62, 0.6)';
+      ctx.shadowBlur = 12;
+      ctx.stroke();
+
+      // 4. Draw Orbiting Train Node Marker along ring
+      const nodeAngle = rotationAngle * 1.5;
+      const trainX = Math.cos(nodeAngle) * ringRadiusX;
+      const trainY = Math.sin(nodeAngle) * ringRadiusY;
+
+      ctx.beginPath();
+      ctx.arc(trainX, trainY, 6, 0, Math.PI * 2);
+      ctx.fillStyle = '#e0a83e';
+      ctx.shadowColor = '#e0a83e';
+      ctx.shadowBlur = 15;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(trainX, trainY, 3, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+
+      ctx.restore();
+
+      // 5. Draw 3D Floating Particles inside globe
+      particles.forEach(p => {
+        const cos = Math.cos(0.008);
+        const sin = Math.sin(0.008);
+        const rx = p.x * cos - p.z * sin;
+        const rz = p.z * cos + p.x * sin;
+        p.x = rx;
+        p.z = rz;
+
+        const screenX = centerX + p.x;
+        const screenY = centerY + p.y;
+        const alpha = (p.z + 160) / 320 * 0.7 + 0.2;
+
+        ctx.beginPath();
+        ctx.arc(screenX, screenY, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = Math.max(0.1, Math.min(1, alpha));
+        ctx.fill();
+        ctx.globalAlpha = 1.0;
+      });
+
+      // 6. Draw Pulse Wave on click
+      if (isPulsing) {
+        pulseWave += 3;
+        if (pulseWave > radius * 1.2) {
+          isPulsing = false;
+          pulseWave = 0;
+        } else {
+          ctx.beginPath();
+          ctx.arc(centerX, centerY, pulseWave, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(224, 168, 62, ${1 - pulseWave / (radius * 1.2)})`;
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        }
+      }
+
+      // 7. Glass Rim Highlight arc
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius - 2, Math.PI * 1.15, Math.PI * 1.65);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.45)';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      ctx.restore();
+
+      requestAnimationFrame(render);
+    }
+
+    canvas.addEventListener('click', () => {
+      isPulsing = true;
+      pulseWave = 10;
+    });
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = canvas.offsetWidth || 300;
+      height = canvas.height = canvas.offsetHeight || 300;
+    });
+
+    render();
+  }
+
 })();
+
 

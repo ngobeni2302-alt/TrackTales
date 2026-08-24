@@ -1,989 +1,701 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" class="light scroll-smooth" data-theme="light" style="scrollbar-width: none;">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <!-- SEO Best Practices -->
-  <title>TrackTales | South Africa Rail Transportation & Tourism</title>
-  <meta name="description" content="Discover South Africa's iconic railway journeys from Pretoria to Cape Town. Explore luxury trains, stopover attractions, interactive rail games, and rail history.">
-  <meta name="keywords" content="TrackTales, South Africa Rail, Blue Train, Rovos Rail, SA Tourism, Kimberley Big Hole, Cape Town train, rail games, Mzansi tourism">
-  <meta property="og:title" content="TrackTales - South Africa Railway Stories, Trains & Tourism">
-  <meta property="og:description" content="Experience Mzansi by rail. Discover luxury train travel, South African tourism, and interactive sight solver games.">
+  <title>TrackTales | Pretoria to Cape Town Cinematic Digital Rail Companion</title>
+  <meta name="description" content="A digital storytelling companion for the Pretoria to Cape Town rail corridor. Experience South Africa's iconic railway journeys, luxury trains, historical stops, and interactive sight games.">
+  <meta name="keywords" content="TrackTales, South Africa Rail, Pretoria to Cape Town, Blue Train, Rovos Rail, Karoo rail, SA Tourism, Kimberley Big Hole, digital rail companion">
+  <meta property="og:title" content="TrackTales: Pretoria to Cape Town, By Story">
+  <meta property="og:description" content="A digital storytelling companion tracing South Africa's luxury rail corridor in full cinematic detail.">
   <meta property="og:type" content="website">
 
-  <!-- Favicon & Stylesheet -->
-  <link rel="stylesheet" href="/static/css/styles.css?v=1.1">
-  <link rel="stylesheet" href="./css/styles.css?v=1.1">
+  <!-- 1. External Resources & CDN Links -->
+  <!-- Google Fonts: Fraunces (500–900 italic), Inter (400–600), IBM Plex Mono (500) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500..900;1,9..144,500..900&family=IBM+Plex+Mono:wght@500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- External CDN Libraries -->
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- QR Code & Canvas Exporter CDNs -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
-  <!-- Inline overrides to bypass aggressive mobile and desktop browser CSS caching -->
-  <style>
-    /* Fix mobile touch target mapping for theme switch */
-    .theme-switch {
-      position: relative !important;
-    }
-    
-    .theme-switch input {
-      position: absolute !important;
-      top: 0 !important;
-      left: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      margin: 0 !important;
-      opacity: 0 !important;
-      cursor: pointer !important;
-      z-index: 5 !important;
-      pointer-events: auto !important;
-    }
 
-    .theme-slider {
-      pointer-events: none !important;
-    }
-
-    [data-theme="light"] .theme-toggle-btn {
-      background: rgba(15, 23, 42, 0.05) !important;
-      border-color: rgba(2, 132, 199, 0.15) !important;
-      color: #0f172a !important;
-    }
-
-    [data-theme="light"] .theme-toggle-btn:hover {
-      background: rgba(15, 23, 42, 0.1) !important;
-      color: #0284c7 !important;
-      border-color: #0284c7 !important;
-    }
-
-    [data-theme="light"] .train-select-btn {
-      background: rgba(15, 23, 42, 0.04) !important;
-      color: #475569 !important;
-      border-color: rgba(2, 132, 199, 0.15) !important;
-    }
-
-    [data-theme="light"] .train-select-btn:hover {
-      background: rgba(15, 23, 42, 0.08) !important;
-      color: #0f172a !important;
-      border-color: #0284c7 !important;
-    }
-
-    [data-theme="light"] .train-select-btn.active {
-      background: linear-gradient(135deg, #0284c7, #38bdf8) !important;
-      color: #ffffff !important;
-      border-color: transparent !important;
-      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.25) !important;
-    }
-
-    @media (max-width: 1024px) {
-      /* Mobile Drawer Panel - Light Mode */
-      [data-theme="light"] .mobile-drawer-panel {
-        background: #ffffff !important;
-        border-right: 1.5px solid rgba(2, 132, 199, 0.15) !important;
-        box-shadow: 12px 0 50px rgba(15, 23, 42, 0.15) !important;
-      }
-
-      /* Mobile Drawer Panel - Dark Mode */
-      [data-theme="dark"] .mobile-drawer-panel {
-        background: #07111e !important;
-        border-right: 1.5px solid rgba(56, 189, 248, 0.5) !important;
-        box-shadow: 12px 0 50px rgba(0, 0, 0, 0.9) !important;
-      }
-
-      /* Close Button */
-      [data-theme="light"] .nav-drawer-close {
-        background: rgba(15, 23, 42, 0.05) !important;
-        border: 1px solid rgba(15, 23, 42, 0.1) !important;
-        color: #475569 !important;
-      }
-      [data-theme="dark"] .nav-drawer-close {
-        background: rgba(255, 255, 255, 0.08) !important;
-        border: 1px solid rgba(56, 189, 248, 0.2) !important;
-        color: #ffffff !important;
-      }
-      .nav-drawer-close:hover {
-        background: rgba(239, 68, 68, 0.15) !important;
-        border-color: #ef4444 !important;
-        color: #ef4444 !important;
-      }
-
-      /* Drawer Links */
-      [data-theme="light"] .mobile-drawer-links a {
-        color: #475569 !important;
-        background: rgba(15, 23, 42, 0.04) !important;
-      }
-      [data-theme="dark"] .mobile-drawer-links a {
-        color: #94a3b8 !important;
-        background: rgba(255, 255, 255, 0.04) !important;
-      }
-      [data-theme="light"] .mobile-drawer-links a:hover,
-      [data-theme="light"] .mobile-drawer-links a.active {
-        color: #0284c7 !important;
-        background: rgba(2, 132, 199, 0.12) !important;
-        border-color: rgba(2, 132, 199, 0.25) !important;
-        box-shadow: 0 4px 15px rgba(2, 132, 199, 0.1) !important;
-      }
-      [data-theme="dark"] .mobile-drawer-links a:hover,
-      [data-theme="dark"] .mobile-drawer-links a.active {
-        color: #ffffff !important;
-        background: rgba(2, 132, 199, 0.25) !important;
-        border-color: rgba(56, 189, 248, 0.5) !important;
-        box-shadow: 0 4px 15px rgba(2, 132, 199, 0.25) !important;
-      }
-
-      /* Toggle Switch Row */
-      [data-theme="light"] .nav-theme-toggle-row {
-        background: rgba(15, 23, 42, 0.03) !important;
-        border: 1px solid rgba(15, 23, 42, 0.08) !important;
-        color: #0f172a !important;
-      }
-      [data-theme="dark"] .nav-theme-toggle-row {
-        background: rgba(255, 255, 255, 0.05) !important;
-        border: 1px solid rgba(56, 189, 248, 0.2) !important;
-        color: #ffffff !important;
-      }
-
-      /* Switch Slider */
-      [data-theme="light"] .theme-slider {
-        background-color: rgba(15, 23, 42, 0.12) !important;
-        border: 1px solid rgba(15, 23, 42, 0.1) !important;
-      }
-      [data-theme="dark"] .theme-slider {
-        background-color: rgba(255, 255, 255, 0.15) !important;
-        border: 1px solid rgba(56, 189, 248, 0.2) !important;
-      }
-      .theme-slider:before {
-        background-color: #ffffff !important;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
-      }
-      [data-theme="light"] .theme-switch input:checked + .theme-slider {
-        background-color: #0284c7 !important;
-        border-color: #38bdf8 !important;
-      }
-      [data-theme="dark"] .theme-switch input:checked + .theme-slider {
-        background-color: #0284c7 !important;
-        border-color: #38bdf8 !important;
-      }
-
-      /* Action Buttons */
-      [data-theme="light"] .nav-drawer-btn {
-        background: rgba(15, 23, 42, 0.04) !important;
-        border: 1px solid rgba(15, 23, 42, 0.08) !important;
-        color: #0f172a !important;
-      }
-      [data-theme="dark"] .nav-drawer-btn {
-        background: rgba(255, 255, 255, 0.06) !important;
-        border: 1px solid rgba(56, 189, 248, 0.2) !important;
-        color: #ffffff !important;
-      }
-      [data-theme="light"] .nav-drawer-btn:hover {
-        background: rgba(15, 23, 42, 0.08) !important;
-        border-color: #0284c7 !important;
-      }
-      [data-theme="dark"] .nav-drawer-btn:hover {
-        background: rgba(255, 255, 255, 0.12) !important;
-        border-color: #38bdf8 !important;
-      }
-
-      /* Primary Button */
-      [data-theme="light"] .nav-drawer-btn-primary {
-        background: linear-gradient(135deg, #0284c7, #0369a1) !important;
-        border-color: transparent !important;
-        color: #ffffff !important;
-      }
-      [data-theme="dark"] .nav-drawer-btn-primary {
-        background: linear-gradient(135deg, #0284c7, #0284c7) !important;
-        border-color: rgba(255, 255, 255, 0.2) !important;
-        color: #ffffff !important;
-      }
-      [data-theme="light"] .nav-drawer-btn-primary:hover {
-        box-shadow: 0 6px 20px rgba(2, 132, 199, 0.3) !important;
-      }
-      [data-theme="dark"] .nav-drawer-btn-primary:hover {
-        box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4) !important;
-      }
-    }
-
-    /* Password Toggle Styles */
-    .btn-toggle-password {
-      transition: color 0.2s ease !important;
-    }
-    .btn-toggle-password:hover {
-      color: #38bdf8 !important;
-    }
-    .btn-toggle-password:focus {
-      outline: none !important;
-    }
-  </style>
   <!-- Motion One Animation Library Shim -->
   <script type="module">
     import { animate, spring, stagger } from "https://cdn.jsdelivr.net/npm/motion@10.18.0/+esm";
     window.motion = { animate, spring, stagger };
   </script>
-  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- 2. Page & Styling Configuration (Tailwind Custom Config - Light Mode Palette) -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              ink: '#0A0C10',
+              panel: '#FFFFFF',
+              paper: '#F8F6F0',
+              muted: '#111827',
+              highveld: '#2E7D46',
+              karoo: '#D99B26',
+              ember: '#C85028',
+              dusk: '#A03060',
+              indigo: '#4A52B0',
+              bay: '#188880',
+              gold: '#D99B26',
+            }
+          },
+          fontFamily: {
+            heading: ['Fraunces', 'serif'],
+            serif: ['Fraunces', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+            mono: ['"IBM Plex Mono"', 'monospace'],
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'bounce-slow': 'bounce 2.5s infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'glow': 'glow 3s ease-in-out infinite alternate',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-12px)' },
+            },
+            glow: {
+              '0%': { opacity: '0.6', filter: 'drop-shadow(0 0 15px rgba(217,155,38,0.3))' },
+              '100%': { opacity: '1', filter: 'drop-shadow(0 0 35px rgba(217,155,38,0.6))' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom CSS Classes for Single Light Mode Theme & Video Zoom -->
+  <style>
+    /* Hide scrollbars & Enforce Warm Ivory Light Mode with High Contrast Dark Typography */
+    html, body {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      background-color: #F8F6F0;
+      color: #0A0C10;
+    }
+    html::-webkit-scrollbar, body::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Video Zoom Choreography */
+    #heroVideo {
+      transition: transform 2.8s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: scale(1);
+      transform-origin: center center;
+    }
+    #heroVideo.zoomed-in {
+      transform: scale(1.4);
+    }
+
+    /* Glassmorphism & Light Mode Visual Tokens */
+    .glass-nav {
+      background: rgba(248, 246, 240, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(18, 20, 28, 0.12);
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(18, 20, 28, 0.12);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    }
+    .glass-card:hover {
+      background: rgba(255, 255, 255, 0.98);
+      border-color: rgba(217, 155, 38, 0.5);
+      box-shadow: 0 15px 35px rgba(217, 155, 38, 0.15);
+    }
+    .glass-button {
+      background: rgba(18, 20, 28, 0.06);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(18, 20, 28, 0.18);
+      color: #0A0C10;
+      font-weight: 600;
+    }
+    .glass-button:hover {
+      background: rgba(18, 20, 28, 0.12);
+      border-color: rgba(217, 155, 38, 0.7);
+    }
+    .text-glow {
+      text-shadow: 0 0 25px rgba(217, 155, 38, 0.4);
+    }
+    .hero-title-shadow {
+      text-shadow: 0 2px 12px rgba(248, 246, 240, 0.9);
+    }
+
+    /* Core App Compatibility Styles */
+    .page-view:not(.active) {
+      display: none !important;
+    }
+    .page-view.active {
+      display: block;
+    }
+    #page-home.page-view.active {
+      display: flex;
+    }
+  </style>
+
+  <!-- External Stylesheet Fallback -->
+  <link rel="stylesheet" href="./css/styles.css?v=1.5">
 </head>
-<body>
+<body class="bg-[#F8F6F0] text-[#0A0C10] font-sans antialiased overflow-x-hidden min-h-screen relative flex flex-col justify-between selection:bg-[#D99B26] selection:text-white">
+
+  <!-- 3. Background Video Layer (STRICTLY ISOLATED TO "THE ROUTE" PAGE) -->
+  <div id="heroVideoBgLayer" class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+    
+    <!-- Background Video Element using current video in videos folder -->
+    <video id="heroVideo" class="absolute inset-0 w-full h-full object-cover scale-105 zoomed-in opacity-85" autoplay loop muted playsinline>
+      <source src="./videos/Steam_locomotive_moving_on_tracks_202608181456.mp4" type="video/mp4">
+    </video>
+
+    <!-- 1. Left column gradient overlay for light mode high-contrast legibility -->
+    <div class="absolute inset-y-0 left-0 w-full sm:w-[60%] lg:w-[52%] bg-gradient-to-r from-[#F8F6F0] via-[#F8F6F0]/98 via-[#F8F6F0]/92 to-transparent pointer-events-none z-10"></div>
+
+    <!-- 2. Top navigation overlay -->
+    <div class="absolute top-0 left-0 right-0 h-48 sm:h-56 lg:h-64 bg-gradient-to-b from-[#F8F6F0] via-[#F8F6F0]/95 via-[#F8F6F0]/60 to-transparent pointer-events-none z-10"></div>
+
+    <!-- 3. Bottom overlay -->
+    <div class="absolute bottom-0 left-0 right-0 h-48 sm:h-56 lg:h-64 bg-gradient-to-t from-[#F8F6F0] via-[#F8F6F0]/95 via-[#F8F6F0]/60 to-transparent pointer-events-none z-10"></div>
+
+  </div>
 
   <!-- Video Loading Splash Screen -->
-  <div id="train-loading-splash" class="train-splash-overlay" role="dialog" aria-label="Loading TrackTales">
-    <!-- Background Video Layer -->
-    <div class="splash-video-container">
-      <video id="splash-video" class="splash-bg-video" autoplay loop muted playsinline>
-        <source src="./videos/loading_video.mp4" type="video/mp4">
-        <source src="/videos/loading_video.mp4" type="video/mp4">
-        <source src="/static/videos/loading_video.mp4" type="video/mp4">
-        Your browser does not support the video tag.
+  <div id="train-loading-splash" class="fixed inset-0 z-[100] flex items-center justify-center bg-[#F8F6F0]/95 backdrop-blur-xl transition-opacity duration-700" role="dialog" aria-label="Loading TrackTales">
+    <div class="splash-video-container absolute inset-0 overflow-hidden pointer-events-none">
+      <video id="splash-video" class="w-full h-full object-cover opacity-30 scale-105" autoplay loop muted playsinline>
+        <source src="./videos/Steam_locomotive_moving_on_tracks_202608181456.mp4" type="video/mp4">
       </video>
-      <div class="splash-video-darkener"></div>
+      <div class="absolute inset-0 bg-[#F8F6F0]/80"></div>
     </div>
 
-    <!-- Floating Audio & Skip Navigation Controls -->
-    <div class="splash-top-controls">
-      <button id="splash-audio-toggle" class="splash-control-btn" title="Toggle Video Audio">
-        <i data-lucide="volume-x"></i>
+    <div class="absolute top-6 right-6 flex items-center gap-3 z-10">
+      <button id="splash-audio-toggle" class="glass-button px-4 py-2 rounded-full text-xs font-mono flex items-center gap-2 text-[#0A0C10] hover:text-[#D99B26]" title="Toggle Sound">
+        <i data-lucide="volume-x" class="w-4 h-4"></i>
         <span>Sound Off</span>
       </button>
-      <button id="splash-skip-btn" class="splash-control-btn splash-skip-btn" title="Enter TrackTales App">
+      <button id="splash-skip-btn" class="glass-button px-5 py-2 rounded-full text-xs font-mono flex items-center gap-2 text-[#D99B26] border-[#D99B26]/40 hover:bg-[#D99B26] hover:text-white transition-all" title="Enter TrackTales App">
         <span>Enter App</span>
-        <i data-lucide="arrow-right"></i>
+        <i data-lucide="arrow-right" class="w-4 h-4"></i>
       </button>
     </div>
 
-    <!-- Center Premium Glassmorphic Card -->
-    <div class="train-splash-card video-splash-card">
-      <div class="splash-badge-logo">
-        <i data-lucide="train" style="width: 32px; height: 32px; color: var(--accent-gold);"></i>
+    <div class="relative z-10 max-w-md w-full mx-4 p-8 rounded-2xl glass-card text-center shadow-2xl border border-black/10">
+      <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-[#D99B26]/15 border border-[#D99B26]/30 flex items-center justify-center text-[#D99B26]">
+        <i data-lucide="train-front" class="w-8 h-8"></i>
       </div>
-      <h3 class="splash-title"><span class="text-gradient-green">TRACKTALES</span></h3>
-      <p class="splash-subtitle">Preparing South Africa Railway & Tourism Experience...</p>
+      <h3 class="font-heading font-extrabold text-2xl tracking-wider text-[#0A0C10] mb-2">TRACK<span class="text-[#D99B26]">TALES</span></h3>
+      <p class="text-xs font-mono text-[#111827] font-semibold tracking-widest uppercase mb-6">Preparing Pretoria to Cape Town Rail Companion...</p>
       
-      <div class="splash-progress-bar">
-        <div class="splash-progress-fill" id="splash-progress-fill"></div>
+      <div class="w-full h-1.5 bg-black/10 rounded-full overflow-hidden mb-3">
+        <div class="h-full bg-[#D99B26] transition-all duration-300 w-0" id="splash-progress-fill"></div>
       </div>
-      <div class="splash-status-text" id="splash-status-text">Connecting South Africa Rail Corridor...</div>
+      <div class="text-[11px] font-mono text-[#111827] font-semibold" id="splash-status-text">Connecting South Africa Rail Corridor...</div>
     </div>
   </div>
 
-  <!-- Navigation Bar -->
-  <header class="navbar" id="navbar">
-    <div class="container">
-      <a href="#home" class="logo" id="nav-logo-link" data-page-target="home">
-        <div class="logo-icon"><i data-lucide="train"></i></div>
-        <span>Track<span class="text-gradient-green">Tales</span></span>
+  <!-- 4. Layout & Content Structure: Navigation Bar (Light Mode) -->
+  <header class="w-full fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300">
+    <div class="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16 h-20 sm:h-24 flex items-center justify-between">
+      
+      <!-- Left Logo -->
+      <a href="#home" class="flex items-center gap-3.5 group nav-page-link" data-page="home" id="nav-logo-link">
+        <div class="relative flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#D99B26]/15 border border-[#D99B26]/40 text-[#D99B26] group-hover:border-[#D99B26] transition-colors shadow-[0_0_15px_rgba(217,155,38,0.2)]">
+          <i data-lucide="train-front" class="w-5 h-5 text-[#D99B26]"></i>
+          <span class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-[#D99B26] animate-pulse"></span>
+        </div>
+        <div class="flex flex-col text-left">
+          <span class="font-heading font-extrabold tracking-wider text-xl sm:text-2xl text-[#0A0C10] leading-none">TRACK<span class="text-[#D99B26]">TALES</span></span>
+          <span class="text-[9px] font-bold tracking-[0.25em] text-[#111827] uppercase mt-1">PRETORIA TO CAPE TOWN</span>
+        </div>
       </a>
 
-      <nav class="nav-wrapper">
-        <button class="nav-chevron left" id="nav-chevron-left" aria-label="Scroll navigation tabs left"><i data-lucide="chevron-left"></i></button>
-        <div class="nav-scroll-container" id="nav-scroll-container">
-          <ul class="nav-links desktop-nav-links" id="nav-menu-desktop" role="tablist">
-            <li role="presentation"><a href="#home" class="nav-page-link active" data-page="home" id="tab-home" role="tab" aria-selected="true" tabindex="0"><i data-lucide="home" class="nav-icon"></i> Home</a></li>
-            <li role="presentation"><a href="#trains" class="nav-page-link" data-page="trains" id="tab-trains" role="tab" aria-selected="false" tabindex="-1"><i data-lucide="train" class="nav-icon"></i> Flagship Trains</a></li>
-            <li role="presentation"><a href="#attractions" class="nav-page-link" data-page="attractions" id="tab-attractions" role="tab" aria-selected="false" tabindex="-1"><i data-lucide="map-pin" class="nav-icon"></i> Attractions</a></li>
-            <li role="presentation"><a href="#games" class="nav-page-link" data-page="games" id="tab-games" role="tab" aria-selected="false" tabindex="-1"><i data-lucide="gamepad-2" class="nav-icon"></i> Sight Games</a></li>
-            <li role="presentation"><a href="#about" class="nav-page-link" data-page="about" id="tab-about" role="tab" aria-selected="false" tabindex="-1"><i data-lucide="info" class="nav-icon"></i> About</a></li>
-          </ul>
-        </div>
-        <button class="nav-chevron right" id="nav-chevron-right" aria-label="Scroll navigation tabs right"><i data-lucide="chevron-right"></i></button>
+      <!-- Center Nav as Animated Sliding Tabs -->
+      <nav class="hidden md:flex items-center relative font-mono text-xs tracking-widest uppercase bg-white/90 p-1.5 rounded-full border border-black/15 shadow-sm" id="nav-tabs-container">
+        <!-- Persistent Sliding Active Tab Indicator -->
+        <div id="nav-tab-indicator" class="absolute bottom-1.5 top-1.5 rounded-full bg-[#D99B26]/20 border border-[#D99B26]/50 transition-all duration-300 pointer-events-none" style="left: 6px; width: 100px;"></div>
+        
+        <a href="#home" class="nav-tab-link nav-page-link px-5 py-2 rounded-full text-[#0A0C10] hover:text-[#D99B26] transition-colors relative z-10 active font-bold" data-page="home">The Route</a>
+        <a href="#about" class="nav-tab-link nav-page-link px-5 py-2 rounded-full text-[#111827] font-semibold hover:text-[#D99B26] transition-colors relative z-10" data-page="about">Stories</a>
+        <a href="#trains" class="nav-tab-link nav-page-link px-5 py-2 rounded-full text-[#111827] font-semibold hover:text-[#D99B26] transition-colors relative z-10" data-page="trains">Modes</a>
+        <a href="#attractions" class="nav-tab-link nav-page-link px-5 py-2 rounded-full text-[#111827] font-semibold hover:text-[#D99B26] transition-colors relative z-10" data-page="attractions">Sights</a>
+        <a href="#games" class="nav-tab-link nav-page-link px-5 py-2 rounded-full text-[#111827] font-semibold hover:text-[#D99B26] transition-colors relative z-10" data-page="games">Games</a>
       </nav>
 
-      <div class="nav-actions-desktop" style="display: flex; align-items: center; gap: 0.75rem;">
-        <button id="theme-toggle" class="theme-toggle-btn desktop-only-btn" aria-label="Toggle light/dark theme" title="Switch between Light and Dark Mode">
-          <i data-lucide="sun"></i>
+      <!-- Right Action CTA -->
+      <div class="flex items-center gap-4">
+        <button id="btn-open-login" class="glass-button px-4 py-2 rounded-full text-xs font-mono text-[#0A0C10] hover:border-[#D99B26]/50 transition-all flex items-center gap-2" title="Passenger Portal Sign In / Account">
+          <i data-lucide="user-check" class="w-4 h-4 text-[#D99B26]"></i>
+          <span id="desktop-login-label">Sign In</span>
         </button>
-        <button id="btn-open-login" class="nav-btn nav-btn-outline desktop-only-btn" title="Passenger Portal Sign In">
-          <i data-lucide="user-check"></i> <span id="desktop-login-label">Sign In</span>
+
+        <!-- Mobile Drawer Toggle -->
+        <button class="md:hidden glass-button p-2.5 rounded-full text-[#0A0C10] hover:text-[#D99B26] transition-colors" id="mobile-toggle-btn" aria-label="Toggle Navigation Menu">
+          <i data-lucide="menu" id="mobileMenuIcon" class="w-5 h-5"></i>
         </button>
-        <button class="mobile-toggle" id="mobile-toggle-btn" aria-label="Toggle navigation menu"><i data-lucide="menu"></i></button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileMenu" class="hidden md:hidden absolute top-full left-0 right-0 glass-card bg-[#F8F6F0]/98 border-t border-b border-black/10 px-6 py-6 transition-all duration-300">
+      <div class="flex flex-col gap-4 font-mono text-xs tracking-widest uppercase">
+        <a href="#home" class="nav-page-link py-3 px-4 rounded-lg bg-black/5 hover:bg-[#D99B26]/20 text-[#0A0C10] flex items-center gap-3 font-semibold" data-page="home">
+          <i data-lucide="compass" class="w-4 h-4 text-[#D99B26]"></i> The Route
+        </a>
+        <a href="#about" class="nav-page-link py-3 px-4 rounded-lg bg-black/5 hover:bg-[#D99B26]/20 text-[#0A0C10] flex items-center gap-3 font-semibold" data-page="about">
+          <i data-lucide="book-open" class="w-4 h-4 text-[#D99B26]"></i> Stories
+        </a>
+        <a href="#trains" class="nav-page-link py-3 px-4 rounded-lg bg-black/5 hover:bg-[#D99B26]/20 text-[#0A0C10] flex items-center gap-3 font-semibold" data-page="trains">
+          <i data-lucide="train" class="w-4 h-4 text-[#D99B26]"></i> Modes
+        </a>
+        <a href="#attractions" class="nav-page-link py-3 px-4 rounded-lg bg-black/5 hover:bg-[#D99B26]/20 text-[#0A0C10] flex items-center gap-3 font-semibold" data-page="attractions">
+          <i data-lucide="map-pin" class="w-4 h-4 text-[#D99B26]"></i> Sights
+        </a>
+        <a href="#games" class="nav-page-link py-3 px-4 rounded-lg bg-black/5 hover:bg-[#D99B26]/20 text-[#0A0C10] flex items-center gap-3 font-semibold" data-page="games">
+          <i data-lucide="gamepad-2" class="w-4 h-4 text-[#D99B26]"></i> Games
+        </a>
+        <button id="mobile-drawer-login-btn" class="py-3 px-4 rounded-lg bg-[#D99B26] text-white flex items-center justify-center gap-2 font-bold">
+          <i data-lucide="user-check" class="w-4 h-4"></i> Sign In / Account
+        </button>
       </div>
     </div>
   </header>
 
-  <!-- Mobile & Tablet Side Panel Drawer (OUTSIDE header to avoid stacking context trap) -->
-  <div class="mobile-drawer-panel" id="nav-menu" aria-label="Mobile navigation drawer">
-    <button class="nav-drawer-close" id="nav-drawer-close-btn" aria-label="Close navigation menu"><i data-lucide="x"></i></button>
-    <ul class="mobile-drawer-links">
-      <li><a href="#home" class="nav-page-link" data-page="home"><i data-lucide="home" class="nav-icon"></i> Home</a></li>
-      <li><a href="#trains" class="nav-page-link" data-page="trains"><i data-lucide="train" class="nav-icon"></i> Flagship Trains</a></li>
-      <li><a href="#attractions" class="nav-page-link" data-page="attractions"><i data-lucide="map-pin" class="nav-icon"></i> Attractions</a></li>
-      <li><a href="#games" class="nav-page-link" data-page="games"><i data-lucide="gamepad-2" class="nav-icon"></i> Sight Games</a></li>
-      <li><a href="#about" class="nav-page-link" data-page="about"><i data-lucide="info" class="nav-icon"></i> About</a></li>
-    </ul>
-
-    <div class="nav-drawer-footer" id="nav-drawer-footer">
-      <label class="nav-theme-toggle-row" title="Toggle Light/Dark Theme" style="cursor: pointer;">
-        <span class="theme-toggle-label">
-          <span id="mobile-theme-icon-container"><i data-lucide="moon"></i></span>
-          <span id="mobile-theme-text">Dark Mode</span>
-        </span>
-        <span class="theme-switch">
-          <input type="checkbox" id="mobile-theme-checkbox">
-          <span class="theme-slider"></span>
-        </span>
-      </label>
-
-      <button id="mobile-drawer-login-btn" class="nav-drawer-btn nav-drawer-btn-primary" title="Passenger Sign In / Sign Out">
-        <i data-lucide="user-check"></i> <span id="mobile-login-label">Sign In</span>
-      </button>
-    </div>
-  </div>
-
-  <!-- Mobile & Tablet Side Panel Backdrop -->
-  <div class="nav-drawer-backdrop" id="nav-drawer-backdrop"></div>
-
-  <!-- MAIN CONTENT CONTAINER WITH PAGE VIEWS -->
-  <main id="main-content">
-
-    <!-- PAGE 1: HOME PAGE -->
-    <section id="page-home" class="page-view active">
+  <!-- 4. Hero Main Section (<main>) -->
+  <main id="main-content" class="relative z-10 flex-1 flex flex-col justify-between min-h-screen">
+    
+    <!-- PAGE 1: HOME PAGE (The Route — Hero Section with "Watch The Journey Unfold.") -->
+    <section id="page-home" class="page-view active min-h-screen flex flex-col justify-between pt-24 sm:pt-28">
       
-      <!-- Hero Section -->
-      <section class="hero" id="hero">
-        <div class="hero-backdrop"></div>
-        <div class="container hero-grid">
-          <div class="hero-content">
-            <div class="badge badge-green">
-              <i data-lucide="map-pin"></i>
-              <span>Pretoria to Kimberley to Cape Town</span>
+      <!-- HERO MAIN WRAPPER -->
+      <div class="w-full max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16 py-8 lg:py-12 flex-1 flex items-center">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center w-full">
+          
+          <!-- LEFT CONTENT COLUMN WITH DARK HIGH-CONTRAST TYPOGRAPHY -->
+          <div class="lg:col-span-7 xl:col-span-6 flex flex-col items-start text-left hero-typography-col">
+            
+            <!-- Category Tag -->
+            <div class="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase font-bold tracking-widest text-[#B87C10]">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#B87C10] animate-pulse"></span>
+              <span>PRETORIA TO CAPE TOWN CORRIDOR</span>
             </div>
-            <h1 style="margin-top: 1rem;">
-              Discover Mzansi Through the <span class="text-gradient-blue">Magic of Rail</span>
+
+            <!-- Display Headline: Watch The Journey Unfold -->
+            <h1 class="font-sans font-black text-4xl sm:text-6xl xl:text-[68px] leading-[1.05] tracking-tight text-[#0A0C10] hero-title-shadow">
+              Watch The Journey
             </h1>
-            <p>
-              Welcome to <strong>TrackTales</strong>—your interactive gateway to South Africa's rich railway history, scenic stopover destinations, luxury train travel, and vibrant tourism corridors.
+            <span class="font-serif italic text-[#B87C10] text-glow text-5xl sm:text-7xl xl:text-[76px] block leading-tight mt-1 mb-6 font-extrabold">
+              Unfold.
+            </span>
+
+            <!-- Dark, Highly Readable Paragraph Copy -->
+            <p class="text-[#111827] font-medium max-w-md leading-relaxed mb-8 text-base sm:text-lg font-sans">
+              A luxury rail ticket for this route can cost tens of thousands of Rand. TrackTales traces the same line a spectrum that runs from the Highveld to the Atlantic.
             </p>
 
-            <div class="hero-actions">
-              <button class="btn-primary nav-page-link" data-page="trains" id="hero-btn-explore">
-                <span>Explore Flagship Trains</span>
-                <i data-lucide="arrow-right"></i>
-              </button>
-              <button class="btn-secondary nav-page-link" data-page="about" id="hero-btn-about">
-                <i data-lucide="info"></i>
-                <span>About TrackTales</span>
-              </button>
+            <!-- Proof/Stat Stack Inline (Crisp Dark Text) -->
+            <div class="flex flex-wrap items-center gap-3 pt-4 border-t border-black/20 font-mono text-xs text-[#111827] font-semibold">
+              <span class="flex items-center gap-2"><i data-lucide="route" class="w-3.5 h-3.5 text-[#B87C10]"></i> 1,550 km</span>
             </div>
 
-            <div class="hero-stats">
-              <div class="stat-item">
-                <h4>1,600 km</h4>
-                <p>Rail Corridor</p>
-              </div>
-              <div class="stat-item">
-                <h4>2 Flagship</h4>
-                <p>Luxury Trains</p>
-              </div>
-              <div class="stat-item">
-                <h4>6 Major Stops</h4>
-                <p>Historic Sights</p>
-              </div>
-            </div>
           </div>
 
-          <div class="hero-card-preview">
-            <img src="https://images.unsplash.com/photo-1541447271487-09612b3f49f7?auto=format&fit=crop&w=1000&q=80" alt="The Blue Train traveling across South African countryside" class="preview-image">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <span class="badge badge-gold">Featured Express</span>
-                <h3 style="margin-top: 0.4rem; font-size: 1.4rem;">The Blue Train</h3>
-                <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0;">Pretoria to Kimberley to Cape Town</p>
-              </div>
-              <button class="badge badge-blue nav-page-link" data-page="trains" style="text-decoration: none; border: none; cursor: pointer;">View Specs</button>
-            </div>
+          <!-- CENTER-RIGHT CENTERPIECE (Locomotive Video Zone - Clear & Unmasked) -->
+          <div class="hidden lg:flex lg:col-span-5 xl:col-span-6 justify-center items-center relative min-h-[380px] pointer-events-none">
+            <!-- Reserved unmasked visual focal space for locomotive zoom choreography -->
           </div>
+
         </div>
-      </section>
+      </div>
 
-      <!-- Home Portal Sections Showcase Grid -->
-      <section class="section">
-        <div class="container">
-          <div class="section-header">
-            <span class="badge badge-blue">Explore TrackTales</span>
-            <h2 style="margin-top: 0.8rem;">Your Gateway to <span class="text-gradient-green">South Africa Railway Tourism</span></h2>
-            <p>Select a section below to dive into Mzansi's luxury trains, scenic stopovers, interactive sight games, and railway history.</p>
-          </div>
+      <!-- 5. Footer Controls Bar -->
+      <footer class="w-full max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-black/15 relative z-10 font-mono text-xs text-[#111827] font-semibold">
+        
+        <!-- Left: Audio & Playback Toggles -->
+        <div class="flex items-center gap-3">
+          <button id="heroMuteBtn" class="glass-button px-3.5 py-2 rounded-full flex items-center gap-2 hover:text-[#D99B26] hover:border-[#D99B26]/40 transition-all text-[#0A0C10]" title="Toggle Audio">
+            <i data-lucide="volume-x" id="heroMuteIcon" class="w-4 h-4 text-[#D99B26]"></i>
+            <span id="heroMuteText" class="uppercase tracking-widest text-[10px]">UNMUTE</span>
+          </button>
 
-          <div class="about-grid" style="margin-top: 2rem;">
-            <div class="about-card" data-page="trains" style="display: flex; flex-direction: column; justify-content: space-between; cursor: pointer;">
-              <div>
-                <div class="about-icon" style="color: var(--primary-blue);"><i data-lucide="train" style="width: 36px; height: 36px;"></i></div>
-                <h3>Flagship Trains Showcase</h3>
-                <p>Compare luxury amenities, speed, and itineraries for <strong>The Blue Train</strong> (Ultra Luxury Express) and <strong>Rovos Rail</strong> (Vintage Edwardian Safari).</p>
-              </div>
-              <button class="btn-primary nav-page-link" data-page="trains" style="margin-top: 1.5rem; width: 100%; justify-content: center;">
-                <span>View Flagship Trains</span>
-                <i data-lucide="arrow-right"></i>
-              </button>
-            </div>
-
-            <div class="about-card" data-page="attractions" style="display: flex; flex-direction: column; justify-content: space-between; cursor: pointer;">
-              <div>
-                <div class="about-icon" style="color: var(--primary-green);"><i data-lucide="map-pin" style="width: 36px; height: 36px;"></i></div>
-                <h3>Attractions Directory</h3>
-                <p>Discover historic stopover attractions from Pretoria Union Buildings and Kimberley Big Hole to Matjiesfontein and Table Mountain.</p>
-              </div>
-              <button class="btn-primary nav-page-link" data-page="attractions" style="margin-top: 1.5rem; width: 100%; justify-content: center;">
-                <span>Explore Sights</span>
-                <i data-lucide="arrow-right"></i>
-              </button>
-            </div>
-
-            <div class="about-card" data-page="games" style="display: flex; flex-direction: column; justify-content: space-between; cursor: pointer;">
-              <div>
-                <div class="about-icon" style="color: var(--accent-gold);"><i data-lucide="gamepad-2" style="width: 36px; height: 36px;"></i></div>
-                <h3>Sight Solver Games</h3>
-                <p>Test your knowledge on South Africa's landmark sights, solve trivia puzzles, and unlock fascinating "Did You Know?" pop-up facts.</p>
-              </div>
-              <button class="btn-primary nav-page-link" data-page="games" style="margin-top: 1.5rem; width: 100%; justify-content: center;">
-                <span>Play Games</span>
-                <i data-lucide="arrow-right"></i>
-              </button>
-            </div>
-
-            <div class="about-card" data-page="about" style="display: flex; flex-direction: column; justify-content: space-between; cursor: pointer;">
-              <div>
-                <div class="about-icon" style="color: var(--primary-blue);"><i data-lucide="info" style="width: 36px; height: 36px;"></i></div>
-                <h3>About & Rail Tourism</h3>
-                <p>Learn about South Africa's rich rail history, luxury train travel lines, and premier tourist destinations.</p>
-              </div>
-              <button class="btn-primary nav-page-link" data-page="about" style="margin-top: 1.5rem; width: 100%; justify-content: center;">
-                <span>Visit About Page</span>
-                <i data-lucide="arrow-right"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>    </section>
-
-    <!-- PAGE 2: FLAGSHIP TRAINS ADVERTISEMENT PAGE -->
-    <section id="page-trains" class="page-view">ins" class="page-view">
-      <div class="container" style="padding-top: 120px; padding-bottom: 80px;">
-        <div class="section-header">
-          <span class="badge badge-gold">South Africa Luxury Express Showcase</span>
-          <h2 style="margin-top: 0.8rem;">Advertise & Compare <span class="text-gradient-blue">The 2 Flagship Trains</span></h2>
-          <p>Discover South Africa's two legendary icons of luxury rail: five-star modern elegance on <strong>The Blue Train</strong> and five-star vintage Edwardian romance on <strong>Rovos Rail</strong>.</p>
+          <button id="heroPlayBtn" class="glass-button px-3.5 py-2 rounded-full flex items-center gap-2 hover:text-[#D99B26] hover:border-[#D99B26]/40 transition-all text-[#0A0C10]" title="Toggle Play/Pause">
+            <i data-lucide="pause" id="heroPlayIcon" class="w-4 h-4 text-[#D99B26]"></i>
+            <span id="heroPlayText" class="uppercase tracking-widest text-[10px]">PAUSE</span>
+          </button>
         </div>
 
-        <!-- 2 Flagship Trains Grid -->
-        <div class="flagship-trains-container">
+        <!-- Center: Animated Scroll Indicator -->
+        <div class="flex items-center gap-2 uppercase tracking-[0.25em] text-[10px] text-[#0A0C10] animate-pulse-slow font-bold">
+          <i data-lucide="chevron-down" class="w-4 h-4 text-[#D99B26] animate-bounce-slow"></i>
+          <span>SCROLL TO EXPLORE</span>
+        </div>
 
-          <!-- TRAIN 1: THE BLUE TRAIN -->
-          <div class="flagship-card">
-            <div class="flagship-badge-floating">
-              <span class="badge badge-blue"><i data-lucide="gem"></i> Flagship 1: Ultra Luxury Express</span>
-            </div>
-            <div class="flagship-media">
-              <img src="https://images.unsplash.com/photo-1541447271487-09612b3f49f7?auto=format&fit=crop&w=1200&q=80" alt="The Blue Train exterior">
-            </div>
-            <div class="flagship-content">
-              <div class="flagship-header-meta">
-                <h2>The Blue Train</h2>
-                <p class="flagship-tagline">"A Window to the Soul of South Africa"</p>
-              </div>
+        <!-- Right: System Tag -->
+        <div class="flex items-center gap-2 uppercase tracking-widest text-[10px] text-[#111827] font-semibold">
+          <span class="w-2 h-2 rounded-full bg-[#2E7D46] animate-pulse"></span>
+          <span>TRACKTALES · THE RAIL RUNNERS</span>
+        </div>
 
-              <p class="flagship-desc">
-                Synonymous with world-class luxury rail travel since 1946. The Blue Train offers 24-hour butler service, marble-tiled ensuite bathrooms with full bathtubs, silver-service multi-course dining, and panoramic observation windows looking out across 1,600 kilometers of spectacular African landscape.
-              </p>
+      </footer>
 
-              <div class="flagship-specs-grid">
-                <div class="spec-box">
-                  <span class="spec-label"><i data-lucide="zap"></i> SPEED</span>
-                  <span class="spec-value">90 km/h (Smooth Slow Travel)</span>
-                </div>
-                <div class="spec-box">
-                  <span class="spec-label"><i data-lucide="clock"></i> DURATION</span>
-                  <span class="spec-value">31 Hours (Pretoria ➔ Cape Town)</span>
-                </div>
-                <div class="spec-box">
-                  <span class="spec-label"><i data-lucide="star"></i> RATING</span>
-                  <span class="spec-value">5-Star Luxury Butler Service</span>
-                </div>
-                <div class="spec-box">
-                  <span class="spec-label"><i data-lucide="utensils"></i> DINING</span>
-                  <span class="spec-value">Gourmet 5-Course & SA Wines</span>
-                </div>
-              </div>
+    </section>
 
-              <div class="flagship-highlights-box">
-                <h4><i data-lucide="check-circle-2" style="color: var(--green-mint);"></i> Key Luxury Highlights:</h4>
-                <ul class="highlights-list">
-                  <li><i data-lucide="check" style="width: 16px; height: 16px; color: var(--green-mint);"></i> 24/7 Dedicated Personal Butler Service for every carriage suite</li>
-                  <li><i data-lucide="check" style="width: 16px; height: 16px; color: var(--green-mint);"></i> En-suite marble bathrooms with full-sized porcelain bathtub</li>
-                  <li><i data-lucide="check" style="width: 16px; height: 16px; color: var(--green-mint);"></i> Cigar & Cognac Club Lounge Car with plush leather armchairs</li>
-                  <li><i data-lucide="check" style="width: 16px; height: 16px; color: var(--green-mint);"></i> Guided stopover excursion to the historic Kimberley Big Hole Diamond Mine</li>
-                </ul>
-              </div>
 
-              <!-- Backend Integration Space Notice -->
-              <div class="backend-integration-space">
-                <div class="backend-space-header">
-                  <span class="badge badge-gold"><i data-lucide="code"></i> Backend Data Space</span>
-                  <small style="color: var(--text-muted);">Dynamic Trails & Stops API Feed Reserved Space</small>
-                </div>
-                <div class="backend-placeholder-body">
-                  <i data-lucide="route" style="width: 28px; height: 28px; color: var(--primary-blue); margin-bottom: 0.4rem;"></i>
-                  <h5>Live Trail & Stop Timelines (Backend Integration Pending)</h5>
-                  <p>Backend team will dynamically inject live trail routes, stopover timetables, GPS tracking data, and cabin live availability into this reserved space.</p>
-                </div>
-              </div>
-            </div>
-          </div>
+    <!-- PAGE 2: FLAGSHIP TRAINS SHOWCASE -->
+    <section id="page-trains" class="page-view pt-32 sm:pt-36 pb-20 px-6 sm:px-12 lg:px-16 max-w-[1440px] mx-auto w-full">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="px-4 py-1.5 rounded-full bg-[#D99B26]/10 border border-[#D99B26]/30 text-[#B87C10] font-mono text-xs font-bold tracking-widest uppercase inline-block mb-4">
+          SOUTH AFRICA LUXURY EXPRESS SHOWCASE
+        </span>
+        <h2 class="font-heading font-extrabold text-3xl sm:text-5xl text-[#0A0C10] mb-4">
+          The 2 <span class="text-[#B87C10] italic font-serif">Flagship</span> Trains
+        </h2>
+        <p class="text-[#111827] font-medium leading-relaxed font-sans">
+          Compare luxury amenities, speed, and itineraries for <strong>The Blue Train</strong> (Ultra Luxury Express) and <strong>Rovos Rail</strong> (Vintage Edwardian Safari).
+        </p>
+      </div>
 
-          <!-- TRAIN 2: ROVOS RAIL -->
-          <div class="flagship-card" style="margin-top: 3rem;">
-            <div class="flagship-badge-floating">
-              <span class="badge badge-gold"><i data-lucide="crown"></i> Flagship 2: Vintage Edwardian Safari</span>
-            </div>
-            <div class="flagship-media">
-              <img src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=1200&q=80" alt="Rovos Rail vintage train">
-            </div>
-            <div class="flagship-content">
-              <div class="flagship-header-meta">
-                <h2>Rovos Rail</h2>
-                <p class="flagship-tagline">"The Most Luxurious Train in the World"</p>
-              </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" id="trains-container">
+        <!-- Rendered dynamically via app.js -->
+      </div>
+    </section>
 
-              <p class="flagship-desc">
-                Established in 1989 by Rohan Vos, Rovos Rail recaptures the nostalgia and Edwardian elegance of 1920s train travel. Featuring hand-restored wood-paneled suites, open-air balcony observation cars for photography, formal evening dress codes, and high tea served daily.
-              </p>
 
-              <div class="flagship-specs-grid">
-                <div class="spec-box">
-                  <span class="spec-label"><i data-lucide="zap"></i> SPEED</span>
-                  <span class="spec-value">60 km/h (Nostalgic Slow Safari)</span>
-                </div>
-                <div class="spec-box">
-                  <span class="spec-label"><i data-lucide="clock"></i> DURATION</span>
-                  <span class="spec-value">48 Hours (Relaxed Safari Pace)</span>
-                </div>
-                <div class="spec-box">
-                  <span class="spec-label"><i data-lucide="camera"></i> VIEWING</span>
-                  <span class="spec-value">Open-Air Rear Balcony Car</span>
-                </div>
-                <div class="spec-box">
-                  <span class="spec-label"><i data-lucide="shirt"></i> DRESS</span>
-                  <span class="spec-value">Formal Gala Evening Banquets</span>
-                </div>
-              </div>
+    <!-- PAGE 3: ATTRACTIONS DIRECTORY -->
+    <section id="page-attractions" class="page-view pt-32 sm:pt-36 pb-20 px-6 sm:px-12 lg:px-16 max-w-[1440px] mx-auto w-full">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="px-4 py-1.5 rounded-full bg-[#2E7D46]/10 border border-[#2E7D46]/30 text-[#2E7D46] font-mono text-xs font-bold tracking-widest uppercase inline-block mb-4">
+          SIGHTSEEING & LANDMARKS
+        </span>
+        <h2 class="font-heading font-extrabold text-3xl sm:text-5xl text-[#0A0C10] mb-4">
+          Attractions Along <span class="text-[#2E7D46] italic font-serif">The Corridor</span>
+        </h2>
+        <p class="text-[#111827] font-medium leading-relaxed font-sans">
+          Explore curated South African landmarks, heritage sites, national parks, and cultural hubs at every station along the Pretoria to Cape Town rail corridor.
+        </p>
+      </div>
 
-              <div class="flagship-highlights-box">
-                <h4><i data-lucide="check-circle-2" style="color: var(--accent-gold);"></i> Key Luxury Highlights:</h4>
-                <ul class="highlights-list">
-                  <li><i data-lucide="check" style="width: 16px; height: 16px; color: var(--accent-gold);"></i> Rear Observation Car with open glass doors and outdoor balcony terrace</li>
-                  <li><i data-lucide="check" style="width: 16px; height: 16px; color: var(--accent-gold);"></i> Restored 1920s Edwardian teak wood craftsmanship and brass fittings</li>
-                  <li><i data-lucide="check" style="width: 16px; height: 16px; color: var(--accent-gold);"></i> Royal Suites occupying half a carriage (16 sq metres) with Victorian bath</li>
-                  <li><i data-lucide="check" style="width: 16px; height: 16px; color: var(--accent-gold);"></i> Off-train historic walk through Matjiesfontein preserved Victorian village</li>
-                </ul>
-              </div>
+      <!-- City Filter Bar -->
+      <div class="flex flex-wrap justify-center gap-3 mb-12 font-mono text-xs uppercase" id="attraction-city-filters">
+        <button class="filter-btn glass-button px-5 py-2.5 rounded-full text-[#0A0C10] font-semibold hover:border-[#D99B26] active" data-city="all">All Stops</button>
+        <button class="filter-btn glass-button px-5 py-2.5 rounded-full text-[#0A0C10] font-semibold hover:border-[#D99B26]" data-city="pretoria">Pretoria</button>
+        <button class="filter-btn glass-button px-5 py-2.5 rounded-full text-[#0A0C10] font-semibold hover:border-[#D99B26]" data-city="kimberley">Kimberley</button>
+        <button class="filter-btn glass-button px-5 py-2.5 rounded-full text-[#0A0C10] font-semibold hover:border-[#D99B26]" data-city="matjiesfontein">Matjiesfontein</button>
+        <button class="filter-btn glass-button px-5 py-2.5 rounded-full text-[#0A0C10] font-semibold hover:border-[#D99B26]" data-city="cape-town">Cape Town</button>
+      </div>
 
-              <!-- Backend Integration Space Notice -->
-              <div class="backend-integration-space">
-                <div class="backend-space-header">
-                  <span class="badge badge-gold"><i data-lucide="code"></i> Backend Data Space</span>
-                  <small style="color: var(--text-muted);">Dynamic Trails & Stops API Feed Reserved Space</small>
-                </div>
-                <div class="backend-placeholder-body">
-                  <i data-lucide="route" style="width: 28px; height: 28px; color: var(--primary-green); margin-bottom: 0.4rem;"></i>
-                  <h5>Live Trail & Stop Timelines (Backend Integration Pending)</h5>
-                  <p>Backend team will dynamically inject live trail routes, stopover timetables, GPS tracking data, and cabin live availability into this reserved space.</p>
-                </div>
-              </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="attractions-container">
+        <!-- Rendered dynamically via app.js -->
+      </div>
+    </section>
+
+
+    <!-- PAGE 4: SIGHT SOLVER GAMES -->
+    <section id="page-games" class="page-view pt-32 sm:pt-36 pb-20 px-6 sm:px-12 lg:px-16 max-w-[1440px] mx-auto w-full">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="px-4 py-1.5 rounded-full bg-[#C85028]/10 border border-[#C85028]/30 text-[#C85028] font-mono text-xs font-bold tracking-widest uppercase inline-block mb-4">
+          INTERACTIVE SIGHT PUZZLES
+        </span>
+        <h2 class="font-heading font-extrabold text-3xl sm:text-5xl text-[#0A0C10] mb-4">
+          Mzansi Rail <span class="text-[#C85028] italic font-serif">Sight Solver</span>
+        </h2>
+        <p class="text-[#111827] font-medium leading-relaxed font-sans">
+          Test your knowledge on South Africa's landmark sights along the Pretoria to Cape Town rail corridor. Solve a sight puzzle to trigger a <strong>Did You Know?</strong> pop-up!
+        </p>
+      </div>
+
+      <!-- Game Scoreboard Bar -->
+      <div class="max-w-4xl mx-auto glass-card p-6 rounded-2xl border border-black/10 mb-8 flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
+        <div class="flex items-center gap-3">
+          <i data-lucide="award" class="w-5 h-5 text-[#D99B26]"></i>
+          <span class="text-[#0A0C10] font-semibold">Score: <strong id="game-score" class="text-[#D99B26] text-base font-bold">0</strong> pts</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <i data-lucide="check-circle-2" class="w-5 h-5 text-[#2E7D46]"></i>
+          <span class="text-[#0A0C10] font-semibold">Solved: <strong id="game-solved-count" class="text-[#2E7D46] text-base font-bold">0</strong> / 5 Sights</span>
+        </div>
+        <button id="btn-reset-game" class="glass-button px-4 py-2 rounded-full text-[#111827] font-semibold hover:text-[#0A0C10] flex items-center gap-2">
+          <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Reset Game
+        </button>
+      </div>
+
+      <!-- Active Game Card -->
+      <div class="max-w-4xl mx-auto glass-card p-8 rounded-3xl border border-black/10 shadow-xl" id="game-card-main">
+        <div class="flex items-center justify-between mb-6">
+          <span class="px-3.5 py-1 rounded-full bg-[#4A52B0]/20 border border-[#4A52B0]/40 text-[#4A52B0] font-mono text-xs font-bold" id="game-sight-city">Kimberley Sight Solver</span>
+          <span class="px-3.5 py-1 rounded-full bg-[#D99B26]/20 border border-[#D99B26]/40 text-[#B87C10] font-mono text-xs font-bold" id="game-sight-pts">+100 PTS</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+          <div class="md:col-span-5 relative rounded-2xl overflow-hidden aspect-square border border-black/10">
+            <img id="game-sight-img" src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80" alt="South African landmark sight" class="w-full h-full object-cover">
+            <div id="game-sight-status-overlay" class="absolute inset-0 bg-[#F8F6F0]/90 flex items-center justify-center p-4 text-center font-mono text-xs text-[#B87C10] font-bold">
+              <span id="game-sight-overlay-text">Solve puzzle to unlock sight fact!</span>
             </div>
           </div>
 
+          <div class="md:col-span-7 flex flex-col text-left">
+            <h3 id="game-question-title" class="font-heading font-bold text-xl text-[#0A0C10] mb-3">Sight Puzzle 1: The Giant Excavation</h3>
+            <p id="game-question-prompt" class="text-[#111827] font-medium leading-relaxed mb-6 font-sans">
+              Which world-famous mining crater in Kimberley was hand-dug by 50,000 diamond miners between 1871 and 1914?
+            </p>
+
+            <div class="grid grid-cols-1 gap-3 mb-4" id="game-options-grid">
+              <!-- Rendered via app.js -->
+            </div>
+
+            <div id="game-feedback-msg" class="font-mono text-xs min-h-[24px]"></div>
+          </div>
         </div>
       </div>
     </section>
 
 
-    <!-- PAGE 3: ATTRACTIONS DIRECTORY PAGE -->
-    <section id="page-attractions" class="page-view">
-      <div class="container" style="padding-top: 120px; padding-bottom: 80px;">
-        <div class="section-header">
-          <span class="badge badge-green">Sightseeing & Landmarks</span>
-          <h2 style="margin-top: 0.8rem;">Attractions Along <span class="text-gradient-green">The Rail Route</span></h2>
-          <p>Explore curated South African landmarks, heritage sites, national parks, and cultural hubs at every station along the corridor.</p>
-        </div>
-
-        <div class="attractions-filter-bar" id="attraction-city-filters">
-          <button class="filter-btn active" data-city="all">All Stops</button>
-          <button class="filter-btn" data-city="pretoria">Pretoria</button>
-          <button class="filter-btn" data-city="johannesburg">Johannesburg</button>
-          <button class="filter-btn" data-city="kimberley">Kimberley</button>
-          <button class="filter-btn" data-city="matjiesfontein">Matjiesfontein</button>
-          <button class="filter-btn" data-city="worcester">Worcester</button>
-          <button class="filter-btn" data-city="cape-town">Cape Town</button>
-        </div>
-
-        <div class="attractions-grid" id="attractions-container">
-          <!-- Rendered via JS -->
-        </div>
+    <!-- PAGE 5: ABOUT TRACKTALES & HERITAGE -->
+    <section id="page-about" class="page-view pt-32 sm:pt-36 pb-20 px-6 sm:px-12 lg:px-16 max-w-[1440px] mx-auto w-full">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="px-4 py-1.5 rounded-full bg-[#4A52B0]/10 border border-[#4A52B0]/30 text-[#4A52B0] font-mono text-xs font-bold tracking-widest uppercase inline-block mb-4">
+          ABOUT & HERITAGE
+        </span>
+        <h2 class="font-heading font-extrabold text-3xl sm:text-5xl text-[#0A0C10] mb-4">
+          Connecting Heritage, <span class="text-[#4A52B0] italic font-serif">Tourism & Rail</span>
+        </h2>
+        <p class="text-[#111827] font-medium leading-relaxed font-sans">
+          South Africa’s rail network is the historical spine connecting Pretoria to Cape Town, carrying over 150 years of architecture, mining history, and breathtaking landscapes.
+        </p>
       </div>
-    </section>
 
-
-    <!-- PAGE 4: INTERACTIVE GAMES & Trivia PAGE -->
-    <section id="page-games" class="page-view">
-      <div class="container" style="padding-top: 120px; padding-bottom: 80px;">
-        <div class="section-header">
-          <span class="badge badge-gold">Interactive Sight Puzzles</span>
-          <h2 style="margin-top: 0.8rem;">Mzansi Rail & <span class="text-gradient-gold">Sight Solver Game</span></h2>
-          <p>Solve interesting facts and puzzles about South Africa's iconic rail attractions. Solve a sight to trigger a <strong>Did You Know?</strong> pop-up!</p>
-        </div>
-
-        <div class="game-dashboard">
-          <!-- Game Scoreboard Bar -->
-          <div class="game-score-bar">
-            <div class="score-pill">
-              <i data-lucide="award" style="color: var(--accent-gold);"></i>
-              <span>Score: <strong id="game-score">0</strong> pts</span>
-            </div>
-            <div class="score-pill">
-              <i data-lucide="check-circle-2" style="color: var(--green-mint);"></i>
-              <span>Solved: <strong id="game-solved-count">0</strong> / 5 Sights</span>
-            </div>
-            <button class="btn-secondary" id="btn-reset-game" style="padding: 0.4rem 1rem; font-size: 0.85rem;">
-              <i data-lucide="rotate-ccw"></i> Reset Game
-            </button>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div class="glass-card p-8 rounded-2xl border border-black/10 text-left">
+          <div class="w-12 h-12 rounded-xl bg-[#D99B26]/15 border border-[#D99B26]/30 flex items-center justify-center text-[#D99B26] mb-6">
+            <i data-lucide="compass" class="w-6 h-6"></i>
           </div>
-
-          <!-- Active Sight Puzzle Card -->
-          <div class="game-card-main" id="game-card-main">
-            <div class="game-card-header">
-              <span class="badge badge-blue" id="game-sight-city">Kimberley Sight Solver</span>
-              <span class="badge badge-gold" id="game-sight-pts">+100 PTS</span>
-            </div>
-
-            <div class="game-card-grid">
-              <div class="game-sight-media">
-                <img id="game-sight-img" src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80" alt="South African landmark puzzle sight">
-                <div class="game-sight-overlay" id="game-sight-status-overlay">
-                  <span id="game-sight-overlay-text">Solve to Reveal Fact!</span>
-                </div>
-              </div>
-
-              <div class="game-sight-question-box">
-                <h3 id="game-question-title" style="margin-bottom: 0.6rem;">Sight Puzzle 1: The Giant Excavation</h3>
-                <p id="game-question-prompt" style="color: var(--text-muted); font-size: 1rem; margin-bottom: 1.5rem;">
-                  Which world-famous mining crater in Kimberley was hand-dug by 50,000 diamond miners between 1871 and 1914?
-                </p>
-
-                <!-- Options grid -->
-                <div class="game-options-grid" id="game-options-grid">
-                  <!-- Generated dynamically via JS -->
-                </div>
-
-                <div class="game-feedback-msg" id="game-feedback-msg"></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Selector buttons for all 5 sight puzzles -->
-          <div class="game-puzzles-selector" id="game-puzzle-buttons">
-            <!-- Buttons 1 to 5 generated by JS -->
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PAGE 5: ABOUT TRACKTALES, TOURISM, ROUTE MAP & SOUVENIR TICKETS -->
-    <section id="page-about" class="page-view">
-      <div class="container" style="padding-top: 120px; padding-bottom: 80px;">
-        <div class="section-header">
-          <span class="badge badge-blue">About TrackTales & South Africa Tourism</span>
-          <h2 style="margin-top: 0.8rem;">Connecting Heritage, <span class="text-gradient-green">Tourism & Rail</span></h2>
-          <p>South Africa’s rail network is not just transport—it is the historical backbone that shaped our nation's cities, mining landmarks, and diverse cultural landscapes.</p>
-        </div>
-
-        <div class="about-grid" style="margin-bottom: 3rem;">
-          <div class="about-card">
-            <div class="about-icon" style="color: var(--primary-blue);"><i data-lucide="compass" style="width: 36px; height: 36px;"></i></div>
-            <h3>What is TrackTales?</h3>
-            <p>
-              TrackTales is an immersive digital platform celebrating the stories, sights, and luxury of South Africa's railways. We bridge heritage rail history with modern digital discovery, giving travelers, tourists, and enthusiasts a front-row seat to Mzansi's rail corridor.
-            </p>
-          </div>
-
-          <div class="about-card">
-            <div class="about-icon" style="color: var(--primary-blue);"><i data-lucide="sun" style="width: 36px; height: 36px;"></i></div>
-            <h3>South Africa Tourism</h3>
-            <p>
-              From the Jacaranda-lined streets of Pretoria and the gold mines of Egoli to the starry Karoo desert night skies and Table Mountain’s coastal ocean views. Rail travel offers an eco-friendly, leisurely, and breathtaking perspective of South Africa’s natural beauty.
-            </p>
-          </div>
-
-          <div class="about-card">
-            <div class="about-icon" style="color: var(--accent-gold);"><i data-lucide="landmark" style="width: 36px; height: 36px;"></i></div>
-            <h3>Rail Transportation Legacy</h3>
-            <p>
-              Laid during the 1870s diamond rush in Kimberley and gold fever in Johannesburg, South Africa's rail lines connected inland mining hub cities directly to coastal ports, laying the foundation for modern trade, architecture, and iconic luxury trains like The Blue Train and Rovos Rail.
-            </p>
-          </div>
-        </div>
-
-        <!-- Deep Dive Tourism & Heritage Box -->
-        <div class="about-card why-rail-card" style="margin-bottom: 3rem;">
-          <div class="why-rail-header">
-            <div class="logo-icon"><i data-lucide="train"></i></div>
-            <div>
-              <h3>Why Travel South Africa By Rail?</h3>
-              <p class="why-rail-subtitle">A timeless journey across 1,600 kilometers of Mzansi heritage</p>
-            </div>
-          </div>
-          <p class="why-rail-desc">
-            Railway transportation in South Africa represents over 150 years of engineering marvels and human passion. As your train travels across the vast Highveld plains, through the mountain tunnels of the Hex River Valley, and down to the Atlantic coastline of Cape Town, you experience the changing topography and rich cultural tapestry of nine provinces.
+          <h3 class="font-heading font-bold text-xl text-[#0A0C10] mb-3">What is TrackTales?</h3>
+          <p class="text-[#111827] font-medium text-sm leading-relaxed">
+            TrackTales is a digital companion for the Pretoria to Cape Town corridor, making luxury rail heritage accessible to everyone through stories, audio soundscapes, and sight solvers.
           </p>
-          <div class="why-rail-highlights">
-            <div>
-              <h4><i data-lucide="landmark"></i> Cultural Preserved Stops</h4>
-              <p>Explore historical Victorian stations like Matjiesfontein, preserved in time since 1884.</p>
-            </div>
-            <div>
-              <h4><i data-lucide="utensils"></i> Culinary & Wine Pairings</h4>
-              <p>Savor regional delicacies from Karoo Lamb and biltong to award-winning Western Cape Pinotage wines.</p>
-            </div>
-            <div>
-              <h4><i data-lucide="leaf"></i> Eco-Friendly Travel</h4>
-              <p>Passenger rail offers a sustainable, low-carbon alternative to explore South Africa’s wilderness.</p>
-            </div>
+        </div>
+
+        <div class="glass-card p-8 rounded-2xl border border-black/10 text-left">
+          <div class="w-12 h-12 rounded-xl bg-[#188880]/15 border border-[#188880]/30 flex items-center justify-center text-[#188880] mb-6">
+            <i data-lucide="sun" class="w-6 h-6"></i>
           </div>
+          <h3 class="font-heading font-bold text-xl text-[#0A0C10] mb-3">South Africa Tourism</h3>
+          <p class="text-[#111827] font-medium text-sm leading-relaxed">
+            From Jacaranda streets in Pretoria and Kimberley diamond vaults to the starry Karoo night sky and Table Mountain's coastal peak, rail travel showcases Mzansi at its finest.
+          </p>
+        </div>
+
+        <div class="glass-card p-8 rounded-2xl border border-black/10 text-left">
+          <div class="w-12 h-12 rounded-xl bg-[#C85028]/15 border border-[#C85028]/30 flex items-center justify-center text-[#C85028] mb-6">
+            <i data-lucide="landmark" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-heading font-bold text-xl text-[#0A0C10] mb-3">Rail Legacy</h3>
+          <p class="text-[#111827] font-medium text-sm leading-relaxed">
+            Laid during the 1870s diamond rush, the Pretoria to Cape Town line connected inland hubs directly to coastal ports, creating legendary trains like The Blue Train and Rovos Rail.
+          </p>
         </div>
       </div>
     </section>
 
   </main>
 
-
-  <!-- MODALS -->
-
-  <!-- DID YOU KNOW? POPUP MODAL -->
-  <div class="modal-overlay" id="did-you-know-modal" role="dialog" aria-labelledby="dyk-modal-title">
-    <div class="modal-content dyk-modal-content">
-      <button class="modal-close" id="dyk-modal-close" aria-label="Close modal"><i data-lucide="x"></i></button>
-      <div class="dyk-header">
-        <div class="dyk-icon-wrap"><i data-lucide="sparkles"></i></div>
-        <div>
-          <span class="badge badge-gold">Puzzle Solved!</span>
-          <h2 id="dyk-modal-title" style="margin-top: 0.2rem;">Did You Know?</h2>
-        </div>
-      </div>
-
-      <div class="dyk-body">
-        <div class="dyk-fact-box">
-          <i data-lucide="lightbulb" class="dyk-bulb-icon"></i>
-          <p id="dyk-fact-text">
-            Did you know? The Big Hole in Kimberley produced 2,722 kilograms (14.5 million carats) of diamonds, including the famous 83.5-carat 'Star of South Africa'!
+  <!-- FULL APPLICATION FOOTER -->
+  <footer class="w-full bg-[#EFECE4] border-t border-black/15 pt-16 pb-12 relative z-10 text-[#111827]">
+    <div class="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        
+        <!-- Col 1: Brand Info -->
+        <div class="lg:col-span-2 flex flex-col items-start text-left">
+          <a href="#home" class="flex items-center gap-3.5 mb-4 group">
+            <div class="flex items-center justify-center w-10 h-10 rounded-full bg-[#D99B26]/15 border border-[#D99B26]/40 text-[#D99B26]">
+              <i data-lucide="train-front" class="w-5 h-5"></i>
+            </div>
+            <span class="font-heading font-extrabold tracking-wider text-2xl text-[#0A0C10]">TRACK<span class="text-[#D99B26]">TALES</span></span>
+          </a>
+          <p class="text-sm text-[#111827] font-medium leading-relaxed max-w-sm">
+            A digital storytelling companion for the Pretoria to Cape Town rail corridor. Built for the Geekulcha Annual Hackathon (September 2026).
           </p>
         </div>
 
-        <div class="dyk-meta-info" id="dyk-meta-info">
-          <div><i data-lucide="map-pin" style="width: 14px; height: 14px; color: var(--green-mint);"></i> <strong>Location:</strong> Kimberley, Northern Cape</div>
-          <div><i data-lucide="train" style="width: 14px; height: 14px; color: var(--primary-blue);"></i> <strong>Rail Connection:</strong> The Blue Train & Rovos Rail Stopover</div>
-        </div>
-      </div>
-
-      <div class="dyk-footer">
-        <button class="btn-primary" id="dyk-btn-next-puzzle">
-          <span>Next Sight Puzzle</span>
-          <i data-lucide="arrow-right"></i>
-        </button>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ANIMATED TRAIN LOGIN MODAL -->
-  <div class="modal-overlay" id="login-modal" role="dialog" aria-labelledby="login-modal-title">
-    <div class="modal-content login-modal-content">
-      <button class="modal-close" id="login-modal-close" aria-label="Close login modal"><i data-lucide="x"></i></button>
-
-      <!-- SIGN IN SECTION (hidden by default) -->
-      <div id="login-section" style="display: none;">
-        <div class="login-header">
-          <div class="login-train-icon">
-            <i data-lucide="train"></i>
-          </div>
-          <h2 id="login-modal-title">TrackTales <span class="text-gradient-green">Passenger Portal</span></h2>
-          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.3rem;">Sign in to access your digital tickets, saved itinerary, and journey passport.</p>
-        </div>
-
-        <form id="login-form" style="margin-top: 1.5rem;">
-          <div class="form-group">
-            <label for="login-email">Passenger Email Address</label>
-            <input type="email" id="login-email" class="form-control" placeholder="e.g. sipho.ndlovu@tracktales.co.za" required>
-          </div>
-
-          <div class="form-group password-group" style="position: relative; margin-top: 1rem;">
-            <label for="login-password">Password</label>
-            <div style="position: relative; display: flex; align-items: center;">
-              <input type="password" id="login-password" class="form-control" placeholder="••••••••" required style="padding-right: 2.5rem; width: 100%;">
-              <button type="button" class="btn-toggle-password" style="position: absolute; right: 10px; background: transparent; border: none; color: var(--text-muted); cursor: pointer;" title="Show/Hide Password">
-                <i data-lucide="eye" class="eye-icon"></i>
-              </button>
-            </div>
-          </div>
-
-          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1.5rem;" id="btn-login-submit">
-            <i data-lucide="log-in"></i>
-            <span id="login-btn-label">Sign In to TrackTales</span>
-          </button>
-        </form>
-
-        <div style="text-align: center; margin-top: 1.2rem; font-size: 0.9rem; color: var(--text-muted);">
-          <span>New passenger? </span>
-          <button type="button" id="toggle-to-signup" style="background: transparent; border: none; color: var(--primary-blue); cursor: pointer; text-decoration: underline; font-weight: 600;">Create Account</button>
-        </div>
-      </div>
-
-      <!-- SIGN UP SECTION -->
-      <div id="signup-section">
-        <div class="login-header">
-          <div class="login-train-icon">
-            <i data-lucide="user-plus"></i>
-          </div>
-          <h2>Create Passenger <span class="text-gradient-green">Account</span></h2>
-          <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.3rem;">Register your email and password to start your TrackTales journey.</p>
-        </div>
-
-        <form id="signup-form" style="margin-top: 1.5rem;">
-          <div class="form-group">
-            <label for="signup-email">Passenger Email Address</label>
-            <input type="email" id="signup-email" class="form-control" placeholder="e.g. passenger@tracktales.co.za" required>
-          </div>
-
-          <div class="form-group password-group" style="position: relative; margin-top: 1rem;">
-            <label for="signup-password">Create Password</label>
-            <div style="position: relative; display: flex; align-items: center;">
-              <input type="password" id="signup-password" class="form-control" placeholder="••••••••" required style="padding-right: 2.5rem; width: 100%;">
-              <button type="button" class="btn-toggle-password" style="position: absolute; right: 10px; background: transparent; border: none; color: var(--text-muted); cursor: pointer;" title="Show/Hide Password">
-                <i data-lucide="eye" class="eye-icon"></i>
-              </button>
-            </div>
-          </div>
-
-          <div class="form-group password-group" style="position: relative; margin-top: 1rem;">
-            <label for="signup-confirm-password">Confirm Password</label>
-            <div style="position: relative; display: flex; align-items: center;">
-              <input type="password" id="signup-confirm-password" class="form-control" placeholder="••••••••" required style="padding-right: 2.5rem; width: 100%;">
-              <button type="button" class="btn-toggle-password" style="position: absolute; right: 10px; background: transparent; border: none; color: var(--text-muted); cursor: pointer;" title="Show/Hide Password">
-                <i data-lucide="eye" class="eye-icon"></i>
-              </button>
-            </div>
-          </div>
-
-          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1.5rem;">
-            <i data-lucide="user-check"></i>
-            <span>Register & Sign In</span>
-          </button>
-        </form>
-
-        <div style="text-align: center; margin-top: 1.2rem; font-size: 0.9rem; color: var(--text-muted);">
-          <span>Already have an account? </span>
-          <button type="button" id="toggle-to-login" style="background: transparent; border: none; color: var(--primary-blue); cursor: pointer; text-decoration: underline; font-weight: 600;">Sign In</button>
-        </div>
-      </div>
-
-
-    </div>
-  </div>
-
-
-  <!-- Story Reader Modal -->
-  <div class="modal-overlay" id="story-modal">
-    <div class="modal-content">
-      <button class="modal-close" id="modal-close-btn" aria-label="Close modal"><i data-lucide="x"></i></button>
-      <span class="badge badge-gold" id="modal-read-time">4 min read</span>
-      <h2 id="modal-title" style="margin: 1rem 0 0.5rem; font-size: 2rem;">Story Title</h2>
-      <div style="font-size: 0.88rem; color: var(--green-light); margin-bottom: 1.5rem;" id="modal-author">By TrackTales Archives</div>
-      <p id="modal-body" style="font-size: 1.1rem; line-height: 1.8; color: #cbd5e1; white-space: pre-line;"></p>
-    </div>
-  </div>
-
-
-  <!-- Digital Journey Passport Modal -->
-  <div class="modal-overlay" id="passport-modal">
-    <div class="modal-content passport-modal-content">
-      <button class="modal-close" id="passport-close-btn" aria-label="Close passport"><i data-lucide="x"></i></button>
-      <div class="passport-header">
-        <div style="color: var(--accent-gold); font-size: 2.2rem; margin-bottom: 0.6rem;"><i data-lucide="globe"></i></div>
-        <h2>Mzansi Journey <span class="text-gradient-gold">Passport</span></h2>
-        <p style="margin-top: 0.4rem; font-size: 0.95rem; color: var(--text-muted);">Explore stops, read folklore stories, and play ambient rails soundscape tracks to collect your official journey stamps.</p>
-      </div>
-      
-      <div class="passport-sections">
-        <div class="passport-sec">
-          <h4 style="display: flex; align-items: center; gap: 0.4rem; font-size: 1.1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.4rem; margin-bottom: 1rem; color: var(--accent-gold);">
-            <i data-lucide="map-pin" style="width: 16px; height: 16px;"></i> Route Stop Stamps
-          </h4>
-          <div class="stamp-grid" id="stamp-grid-stops"></div>
-        </div>
-        
-        <div class="passport-sec-split">
-          <div class="passport-sec">
-            <h4 style="display: flex; align-items: center; gap: 0.4rem; font-size: 1.1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.4rem; margin-bottom: 1rem; color: var(--green-mint);">
-              <i data-lucide="book-open" style="width: 16px; height: 16px;"></i> Stories Read
-            </h4>
-            <div class="stamp-grid-mini" id="stamp-grid-stories"></div>
-          </div>
-          <div class="passport-sec">
-            <h4 style="display: flex; align-items: center; gap: 0.4rem; font-size: 1.1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.4rem; margin-bottom: 1rem; color: var(--blue-light);">
-              <i data-lucide="music" style="width: 16px; height: 16px;"></i> Sounds Played
-            </h4>
-            <div class="stamp-grid-mini" id="stamp-grid-sounds"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="passport-reward-box" id="passport-reward">
-        <div class="reward-icon-wrap" style="color: var(--accent-gold); font-size: 2rem;"><i data-lucide="award"></i></div>
-        <div style="text-align: left;">
-          <h4 style="color: var(--accent-gold); margin-bottom: 0.2rem;">Golden Journey Reward</h4>
-          <p id="passport-reward-status" style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">Collect stamps at all 6 route stops to complete your South Africa Tourist Passport!</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="#home" class="logo nav-page-link" data-page="home">
-            <div class="logo-icon"><i data-lucide="train"></i></div>
-            <span>Track<span class="text-gradient-green">Tales</span></span>
-          </a>
-          <p>Celebrating the rich heritage, luxury travel, and spectacular landscapes of South Africa's legendary Pretoria to Cape Town rail corridor.</p>
-        </div>
-
-        <div class="footer-links">
-          <h4>Navigation</h4>
-          <ul>
-            <li><a href="#home" class="nav-page-link" data-page="home">Home & Tourism</a></li>
-            <li><a href="#trains" class="nav-page-link" data-page="trains">The 2 Flagship Trains</a></li>
-            <li><a href="#attractions" class="nav-page-link" data-page="attractions">Attractions Directory</a></li>
-            <li><a href="#games" class="nav-page-link" data-page="games">Sight Solver Games</a></li>
-            <li><a href="#about" class="nav-page-link" data-page="about">About TrackTales</a></li>
+        <!-- Col 2: Navigation Links -->
+        <div class="flex flex-col items-start text-left font-mono text-xs">
+          <h4 class="font-heading font-bold text-sm text-[#0A0C10] uppercase tracking-wider mb-4">Navigation</h4>
+          <ul class="space-y-2.5 font-semibold">
+            <li><a href="#home" class="hover:text-[#D99B26] transition-colors">The Route</a></li>
+            <li><a href="#trains" class="hover:text-[#D99B26] transition-colors">Flagship Trains</a></li>
+            <li><a href="#attractions" class="hover:text-[#D99B26] transition-colors">Sights &amp; Landmarks</a></li>
+            <li><a href="#games" class="hover:text-[#D99B26] transition-colors">Sight Solver Puzzles</a></li>
+            <li><a href="#about" class="hover:text-[#D99B26] transition-colors">Heritage &amp; About</a></li>
           </ul>
         </div>
 
-        <div class="footer-links">
-          <h4>Geekulcha Hackathon Webapp</h4>
-          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 0.8rem;">
-            TrackTales is a <strong>Geekulcha motivated hackathon web application</strong> created for the upcoming <strong>Geekulcha Annual Hackathon 2026</strong> (25–27 September 2026).
+        <!-- Col 3: Hackathon & Event -->
+        <div class="flex flex-col items-start text-left font-mono text-xs">
+          <h4 class="font-heading font-bold text-sm text-[#0A0C10] uppercase tracking-wider mb-4">Hackathon 2026</h4>
+          <p class="text-[#111827] font-medium leading-relaxed mb-4">
+            Geekulcha Annual Hackathon September 2026 entry.
           </p>
-          <p style="font-size: 0.85rem; line-height: 1.5;">
-            Aligned with the <em>"Build for Use"</em> initiative—focusing on digital tourism solutions, open-source tech, and community heritage.
-          </p>
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/5 border border-black/15 text-[11px] text-[#B87C10] font-bold">
+            <i data-lucide="award" class="w-3.5 h-3.5"></i>
+            <span>Geekulcha 2026</span>
+          </div>
         </div>
+
       </div>
 
-      <div class="footer-bottom">
-        <p>&copy; 2026 TrackTales South Africa. A Geekulcha Motivated Hackathon Web Application | Geekulcha Annual Hackathon 2026 ("Build for Use").</p>
+      <!-- Bottom Bar -->
+      <div class="pt-8 border-t border-black/15 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-[#111827] font-semibold">
+        <div>&copy; 2026 TrackTales. All rights reserved.</div>
+        <div class="flex items-center gap-6">
+          <span>Pretoria to Cape Town Corridor</span>
+        </div>
       </div>
     </div>
   </footer>
 
-  <!-- Scripts -->
-  <script src="/static/js/app.js?v=1.1"></script>
-  <script src="./js/app.js?v=1.1"></script>
+
+  <!-- ROUTE PREVIEW MODAL (<div id="videoModal">) -->
+  <div id="videoModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/75 backdrop-blur-md p-4 sm:p-8">
+    <div class="relative w-full max-w-4xl bg-white border border-black/15 rounded-3xl overflow-hidden shadow-2xl flex flex-col">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between p-6 border-b border-black/10 bg-[#F8F6F0]">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-[#D99B26]/15 border border-[#D99B26]/30 flex items-center justify-center text-[#D99B26]">
+            <i data-lucide="clapperboard" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-heading font-bold text-lg text-[#0A0C10]">TrackTales Route Footage Preview</h3>
+            <p class="font-mono text-[10px] text-[#111827] font-semibold uppercase tracking-widest">Pretoria to Cape Town Rail Corridor Clip</p>
+          </div>
+        </div>
+
+        <button id="closeVideoModal" class="glass-button p-2.5 rounded-full text-[#0A0C10] hover:text-[#D99B26] transition-colors" title="Close Preview">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Modal Video Body using single current video -->
+      <div class="relative aspect-video bg-black flex items-center justify-center">
+        <video id="modalVideo" class="w-full h-full object-cover" controls>
+          <source src="./videos/Steam_locomotive_moving_on_tracks_202608181456.mp4" type="video/mp4">
+          Your browser does not support playing HTML5 video.
+        </video>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Sign In / Sign Up Modal -->
+  <div id="login-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 backdrop-blur-md p-4">
+    <div class="modal-content glass-card max-w-md w-full p-8 rounded-3xl border border-black/15 shadow-2xl relative bg-white">
+      <button id="login-modal-close" class="absolute top-6 right-6 text-black/60 hover:text-black" title="Close"><i data-lucide="x" class="w-5 h-5"></i></button>
+
+      <!-- SIGN IN SECTION -->
+      <div id="login-section">
+        <div class="text-center mb-6">
+          <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-[#D99B26]/15 border border-[#D99B26]/30 flex items-center justify-center text-[#D99B26]">
+            <i data-lucide="train-front" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-heading font-bold text-xl text-[#0A0C10]">Passenger <span class="text-[#D99B26]">Portal</span></h3>
+          <p class="text-xs font-mono text-[#111827] font-semibold mt-1">Sign in to access your digital tickets and journey passport.</p>
+        </div>
+
+        <form id="login-form" class="space-y-4 font-mono text-xs">
+          <div>
+            <label class="block text-[#111827] mb-1 text-left font-bold">Passenger Email</label>
+            <input type="email" id="login-email" class="w-full px-4 py-3 rounded-xl bg-black/5 border border-black/15 text-[#0A0C10] font-semibold focus:outline-none focus:border-[#D99B26]" placeholder="passenger@tracktales.co.za" required>
+          </div>
+          <div class="relative password-group">
+            <label class="block text-[#111827] mb-1 text-left font-bold">Password</label>
+            <div class="relative">
+              <input type="password" id="login-password" class="w-full px-4 py-3 pr-10 rounded-xl bg-black/5 border border-black/15 text-[#0A0C10] font-semibold focus:outline-none focus:border-[#D99B26]" placeholder="••••••••" required>
+              <button type="button" class="btn-toggle-password absolute right-3 top-1/2 -translate-y-1/2 text-black/40 hover:text-black p-1">
+                <i data-lucide="eye" class="w-4 h-4 eye-icon"></i>
+              </button>
+            </div>
+          </div>
+          <button type="submit" class="w-full py-3.5 rounded-full bg-[#D99B26] text-white font-bold uppercase tracking-wider hover:bg-[#C98B1E] transition-all flex items-center justify-center gap-2 shadow-md">
+            <i data-lucide="log-in" class="w-4 h-4"></i> <span id="login-btn-label">Sign In</span>
+          </button>
+        </form>
+
+        <div class="mt-6 pt-4 border-t border-black/10 text-center font-mono text-xs text-[#111827] font-semibold">
+          Don't have an account? <button type="button" id="toggle-to-signup" class="text-[#D99B26] font-bold hover:underline ml-1">Create Account</button>
+        </div>
+      </div>
+
+      <!-- SIGN UP SECTION -->
+      <div id="signup-section" class="hidden">
+        <div class="text-center mb-6">
+          <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-[#D99B26]/15 border border-[#D99B26]/30 flex items-center justify-center text-[#D99B26]">
+            <i data-lucide="user-plus" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-heading font-bold text-xl text-[#0A0C10]">Create <span class="text-[#D99B26]">Account</span></h3>
+          <p class="text-xs font-mono text-[#111827] font-semibold mt-1">Register for TrackTales Passenger Portal.</p>
+        </div>
+
+        <form id="signup-form" class="space-y-4 font-mono text-xs">
+          <div>
+            <label class="block text-[#111827] mb-1 text-left font-bold">Full Name</label>
+            <input type="text" id="signup-name" class="w-full px-4 py-3 rounded-xl bg-black/5 border border-black/15 text-[#0A0C10] font-semibold focus:outline-none focus:border-[#D99B26]" placeholder="Sipho Ndlovu" required>
+          </div>
+          <div>
+            <label class="block text-[#111827] mb-1 text-left font-bold">Passenger Email</label>
+            <input type="email" id="signup-email" class="w-full px-4 py-3 rounded-xl bg-black/5 border border-black/15 text-[#0A0C10] font-semibold focus:outline-none focus:border-[#D99B26]" placeholder="passenger@tracktales.co.za" required>
+          </div>
+          <div class="relative password-group">
+            <label class="block text-[#111827] mb-1 text-left font-bold">Password</label>
+            <div class="relative">
+              <input type="password" id="signup-password" class="w-full px-4 py-3 pr-10 rounded-xl bg-black/5 border border-black/15 text-[#0A0C10] font-semibold focus:outline-none focus:border-[#D99B26]" placeholder="••••••••" required>
+              <button type="button" class="btn-toggle-password absolute right-3 top-1/2 -translate-y-1/2 text-black/40 hover:text-black p-1">
+                <i data-lucide="eye" class="w-4 h-4 eye-icon"></i>
+              </button>
+            </div>
+          </div>
+          <div class="relative password-group">
+            <label class="block text-[#111827] mb-1 text-left font-bold">Confirm Password</label>
+            <div class="relative">
+              <input type="password" id="signup-confirm-password" class="w-full px-4 py-3 pr-10 rounded-xl bg-black/5 border border-black/15 text-[#0A0C10] font-semibold focus:outline-none focus:border-[#D99B26]" placeholder="••••••••" required>
+              <button type="button" class="btn-toggle-password absolute right-3 top-1/2 -translate-y-1/2 text-black/40 hover:text-black p-1">
+                <i data-lucide="eye" class="w-4 h-4 eye-icon"></i>
+              </button>
+            </div>
+          </div>
+          <button type="submit" class="w-full py-3.5 rounded-full bg-[#D99B26] text-white font-bold uppercase tracking-wider hover:bg-[#C98B1E] transition-all flex items-center justify-center gap-2 shadow-md">
+            <i data-lucide="user-check" class="w-4 h-4"></i> Sign Up
+          </button>
+        </form>
+
+        <div class="mt-6 pt-4 border-t border-black/10 text-center font-mono text-xs text-[#111827] font-semibold">
+          Already have an account? <button type="button" id="toggle-to-login" class="text-[#D99B26] font-bold hover:underline ml-1">Sign In</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main JavaScript App Logic -->
+  <script src="./js/app.js?v=1.5"></script>
+
 </body>
 </html>

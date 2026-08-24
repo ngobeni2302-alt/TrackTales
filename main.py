@@ -9,7 +9,7 @@ from pydantic import BaseModel
 
 app = FastAPI(
     title="TrackTales API - South African Railway Stories & Journeys",
-    description="Explore South Africa's legendary rail lines: The Blue Train, Rovos Rail, and Shosholoza Meyl from Pretoria to Cape Town.",
+    description="Explore South Africa's 2 flagship luxury rail lines: The Blue Train and Rovos Rail from Pretoria to Cape Town.",
     version="1.0.0"
 )
 
@@ -30,19 +30,19 @@ TRAINS_DATA = [
         "name": "The Blue Train",
         "tagline": "A Window to the Soul of South Africa",
         "category": "Ultra Luxury Express",
-        "speed": "90 km/h (Smooth Slow Travel)",
+        "speed": "90 km/h (Smooth Luxury Travel)",
         "duration": "31 Hours (1,600 km)",
         "frequency": "Weekly Departures",
-        "route_summary": "Pretoria -> Kimberley -> Matjiesfontein -> Cape Town",
+        "route_summary": "Southbound: Pretoria (Irene/Park) -> Kimberley -> Cape Town",
         "primary_color": "#005691",
         "secondary_color": "#d4af37",
-        "description": "The Blue Train has been synonymous with luxury rail travel since 1946. Kings, presidents, and celebrities have experienced its world-class butler service, marble-tiled suite bathrooms, fine South African wine pairings, and exquisite multi-course dining as the dramatic landscapes of Mzansi unfold outside panoramic windows.",
+        "description": "The Blue Train has been synonymous with luxury rail travel since 1946. On the southbound journey from Pretoria to Cape Town, passengers disembark for a scheduled main off-train excursion in Kimberley, featuring a guided tour of the famous Big Hole and the Open Diamond Mine Museum. (Note: On northbound trips from Cape Town to Pretoria, the train stops at the historic town of Matjiesfontein).",
         "highlights": [
+            "Kimberley Big Hole & Diamond Mine Museum Guided Tour",
             "24/7 Dedicated Personal Butler Service",
             "En-suite marble bathrooms with full-sized bathtubs",
             "Gourmet 5-course dining with silver service & local wine pairing",
-            "Cigar & Cognac Observation Lounge Car",
-            "Excursion stop at the historic Kimberley Big Hole Diamond Mine"
+            "Cigar & Cognac Observation Lounge Car"
         ],
         "suites": [
             {
@@ -58,7 +58,7 @@ TRAINS_DATA = [
                 "amenities": "Private shower or bath, writing desk, butler service, complimentary champagne"
             }
         ],
-        "image_url": "https://images.unsplash.com/photo-1541447271487-09612b3f49f7?auto=format&fit=crop&w=1000&q=80"
+        "image_url": "/images/blue-train.jpg"
     },
     {
         "id": "rovos-rail",
@@ -66,18 +66,18 @@ TRAINS_DATA = [
         "tagline": "The Most Luxurious Train in the World",
         "category": "Vintage Edwardian Luxury",
         "speed": "60 km/h (Nostalgic Slow Travel)",
-        "duration": "48 Hours (Relaxed Safari Pace)",
+        "duration": "3 Days / 48 Hours (1,600 km)",
         "frequency": "Bi-Weekly Departures",
-        "route_summary": "Pretoria -> Highveld -> Kimberley -> Karoo (Matjiesfontein) -> Cape Town",
+        "route_summary": "Capital Park (Pretoria) -> Highveld -> Kimberley -> Great Karoo -> Hex River -> Cape Town",
         "primary_color": "#0e382c",
         "secondary_color": "#c5a059",
-        "description": "Established in 1989 by Rohan Vos, Rovos Rail recaptures the romance and elegance of a bygone era. Featuring restored 1920s Edwardian wood-paneled carriages, open-air balcony observation cars, formal dress-code evening banquets, and high tea in the lounge car, it is the ultimate romantic rail safari.",
+        "description": "Established in 1989 by Rohan Vos, Rovos Rail covers approximately 1,600 kilometers over 3 days from Pretoria (Capital Park) to Cape Town. It features two main off-train excursion stops: Kimberley (to view the Big Hole and Diamond Mine Museum) and the perfectly preserved 19th-century Victorian railway village of Matjiesfontein. The route traverses the gold-rich Highveld grasslands, the vast semi-desert of The Great Karoo, and the dramatic mountain passes and tunnels of the Hex River Valley.",
         "highlights": [
+            "Kimberley Stop: Big Hole & Underground/Surface Diamond Mine Museum",
+            "Matjiesfontein Stop: Preserved 19th-century Victorian Railway Village & Museum",
             "Open-air balcony on the rear Observation Car for photography",
-            "Vintage wood-paneled suites with original period craftsmanship",
-            "Formal dress code evening dinners (suit & tie / evening gown)",
-            "All-inclusive South African fine wines & traditional High Tea",
-            "Off-train historic excursion to the preserved Victorian village of Matjiesfontein"
+            "Scenic Passing Points: Highveld Plateau, Great Karoo & Hex River Valley Tunnels",
+            "Formal dress code evening dinners (suit & tie / evening gown)"
         ],
         "suites": [
             {
@@ -99,7 +99,7 @@ TRAINS_DATA = [
                 "amenities": "Ensuite shower, vintage brass fittings, air conditioning"
             }
         ],
-        "image_url": "https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=1000&q=80"
+        "image_url": "/images/rovos-rail.jpg"
     }
 ]
 
@@ -123,7 +123,7 @@ ROUTE_STOPS = [
         "province": "Northern Cape",
         "distance_km": 645,
         "coordinates": {"lat": -28.7282, "lng": 24.7499},
-        "description": "Famous worldwide for the 1870s Diamond Rush. Home to 'The Big Hole'—the largest hand-dug excavation on earth—and vintage tramways.",
+        "description": "Famous worldwide for the 1870s Diamond Rush. Home to 'The Big Hole', the largest hand-dug excavation on earth, and vintage tramways.",
         "train_calls": ["The Blue Train", "Rovos Rail"],
         "recommended_stay": "Stopover Tour (3-4 Hours)",
         "local_dish": "Northern Cape Biltong & Kalahari Truffle Tart"
@@ -218,7 +218,7 @@ STORIES_DATA = [
         "author": "Rail History Heritage Trust",
         "read_time": "4 min read",
         "summary": "In the 1870s, the discovery of diamonds in Kimberley sparked an urgent engineering race to lay tracks across the formidable Karoo desert, connecting coastal ports to the inland treasure trove.",
-        "content": "Before the steam locomotives chugged into Kimberley in 1885, traveling from Cape Town to the diamond fields required a grueling multi-week journey by ox-wagon across scorched Karoo scrubland. The arrival of the iron horse transformed South Africa overnight. Engineering feats like the Hex River Railway Pass—carved manually through solid rock and cliffside ledges—allowed heavy machinery to reach the mines and birthed South Africa's modern industrial network."
+        "content": "Before the steam locomotives chugged into Kimberley in 1885, traveling from Cape Town to the diamond fields required a grueling multi-week journey by ox-wagon across scorched Karoo scrubland. The arrival of the iron horse transformed South Africa overnight. Engineering feats like the Hex River Railway Pass, carved manually through solid rock and cliffside ledges, allowed heavy machinery to reach the mines and birthed South Africa's modern industrial network."
     },
     {
         "id": "story-2",
@@ -226,7 +226,7 @@ STORIES_DATA = [
         "author": "TrackTales Archives",
         "read_time": "3 min read",
         "summary": "Originally dubbed the 'Union Limited' in 1923, the train acquired its iconic royal blue coat during World War II and grew into a world symbol of luxurious hospitality.",
-        "content": "Kings, queens, statesmen, and cultural icons have stepped onto the deep pile carpets of The Blue Train. From Nelson Mandela hosting foreign dignitaries to Hollywood legends watching the sunset over the Karoo, the train is more than transport—it is a floating sanctuary where butler service, fine porcelain, and slow travel create lifelong memories."
+        "content": "Kings, queens, statesmen, and cultural icons have stepped onto the deep pile carpets of The Blue Train. From Nelson Mandela hosting foreign dignitaries to Hollywood legends watching the sunset over the Karoo, the train is more than transport, it is a floating sanctuary where butler service, fine porcelain, and slow travel create lifelong memories."
     },
     {
         "id": "story-3",
