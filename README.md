@@ -1,13 +1,12 @@
 # TrackTales - South Africa Railway Journeys, Tourism & Interactive Stories
 
 **TrackTales** is a modern, inclusive, and visually stunning web application celebrating South Africa’s legendary rail transportation history and scenic tourism corridors from **Pretoria to Cape Town**:
-1. **The Blue Train** – The five-star ultra luxury express ("Window to the Soul of South Africa").
-2. **Rovos Rail** – The world's most opulent vintage Edwardian train safari.
-3. **Shosholoza Meyl** – The passionate, authentic passenger express connecting communities across Mzansi.
+1. **The Blue Train** : The five-star ultra luxury express ("Window to the Soul of South Africa").
+2. **Rovos Rail** : The world's most opulent vintage Edwardian train safari.
 
-Built with a **FastAPI** Python backend, **Vanilla JavaScript & CSS**, a **White-Dominant WCAG AAA Accessible Design System**, and live deployed production hosting on **Vercel**.
+Built with a **FastAPI** Python backend, **Vanilla JavaScript & CSS**, a **Light-Mode High-Contrast WCAG AAA Accessible Design System**, and live deployed production hosting on **Vercel**.
 
-> 🌐 **Live Web Application URL**: **[https://track-tales.vercel.app](https://track-tales.vercel.app)** *(or your Vercel deployment link)*  
+> 🌐 **Live Web Application URL**: **[https://track-tales.vercel.app](https://track-tales.vercel.app)**  
 > 💻 **Local Development URL**: **[http://localhost:8000](http://localhost:8000)** (via `./start.sh`)
 
 ---

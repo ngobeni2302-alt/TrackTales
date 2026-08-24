@@ -1329,11 +1329,18 @@
       localStorage.setItem('tracktales_users', JSON.stringify(defaultUsers));
     }
 
-    // Restore persistent active user session if present
+    // Restore persistent active user session or perform automatic login setup if saved user exists
     const checkActiveSession = () => {
       const loggedUser = localStorage.getItem('tracktales_logged_user');
-      if (loggedUser) {
+      const lastUser = localStorage.getItem('last_user');
+      const lastPass = localStorage.getItem('last_password');
+      const users = JSON.parse(localStorage.getItem('tracktales_users') || '{}');
+
+      if (loggedUser || (lastUser && lastPass && users[lastUser] === lastPass)) {
         isAuthenticated = true;
+        if (!loggedUser && lastUser) {
+          localStorage.setItem('tracktales_logged_user', JSON.stringify({ email: lastUser }));
+        }
         const desktopLabel = document.getElementById('desktop-login-label');
         if (desktopLabel) desktopLabel.textContent = "Sign Out";
         if (openBtn) openBtn.innerHTML = `<i data-lucide="log-out" class="w-4 h-4 text-[#D99B26]"></i> <span id="desktop-login-label">Sign Out</span>`;
