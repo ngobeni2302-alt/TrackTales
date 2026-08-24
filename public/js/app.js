@@ -127,27 +127,35 @@
 
   // --- Initialize App ---
   document.addEventListener('DOMContentLoaded', () => {
-    setupLoadingSplash();
-    loadPassport();
-    fetchApiData();
-    setupNavigation();
-    setupPageNavigation();
-    setupLoginModal();
-    setupGamesEngine();
-    setupRouteMapControls();
-    setupAttractionFilters();
-    setupTicketForm();
-    setupTicketFlip();
-    setupThemeToggle();
-    setupDownloadTicket();
-    setupStoryModal();
-    setupPassportModal();
-    setupHeroVideoControls();
-    setupRoutePreviewModal();
-    setupMobileMenu();
-    setupAnimatedTabs();
-    setupMotionEntranceAnimations();
-    setup3DCanvasGlobe();
+    const safeExec = (fn, name) => {
+      try {
+        fn();
+      } catch (err) {
+        console.warn(`[TrackTales] Warning in ${name}:`, err);
+      }
+    };
+
+    safeExec(setupLoadingSplash, 'setupLoadingSplash');
+    safeExec(loadPassport, 'loadPassport');
+    safeExec(fetchApiData, 'fetchApiData');
+    safeExec(setupNavigation, 'setupNavigation');
+    safeExec(setupPageNavigation, 'setupPageNavigation');
+    safeExec(setupLoginModal, 'setupLoginModal');
+    safeExec(setupGamesEngine, 'setupGamesEngine');
+    safeExec(setupRouteMapControls, 'setupRouteMapControls');
+    safeExec(setupAttractionFilters, 'setupAttractionFilters');
+    safeExec(setupTicketForm, 'setupTicketForm');
+    safeExec(setupTicketFlip, 'setupTicketFlip');
+    safeExec(setupThemeToggle, 'setupThemeToggle');
+    safeExec(setupDownloadTicket, 'setupDownloadTicket');
+    safeExec(setupStoryModal, 'setupStoryModal');
+    safeExec(setupPassportModal, 'setupPassportModal');
+    safeExec(setupHeroVideoControls, 'setupHeroVideoControls');
+    safeExec(setupRoutePreviewModal, 'setupRoutePreviewModal');
+    safeExec(setupMobileMenu, 'setupMobileMenu');
+    safeExec(setupAnimatedTabs, 'setupAnimatedTabs');
+    safeExec(setupMotionEntranceAnimations, 'setupMotionEntranceAnimations');
+    safeExec(setup3DCanvasGlobe, 'setup3DCanvasGlobe');
   });
 
 
@@ -977,7 +985,10 @@
         if (window.lucide) lucide.createIcons();
       }
     };
-    splash.addEventListener('click', enableAudioOnInteraction, { once: true });
+    splash.addEventListener('click', () => {
+      enableAudioOnInteraction();
+      dismissSplash();
+    });
 
     let isDismissed = false;
     const dismissSplash = () => {
@@ -998,7 +1009,7 @@
       splash.classList.add('fade-out');
       setTimeout(() => {
         splash.style.display = 'none';
-      }, 600);
+      }, 500);
     };
 
     if (skipBtn) {
@@ -1008,7 +1019,10 @@
       });
     }
 
-    // Dynamic progress bar & status updates over 8 seconds (8,000 ms)
+    // Hard fallback timeout: guarantee splash dismisses cleanly within 2.3 seconds
+    setTimeout(dismissSplash, 2300);
+
+    // Dynamic progress bar & status updates over 1.8 seconds
     let progress = 0;
     const statusMessages = [
       "Starting TrackTales Locomotive Engine...",
@@ -1018,9 +1032,9 @@
       "Ready for TrackTales!"
     ];
 
-    const TOTAL_DURATION_MS = 8000; // 8 Seconds duration
-    const INTERVAL_MS = 80;
-    const INCREMENT = 100 / (TOTAL_DURATION_MS / INTERVAL_MS); // 1% per 80ms = 8 seconds
+    const TOTAL_DURATION_MS = 1800; // 1.8 Seconds duration for fast load
+    const INTERVAL_MS = 40;
+    const INCREMENT = 100 / (TOTAL_DURATION_MS / INTERVAL_MS);
 
     const interval = setInterval(() => {
       progress += INCREMENT;
@@ -1036,7 +1050,7 @@
         clearInterval(interval);
         setTimeout(() => {
           dismissSplash();
-        }, 200);
+        }, 150);
       }
     }, INTERVAL_MS);
   }
