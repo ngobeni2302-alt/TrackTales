@@ -1,13 +1,25 @@
 # TrackTales - South Africa Railway Journeys, Tourism & Interactive Stories
 
 **TrackTales** is a modern, inclusive, and visually stunning web application celebrating South Africa’s legendary rail transportation history and scenic tourism corridors from **Pretoria to Cape Town**:
-1. **The Blue Train** : The five-star ultra luxury express ("Window to the Soul of South Africa").
-2. **Rovos Rail** : The world's most opulent vintage Edwardian train safari.
+1. **The Blue Train**: The five-star ultra luxury express ("Window to the Soul of South Africa").
+2. **Rovos Rail**: The world's most opulent vintage Edwardian train safari.
+3. **Shosholoza Meyl**: Authentic long-distance passenger train connecting South Africa's heartland.
 
-Built with a **FastAPI** Python backend, **Vanilla JavaScript & CSS**, a **Light-Mode High-Contrast WCAG AAA Accessible Design System**, and live deployed production hosting on **Vercel**.
+Built with a **FastAPI** Python backend, **Vanilla JavaScript & CSS**, a **Light-Mode High-Contrast WCAG AAA Accessible Design System**, **Motion One** spring animations, and live deployed production hosting on **Vercel**.
 
 > 🌐 **Live Web Application URL**: **[https://track-tales.vercel.app](https://track-tales.vercel.app)**  
 > 💻 **Local Development URL**: **[http://localhost:8000](http://localhost:8000)** (via `./start.sh`)
+
+---
+
+## Key Features & Highlights
+
+- **Motion One Animation Engine**: Enhanced micro-interactions, spring-based modal popups, smooth hash route transitions, and staggered card cascade animations.
+- **Fail-Safe Loading Splash**: Fast, optimized splash screen loading sequence equipped with auto-dismiss fail-safe timers for responsive entry.
+- **Persistent Auth & Passenger Portal**: Streamlined user login and logout management powered by browser local storage with clear session status displays.
+- **Interactive Mzansi Sight Solver & Trivia**: Landmark discovery games with educational pop-up modals, score tracking, and achievement progress.
+- **Digital Souvenir Boarding Pass Generator**: Interactive ticket generator with seat allocation maps and scannable QR verification codes.
+- **WCAG AAA High-Contrast Accessibility**: Standardized 60-30-10 color rule with dark and light mode toggle support.
 
 ---
 
@@ -25,27 +37,27 @@ The application interface is built using a strict **60-30-10 color balance rule*
 
 The site navigation panel is organized in the following order:
 1. **Home**: Discover Mzansi through the Magic of Rail and explore section highlights.
-2. **Flagship Trains**: Compare luxury express details, speeds, and amenities for The Blue Train and Rovos Rail.
+2. **Flagship Trains**: Compare luxury express details, speeds, and amenities for The Blue Train, Rovos Rail, and Shosholoza Meyl.
 3. **Attractions**: Browse landmark sights along the Pretoria to Cape Town rail corridor.
 4. **Sight Games**: Interactive trivia sight solver puzzles and "Did You Know?" educational pop-ups.
 5. **About**: Dedicated about page, interactive Pretoria-Cape Town route map, digital boarding pass generator, and rail folklore stories.
 
 ### 1. Home Page
 - **Hero Section**: Gateway to South Africa railway tourism with interactive CTA buttons.
-- **Explore Portal Showcase**: Overview cards linking to Flagship Trains, Attractions, Sight Games, and About.
+- **Explore Portal Showcase**: Interactive cards linking directly to Flagship Trains, Attractions, Sight Games, and About.
 
 ### 2. Flagship Trains Page (Advertising Luxury Trains)
-- **Dedicated Showcase**: Displays in-depth luxury advertisements for South Africa's 2 flagship trains: **The Blue Train** (Ultra Luxury Express) and **Rovos Rail** (Vintage Edwardian Safari).
+- **Dedicated Showcase**: Displays in-depth luxury advertisements for South Africa's flagship trains: **The Blue Train** (Ultra Luxury Express), **Rovos Rail** (Vintage Edwardian Safari), and **Shosholoza Meyl** (Passenger Express).
 - **Luxury Specs & Highlights**: Speed, travel duration, 24/7 butler service, open balcony observation car, and fine dining details.
-- **Reserved Backend Integration Space**: Clear, structured containers reserved for the backend team to dynamically stream live trail feeds, stop schedules, and cabin availability.
+- **Reserved Backend Integration Space**: Clear, structured containers reserved for live trail feeds, stop schedules, and cabin availability.
 
 ### 3. Attractions Directory Page
-- Curated landmark directory showcasing South Africa's sights along the rail line (e.g. Kimberley Big Hole, Union Buildings, Lord Milner Hotel, Table Mountain, Hex River Valley Winelands).
+- Curated landmark directory showcasing South Africa's sights along the rail line (Kimberley Big Hole, Union Buildings, Lord Milner Hotel, Table Mountain, Hex River Valley Winelands).
 - Interactive city filter buttons (Pretoria, Johannesburg, Kimberley, Matjiesfontein, Worcester, Cape Town) and 3D flippable attraction cards.
 
 ### 4. Interactive Games Page (Mzansi Sight Solver & "Did You Know?" Pop-ups)
 - **Interactive Sight Puzzles**: Solve trivia and landmark puzzles about South African rail stops (+100 PTS score tracker & progress bar).
-- **"Did You Know?" Pop-Up Modal**: Correctly solving a sight puzzle triggers an educational pop-up revealing fascinating South African tourism, geography, and rail folklore facts.
+- **"Did You Know?" Pop-Up Modal**: Correctly solving a sight puzzle triggers an educational pop-up revealing South African tourism, geography, and rail folklore facts.
 
 ### 5. About Page (About TrackTales, SA Tourism, Route Map & Souvenir Tickets)
 - **TrackTales Mission**: Explains the platform's vision connecting heritage rail history with modern digital travel.
@@ -65,17 +77,17 @@ TrackTales can be accessed directly online via the deployed web application or l
 
 ### 🌐 Live Deployed Web Application (Recommended)
 
-Now that TrackTales is deployed live on **Vercel**, you can open and use the web application directly in your browser:
+TrackTales is deployed live on **Vercel** and can be accessed directly in your web browser:
 
-1. **Live Deployed Web Link**: **[https://track-tales.vercel.app](https://track-tales.vercel.app)** *(or your Vercel project URL)*
-2. **Cross-Device Access**: Open on any modern desktop browser, tablet, or mobile phone.
-3. **Instant Full Functionality**: Access all flagship train showcases, sights & attractions directory, interactive Mzansi Sight Solver games, and the digital souvenir boarding pass generator directly online.
+1. **Live Deployed Web Link**: **[https://track-tales.vercel.app](https://track-tales.vercel.app)**
+2. **Cross-Device Access**: Optimized for desktop browsers, tablets, and mobile devices.
+3. **Instant Full Functionality**: Access flagship train showcases, sights directory, interactive trivia games, and the boarding pass generator online.
 
 ---
 
 ### 💻 Local Development & Launch Options
 
-If you want to run or modify TrackTales locally on your machine, you can launch it using any of the following options:
+To run or modify TrackTales locally, launch it using any of the following methods:
 
 #### Option 1: Easiest 1-Click Launch (Recommended for Local Dev)
 Simply run the launcher script in your terminal:
@@ -87,7 +99,7 @@ Simply run the launcher script in your terminal:
 #### Option 2: FastAPI Python Backend Launch
 A Python virtual environment (`venv`) with all required packages (`fastapi`, `uvicorn`, `pydantic`) is pre-installed in the repository:
 
-##### Method A (Using the pre-installed Virtual Environment):
+##### Method A (Using pre-installed Virtual Environment):
 ```bash
 ./venv/bin/python3 main.py
 ```
@@ -117,17 +129,18 @@ npx serve public -p 8000
 ```
 
 #### Option 4: Direct Browser Offline Launch
-TrackTales includes full client-side fallback data. Double-click or open **`public/index.html`** directly in any web browser without starting a background terminal server!
+TrackTales includes full client-side fallback data. Double-click or open **`public/index.html`** directly in any browser without running a local server!
 
 ---
 
-## Deployment & Hosting Details
+## Deployment & Vercel Configuration
 
-TrackTales is fully configured for serverless production deployment on **Vercel**:
+TrackTales is configured for serverless production deployment on **Vercel**:
 
-- **Serverless API Engine**: `api/index.py` handles API requests (`/api/trains`, `/api/routes`, etc.) using Vercel Python serverless runtime.
-- **Static Asset Delivery**: `public/` directory assets are served with edge CDN performance and instant caching.
-- **Deploying Updates**: Run `vercel` or `vercel --prod` from the terminal, or connect this repository to your Vercel Dashboard for automatic deployment on push.
+- **Serverless API Engine**: `api/index.py` handles API endpoints (`/api/trains`, `/api/routes`, etc.) using Vercel Python serverless runtime.
+- **Explicit Static Asset Routing**: `vercel.json` maps static paths (`/js/`, `/css/`, `/images/`, `/videos/`) directly to static assets, preventing SPA fallback interference.
+- **Static CDN Asset Delivery**: `public/` directory assets are delivered via high-performance edge CDN.
+- **Deploying Updates**: Run `vercel` or `vercel --prod` from the terminal, or push commits to the connected git repository for automatic deployment.
 
 ---
 
@@ -139,14 +152,14 @@ TrackTales/
 ├── api/
 │   └── index.py         # Vercel Python serverless entry point
 ├── public/
-│   ├── index.html       # Multi-page layout (Home, Flagship Trains, Attractions, Games, About)
+│   ├── index.html       # Multi-page SPA layout (Home, Flagship Trains, Attractions, Games, About)
 │   ├── css/
 │   │   └── styles.css   # WCAG AAA Light/Dark design system & CSS keyframe animations
 │   └── js/
-│       └── app.js       # Page router, train loader splash, games engine, and login modal
+│       └── app.js       # Page router, train loader splash, games engine, and auth modal
 ├── requirements.txt     # Python backend dependencies
 ├── start.sh             # 1-Click launcher script
-├── vercel.json          # Vercel deployment routing config
+├── vercel.json          # Vercel deployment & static asset routing config
 ├── package.json         # NPM scripts and project metadata
 └── README.md            # Project documentation
 ```
