@@ -2161,6 +2161,7 @@
       distance_km: 0,
       stop_time: "09:00 AM Departure · Origin Station",
       teaser: "The grand Jacaranda capital and northern gateway of South Africa's iron rails, where vintage steam and luxury expresses begin their southward journey.",
+      video: "/videos/Steam_locomotive_moving_on_tracks_202608181456.mp4",
       img: "https://images.unsplash.com/photo-1577971132997-c10be9372519?auto=format&fit=crop&w=800&q=80",
       vector: "bottom"
     },
@@ -2293,6 +2294,20 @@
         const vectorClass = `enter-${stop.vector || 'bottom'}`;
         const delayMs = index * 70;
 
+        const mediaHTML = stop.video ? `
+          <video src="${stop.video}" 
+                 poster="${stop.img}" 
+                 autoplay 
+                 loop 
+                 muted 
+                 playsinline 
+                 aria-hidden="true" 
+                 class="corridor-card-video corridor-card-img">
+          </video>
+        ` : `
+          <img src="${stop.img}" alt="${stop.name}" class="corridor-card-img" />
+        `;
+
         return `
           <div class="corridor-stop-card ${vectorClass}" 
                data-stop-id="${stop.id}" 
@@ -2306,7 +2321,7 @@
               <span class="corridor-badge ${stop.category === 'scheduled' ? 'corridor-badge-scheduled' : 'corridor-badge-passthrough'}">
                 ${stop.badge}
               </span>
-              <img src="${stop.img}" alt="${stop.name}" class="corridor-card-img" />
+              ${mediaHTML}
               <div class="corridor-card-gradient"></div>
             </div>
 
@@ -2352,6 +2367,13 @@
         const stopId = card.getAttribute('data-stop-id');
 
         // 3D Tilt & Parallax Physics Engine
+        card.addEventListener('mouseenter', () => {
+          const video = card.querySelector('video');
+          if (video && video.paused) {
+            video.play().catch(() => {});
+          }
+        });
+
         card.addEventListener('mousemove', (e) => {
           const rect = card.getBoundingClientRect();
           const x = e.clientX - rect.left;
@@ -2434,6 +2456,11 @@
     window.openPretoriaFeatureModal = function () {
       overlay.classList.add('active');
       document.body.style.overflow = 'hidden';
+      const featureVideo = overlay.querySelector('video');
+      if (featureVideo) {
+        featureVideo.currentTime = 0;
+        featureVideo.play().catch(() => {});
+      }
       if (window.lucide) lucide.createIcons();
     };
 

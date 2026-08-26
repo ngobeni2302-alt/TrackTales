@@ -423,9 +423,17 @@
     <div id="pretoria-feature-overlay" class="pretoria-feature-overlay fixed inset-0 z-[120] hidden items-center justify-center p-4 sm:p-8 bg-[#03050a]/92 backdrop-blur-2xl transition-all duration-700">
       <div class="pretoria-feature-card relative max-w-4xl w-full bg-[#090e1a] border border-[#D4AF37]/40 rounded-3xl overflow-hidden shadow-[0_0_80px_rgba(212,175,55,0.25)] flex flex-col md:flex-row transform transition-transform duration-700 scale-95 opacity-0" id="pretoria-feature-panel">
         
-        <!-- Feature Header Image -->
+        <!-- Feature Header Video -->
         <div class="md:w-1/2 relative min-h-[280px] md:min-h-[480px] overflow-hidden">
-          <img id="pretoria-feature-img" src="https://images.unsplash.com/photo-1577971132997-c10be9372519?auto=format&fit=crop&w=1200&q=80" alt="Pretoria Terminus Station" class="w-full h-full object-cover transition-transform duration-[4000ms] ease-out scale-105" />
+          <video id="pretoria-feature-video" 
+                 src="/videos/Steam_locomotive_moving_on_tracks_202608181456.mp4" 
+                 poster="https://images.unsplash.com/photo-1577971132997-c10be9372519?auto=format&fit=crop&w=1200&q=80"
+                 autoplay 
+                 loop 
+                 muted 
+                 playsinline 
+                 class="w-full h-full object-cover transition-transform duration-[4000ms] ease-out scale-105">
+          </video>
           <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#090e1a] via-[#090e1a]/40 to-transparent"></div>
           
           <div class="absolute top-6 left-6 flex flex-col gap-2 z-10">

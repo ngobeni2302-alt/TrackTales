@@ -4045,15 +4045,20 @@ p {
   overflow: hidden;
 }
 
-.corridor-card-img {
+.corridor-card-img,
+.corridor-card-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transform: scale(1.05) translateZ(0);
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
 }
 
-.corridor-stop-card:hover .corridor-card-img {
+.corridor-stop-card:hover .corridor-card-img,
+.corridor-stop-card:hover .corridor-card-video,
+.corridor-stop-card:focus-within .corridor-card-img,
+.corridor-stop-card:focus-within .corridor-card-video {
   transform: scale(1.15) translateZ(10px);
 }
 
