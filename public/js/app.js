@@ -156,6 +156,7 @@
     safeExec(setupAnimatedTabs, 'setupAnimatedTabs');
     safeExec(setupMotionEntranceAnimations, 'setupMotionEntranceAnimations');
     safeExec(setup3DCanvasGlobe, 'setup3DCanvasGlobe');
+    safeExec(setupCorridorStops, 'setupCorridorStops');
   });
 
 
@@ -1073,7 +1074,7 @@
       desktopNavMenu.appendChild(navIndicator);
     }
 
-    const PAGE_ORDER = ['home', 'trains', 'attractions', 'games', 'about'];
+    const PAGE_ORDER = ['home', 'stops', 'trains', 'games', 'about'];
     let currentPage = 'home';
 
     function updateNavIndicator(targetPage, isSlow) {
@@ -1192,12 +1193,12 @@
                   );
                 }
               }
-              // If page is attractions, stagger attractions card cascade
-              if (targetPage === 'attractions') {
-                const attractionCards = page.querySelectorAll('.attraction-card');
-                if (attractionCards.length > 0) {
+              // If page is stops, stagger stop card cascade
+              if (targetPage === 'stops') {
+                const stopCards = page.querySelectorAll('.corridor-stop-card');
+                if (stopCards.length > 0) {
                   window.motion.animate(
-                    attractionCards,
+                    stopCards,
                     { opacity: [0, 1], y: [20, 0] },
                     { delay: window.motion.stagger(0.06), duration: 0.45, ease: "ease-out" }
                   );
@@ -1298,8 +1299,10 @@
     
     const validPagesMap = {
       'home': 'home',
+      'stops': 'stops',
       'trains': 'trains',
-      'attractions': 'attractions',
+      'attractions': 'stops',
+      'sights': 'stops',
       'games': 'games',
       'sightgames': 'games',
       'slightgames': 'games',
@@ -2145,6 +2148,295 @@
     });
 
     render();
+  }
+
+  // --- Corridor Stops Data & Cinematic Interaction Engine ---
+  const CORRIDOR_STOPS = [
+    {
+      id: "pretoria-terminus",
+      name: "Pretoria Terminus",
+      category: "scheduled",
+      badge: "SCHEDULED STOP",
+      province: "Gauteng",
+      distance_km: 0,
+      teaser: "The grand Jacaranda capital and northern gateway of South Africa's iron rails, where vintage steam and luxury expresses begin their southward journey.",
+      img: "https://images.unsplash.com/photo-1577971132997-c10be9372519?auto=format&fit=crop&w=800&q=80",
+      vector: "bottom"
+    },
+    {
+      id: "johannesburg-park",
+      name: "Johannesburg Park",
+      category: "passthrough",
+      badge: "PASS-THROUGH",
+      province: "Gauteng",
+      distance_km: 68,
+      teaser: "The industrial heartland where gold rush rails converge. Steam locomotives roared past deep mine shafts to forge South Africa's economic spine.",
+      img: "https://images.unsplash.com/photo-1576485290814-1c72aa4bbb8e?auto=format&fit=crop&w=800&q=80",
+      vector: "side"
+    },
+    {
+      id: "kimberley-junction",
+      name: "Kimberley Junction",
+      category: "scheduled",
+      badge: "SCHEDULED STOP",
+      province: "Northern Cape",
+      distance_km: 645,
+      teaser: "Site of the 1870s Diamond Rush. Flagship trains stop for passengers to step back in time and marvel at the world's largest hand-dug excavation.",
+      img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80",
+      vector: "depth"
+    },
+    {
+      id: "de-aar-hub",
+      name: "De Aar Junction",
+      category: "passthrough",
+      badge: "PASS-THROUGH",
+      province: "Northern Cape",
+      distance_km: 810,
+      teaser: "The legendary railway junction in the heart of the Great Karoo desert. Under starry skies, tracks split toward Namibia, Cape Town, and Algoa Bay.",
+      img: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80",
+      vector: "bottom"
+    },
+    {
+      id: "matjiesfontein-oasis",
+      name: "Matjiesfontein Karoo",
+      category: "scheduled",
+      badge: "SCHEDULED STOP",
+      province: "Western Cape",
+      distance_km: 1320,
+      teaser: "A perfectly preserved Victorian village frozen in time. Royal mail trains, cricket legends, and Karoo breezes welcome weary travellers for a midnight stroll.",
+      img: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80",
+      vector: "side"
+    },
+    {
+      id: "hex-river-pass",
+      name: "Hex River Pass",
+      category: "passthrough",
+      badge: "PASS-THROUGH",
+      province: "Western Cape",
+      distance_km: 1480,
+      teaser: "A masterpiece of 19th-century railway engineering. Steam trains climb steep mountain tunnels before sweeping down into emerald wine valleys.",
+      img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
+      vector: "depth"
+    },
+    {
+      id: "worcester-station",
+      name: "Worcester Valley",
+      category: "passthrough",
+      badge: "PASS-THROUGH",
+      province: "Western Cape",
+      distance_km: 1510,
+      teaser: "Nestled between the Brandwacht mountains and coastal fruit valleys, where mountain mist meets the historic Cape line.",
+      img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80",
+      vector: "bottom"
+    },
+    {
+      id: "cape-town-terminus",
+      name: "Cape Town Terminus",
+      category: "scheduled",
+      badge: "SCHEDULED STOP",
+      province: "Western Cape",
+      distance_km: 1600,
+      teaser: "The triumphant coastal terminus beneath Table Mountain. Ocean breezes mark the grand arrival after 1,600 kilometers across South Africa.",
+      img: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=800&q=80",
+      vector: "side"
+    }
+  ];
+
+  function setupCorridorStops() {
+    const gridContainer = document.getElementById('corridor-stops-grid');
+    const filterButtons = document.querySelectorAll('#corridor-filter-group .corridor-filter-pill');
+    const signalLine = document.getElementById('corridor-signal-line');
+    
+    if (!gridContainer) return;
+
+    let activeFilter = 'all';
+
+    function renderCards(filterType, isTransition = false) {
+      let filtered = CORRIDOR_STOPS;
+      if (filterType !== 'all') {
+        filtered = CORRIDOR_STOPS.filter(s => s.category === filterType);
+      }
+
+      if (isTransition) {
+        // Physical reaction: current cards peel away into depth first
+        const currentCards = gridContainer.querySelectorAll('.corridor-stop-card');
+        currentCards.forEach(card => {
+          card.classList.add('card-peel-away');
+        });
+
+        // Trigger signal line beam pulse animation
+        if (signalLine) {
+          signalLine.classList.remove('active');
+          void signalLine.offsetWidth; // trigger reflow
+          signalLine.classList.add('active');
+        }
+
+        setTimeout(() => {
+          buildGridHTML(filtered);
+        }, 320);
+      } else {
+        buildGridHTML(filtered);
+      }
+    }
+
+    function buildGridHTML(stopsList) {
+      gridContainer.innerHTML = stopsList.map((stop, index) => {
+        const isPretoria = stop.id === 'pretoria-terminus';
+        const vectorClass = `enter-${stop.vector || 'bottom'}`;
+        const delayMs = index * 70;
+
+        return `
+          <div class="corridor-stop-card ${vectorClass}" 
+               data-stop-id="${stop.id}" 
+               data-category="${stop.category}"
+               style="animation-delay: ${delayMs}ms;"
+               tabindex="0" 
+               role="button" 
+               aria-label="${stop.name}, ${stop.province}, ${stop.distance_km} kilometers. ${stop.teaser}">
+            
+            <div class="corridor-card-media">
+              <span class="corridor-badge ${stop.category === 'scheduled' ? 'corridor-badge-scheduled' : 'corridor-badge-passthrough'}">
+                ${stop.badge}
+              </span>
+              <img src="${stop.img}" alt="${stop.name}" class="corridor-card-img" />
+              <div class="corridor-card-gradient"></div>
+            </div>
+
+            <div class="corridor-card-body">
+              <div>
+                <h3 class="corridor-card-title">${stop.name}</h3>
+                <div class="corridor-card-meta">
+                  <i data-lucide="map-pin" style="width: 13px; height: 13px;"></i>
+                  <span>${stop.province.toUpperCase()} · ${stop.distance_km} KM</span>
+                </div>
+                <p class="corridor-card-teaser">${stop.teaser}</p>
+              </div>
+
+              <div class="corridor-card-cta">
+                <span>${isPretoria ? 'Click to Expand Station Story' : 'Hover to Read Story'}</span>
+                <i data-lucide="arrow-right" style="width: 12px; height: 12px;"></i>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+
+      attachCardEventListeners();
+    }
+
+    function attachCardEventListeners() {
+      const cards = gridContainer.querySelectorAll('.corridor-stop-card');
+
+      cards.forEach(card => {
+        const stopId = card.getAttribute('data-stop-id');
+
+        // 3D Tilt & Parallax Physics Engine
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+
+          const rotateX = ((y - centerY) / centerY) * -12; // tilt up/down
+          const rotateY = ((x - centerX) / centerX) * 12;  // tilt left/right
+
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
+          card.style.setProperty('--mouse-x', `${(x / rect.width) * 100}%`);
+          card.style.setProperty('--mouse-y', `${(y / rect.height) * 100}%`);
+
+          // Apply neighbor dimming effect to focus attention
+          cards.forEach(other => {
+            if (other !== card) {
+              other.classList.add('neighbor-dimmed');
+            } else {
+              other.classList.remove('neighbor-dimmed');
+            }
+          });
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = '';
+          cards.forEach(other => other.classList.remove('neighbor-dimmed'));
+        });
+
+        // Click / Tap Event Logic
+        card.addEventListener('click', () => {
+          if (stopId === 'pretoria-terminus') {
+            openPretoriaFeatureModal();
+          } else {
+            // Mobile or tap physical bounce feedback
+            card.style.transform = 'perspective(1000px) translateZ(40px) rotateX(-5deg)';
+            setTimeout(() => { card.style.transform = ''; }, 600);
+          }
+        });
+
+        // Accessibility Keyboard Trigger (Enter or Space)
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            if (stopId === 'pretoria-terminus') {
+              openPretoriaFeatureModal();
+            }
+          }
+        });
+      });
+    }
+
+    // Filter Pills Event Handlers
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.getAttribute('data-filter');
+        activeFilter = filter;
+        renderCards(filter, true);
+      });
+    });
+
+    // Initial render
+    renderCards('all');
+
+    // Setup Pretoria modal handlers
+    setupPretoriaFeatureModal();
+  }
+
+  function setupPretoriaFeatureModal() {
+    const overlay = document.getElementById('pretoria-feature-overlay');
+    const closeBtn = document.getElementById('pretoria-close-btn');
+    const collapseCta = document.getElementById('pretoria-collapse-cta');
+
+    if (!overlay) return;
+
+    window.openPretoriaFeatureModal = function () {
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      if (window.lucide) lucide.createIcons();
+    };
+
+    function closePretoriaModal() {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closePretoriaModal);
+    if (collapseCta) collapseCta.addEventListener('click', closePretoriaModal);
+
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) closePretoriaModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('active')) {
+        closePretoriaModal();
+      }
+    });
   }
 
 })();

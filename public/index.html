@@ -235,9 +235,9 @@
         <div id="nav-tab-indicator" class="absolute bottom-1.5 top-1.5 rounded-full bg-[#D99B26]/20 border border-[#D99B26]/50 transition-all duration-300 pointer-events-none" style="left: 6px; width: 100px;"></div>
         
         <a href="#home" class="nav-tab-link nav-page-link px-5 py-2 rounded-full text-[#0A0C10] hover:text-[#D99B26] transition-colors relative z-10 active font-bold" data-page="home">The Route</a>
+        <a href="#stops" class="nav-tab-link nav-page-link px-5 py-2 rounded-full text-[#111827] font-semibold hover:text-[#D99B26] transition-colors relative z-10" data-page="stops">Corridor Stops</a>
         <a href="#about" class="nav-tab-link nav-page-link px-5 py-2 rounded-full text-[#111827] font-semibold hover:text-[#D99B26] transition-colors relative z-10" data-page="about">Stories</a>
         <a href="#trains" class="nav-tab-link nav-page-link px-5 py-2 rounded-full text-[#111827] font-semibold hover:text-[#D99B26] transition-colors relative z-10" data-page="trains">Modes</a>
-        <a href="#attractions" class="nav-tab-link nav-page-link px-5 py-2 rounded-full text-[#111827] font-semibold hover:text-[#D99B26] transition-colors relative z-10" data-page="attractions">Sights</a>
         <a href="#games" class="nav-tab-link nav-page-link px-5 py-2 rounded-full text-[#111827] font-semibold hover:text-[#D99B26] transition-colors relative z-10" data-page="games">Games</a>
       </nav>
 
@@ -261,14 +261,14 @@
         <a href="#home" class="nav-page-link py-3 px-4 rounded-lg bg-black/5 hover:bg-[#D99B26]/20 text-[#0A0C10] flex items-center gap-3 font-semibold" data-page="home">
           <i data-lucide="compass" class="w-4 h-4 text-[#D99B26]"></i> The Route
         </a>
+        <a href="#stops" class="nav-page-link py-3 px-4 rounded-lg bg-black/5 hover:bg-[#D99B26]/20 text-[#0A0C10] flex items-center gap-3 font-semibold" data-page="stops">
+          <i data-lucide="map-pin" class="w-4 h-4 text-[#D99B26]"></i> Corridor Stops
+        </a>
         <a href="#about" class="nav-page-link py-3 px-4 rounded-lg bg-black/5 hover:bg-[#D99B26]/20 text-[#0A0C10] flex items-center gap-3 font-semibold" data-page="about">
           <i data-lucide="book-open" class="w-4 h-4 text-[#D99B26]"></i> Stories
         </a>
         <a href="#trains" class="nav-page-link py-3 px-4 rounded-lg bg-black/5 hover:bg-[#D99B26]/20 text-[#0A0C10] flex items-center gap-3 font-semibold" data-page="trains">
           <i data-lucide="train" class="w-4 h-4 text-[#D99B26]"></i> Modes
-        </a>
-        <a href="#attractions" class="nav-page-link py-3 px-4 rounded-lg bg-black/5 hover:bg-[#D99B26]/20 text-[#0A0C10] flex items-center gap-3 font-semibold" data-page="attractions">
-          <i data-lucide="map-pin" class="w-4 h-4 text-[#D99B26]"></i> Sights
         </a>
         <a href="#games" class="nav-page-link py-3 px-4 rounded-lg bg-black/5 hover:bg-[#D99B26]/20 text-[#0A0C10] flex items-center gap-3 font-semibold" data-page="games">
           <i data-lucide="gamepad-2" class="w-4 h-4 text-[#D99B26]"></i> Games
@@ -360,6 +360,128 @@
     </section>
 
 
+    <!-- PAGE: CORRIDOR STOPS (CINEMATIC LIVING JOURNEY) -->
+    <section id="page-stops" class="page-view pt-28 sm:pt-32 pb-24 px-4 sm:px-8 lg:px-12 max-w-[1440px] mx-auto w-full min-h-screen relative overflow-hidden">
+      <!-- Atmospheric Background Layers -->
+      <div class="absolute inset-0 pointer-events-none z-0">
+        <!-- SVG Film Grain Overlay -->
+        <svg class="absolute inset-0 w-full h-full opacity-[0.03] mix-blend-overlay">
+          <filter id="noiseFilter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/>
+          </filter>
+          <rect width="100%" height="100%" filter="url(#noiseFilter)"/>
+        </svg>
+
+        <!-- Faint Railway Corridor Track Map Graphics -->
+        <svg class="absolute inset-0 w-full h-full opacity-15 stroke-[#D99B26]" xmlns="http://www.w3.org/2000/svg">
+          <path d="M-100 150 Q 400 300 900 120 T 1800 400" fill="none" stroke-width="1.5" stroke-dasharray="6 6"/>
+          <path d="M-50 450 Q 500 200 1100 500 T 2000 300" fill="none" stroke-width="1" stroke-dasharray="3 9" opacity="0.6"/>
+          <circle cx="250" cy="205" r="3" fill="#D99B26"/>
+          <circle cx="680" cy="225" r="3" fill="#D99B26"/>
+          <circle cx="1200" cy="380" r="3" fill="#D99B26"/>
+        </svg>
+
+        <!-- Deep Ambient Radial Glows -->
+        <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-radial from-[#d99b26]/10 via-transparent to-transparent blur-3xl"></div>
+        <div class="absolute -bottom-40 right-10 w-[700px] h-[400px] bg-radial from-[#0284c7]/10 via-transparent to-transparent blur-3xl"></div>
+      </div>
+
+      <div class="max-w-[1440px] mx-auto relative z-10">
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-14">
+          <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#D99B26]/10 border border-[#D99B26]/30 text-[#B87C10] font-mono text-xs font-bold tracking-widest uppercase mb-4 shadow-[0_0_20px_rgba(217,155,38,0.12)]">
+            <span class="w-2 h-2 rounded-full bg-[#D99B26] animate-ping"></span>
+            <span>SOUTH AFRICAN RAIL HERITAGE · PRETORIA TO CAPE TOWN</span>
+          </div>
+          <h2 class="font-heading font-extrabold text-3xl sm:text-5xl lg:text-6xl text-[#0A0C10] tracking-tight mb-4">
+            Corridor <span class="text-[#D99B26] italic font-serif">Stops</span>
+          </h2>
+          <p class="text-[#111827] font-medium leading-relaxed font-sans text-base sm:text-lg max-w-2xl mx-auto">
+            An immersive living journey tracing historic stations, mountain passes, and Karoo desert junctions along Mzansi's iconic 1,600 km rail corridor.
+          </p>
+        </div>
+
+        <!-- Filter Tabs Component -->
+        <div class="relative max-w-md mx-auto mb-16">
+          <div class="corridor-filter-bar flex items-center justify-between p-1.5 rounded-full bg-white/90 border border-black/15 backdrop-blur-xl shadow-md" id="corridor-filter-group">
+            <button class="corridor-filter-pill active" data-filter="all">All Stops</button>
+            <button class="corridor-filter-pill" data-filter="scheduled">Scheduled Stop</button>
+            <button class="corridor-filter-pill" data-filter="passthrough">Pass-through</button>
+          </div>
+          <!-- Animated Railway Signal Laser Beam Line -->
+          <div id="corridor-signal-line" class="corridor-signal-line"></div>
+        </div>
+
+        <!-- Living Stop Cards Grid -->
+        <div id="corridor-stops-grid" class="corridor-stops-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <!-- Dynamically populated via app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- PRETORIA TERMINUS CINEMATIC FEATURE OVERLAY PANEL -->
+    <div id="pretoria-feature-overlay" class="pretoria-feature-overlay fixed inset-0 z-[120] hidden items-center justify-center p-4 sm:p-8 bg-[#03050a]/92 backdrop-blur-2xl transition-all duration-700">
+      <div class="pretoria-feature-card relative max-w-4xl w-full bg-[#090e1a] border border-[#D4AF37]/40 rounded-3xl overflow-hidden shadow-[0_0_80px_rgba(212,175,55,0.25)] flex flex-col md:flex-row transform transition-transform duration-700 scale-95 opacity-0" id="pretoria-feature-panel">
+        
+        <!-- Feature Header Image -->
+        <div class="md:w-1/2 relative min-h-[280px] md:min-h-[480px] overflow-hidden">
+          <img id="pretoria-feature-img" src="https://images.unsplash.com/photo-1577971132997-c10be9372519?auto=format&fit=crop&w=1200&q=80" alt="Pretoria Terminus Station" class="w-full h-full object-cover transition-transform duration-[4000ms] ease-out scale-105" />
+          <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#090e1a] via-[#090e1a]/40 to-transparent"></div>
+          
+          <div class="absolute top-6 left-6 flex flex-col gap-2 z-10">
+            <span class="px-3.5 py-1 rounded-full bg-[#D4AF37] text-[#060913] font-mono text-[11px] font-bold tracking-widest uppercase shadow-md">SCHEDULED TERMINUS</span>
+            <span class="px-3.5 py-1 rounded-full bg-[#060913]/80 border border-[#D4AF37]/50 text-[#E5C158] font-mono text-[10px] font-semibold tracking-wider">GAUTENG PROVINCE · 0 KM</span>
+          </div>
+
+          <div class="absolute bottom-6 left-6 right-6 font-mono text-xs text-[#E5C158] z-10 flex items-center justify-between border-t border-[#D4AF37]/30 pt-3">
+            <span>PLATFORM 1</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i> 09:00 AM SCHEDULED DEPARTURE</span>
+          </div>
+        </div>
+
+        <!-- Feature Content Area -->
+        <div class="md:w-1/2 p-8 md:p-10 flex flex-col justify-between text-left relative">
+          <!-- Close Button -->
+          <button id="pretoria-close-btn" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#E5C158] hover:bg-[#D4AF37] hover:text-[#060913] transition-all flex items-center justify-center" title="Close Station Feature">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+
+          <div>
+            <span class="text-xs font-mono text-[#D4AF37] font-bold tracking-[0.25em] uppercase block mb-2">HERITAGE FEATURE</span>
+            <h3 class="font-heading font-extrabold text-2xl sm:text-4xl text-[#FCFAF4] mb-4">Pretoria Terminus</h3>
+            
+            <div class="w-12 h-0.5 bg-[#D4AF37] mb-6"></div>
+
+            <p class="text-[#C4C9D4] font-sans text-sm sm:text-base leading-relaxed mb-6">
+              Known as the Jacaranda City terminal, Pretoria Capital Park serves as the northern grand terminus for South Africa's most prestigious express lines. Built with red sandstone and Victorian ironwork, the station has sent travelers across the continent since the 1890s.
+            </p>
+
+            <div class="space-y-3 font-mono text-xs text-[#E5C158] bg-[#0c1324] p-4 rounded-xl border border-[#D4AF37]/20 mb-6">
+              <div class="flex items-center justify-between">
+                <span class="text-[#8e98b0]">Primary Express:</span>
+                <span class="font-bold">The Blue Train & Rovos Rail</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-[#8e98b0]">Corridor Route:</span>
+                <span class="font-bold">Pretoria ➔ Cape Town (1,600 km)</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-[#8e98b0]">Heritage Status:</span>
+                <span class="font-bold text-[#D4AF37]">National Rail Monument</span>
+              </div>
+            </div>
+          </div>
+
+          <button id="pretoria-collapse-cta" class="w-full py-3.5 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#B8860B] text-[#060913] font-bold font-mono text-xs uppercase tracking-wider hover:brightness-110 transition-all shadow-[0_0_25px_rgba(212,175,55,0.3)] flex items-center justify-center gap-2">
+            <span>Return to Corridor Journey Grid</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+
     <!-- PAGE 2: FLAGSHIP TRAINS SHOWCASE -->
     <section id="page-trains" class="page-view pt-32 sm:pt-36 pb-20 px-6 sm:px-12 lg:px-16 max-w-[1440px] mx-auto w-full">
       <div class="text-center max-w-2xl mx-auto mb-16">
@@ -375,35 +497,6 @@
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" id="trains-container">
-        <!-- Rendered dynamically via app.js -->
-      </div>
-    </section>
-
-
-    <!-- PAGE 3: ATTRACTIONS DIRECTORY -->
-    <section id="page-attractions" class="page-view pt-32 sm:pt-36 pb-20 px-6 sm:px-12 lg:px-16 max-w-[1440px] mx-auto w-full">
-      <div class="text-center max-w-2xl mx-auto mb-12">
-        <span class="px-4 py-1.5 rounded-full bg-[#2E7D46]/10 border border-[#2E7D46]/30 text-[#2E7D46] font-mono text-xs font-bold tracking-widest uppercase inline-block mb-4">
-          SIGHTSEEING & LANDMARKS
-        </span>
-        <h2 class="font-heading font-extrabold text-3xl sm:text-5xl text-[#0A0C10] mb-4">
-          Attractions Along <span class="text-[#2E7D46] italic font-serif">The Corridor</span>
-        </h2>
-        <p class="text-[#111827] font-medium leading-relaxed font-sans">
-          Explore curated South African landmarks, heritage sites, national parks, and cultural hubs at every station along the Pretoria to Cape Town rail corridor.
-        </p>
-      </div>
-
-      <!-- City Filter Bar -->
-      <div class="flex flex-wrap justify-center gap-3 mb-12 font-mono text-xs uppercase" id="attraction-city-filters">
-        <button class="filter-btn glass-button px-5 py-2.5 rounded-full text-[#0A0C10] font-semibold hover:border-[#D99B26] active" data-city="all">All Stops</button>
-        <button class="filter-btn glass-button px-5 py-2.5 rounded-full text-[#0A0C10] font-semibold hover:border-[#D99B26]" data-city="pretoria">Pretoria</button>
-        <button class="filter-btn glass-button px-5 py-2.5 rounded-full text-[#0A0C10] font-semibold hover:border-[#D99B26]" data-city="kimberley">Kimberley</button>
-        <button class="filter-btn glass-button px-5 py-2.5 rounded-full text-[#0A0C10] font-semibold hover:border-[#D99B26]" data-city="matjiesfontein">Matjiesfontein</button>
-        <button class="filter-btn glass-button px-5 py-2.5 rounded-full text-[#0A0C10] font-semibold hover:border-[#D99B26]" data-city="cape-town">Cape Town</button>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="attractions-container">
         <!-- Rendered dynamically via app.js -->
       </div>
     </section>

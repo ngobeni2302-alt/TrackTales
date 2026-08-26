@@ -3927,6 +3927,349 @@ p {
   }
 }
 
+/* ==========================================================================
+   Corridor Stops — Integrated Heritage Interaction & Motion Engine
+   ========================================================================== */
+
+#page-stops {
+  background: transparent !important;
+  color: inherit;
+  font-family: 'Outfit', sans-serif;
+  perspective: 1200px;
+}
+
+#page-stops * {
+  box-sizing: border-box;
+}
+
+/* Filter Pills Bar & Activation Sequence */
+.corridor-filter-pill {
+  position: relative;
+  padding: 0.6rem 1.4rem;
+  border-radius: 9999px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #475569;
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10;
+}
+
+.corridor-filter-pill:hover {
+  color: #0a0c10;
+  border-color: rgba(217, 155, 38, 0.35);
+}
+
+.corridor-filter-pill.active {
+  color: #0a0c10;
+  background: linear-gradient(135deg, #f3e5ab 0%, #d99b26 100%);
+  border-color: #d99b26;
+  box-shadow: 0 4px 15px rgba(217, 155, 38, 0.35);
+  transform: scale(1.05);
+}
+
+/* Signal Laser Beam Line */
+.corridor-signal-line {
+  position: absolute;
+  bottom: -12px;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, transparent, #d4af37, #ffffff, #d4af37, transparent);
+  box-shadow: 0 0 15px #d4af37;
+  opacity: 0;
+  pointer-events: none;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+
+.corridor-signal-line.active {
+  opacity: 1;
+  animation: signalPulseBeam 1.2s ease-out forwards;
+}
+
+@keyframes signalPulseBeam {
+  0% { width: 0%; left: 0%; opacity: 1; }
+  50% { width: 100%; left: 0%; opacity: 1; }
+  100% { width: 100%; left: 0%; opacity: 0; }
+}
+
+/* Living Stop Card — Rounded, Deep Glass, Gold Edges */
+.corridor-stop-card {
+  position: relative;
+  border-radius: 1.5rem;
+  background: linear-gradient(160deg, #0f172a 0%, #1e293b 100%) !important;
+  border: 1.5px solid rgba(217, 155, 38, 0.4) !important;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 420px;
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease, opacity 0.5s ease, filter 0.5s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Light sheen overlay following cursor */
+.corridor-stop-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(217, 155, 38, 0.2), transparent 40%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 5;
+}
+
+.corridor-stop-card:hover::before {
+  opacity: 1;
+}
+
+.corridor-stop-card:hover {
+  border-color: rgba(217, 155, 38, 0.8) !important;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(217, 155, 38, 0.3);
+}
+
+/* Header Photo with Zoom Parallax */
+.corridor-card-media {
+  position: relative;
+  height: 200px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.corridor-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.05) translateZ(0);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.corridor-stop-card:hover .corridor-card-img {
+  transform: scale(1.15) translateZ(10px);
+}
+
+.corridor-card-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(15, 23, 42, 1) 0%, rgba(15, 23, 42, 0.3) 60%, transparent 100%);
+}
+
+/* Category Badge */
+.corridor-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 800 !important;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  z-index: 10;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.corridor-badge-scheduled {
+  background: #d99b26 !important;
+  color: #000000 !important;
+}
+
+.corridor-badge-passthrough {
+  background: #0284c7 !important;
+  color: #ffffff !important;
+  border: 1px solid #7dd3fc !important;
+  backdrop-filter: blur(8px);
+}
+
+/* Body Content */
+.corridor-card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+  transform: translateZ(20px);
+  position: relative;
+  z-index: 10;
+}
+
+.corridor-card-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.45rem;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  margin-bottom: 0.4rem;
+  transition: color 0.3s ease;
+}
+
+.corridor-stop-card:hover .corridor-card-title {
+  color: #f59e0b !important;
+}
+
+.corridor-card-meta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  color: #f59e0b !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.corridor-card-meta * {
+  color: #f59e0b !important;
+}
+
+.corridor-card-teaser {
+  font-size: 0.88rem;
+  color: #e2e8f0 !important;
+  line-height: 1.55;
+  margin-bottom: 1.2rem;
+  font-weight: 400 !important;
+}
+
+.corridor-card-cta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 800 !important;
+  color: #f59e0b !important;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: gap 0.3s ease, color 0.3s ease;
+  transform: translateZ(30px);
+}
+
+.corridor-card-cta * {
+  color: #f59e0b !important;
+}
+
+.corridor-stop-card:hover .corridor-card-cta,
+.corridor-stop-card:hover .corridor-card-cta * {
+  gap: 0.8rem;
+  color: #fef08a !important;
+}
+
+/* Ensure Light Mode theme overrides do not darken corridor cards */
+[data-theme="light"] .corridor-stop-card {
+  background: linear-gradient(160deg, #0f172a 0%, #1e293b 100%) !important;
+}
+[data-theme="light"] .corridor-card-title {
+  color: #ffffff !important;
+}
+[data-theme="light"] .corridor-card-teaser {
+  color: #e2e8f0 !important;
+}
+[data-theme="light"] .corridor-card-meta,
+[data-theme="light"] .corridor-card-meta * {
+  color: #f59e0b !important;
+}
+[data-theme="light"] .corridor-card-cta,
+[data-theme="light"] .corridor-card-cta * {
+  color: #f59e0b !important;
+}
+
+/* Neighbor reaction class when hovering a card */
+.corridor-stop-card.neighbor-dimmed {
+  opacity: 0.45 !important;
+  filter: blur(2px) grayscale(30%);
+  transform: scale(0.96) translateZ(-30px) !important;
+}
+
+/* Card Exit Transformation (Physical Peel Away into depth) */
+.corridor-stop-card.card-peel-away {
+  transform: translateZ(-200px) rotateX(20deg) rotateY(-10deg) opacity(0) !important;
+  filter: blur(12px);
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+/* Staggered Multi-Vector Entrance Animations */
+.corridor-stop-card.enter-bottom {
+  animation: emergeFromBottom 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.corridor-stop-card.enter-side {
+  animation: emergeFromSide 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.corridor-stop-card.enter-depth {
+  animation: emergeFromDepth 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes emergeFromBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(80px) rotateX(25deg) scale(0.9);
+    filter: blur(8px);
+  }
+  80% {
+    transform: translateY(-5px) rotateX(-2deg) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes emergeFromSide {
+  0% {
+    opacity: 0;
+    transform: translateX(-80px) rotateY(-20deg) scale(0.9);
+    filter: blur(8px);
+  }
+  80% {
+    transform: translateX(5px) rotateY(2deg) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotateY(0deg) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes emergeFromDepth {
+  0% {
+    opacity: 0;
+    transform: translateZ(-300px) scale(0.6);
+    filter: blur(14px);
+  }
+  80% {
+    transform: translateZ(10px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateZ(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Pretoria Terminus Feature Panel Overlays */
+.pretoria-feature-overlay.active {
+  display: flex !important;
+}
+
+.pretoria-feature-overlay.active #pretoria-feature-panel {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+
 
 
 
