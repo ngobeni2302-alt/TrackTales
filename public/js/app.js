@@ -2159,6 +2159,7 @@
       badge: "SCHEDULED STOP",
       province: "Gauteng",
       distance_km: 0,
+      stop_time: "09:00 AM Departure · Origin Station",
       teaser: "The grand Jacaranda capital and northern gateway of South Africa's iron rails, where vintage steam and luxury expresses begin their southward journey.",
       img: "https://images.unsplash.com/photo-1577971132997-c10be9372519?auto=format&fit=crop&w=800&q=80",
       vector: "bottom"
@@ -2170,6 +2171,7 @@
       badge: "PASS-THROUGH",
       province: "Gauteng",
       distance_km: 68,
+      stop_time: "Express Pass-through · 12 Mins",
       teaser: "The industrial heartland where gold rush rails converge. Steam locomotives roared past deep mine shafts to forge South Africa's economic spine.",
       img: "https://images.unsplash.com/photo-1576485290814-1c72aa4bbb8e?auto=format&fit=crop&w=800&q=80",
       vector: "side"
@@ -2181,6 +2183,7 @@
       badge: "SCHEDULED STOP",
       province: "Northern Cape",
       distance_km: 645,
+      stop_time: "Scheduled Stop · 45 Mins",
       teaser: "Site of the 1870s Diamond Rush. Flagship trains stop for passengers to step back in time and marvel at the world's largest hand-dug excavation.",
       img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80",
       vector: "depth"
@@ -2192,6 +2195,7 @@
       badge: "PASS-THROUGH",
       province: "Northern Cape",
       distance_km: 810,
+      stop_time: "Pass-through · Technical Halt",
       teaser: "The legendary railway junction in the heart of the Great Karoo desert. Under starry skies, tracks split toward Namibia, Cape Town, and Algoa Bay.",
       img: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80",
       vector: "bottom"
@@ -2203,6 +2207,7 @@
       badge: "SCHEDULED STOP",
       province: "Western Cape",
       distance_km: 1320,
+      stop_time: "Scheduled Stop · 30 Mins",
       teaser: "A perfectly preserved Victorian village frozen in time. Royal mail trains, cricket legends, and Karoo breezes welcome weary travellers for a midnight stroll.",
       img: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80",
       vector: "side"
@@ -2214,6 +2219,7 @@
       badge: "PASS-THROUGH",
       province: "Western Cape",
       distance_km: 1480,
+      stop_time: "Scenic Mountain Pass-through",
       teaser: "A masterpiece of 19th-century railway engineering. Steam trains climb steep mountain tunnels before sweeping down into emerald wine valleys.",
       img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
       vector: "depth"
@@ -2225,6 +2231,7 @@
       badge: "PASS-THROUGH",
       province: "Western Cape",
       distance_km: 1510,
+      stop_time: "Pass-through · 15 Mins",
       teaser: "Nestled between the Brandwacht mountains and coastal fruit valleys, where mountain mist meets the historic Cape line.",
       img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80",
       vector: "bottom"
@@ -2236,6 +2243,7 @@
       badge: "SCHEDULED STOP",
       province: "Western Cape",
       distance_km: 1600,
+      stop_time: "17:30 PM Arrival · Terminus Station",
       teaser: "The triumphant coastal terminus beneath Table Mountain. Ocean breezes mark the grand arrival after 1,600 kilometers across South Africa.",
       img: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=800&q=80",
       vector: "side"
@@ -2303,15 +2311,24 @@
             </div>
 
             <div class="corridor-card-body">
-              <div>
+              <div class="corridor-card-footer-info">
                 <h3 class="corridor-card-title">${stop.name}</h3>
                 <div class="corridor-card-meta">
                   <i data-lucide="map-pin" style="width: 13px; height: 13px;"></i>
                   <span>${stop.province.toUpperCase()} · ${stop.distance_km} KM</span>
                 </div>
+              </div>
+
+              <!-- Hover / Focus Reveal Block (Hidden by default, reveals smoothly on :hover / :focus-within) -->
+              <div class="corridor-card-reveal-block">
+                <div class="corridor-card-stoptime">
+                  <i data-lucide="clock" style="width: 12px; height: 12px;"></i>
+                  <span>${stop.stop_time}</span>
+                </div>
                 <p class="corridor-card-teaser">${stop.teaser}</p>
               </div>
 
+              <!-- Static CTA Line (Visible by default, fades out on hover/focus-within) -->
               <div class="corridor-card-cta">
                 <span>${isPretoria ? 'Click to Expand Station Story' : 'Hover to Read Story'}</span>
                 <i data-lucide="arrow-right" style="width: 12px; height: 12px;"></i>

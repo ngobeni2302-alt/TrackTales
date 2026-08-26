@@ -4060,7 +4060,13 @@ p {
 .corridor-card-gradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(15, 23, 42, 1) 0%, rgba(15, 23, 42, 0.3) 60%, transparent 100%);
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.4) 60%, transparent 100%);
+  transition: background 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.corridor-stop-card:hover .corridor-card-gradient,
+.corridor-stop-card:focus-within .corridor-card-gradient {
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.98) 0%, rgba(15, 23, 42, 0.8) 75%, rgba(15, 23, 42, 0.3) 100%);
 }
 
 /* Category Badge */
@@ -4091,16 +4097,20 @@ p {
   backdrop-filter: blur(8px);
 }
 
-/* Body Content */
+/* Body Content Layout */
 .corridor-card-body {
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
   flex-grow: 1;
   transform: translateZ(20px);
   position: relative;
   z-index: 10;
+}
+
+.corridor-card-footer-info {
+  margin-bottom: 0.2rem;
 }
 
 .corridor-card-title {
@@ -4108,11 +4118,12 @@ p {
   font-size: 1.45rem;
   font-weight: 800 !important;
   color: #ffffff !important;
-  margin-bottom: 0.4rem;
-  transition: color 0.3s ease;
+  margin-bottom: 0.3rem;
+  transition: color 250ms ease-out;
 }
 
-.corridor-stop-card:hover .corridor-card-title {
+.corridor-stop-card:hover .corridor-card-title,
+.corridor-stop-card:focus-within .corridor-card-title {
   color: #f59e0b !important;
 }
 
@@ -4122,7 +4133,6 @@ p {
   color: #f59e0b !important;
   font-weight: 700 !important;
   letter-spacing: 0.05em;
-  margin-bottom: 0.8rem;
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -4132,14 +4142,54 @@ p {
   color: #f59e0b !important;
 }
 
+/* Hover-to-Reveal Info Block (Collapsible via performant CSS transitions) */
+.corridor-card-reveal-block {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(14px);
+  overflow: hidden;
+  pointer-events: none;
+  transition: max-height 250ms cubic-bezier(0.16, 1, 0.3, 1), 
+              opacity 220ms ease-out, 
+              transform 250ms cubic-bezier(0.16, 1, 0.3, 1),
+              margin 250ms ease-out;
+  margin-top: 0;
+}
+
+.corridor-stop-card:hover .corridor-card-reveal-block,
+.corridor-stop-card:focus-within .corridor-card-reveal-block {
+  max-height: 220px;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  margin-top: 0.8rem;
+}
+
+.corridor-card-stoptime {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700 !important;
+  color: #38bdf8 !important;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.corridor-card-stoptime * {
+  color: #38bdf8 !important;
+}
+
 .corridor-card-teaser {
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   color: #e2e8f0 !important;
-  line-height: 1.55;
-  margin-bottom: 1.2rem;
+  line-height: 1.5;
+  margin-bottom: 0.2rem;
   font-weight: 400 !important;
 }
 
+/* Static CTA Line (Visible by default, smoothly fades out on hover/focus-within) */
 .corridor-card-cta {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 0.75rem;
@@ -4150,8 +4200,11 @@ p {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  transition: gap 0.3s ease, color 0.3s ease;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 200ms ease-out, transform 200ms ease-out;
   transform: translateZ(30px);
+  margin-top: 0.6rem;
 }
 
 .corridor-card-cta * {
@@ -4159,9 +4212,13 @@ p {
 }
 
 .corridor-stop-card:hover .corridor-card-cta,
-.corridor-stop-card:hover .corridor-card-cta * {
-  gap: 0.8rem;
-  color: #fef08a !important;
+.corridor-stop-card:focus-within .corridor-card-cta {
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  margin-top: 0;
+  height: 0;
+  overflow: hidden;
 }
 
 /* Ensure Light Mode theme overrides do not darken corridor cards */
