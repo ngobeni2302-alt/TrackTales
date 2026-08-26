@@ -2161,7 +2161,7 @@
       distance_km: 0,
       stop_time: "09:00 AM Departure · Origin Station",
       teaser: "The grand Jacaranda capital and northern gateway of South Africa's iron rails, where vintage steam and luxury expresses begin their southward journey.",
-      video: "/videos/Steam_locomotive_moving_on_tracks_202608181456.mp4",
+      video: "/videos/Purple_leaves_falling_on_street_202608261538.mp4",
       img: "https://images.unsplash.com/photo-1577971132997-c10be9372519?auto=format&fit=crop&w=800&q=80",
       vector: "bottom"
     },
