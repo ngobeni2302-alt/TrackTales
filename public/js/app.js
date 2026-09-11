@@ -152,8 +152,7 @@
     safeExec(setupPassportModal, 'setupPassportModal');
     safeExec(setupHeroVideoControls, 'setupHeroVideoControls');
     safeExec(setupRoutePreviewModal, 'setupRoutePreviewModal');
-    safeExec(setupMobileMenu, 'setupMobileMenu');
-    safeExec(setupAnimatedTabs, 'setupAnimatedTabs');
+    safeExec(setupRailwayNavigation, 'setupRailwayNavigation');
     safeExec(setupMotionEntranceAnimations, 'setupMotionEntranceAnimations');
     safeExec(setup3DCanvasGlobe, 'setup3DCanvasGlobe');
     safeExec(setupCorridorStops, 'setupCorridorStops');
@@ -1774,73 +1773,49 @@
     renderActivePuzzle();
   }
 
-  // --- Hero Section Background Video Controls & Cinematic Zoom ---
+  // --- Hero Section Background Video Continuous Motion & Default Sound ---
   function setupHeroVideoControls() {
     const video = document.getElementById('heroVideo');
-    const muteBtn = document.getElementById('heroMuteBtn');
-    const playBtn = document.getElementById('heroPlayBtn');
-    const muteIcon = document.getElementById('heroMuteIcon');
-    const muteText = document.getElementById('heroMuteText');
-    const playIcon = document.getElementById('heroPlayIcon');
-    const playText = document.getElementById('heroPlayText');
-
     if (!video) return;
 
-    // Set playbackRate to 0.75 for smooth cinematic ambient feel
-    video.playbackRate = 0.75;
+    // Set playbackRate for smooth cinematic ambient train movement
+    video.playbackRate = 0.85;
 
     // Trigger Zoom-in-to-pull-back sequence: remove .zoomed-in after ~100ms
     setTimeout(() => {
       video.classList.remove('zoomed-in');
     }, 100);
 
-    if (muteBtn) {
-      const syncMuteUI = () => {
-        if (muteIcon && muteText) {
-          if (video.muted) {
-            muteIcon.setAttribute('data-lucide', 'volume-x');
-            muteText.textContent = 'UNMUTE';
-          } else {
-            muteIcon.setAttribute('data-lucide', 'volume-2');
-            muteText.textContent = 'MUTE';
-          }
-          if (window.lucide) lucide.createIcons();
-        }
-      };
-
-      // Ensure initial UI matches video state
-      syncMuteUI();
-
-      muteBtn.addEventListener('click', () => {
-        if (video.muted) {
-          video.muted = false;
-          video.volume = 1.0;
-          video.play().catch(e => console.log('Video play on unmute:', e));
-        } else {
+    // Keep train continuously moving with sound
+    const startPlaying = () => {
+      video.muted = false;
+      video.volume = 1.0;
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // If browser restricts initial unmuted autoplay, play muted first then unmute on first gesture
           video.muted = true;
-        }
-        syncMuteUI();
-      });
-    }
+          video.play().catch(() => {});
 
-    if (playBtn) {
-      playBtn.addEventListener('click', () => {
-        if (video.paused) {
-          video.play();
-          if (playIcon && playText) {
-            playIcon.setAttribute('data-lucide', 'pause');
-            playText.textContent = 'PAUSE';
-          }
-        } else {
-          video.pause();
-          if (playIcon && playText) {
-            playIcon.setAttribute('data-lucide', 'play');
-            playText.textContent = 'PLAY';
-          }
-        }
-        if (window.lucide) lucide.createIcons();
-      });
-    }
+          const unlockAudio = () => {
+            video.muted = false;
+            video.volume = 1.0;
+            video.play().catch(() => {});
+            window.removeEventListener('pointerdown', unlockAudio);
+            window.removeEventListener('keydown', unlockAudio);
+            window.removeEventListener('scroll', unlockAudio);
+            window.removeEventListener('click', unlockAudio);
+          };
+
+          window.addEventListener('pointerdown', unlockAudio, { once: true });
+          window.addEventListener('keydown', unlockAudio, { once: true });
+          window.addEventListener('scroll', unlockAudio, { once: true });
+          window.addEventListener('click', unlockAudio, { once: true });
+        });
+      }
+    };
+
+    startPlaying();
   }
 
   // --- Route Preview Video Modal Handlers with Escape Dismissal ---
@@ -1894,75 +1869,88 @@
     if (playJourneyBtn) playJourneyBtn.addEventListener('click', scrollToRoute);
   }
 
-  // --- Mobile Menu Toggle ---
-  function setupMobileMenu() {
-    const btn = document.getElementById('mobile-toggle-btn');
-    const menu = document.getElementById('mobileMenu');
-    const icon = document.getElementById('mobileMenuIcon');
+  // --- Cinematic Railway Navigation Hamburger & Sequential Movement Engine ---
+  function setupRailwayNavigation() {
+    const toggleBtn = document.getElementById('railway-menu-toggle');
+    const panel = document.getElementById('railway-menu-panel');
+    const backdrop = document.getElementById('railway-menu-backdrop');
+    if (!toggleBtn || !panel || !backdrop) return;
 
-    if (!btn || !menu) return;
+    let isOpen = false;
+    let isTransitioning = false;
 
-    btn.addEventListener('click', () => {
-      const isHidden = menu.classList.contains('hidden');
-      if (isHidden) {
-        menu.classList.remove('hidden');
-        if (icon) icon.setAttribute('data-lucide', 'x');
-      } else {
-        menu.classList.add('hidden');
-        if (icon) icon.setAttribute('data-lucide', 'menu');
-      }
+    function openMenu() {
+      if (isTransitioning || isOpen) return;
+      isTransitioning = true;
+      isOpen = true;
+
+      // 1. Clear closing class
+      panel.classList.remove('is-closing');
+
+      // 2. Force reflow so initial off-screen transform displacements are active in render tree
+      void panel.offsetHeight;
+
+      // 3. Trigger sequential physical arrivals (100ms staggered per item)
+      panel.classList.add('is-open');
+      backdrop.classList.add('is-open');
+      toggleBtn.classList.add('is-active');
+      toggleBtn.setAttribute('aria-expanded', 'true');
+
       if (window.lucide) lucide.createIcons();
-    });
 
-    menu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        menu.classList.add('hidden');
-        if (icon) icon.setAttribute('data-lucide', 'menu');
-        if (window.lucide) lucide.createIcons();
-      });
-    });
-  }
-
-  // --- Animated Nav Tab Indicator ---
-  function setupAnimatedTabs() {
-    const container = document.getElementById('nav-tabs-container');
-    const indicator = document.getElementById('nav-tab-indicator');
-    if (!container || !indicator) return;
-
-    const tabs = container.querySelectorAll('.nav-tab-link');
-
-    function updateIndicator(activeTab) {
-      if (!activeTab) return;
-      const containerRect = container.getBoundingClientRect();
-      const tabRect = activeTab.getBoundingClientRect();
-      const left = tabRect.left - containerRect.left;
-      const width = tabRect.width;
-
-      indicator.style.left = `${left}px`;
-      indicator.style.width = `${width}px`;
+      setTimeout(() => {
+        isTransitioning = false;
+      }, 650);
     }
 
-    // Set initial position
-    const initialActive = container.querySelector('.nav-tab-link.active') || tabs[0];
-    if (initialActive) updateIndicator(initialActive);
+    function closeMenu() {
+      if (isTransitioning || !isOpen) return;
+      isTransitioning = true;
+      isOpen = false;
 
-    tabs.forEach(tab => {
-      tab.addEventListener('mouseenter', () => updateIndicator(tab));
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        updateIndicator(tab);
+      // 1. Trigger reverse retraction sequence (80ms step starting from station 05)
+      panel.classList.add('is-closing');
+      panel.classList.remove('is-open');
+      backdrop.classList.remove('is-open');
+      toggleBtn.classList.remove('is-active');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+
+      // 2. Clear closing state once physical reverse retraction completes (~400ms)
+      setTimeout(() => {
+        panel.classList.remove('is-closing');
+        isTransitioning = false;
+      }, 420);
+    }
+
+    toggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    backdrop.addEventListener('click', closeMenu);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isOpen) {
+        closeMenu();
+      }
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (isOpen && !panel.contains(e.target) && !toggleBtn.contains(e.target)) {
+        closeMenu();
+      }
+    });
+
+    // Close menu when any navigation station link is clicked
+    panel.querySelectorAll('.railway-nav-item').forEach(item => {
+      item.addEventListener('click', () => {
+        closeMenu();
       });
-    });
-
-    container.addEventListener('mouseleave', () => {
-      const currentActive = container.querySelector('.nav-tab-link.active');
-      if (currentActive) updateIndicator(currentActive);
-    });
-
-    window.addEventListener('resize', () => {
-      const currentActive = container.querySelector('.nav-tab-link.active');
-      if (currentActive) updateIndicator(currentActive);
     });
   }
 
