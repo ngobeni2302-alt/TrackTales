@@ -940,70 +940,53 @@
     renderPassportUI();
   }
 
-  // --- 1. Video Loading Splash Screen Controller ---
+  // --- 1. Video Loading Splash Screen & Passenger Auth Card Controller ---
   function setupLoadingSplash() {
     const splash = document.getElementById('train-loading-splash');
-    const fill = document.getElementById('splash-progress-fill');
     const video = document.getElementById('splash-video');
-    const audioBtn = document.getElementById('splash-audio-toggle');
-    const skipBtn = document.getElementById('splash-skip-btn');
-    const statusText = document.getElementById('splash-status-text');
+    const cardPanelVideo = document.getElementById('card-panel-video');
 
     if (!splash) return;
 
-    // Trigger video play safely (handle browser autoplay policies)
-    if (video) {
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(err => {
-          console.log("Video autoplay initialized in muted state or waiting for user interaction:", err);
-        });
+    // Trigger videos play safely
+    [video, cardPanelVideo].forEach(v => {
+      if (v) {
+        const playPromise = v.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(err => {
+            console.log("Video autoplay muted state:", err);
+          });
+        }
       }
-    }
+    });
 
     // Sound toggle control handler
     if (audioBtn && video) {
-      audioBtn.addEventListener('click', () => {
+      audioBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         video.muted = !video.muted;
         if (!video.muted) {
           video.play().catch(e => console.log("Play on unmute:", e));
-        }
-        if (video.muted) {
-          audioBtn.innerHTML = '<i data-lucide="volume-x"></i> <span>Sound Off</span>';
+          audioBtn.innerHTML = '<i data-lucide="volume-2" class="w-4 h-4"></i> <span>Sound On</span>';
         } else {
-          audioBtn.innerHTML = '<i data-lucide="volume-2"></i> <span>Sound On</span>';
+          audioBtn.innerHTML = '<i data-lucide="volume-x" class="w-4 h-4"></i> <span>Sound Off</span>';
         }
         if (window.lucide) lucide.createIcons();
       });
     }
-
-    // Unmute sound on first click on splash screen during loading if user wants audio
-    const enableAudioOnInteraction = () => {
-      if (video && video.muted && audioBtn) {
-        video.muted = false;
-        video.play().catch(e => console.log("Unmute on interaction:", e));
-        audioBtn.innerHTML = '<i data-lucide="volume-2"></i> <span>Sound On</span>';
-        if (window.lucide) lucide.createIcons();
-      }
-    };
-    splash.addEventListener('click', () => {
-      enableAudioOnInteraction();
-      dismissSplash();
-    });
 
     let isDismissed = false;
     const dismissSplash = () => {
       if (isDismissed) return;
       isDismissed = true;
       
-      // CRITICAL: Stop loading video & mute sound immediately when loading completes
       if (video) {
         try {
           video.pause();
           video.muted = true;
           video.currentTime = 0;
         } catch (e) {
-          console.log("Error pausing loading video:", e);
+          console.log("Error pausing splash video:", e);
         }
       }
 
@@ -1020,40 +1003,222 @@
       });
     }
 
-    // Hard fallback timeout: guarantee splash dismisses cleanly within 2.3 seconds
-    setTimeout(dismissSplash, 2300);
+    if (guestBtn) {
+      guestBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dismissSplash();
+      });
+    }
 
-    // Dynamic progress bar & status updates over 1.8 seconds
-    let progress = 0;
-    const statusMessages = [
-      "Starting TrackTales Locomotive Engine...",
-      "Loading Luxury Express Lines (The Blue Train & Rovos Rail)...",
-      "Fetching South African Landmark Sights & Attractions...",
-      "Preparing TrackTales Railway Portal...",
-      "Ready for TrackTales!"
-    ];
+    // --- Tab / Screen Switcher Logic ---
+    const toSignupLink = document.getElementById('splash-to-signup-link');
+    const toSigninLink = document.getElementById('splash-to-signin-link');
+    const signinContent = document.getElementById('splash-signin-content');
+    const signupContent = document.getElementById('splash-signup-content');
+    const loggedInContent = document.getElementById('splash-logged-in-content');
+    const authAlert = document.getElementById('splash-auth-alert');
+    const forgotPassBtn = document.getElementById('splash-forgot-pass-btn');
 
-    const TOTAL_DURATION_MS = 1800; // 1.8 Seconds duration for fast load
-    const INTERVAL_MS = 40;
-    const INCREMENT = 100 / (TOTAL_DURATION_MS / INTERVAL_MS);
-
-    const interval = setInterval(() => {
-      progress += INCREMENT;
-      if (progress > 100) progress = 100;
-      if (fill) fill.style.width = progress + '%';
-
-      if (statusText) {
-        const msgIdx = Math.min(Math.floor((progress / 100) * statusMessages.length), statusMessages.length - 1);
-        statusText.textContent = statusMessages[msgIdx];
+    const showAlert = (msg, type = 'info') => {
+      if (!authAlert) return;
+      authAlert.classList.remove('hidden', 'bg-red-500/10', 'border-red-500/30', 'text-red-700', 'bg-[#D99B26]/15', 'border-[#D99B26]/35', 'text-[#A86F12]', 'bg-[#FAF8F5]', 'border-[#EBE5D9]', 'text-[#1C1917]');
+      if (type === 'error') {
+        authAlert.classList.add('bg-red-500/10', 'border-red-500/30', 'text-red-700');
+      } else if (type === 'success') {
+        authAlert.classList.add('bg-[#D99B26]/15', 'border-[#D99B26]/35', 'text-[#A86F12]');
+      } else {
+        authAlert.classList.add('bg-[#FAF8F5]', 'border-[#EBE5D9]', 'text-[#1C1917]');
       }
+      authAlert.textContent = msg;
+    };
 
-      if (progress >= 100) {
-        clearInterval(interval);
+    const hideAlert = () => {
+      if (authAlert) authAlert.classList.add('hidden');
+    };
+
+    const showSignIn = () => {
+      hideAlert();
+      if (signinContent) signinContent.classList.remove('hidden');
+      if (signupContent) signupContent.classList.add('hidden');
+    };
+
+    const showSignUp = () => {
+      hideAlert();
+      if (signupContent) signupContent.classList.remove('hidden');
+      if (signinContent) signinContent.classList.add('hidden');
+    };
+
+    if (toSignupLink) toSignupLink.addEventListener('click', showSignUp);
+    if (toSigninLink) toSigninLink.addEventListener('click', showSignIn);
+
+    if (forgotPassBtn) {
+      forgotPassBtn.addEventListener('click', () => {
+        const email = document.getElementById('splash-signin-email').value.trim();
+        if (!email) {
+          showAlert("Please enter your registered email address above to reset password.", "info");
+        } else {
+          showAlert(`Password reset link sent to ${email}. Please check your inbox.`, "success");
+        }
+      });
+    }
+
+    // Quick Demo Credentials Auto-Fill
+    const demoFillBtn = document.getElementById('splash-demo-fill-btn');
+    if (demoFillBtn) {
+      demoFillBtn.addEventListener('click', () => {
+        const emailInput = document.getElementById('splash-signin-email');
+        const passInput = document.getElementById('splash-signin-password');
+        if (emailInput) emailInput.value = 'passenger@tracktales.co.za';
+        if (passInput) passInput.value = 'tracktales2026';
+        showAlert("Demo passenger credentials loaded! Click 'SIGN IN'.", "success");
+      });
+    }
+
+    // Check Active Session on Splash Load
+    const updateSplashSessionUI = () => {
+      const loggedUser = JSON.parse(localStorage.getItem('tracktales_logged_user') || 'null');
+      if (loggedUser && (loggedUser.name || loggedUser.email)) {
+        if (signinContent) signinContent.classList.add('hidden');
+        if (signupContent) signupContent.classList.add('hidden');
+        if (loggedInContent) loggedInContent.classList.remove('hidden');
+
+        const userNameEl = document.getElementById('splash-user-name');
+        const userEmailEl = document.getElementById('splash-user-email');
+        if (userNameEl) userNameEl.textContent = `Welcome Back, ${loggedUser.name || loggedUser.email}!`;
+        if (userEmailEl) userEmailEl.textContent = loggedUser.email || '';
+      } else {
+        if (loggedInContent) loggedInContent.classList.add('hidden');
+        showSignIn();
+      }
+    };
+    updateSplashSessionUI();
+
+    // Proceed to app as logged in user button
+    const enterAsUserBtn = document.getElementById('splash-enter-as-user-btn');
+    if (enterAsUserBtn) {
+      enterAsUserBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dismissSplash();
+      });
+    }
+
+    // Splash Sign Out button
+    const splashSignoutBtn = document.getElementById('splash-signout-btn');
+    if (splashSignoutBtn) {
+      splashSignoutBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        localStorage.removeItem('tracktales_logged_user');
+        const openBtn = document.getElementById('btn-open-login');
+        const desktopLabel = document.getElementById('desktop-login-label');
+        if (desktopLabel) desktopLabel.textContent = "Sign In";
+        if (openBtn) openBtn.innerHTML = `<i data-lucide="user-check" class="w-4 h-4 text-[#D99B26]"></i> <span id="desktop-login-label">Sign In</span>`;
+        if (window.lucide) lucide.createIcons();
+        showAlert("Signed out successfully.", "info");
+        updateSplashSessionUI();
+      });
+    }
+
+    // --- Sign In Form Submission ---
+    const splashSigninForm = document.getElementById('splash-signin-form');
+    if (splashSigninForm) {
+      splashSigninForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('splash-signin-email').value.trim().toLowerCase();
+        const password = document.getElementById('splash-signin-password').value;
+        const btnLabel = document.getElementById('splash-signin-btn-label');
+
+        if (btnLabel) btnLabel.textContent = "Authenticating...";
+
         setTimeout(() => {
-          dismissSplash();
-        }, 150);
-      }
-    }, INTERVAL_MS);
+          const users = JSON.parse(localStorage.getItem('tracktales_users') || '{}');
+          
+          if (!users['passenger@tracktales.co.za']) {
+            users['passenger@tracktales.co.za'] = 'tracktales2026';
+            localStorage.setItem('tracktales_users', JSON.stringify(users));
+          }
+
+          if (users[email] && users[email] !== password) {
+            showAlert("Incorrect password! Please check your credentials.", "error");
+            if (btnLabel) btnLabel.textContent = "SIGN IN";
+            return;
+          }
+
+          users[email] = password;
+          localStorage.setItem('tracktales_users', JSON.stringify(users));
+
+          const displayName = email.split('@')[0].replace('.', ' ').toUpperCase();
+          const userObj = { name: displayName, email: email };
+          localStorage.setItem('tracktales_logged_user', JSON.stringify(userObj));
+          localStorage.setItem('last_user', email);
+          localStorage.setItem('last_password', password);
+
+          const openBtn = document.getElementById('btn-open-login');
+          const desktopLabel = document.getElementById('desktop-login-label');
+          if (desktopLabel) desktopLabel.textContent = "Sign Out";
+          if (openBtn) openBtn.innerHTML = `<i data-lucide="log-out" class="w-4 h-4 text-[#D99B26]"></i> <span id="desktop-login-label">Sign Out</span>`;
+          if (window.lucide) lucide.createIcons();
+
+          showAlert("Sign in successful! Boarding TrackTales...", "success");
+
+          setTimeout(() => {
+            dismissSplash();
+          }, 500);
+        }, 300);
+      });
+    }
+
+    // --- Sign Up Form Submission ---
+    const splashSignupForm = document.getElementById('splash-signup-form');
+    if (splashSignupForm) {
+      splashSignupForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('splash-signup-name').value.trim();
+        const email = document.getElementById('splash-signup-email').value.trim().toLowerCase();
+        const password = document.getElementById('splash-signup-password').value;
+        const confirmPassword = document.getElementById('splash-signup-confirm-password').value;
+        const btnLabel = document.getElementById('splash-signup-btn-label');
+
+        if (password !== confirmPassword) {
+          showAlert("Passwords do not match!", "error");
+          return;
+        }
+
+        const users = JSON.parse(localStorage.getItem('tracktales_users') || '{}');
+        if (users[email]) {
+          showAlert("Account with this email already exists!", "error");
+          showSignIn();
+          const emailInput = document.getElementById('splash-signin-email');
+          if (emailInput) emailInput.value = email;
+          return;
+        }
+
+        if (btnLabel) btnLabel.textContent = "Creating Account...";
+
+        setTimeout(() => {
+          users[email] = password;
+          localStorage.setItem('tracktales_users', JSON.stringify(users));
+          
+          const userObj = { name: name || email.split('@')[0], email: email };
+          localStorage.setItem('tracktales_logged_user', JSON.stringify(userObj));
+          localStorage.setItem('last_user', email);
+          localStorage.setItem('last_password', password);
+
+          const openBtn = document.getElementById('btn-open-login');
+          const desktopLabel = document.getElementById('desktop-login-label');
+          if (desktopLabel) desktopLabel.textContent = "Sign Out";
+          if (openBtn) openBtn.innerHTML = `<i data-lucide="log-out" class="w-4 h-4 text-[#D99B26]"></i> <span id="desktop-login-label">Sign Out</span>`;
+          if (window.lucide) lucide.createIcons();
+
+          showAlert(`Welcome, ${name || email}! Account created. Boarding...`, "success");
+
+          setTimeout(() => {
+            dismissSplash();
+          }, 500);
+        }, 300);
+      });
+    }
+
+    if (window.lucide) lucide.createIcons();
   }
 
   // --- 2. Page Router Navigation with UI Systems Principles ---
