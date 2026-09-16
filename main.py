@@ -44,18 +44,38 @@ TRAINS_DATA = [
             "Gourmet 5-course dining with silver service & local wine pairing",
             "Cigar & Cognac Observation Lounge Car"
         ],
-        "suites": [
+        "scenery_highlights": [
             {
-                "name": "Luxury Suite",
-                "bed_type": "Twin beds or Double bed",
-                "size": "5-Star Deluxe",
-                "amenities": "Full marble bath, private audio system, Wi-Fi, butler service, mini-bar"
+                "title": "The Great Karoo Sunset & Desert Horizons",
+                "vantage": "Observation Car Panoramic Lounge",
+                "time_window": "Late Afternoon to Golden Hour",
+                "icon": "sun",
+                "desc": "Experience the infinite flat-topped kopjes and acacia silhouettes of the Karoo bathed in glowing crimson and gold through floor-to-ceiling panoramic glass.",
+                "tips": "Arrive at the Observation Car 30 minutes before twilight for prime armchair seating."
             },
             {
-                "name": "De Luxe Suite",
-                "bed_type": "Twin beds or Double bed",
-                "size": "Executive Comfort",
-                "amenities": "Private shower or bath, writing desk, butler service, complimentary champagne"
+                "title": "Hex River Mountain Pass & Railway Tunnels",
+                "vantage": "Club Car & Lounge Windows",
+                "time_window": "Morning Descent into Western Cape",
+                "icon": "mountain",
+                "desc": "Marvel as the train snakes through towering sandstone ranges and the 13.5 km tunnel system into emerald vineyard valleys.",
+                "tips": "Sit on the right side of the lounge car for sheer mountain ravine views."
+            },
+            {
+                "title": "Kamfers Dam Flamingo Salt Pans",
+                "vantage": "Panoramic Windows & Dining Car",
+                "time_window": "Approaching Kimberley Rail Junction",
+                "icon": "compass",
+                "desc": "Witness tens of thousands of lesser flamingos tinting the salt pan waters in pastel pink right along the rail tracks.",
+                "tips": "Have your camera ready as flocks take flight in waves alongside the train."
+            },
+            {
+                "title": "Highveld Open Goldfields & Grasslands",
+                "vantage": "Panoramic Lounge & Club Car",
+                "time_window": "Pretoria & Gauteng Departure",
+                "icon": "layers",
+                "desc": "Watch the rolling high-altitude savannah and historic mine dumps transition into the wide-open expanse of the central plateau.",
+                "tips": "Best enjoyed with morning espresso as the train reaches cruising speed."
             }
         ],
         "image_url": "/images/blue-train.jpg"
@@ -79,24 +99,38 @@ TRAINS_DATA = [
             "Scenic Passing Points: Highveld Plateau, Great Karoo & Hex River Valley Tunnels",
             "Formal dress code evening dinners (suit & tie / evening gown)"
         ],
-        "suites": [
+        "scenery_highlights": [
             {
-                "name": "Royal Suite",
-                "bed_type": "King-size bed",
-                "size": "16 sq. metres (Half carriage)",
-                "amenities": "Victorian bath, ensuite shower, lounge area, 24h room service, fine teas"
+                "title": "Open-Air Balcony Sunset & Stargazing",
+                "vantage": "Rear Open Observation Balcony",
+                "time_window": "Twilight to Deep Desert Night",
+                "icon": "sparkles",
+                "desc": "Step onto the open teak balcony at the very rear of the train. Feel the crisp Karoo air and watch the tracks vanish under a starry Milky Way.",
+                "tips": "The open balcony offers 100% glare-free photography and an immersive soundscape."
             },
             {
-                "name": "Deluxe Suite",
-                "bed_type": "Twin or Double bed",
-                "size": "11 sq. metres",
-                "amenities": "Ensuite shower, seating area, wood paneling, fully stocked bar fridge"
+                "title": "Hex River Mountain Viaducts & 4 Tunnels",
+                "vantage": "Observation Car & Teak Balcony",
+                "time_window": "Day 3 Morning Winelands Descent",
+                "icon": "mountain",
+                "desc": "The vintage train negotiates the steep 1-in-40 gradient through 4 historic mountain tunnels with views over Cape Dutch homesteads.",
+                "tips": "The rear balcony provides stunning views of the curved train winding across stone viaducts."
             },
             {
-                "name": "Pullman Suite",
-                "bed_type": "Sofa bed by day, upper/lower berth by night",
-                "size": "7 sq. metres",
-                "amenities": "Ensuite shower, vintage brass fittings, air conditioning"
+                "title": "Matjiesfontein Victorian Desert Village",
+                "vantage": "Observation Lounge & Open Balcony",
+                "time_window": "Afternoon Arrival in Little Karoo",
+                "icon": "compass",
+                "desc": "Glide into the preserved 19th-century railway village of Matjiesfontein, framed by the rugged Witteberge peaks and cast-iron lamps.",
+                "tips": "Listen for the traditional bugle call summoning passengers to the platform."
+            },
+            {
+                "title": "Vaal River Crossing & Maize Triangle",
+                "vantage": "1920s Dining Car & Suites",
+                "time_window": "Day 1 Afternoon Highveld Transit",
+                "icon": "wind",
+                "desc": "Cross the Vaal River border into the Free State plains, watching springbok and native birdlife scatter across the grasslands.",
+                "tips": "Keep watch from the wood-framed picture windows during afternoon high tea."
             }
         ],
         "image_url": "/images/rovos-rail.jpg"
