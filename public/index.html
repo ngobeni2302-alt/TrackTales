@@ -4,8 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- SEO Best Practices -->
+  <!-- SEO Best Practices & Favicon -->
   <title>TrackTales | Pretoria to Cape Town Cinematic Digital Rail Companion</title>
+  <link rel="icon" type="image/jpeg" href="./images/tracktales-logo.jpg">
+  <link rel="shortcut icon" type="image/jpeg" href="./images/tracktales-logo.jpg">
+  <link rel="apple-touch-icon" href="./images/tracktales-logo.jpg">
   <meta name="description" content="A digital storytelling companion for the Pretoria to Cape Town rail corridor. Experience South Africa's iconic railway journeys, luxury trains, historical stops, and interactive sight games.">
   <meta name="keywords" content="TrackTales, South Africa Rail, Pretoria to Cape Town, Blue Train, Rovos Rail, Karoo rail, SA Tourism, Kimberley Big Hole, digital rail companion">
   <meta property="og:title" content="TrackTales: Pretoria to Cape Town, By Story">
@@ -156,7 +159,7 @@
   </style>
 
   <!-- External Stylesheet Fallback -->
-  <link rel="stylesheet" href="./css/styles.css?v=1.5">
+  <link rel="stylesheet" href="./css/styles.css?v=2.4">
 </head>
 <body class="bg-[#F8F6F0] text-[#0A0C10] font-sans antialiased overflow-x-hidden min-h-screen relative flex flex-col justify-between selection:bg-[#D99B26] selection:text-white">
 
@@ -164,191 +167,580 @@
   <div id="heroVideoBgLayer" class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
     
     <!-- Background Video Element using current video in videos folder -->
-    <video id="heroVideo" class="absolute inset-0 w-full h-full object-cover scale-105 zoomed-in opacity-100" autoplay loop muted playsinline>
+    <video id="heroVideo" class="absolute inset-0 w-full h-full object-cover scale-105 zoomed-in opacity-85" autoplay loop muted playsinline>
       <source src="./videos/Steam_locomotive_moving_on_tracks_202608181456.mp4" type="video/mp4">
     </video>
 
+    <!-- 1. Left column gradient overlay for light mode high-contrast legibility -->
+    <div class="absolute inset-y-0 left-0 w-full sm:w-[60%] lg:w-[52%] bg-gradient-to-r from-[#F8F6F0] via-[#F8F6F0]/98 via-[#F8F6F0]/92 to-transparent pointer-events-none z-10"></div>
+
+    <!-- 2. Top navigation overlay -->
+    <div class="absolute top-0 left-0 right-0 h-48 sm:h-56 lg:h-64 bg-gradient-to-b from-[#F8F6F0] via-[#F8F6F0]/95 via-[#F8F6F0]/60 to-transparent pointer-events-none z-10"></div>
+
+    <!-- 3. Bottom overlay -->
+    <div class="absolute bottom-0 left-0 right-0 h-48 sm:h-56 lg:h-64 bg-gradient-to-t from-[#F8F6F0] via-[#F8F6F0]/95 via-[#F8F6F0]/60 to-transparent pointer-events-none z-10"></div>
+
   </div>
 
-  <!-- Video Loading Splash Screen -->
-  <div id="train-loading-splash" class="fixed inset-0 z-[100] flex items-center justify-center bg-[#F8F6F0]/95 backdrop-blur-xl transition-opacity duration-700" role="dialog" aria-label="Loading TrackTales">
+  <!-- Video Loading & Login Splash Screen (Bright & Warm Palette) -->
+  <div id="train-loading-splash" class="fixed inset-0 z-[100] flex items-center justify-center bg-[#F8F6F0]/95 backdrop-blur-xl transition-opacity duration-700 p-4" role="dialog" aria-label="TrackTales Passenger Portal">
+    
+    <!-- Background video / overlay (Visually clear moving train in background) -->
     <div class="splash-video-container absolute inset-0 overflow-hidden pointer-events-none">
-      <video id="splash-video" class="w-full h-full object-cover opacity-30 scale-105" autoplay loop muted playsinline>
+      <video id="splash-video" class="w-full h-full object-cover opacity-50 scale-105" autoplay loop muted playsinline>
         <source src="./videos/Steam_locomotive_moving_on_tracks_202608181456.mp4" type="video/mp4">
       </video>
-      <div class="absolute inset-0 bg-[#F8F6F0]/80"></div>
+      <div class="absolute inset-0 bg-[#F8F6F0]/65"></div>
     </div>
 
-    <div class="absolute top-6 right-6 flex items-center gap-3 z-10">
-      <button id="splash-audio-toggle" class="glass-button px-4 py-2 rounded-full text-xs font-mono flex items-center gap-2 text-[#0A0C10] hover:text-[#D99B26]" title="Toggle Sound">
-        <i data-lucide="volume-x" class="w-4 h-4"></i>
-        <span>Sound Off</span>
-      </button>
-      <button id="splash-skip-btn" class="glass-button px-5 py-2 rounded-full text-xs font-mono flex items-center gap-2 text-[#D99B26] border-[#D99B26]/40 hover:bg-[#D99B26] hover:text-white transition-all" title="Enter TrackTales App">
-        <span>Enter App</span>
-        <i data-lucide="arrow-right" class="w-4 h-4"></i>
-      </button>
-    </div>
-
-    <div class="relative z-10 max-w-md w-full mx-4 p-8 rounded-2xl glass-card text-center shadow-2xl border border-black/10">
-      <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-[#D99B26]/15 border border-[#D99B26]/30 flex items-center justify-center text-[#D99B26]">
-        <i data-lucide="train-front" class="w-8 h-8"></i>
-      </div>
-      <h3 class="font-heading font-extrabold text-2xl tracking-wider text-[#0A0C10] mb-2">TRACK<span class="text-[#D99B26]">TALES</span></h3>
-      <p class="text-xs font-mono text-[#111827] font-semibold tracking-widest uppercase mb-6">Preparing Pretoria to Cape Town Rail Companion...</p>
+    <!-- Modern Split Screen Login / Signup Modal (Bright & Warm Palette) -->
+    <div class="relative z-10 max-w-4xl w-full rounded-3xl overflow-hidden shadow-2xl border border-[#EBE5D9] bg-[#FAF8F5] flex flex-col md:flex-row text-[#1C1917] my-auto max-h-[90vh] md:max-h-[85vh]">
       
-      <div class="w-full h-1.5 bg-black/10 rounded-full overflow-hidden mb-3">
-        <div class="h-full bg-[#D99B26] transition-all duration-300 w-0" id="splash-progress-fill"></div>
+      <!-- LEFT PANEL: Auth Forms (Warm Cream White) -->
+      <div class="w-full md:w-1/2 p-8 sm:p-11 flex flex-col justify-between bg-[#FAF8F5] relative overflow-y-auto">
+        
+        <!-- Logo Header with Official TrackTales Logo -->
+        <div class="flex items-center gap-3.5 mb-4">
+          <img src="./images/tracktales-logo.jpg" alt="TrackTales Logo" class="w-12 h-12 rounded-full object-cover shadow-md border-2 border-[#D99B26]">
+          <div class="flex flex-col text-left">
+            <span class="font-heading font-extrabold tracking-wider text-xl text-[#1C1917] leading-none">TRACK<span class="text-[#D99B26]">TALES</span></span>
+            <span class="text-[9px] font-mono text-[#78716C] font-bold tracking-widest uppercase mt-1">REAL ROUTES. EXTRAORDINARY STORIES.</span>
+          </div>
+        </div>
+
+        <!-- Auth Alert Container -->
+        <div id="splash-auth-alert" class="hidden mb-4 p-3 rounded-xl text-xs font-sans border text-center transition-all"></div>
+
+        <!-- SIGN IN FORM SECTION -->
+        <div id="splash-signin-content" class="space-y-5 my-auto">
+          <div>
+            <h2 class="font-sans font-extrabold text-3xl sm:text-4xl text-[#1C1917] tracking-tight mb-1">Welcome</h2>
+            <p class="text-xs text-[#78716C] font-sans">Sign in to access your South Africa rail companion pass.</p>
+          </div>
+
+          <form id="splash-signin-form" class="space-y-4 font-sans text-sm">
+            <div class="relative">
+              <input type="email" id="splash-signin-email" class="w-full bg-transparent border-b border-[#D6CFC7] text-[#1C1917] placeholder-[#A8A29E] py-2 px-1 text-sm focus:outline-none focus:border-[#D99B26] transition-colors" placeholder="Email *" required>
+            </div>
+            
+            <div class="relative">
+              <input type="password" id="splash-signin-password" class="w-full bg-transparent border-b border-[#D6CFC7] text-[#1C1917] placeholder-[#A8A29E] py-2 pl-1 pr-8 text-sm focus:outline-none focus:border-[#D99B26] transition-colors" placeholder="Password *" required>
+              <button type="button" class="btn-toggle-password absolute right-1 top-1/2 -translate-y-1/2 text-[#A8A29E] hover:text-[#1C1917] p-1" title="Toggle password visibility">
+                <i data-lucide="eye" class="w-4 h-4 eye-icon"></i>
+              </button>
+            </div>
+
+            <!-- Saved Registered Passenger Journey Pass Banner (Shown automatically when registered user is recognized) -->
+            <div id="splash-signin-saved-pass-banner" class="hidden p-3 rounded-2xl bg-[#D99B26]/10 border border-[#D99B26]/30 flex items-center justify-between text-xs transition-all">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#D99B26] animate-pulse"></span>
+                <span class="text-[#78716C] font-semibold">Your Registered Journey:</span>
+              </div>
+              <span id="splash-signin-saved-pass-name" class="font-bold text-[#D99B26] font-sans">The Blue Train</span>
+            </div>
+
+            <!-- Manual Train Selection Widget (Shown for new/unrecognized passengers) -->
+            <div id="splash-signin-train-selector-container" class="space-y-1.5 pt-1">
+              <div class="flex items-center justify-between">
+                <label class="block text-[10px] font-mono font-bold uppercase tracking-wider text-[#78716C]">Select Train Journey *</label>
+                <span id="splash-signin-train-label" class="text-[10px] font-mono font-bold text-[#D99B26]">The Blue Train</span>
+              </div>
+              <div class="grid grid-cols-2 gap-2" role="radiogroup" aria-label="Select Train">
+                <!-- Button: The Blue Train -->
+                <button type="button" data-train-choice="blue-train" class="splash-train-choice-btn p-2.5 rounded-xl border-2 text-left transition-all duration-200 flex flex-col justify-between relative group active bg-[#D99B26]/15 border-[#D99B26] shadow-sm">
+                  <div class="flex items-center justify-between w-full mb-1">
+                    <span class="text-xs font-extrabold text-[#1C1917] font-sans">The Blue Train</span>
+                    <span class="train-choice-radio w-3.5 h-3.5 rounded-full border-2 border-[#D99B26] bg-[#D99B26] flex items-center justify-center">
+                      <i data-lucide="check" class="w-2.5 h-2.5 text-white stroke-[3]"></i>
+                    </span>
+                  </div>
+                  <span class="text-[9px] font-mono font-bold text-[#D99B26] tracking-tight uppercase">Ultra Luxury • 31h</span>
+                </button>
+
+                <!-- Button: Rovos Rail -->
+                <button type="button" data-train-choice="rovos-rail" class="splash-train-choice-btn p-2.5 rounded-xl border-2 text-left transition-all duration-200 flex flex-col justify-between relative group border-[#E7E2D8] bg-white/70 hover:border-[#2A9D8F]/60">
+                  <div class="flex items-center justify-between w-full mb-1">
+                    <span class="text-xs font-extrabold text-[#1C1917] font-sans">Rovos Rail</span>
+                    <span class="train-choice-radio w-3.5 h-3.5 rounded-full border-2 border-[#D6CFC7] bg-transparent flex items-center justify-center">
+                      <i data-lucide="check" class="w-2.5 h-2.5 text-white stroke-[3] hidden"></i>
+                    </span>
+                  </div>
+                  <span class="text-[9px] font-mono font-bold text-[#2A9D8F] tracking-tight uppercase">Edwardian Safari • 3d</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between text-xs pt-0.5">
+              <button type="button" id="splash-forgot-pass-btn" class="text-[#D99B26] hover:text-[#C98B1E] transition-colors font-semibold">Forgot Password?</button>
+            </div>
+
+            <button type="submit" id="splash-signin-submit-btn" class="w-full py-3.5 rounded-xl bg-[#D99B26] text-white font-bold uppercase tracking-wider hover:bg-[#C98B1E] transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#D99B26]/20 mt-2">
+              <span id="splash-signin-btn-label">SIGN IN</span>
+            </button>
+
+            <div class="flex items-center gap-2 text-xs text-[#44403C] font-medium">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" id="splash-remember-me" checked class="rounded accent-[#D99B26] w-4 h-4">
+                <span>Remember me</span>
+              </label>
+            </div>
+          </form>
+
+          <div class="pt-3 border-t border-[#EBE5D9] text-xs font-sans text-[#78716C]">
+            Don't have an account yet? <button type="button" id="splash-to-signup-link" class="text-[#D99B26] font-bold hover:underline ml-1">Join here</button>
+          </div>
+        </div>
+
+        <!-- SIGN UP FORM SECTION -->
+        <div id="splash-signup-content" class="hidden space-y-4 my-auto">
+          <div>
+            <h2 class="font-sans font-extrabold text-3xl sm:text-4xl text-[#1C1917] tracking-tight mb-1">Create Account</h2>
+            <p class="text-xs text-[#78716C] font-sans">Register for your TrackTales digital passport.</p>
+          </div>
+
+          <form id="splash-signup-form" class="space-y-3 font-sans text-sm">
+            <div class="relative">
+              <input type="text" id="splash-signup-name" class="w-full bg-transparent border-b border-[#D6CFC7] text-[#1C1917] placeholder-[#A8A29E] py-1.5 px-1 text-sm focus:outline-none focus:border-[#D99B26] transition-colors" placeholder="Full Name *" required>
+            </div>
+
+            <div class="relative">
+              <input type="email" id="splash-signup-email" class="w-full bg-transparent border-b border-[#D6CFC7] text-[#1C1917] placeholder-[#A8A29E] py-1.5 px-1 text-sm focus:outline-none focus:border-[#D99B26] transition-colors" placeholder="Email *" required>
+            </div>
+
+            <div class="relative">
+              <input type="password" id="splash-signup-password" class="w-full bg-transparent border-b border-[#D6CFC7] text-[#1C1917] placeholder-[#A8A29E] py-1.5 px-1 text-sm focus:outline-none focus:border-[#D99B26] transition-colors" placeholder="Password *" required>
+            </div>
+
+            <div class="relative">
+              <input type="password" id="splash-signup-confirm-password" class="w-full bg-transparent border-b border-[#D6CFC7] text-[#1C1917] placeholder-[#A8A29E] py-1.5 px-1 text-sm focus:outline-none focus:border-[#D99B26] transition-colors" placeholder="Confirm Password *" required>
+            </div>
+
+            <!-- Train Selection Widget (2 Trains) in Sign Up -->
+            <div class="space-y-1 pt-1">
+              <div class="flex items-center justify-between">
+                <label class="block text-[10px] font-mono font-bold uppercase tracking-wider text-[#78716C]">Preferred Train *</label>
+                <span id="splash-signup-train-label" class="text-[10px] font-mono font-bold text-[#D99B26]">The Blue Train</span>
+              </div>
+              <div class="grid grid-cols-2 gap-2" role="radiogroup" aria-label="Select Preferred Train">
+                <button type="button" data-train-choice="blue-train" class="splash-train-choice-btn p-2 rounded-xl border-2 text-left transition-all duration-200 flex flex-col justify-between relative group active bg-[#D99B26]/15 border-[#D99B26] shadow-sm">
+                  <div class="flex items-center justify-between w-full mb-0.5">
+                    <span class="text-xs font-extrabold text-[#1C1917] font-sans">The Blue Train</span>
+                    <span class="train-choice-radio w-3.5 h-3.5 rounded-full border-2 border-[#D99B26] bg-[#D99B26] flex items-center justify-center">
+                      <i data-lucide="check" class="w-2.5 h-2.5 text-white stroke-[3]"></i>
+                    </span>
+                  </div>
+                  <span class="text-[9px] font-mono font-bold text-[#D99B26] uppercase">Ultra Luxury</span>
+                </button>
+
+                <button type="button" data-train-choice="rovos-rail" class="splash-train-choice-btn p-2 rounded-xl border-2 text-left transition-all duration-200 flex flex-col justify-between relative group border-[#E7E2D8] bg-white/70 hover:border-[#2A9D8F]/60">
+                  <div class="flex items-center justify-between w-full mb-0.5">
+                    <span class="text-xs font-extrabold text-[#1C1917] font-sans">Rovos Rail</span>
+                    <span class="train-choice-radio w-3.5 h-3.5 rounded-full border-2 border-[#D6CFC7] bg-transparent flex items-center justify-center">
+                      <i data-lucide="check" class="w-2.5 h-2.5 text-white stroke-[3] hidden"></i>
+                    </span>
+                  </div>
+                  <span class="text-[9px] font-mono font-bold text-[#2A9D8F] uppercase">Edwardian Vintage</span>
+                </button>
+              </div>
+            </div>
+
+            <button type="submit" id="splash-signup-submit-btn" class="w-full py-3 rounded-xl bg-[#D99B26] text-white font-bold uppercase tracking-wider hover:bg-[#C98B1E] transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#D99B26]/20 mt-1">
+              <span id="splash-signup-btn-label">CREATE ACCOUNT</span>
+            </button>
+          </form>
+
+          <div class="pt-3 border-t border-[#EBE5D9] text-xs font-sans text-[#78716C]">
+            Already have an account? <button type="button" id="splash-to-signin-link" class="text-[#D99B26] font-bold hover:underline ml-1">Sign in</button>
+          </div>
+        </div>
+
+        <!-- ALREADY LOGGED IN SECTION -->
+        <div id="splash-logged-in-content" class="hidden text-center space-y-4 my-auto">
+          <div class="p-5 rounded-2xl bg-[#D99B26]/10 border border-[#D99B26]/30">
+            <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-[#D99B26] text-white flex items-center justify-center shadow-md">
+              <i data-lucide="user-check" class="w-6 h-6"></i>
+            </div>
+            <div class="font-bold text-lg text-[#1C1917]" id="splash-user-name">Welcome Back, Passenger!</div>
+            <div class="text-xs text-[#78716C] mt-0.5" id="splash-user-email">active@tracktales.co.za</div>
+            <div class="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-mono bg-[#D99B26]/20 text-[#D99B26] font-bold border border-[#D99B26]/40 uppercase tracking-widest">
+              <span class="w-2 h-2 rounded-full bg-[#D99B26] animate-pulse"></span>
+              <span>Passenger Pass Verified</span>
+            </div>
+          </div>
+
+          <!-- Logged in Train Switcher -->
+          <div class="p-3 rounded-2xl bg-white border border-[#EBE5D9] text-left space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-mono font-bold uppercase text-[#78716C]">Current Train Journey:</span>
+              <span id="splash-logged-in-train-badge" class="text-[10px] font-mono font-extrabold bg-[#D99B26] text-white px-2 py-0.5 rounded-full uppercase">The Blue Train</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" data-train-choice="blue-train" class="splash-train-choice-btn py-2 px-2.5 rounded-xl border-2 text-xs font-bold font-sans transition-all flex items-center justify-between active bg-[#D99B26]/15 border-[#D99B26] text-[#1C1917]">
+                <span>The Blue Train</span>
+                <span class="train-choice-radio w-3.5 h-3.5 rounded-full border-2 border-[#D99B26] bg-[#D99B26] flex items-center justify-center">
+                  <i data-lucide="check" class="w-2.5 h-2.5 text-white stroke-[3]"></i>
+                </span>
+              </button>
+              <button type="button" data-train-choice="rovos-rail" class="splash-train-choice-btn py-2 px-2.5 rounded-xl border-2 text-xs font-bold font-sans transition-all flex items-center justify-between border-[#E7E2D8] bg-white/70 text-[#78716C] hover:border-[#2A9D8F]">
+                <span>Rovos Rail</span>
+                <span class="train-choice-radio w-3.5 h-3.5 rounded-full border-2 border-[#D6CFC7] bg-transparent flex items-center justify-center">
+                  <i data-lucide="check" class="w-2.5 h-2.5 text-white stroke-[3] hidden"></i>
+                </span>
+              </button>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <button type="button" id="splash-enter-as-user-btn" class="w-full py-3.5 rounded-xl bg-[#D99B26] text-white font-bold uppercase tracking-wider hover:bg-[#C98B1E] transition-all flex items-center justify-center gap-2 shadow-lg">
+              <span>Proceed to Train Companion</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+            <button type="button" id="splash-signout-btn" class="w-full py-2 rounded-xl border border-[#D6CFC7] text-[#44403C] text-xs font-bold hover:bg-black/5 transition-all flex items-center justify-center gap-2">
+              <i data-lucide="log-out" class="w-3.5 h-3.5 text-red-500"></i>
+              <span>Sign Out / Switch Account</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Footer Accent -->
+        <div class="mt-4 pt-2 text-left text-xs font-sans text-[#A8A29E]">
+          Pretoria to Cape Town Express
+        </div>
+
       </div>
-      <div class="text-[11px] font-mono text-[#111827] font-semibold" id="splash-status-text">Connecting South Africa Rail Corridor...</div>
+
+      <!-- RIGHT PANEL: Live Moving Steam Locomotive Video & Interactive Train Cards -->
+      <div class="w-full md:w-1/2 min-h-[340px] md:min-h-full relative overflow-hidden flex flex-col justify-between p-6 sm:p-8 bg-[#1e2e34]">
+        <video id="card-panel-video" class="absolute inset-0 w-full h-full object-cover scale-105 pointer-events-none" autoplay loop muted playsinline>
+          <source src="./videos/Steam_locomotive_moving_on_tracks_202608181456.mp4" type="video/mp4">
+        </video>
+        
+        <!-- Warm Overlay Gradient for maximum text legibility over moving train -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/50 pointer-events-none"></div>
+        
+        <!-- Top Route Badge -->
+        <div class="relative z-10 flex justify-between items-center">
+          <span class="text-[10px] font-mono tracking-widest text-[#1C1917] uppercase bg-white/95 px-3 py-1 rounded-full backdrop-blur-md border border-[#E7E2D8] font-bold shadow-md">
+            Pretoria to Cape Town (1,600 km)
+          </span>
+        </div>
+
+        <!-- Train Information Interactive Selection Cards -->
+        <div class="relative z-10 space-y-3.5 my-auto py-2">
+          
+          <!-- Mini Block 1: The Blue Train -->
+          <div id="splash-card-blue" data-train-choice="blue-train" class="splash-train-card cursor-pointer p-4 rounded-2xl selected-blue text-[#1C1917] transition-all duration-300 relative group">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="font-sans font-extrabold text-base tracking-wide text-[#1C1917]">The Blue Train</span>
+              <span class="text-[10px] font-mono font-extrabold bg-[#D99B26] text-white px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm">Ultra Luxury Express</span>
+            </div>
+            <p class="text-xs text-[#292524] font-semibold leading-relaxed">
+              31-hour express with 24/7 personal butler service, full marble baths, 5-course gourmet dining & guided Kimberley Big Hole tour.
+            </p>
+          </div>
+
+          <!-- Mini Block 2: Rovos Rail -->
+          <div id="splash-card-rovos" data-train-choice="rovos-rail" class="splash-train-card cursor-pointer p-4 rounded-2xl unselected text-[#1C1917] transition-all duration-300 relative group">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="font-sans font-extrabold text-base tracking-wide text-[#1C1917]">Rovos Rail Safari</span>
+              <span class="text-[10px] font-mono font-extrabold bg-[#2A9D8F] text-white px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm">Edwardian Vintage</span>
+            </div>
+            <p class="text-xs text-[#292524] font-semibold leading-relaxed">
+              3-day nostalgic safari travel in hand-restored 1920s timber suites featuring an open-air observation car & Victorian Matjiesfontein stop.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- Bottom Title Banner -->
+        <div class="relative z-10 text-left border-t border-white/30 pt-3" style="color: #ffffff !important;">
+          <h4 class="font-sans font-extrabold text-xl tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]" style="color: #ffffff !important;">The Great Karoo Corridor</h4>
+          <p class="text-xs font-semibold drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]" style="color: #ffffff !important;">Experience South Africa's 2 flagship luxury train lines.</p>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <!-- 4. Layout & Content Structure: Navigation Bar (Light Mode) -->
+  <!-- 4. Layout & Content Structure: Navigation Bar with Navigation Panel -->
   <header class="w-full fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300">
     <div class="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16 h-20 sm:h-24 flex items-center justify-between">
       
-      <!-- Left Logo -->
-      <a href="#home" class="flex items-center gap-3.5 group nav-page-link" data-page="home" id="nav-logo-link">
-        <div class="relative flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#D99B26]/15 border border-[#D99B26]/40 text-[#D99B26] group-hover:border-[#D99B26] transition-colors shadow-[0_0_15px_rgba(217,155,38,0.2)]">
-          <i data-lucide="train-front" class="w-5 h-5 text-[#D99B26]"></i>
+      <div class="flex items-center gap-3 sm:gap-4">
+        <!-- Three-line Navigation Trigger on the Left -->
+        <button id="btn-open-nav-panel" class="nav-hub-trigger glass-button p-2.5 rounded-xl text-[#0A0C10] hover:border-[#D99B26] hover:bg-[#D99B26]/10 transition-all flex items-center gap-2 shadow-md bg-white/95 border border-black/15 cursor-pointer group" title="Open Corridor Navigation" aria-label="Open Corridor Navigation" aria-haspopup="true" aria-expanded="false">
+          <i data-lucide="menu" id="nav-panel-menu-icon" class="w-5 h-5 text-[#D99B26] group-hover:scale-110 transition-transform"></i>
+          <span class="hidden sm:inline text-[10px] font-mono font-bold uppercase tracking-wider">Navigate</span>
+          <span id="nav-panel-active-title" class="sr-only">The Route</span>
+          <i data-lucide="chevron-down" id="nav-panel-chevron" class="w-3 h-3 text-[#78716C]"></i>
+        </button>
+
+        <!-- Left Logo with Official TrackTales Badge -->
+        <a href="#home" class="flex items-center gap-3.5 group nav-page-link" data-page="home" id="nav-logo-link">
+        <div class="relative flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-full border-2 border-[#D99B26] overflow-hidden shadow-[0_0_15px_rgba(217,155,38,0.3)] group-hover:scale-105 transition-transform">
+          <img src="./images/tracktales-logo.jpg" alt="TrackTales Logo" class="w-full h-full object-cover">
           <span class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-[#D99B26] animate-pulse"></span>
         </div>
         <div class="flex flex-col text-left">
           <span class="font-heading font-extrabold tracking-wider text-xl sm:text-2xl text-[#0A0C10] leading-none">TRACK<span class="text-[#D99B26]">TALES</span></span>
-          <span class="text-[9px] font-bold tracking-[0.25em] text-[#111827] uppercase mt-1">PRETORIA TO CAPE TOWN</span>
+          <span class="text-[9px] font-bold tracking-[0.22em] text-[#111827] uppercase mt-1">PRETORIA TO CAPE TOWN</span>
         </div>
-      </a>
+        </a>
+      </div>
 
-      <!-- Right Action CTA & Cinematic Hamburger Railway Control -->
-      <div class="flex items-center gap-3 sm:gap-4">
-        <button id="btn-open-login" class="glass-button px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs font-mono text-[#0A0C10] hover:border-[#D99B26]/50 transition-all flex items-center gap-2" title="Passenger Portal Sign In / Account">
+      <!-- Right Action CTA Toolbar -->
+      <div class="flex items-center gap-1.5 sm:gap-2">
+        
+        <!-- Live GPS Corridor Tracker Button -->
+        <button id="btn-open-gps" class="glass-button px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-mono text-[#0A0C10] hover:border-[#2E7D46] hover:bg-[#2E7D46]/10 transition-all flex items-center gap-1.5 shadow-sm cursor-pointer" title="Live GPS Corridor Tracker & Landmark Proximity">
+          <i data-lucide="navigation" id="nav-gps-icon" class="w-3.5 h-3.5 text-[#2E7D46]"></i>
+          <span id="nav-gps-label" class="font-bold hidden xl:inline text-[11px]">GPS: Off</span>
+        </button>
+
+        <!-- Multi-Language Switcher (SA Official Languages) -->
+        <div class="relative inline-flex items-center">
+          <select id="lang-select" class="glass-button px-2 sm:px-2.5 py-1.5 sm:py-2 rounded-full text-[11px] font-mono font-bold text-[#0A0C10] bg-white/90 border border-black/15 focus:outline-none focus:border-[#D99B26] cursor-pointer appearance-none pr-6" title="Switch South African Language">
+            <option value="en">EN</option>
+            <option value="zu">ZU · isiZulu</option>
+            <option value="xh">XH · isiXhosa</option>
+            <option value="af">AF · Afrikaans</option>
+            <option value="st">ST · Sesotho</option>
+            <option value="tn">TN · Setswana</option>
+            <option value="nso">NSO · Sepedi</option>
+            <option value="ts">TS · Xitsonga</option>
+            <option value="ss">SS · siSwati</option>
+            <option value="ve">VE · Tshivenda</option>
+            <option value="nr">NR · isiNdebele</option>
+          </select>
+          <i data-lucide="chevron-down" class="w-3 h-3 text-[#78716C] absolute right-2 pointer-events-none"></i>
+        </div>
+
+        <!-- Accessibility Suite for Blind & Low Vision Passengers -->
+        <button id="btn-open-accessibility" class="glass-button p-2 sm:px-2.5 sm:py-2 rounded-full text-xs font-mono text-[#0A0C10] hover:border-[#4A52B0] hover:bg-[#4A52B0]/10 transition-all flex items-center gap-1 shadow-sm cursor-pointer" title="Accessibility Mode, Screen Reader Audio, & High Contrast">
+          <i data-lucide="eye" class="w-3.5 h-3.5 text-[#4A52B0]"></i>
+          <span class="font-bold hidden xl:inline text-[11px]">Access</span>
+        </button>
+
+        <!-- Emergency Hotline SOS Button -->
+        <button id="btn-open-sos" class="glass-button px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-mono text-red-600 bg-red-500/10 border-red-500/30 hover:bg-red-500/20 hover:border-red-500 transition-all flex items-center gap-1.5 shadow-sm font-bold animate-pulse cursor-pointer" title="Railway Police & Emergency Hotlines">
+          <i data-lucide="phone-call" class="w-3.5 h-3.5 text-red-600"></i>
+          <span class="hidden sm:inline text-[11px]">SOS</span>
+        </button>
+
+        <!-- Active Train Indicator Badge -->
+        <div id="nav-train-badge" class="glass-button px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-mono text-[#0A0C10] flex items-center gap-1.5 shadow-sm border-[#D99B26]/40 bg-[#D99B26]/10 hidden md:flex" title="Selected Passenger Train">
+          <i data-lucide="train" class="w-3.5 h-3.5 text-[#D99B26]"></i>
+          <span id="nav-train-label" class="font-bold text-[11px]">The Blue Train</span>
+        </div>
+
+        <!-- Subscription Pass Badge / Manager -->
+        <button id="btn-open-subscriptions" class="glass-button px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-mono text-[#0A0C10] hover:border-[#D99B26] hover:bg-[#D99B26]/10 transition-all flex items-center gap-1.5 shadow-sm cursor-pointer" title="View / Change Subscription Pass">
+          <i data-lucide="crown" class="w-3.5 h-3.5 text-[#D99B26]"></i>
+          <span id="nav-subscription-label" class="font-bold text-[11px]">Pass: Free</span>
+        </button>
+
+        <button id="btn-open-login" class="glass-button px-3 sm:px-4 py-2 rounded-full text-xs font-mono text-[#0A0C10] hover:border-[#D99B26]/50 transition-all flex items-center gap-2 cursor-pointer" title="Passenger Portal Sign In / Account">
           <i data-lucide="user-check" class="w-4 h-4 text-[#D99B26]"></i>
           <span id="desktop-login-label">Sign In</span>
         </button>
 
-        <!-- Cinematic Railway Hamburger Button (Smoothly transforms into X) -->
-        <button id="railway-menu-toggle" class="railway-menu-btn relative flex items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#F8F6F0]/90 hover:bg-white border border-black/15 hover:border-[#D99B26]/60 transition-all duration-300 shadow-sm group focus:outline-none focus:ring-2 focus:ring-[#D99B26]/40" aria-label="Open Railway Navigation" aria-expanded="false" aria-controls="railway-menu-panel">
-          <div class="hamburger-icon-wrapper flex flex-col justify-center items-center w-5 h-4 relative">
-            <span class="hamburger-line line-top"></span>
-            <span class="hamburger-line line-mid"></span>
-            <span class="hamburger-line line-bot"></span>
-          </div>
+        <!-- Mobile Drawer Toggle -->
+        <button class="md:hidden glass-button p-2.5 rounded-full text-[#0A0C10] hover:text-[#D99B26] transition-colors cursor-pointer" id="mobile-toggle-btn" aria-label="Toggle Navigation Menu">
+          <i data-lucide="menu" id="mobileMenuIcon" class="w-5 h-5"></i>
         </button>
       </div>
+    </div>
 
+    <!-- CORRIDOR NAVIGATION HUB PANEL (DROPDOWN MODAL PANEL) -->
+    <div id="navigationHubPanel" class="hidden absolute top-full left-0 right-0 z-50 max-w-5xl mx-auto px-4 pt-3 pb-6 transition-all duration-300">
+      <div class="glass-card bg-[#FAF8F5]/98 backdrop-blur-2xl border-2 border-[#D99B26]/30 rounded-3xl p-6 sm:p-8 shadow-2xl text-left text-[#0A0C10]">
+        
+        <!-- Panel Header -->
+        <div class="flex items-center justify-between pb-4 border-b border-black/10 mb-6">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-[#D99B26]/15 border border-[#D99B26]/30 flex items-center justify-center text-[#D99B26]">
+              <i data-lucide="compass" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-[#B87C10] block">CORRIDOR COMPANION</span>
+              <h3 class="font-heading font-extrabold text-xl sm:text-2xl text-[#0A0C10]">Navigation Hub Panel</h3>
+            </div>
+          </div>
+          
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono text-[#78716C] font-semibold hidden sm:inline">1,600 km Pretoria to Cape Town</span>
+            <button id="nav-hub-close-btn" class="glass-button p-2 rounded-full text-[#78716C] hover:text-[#0A0C10] cursor-pointer" title="Close Navigation Panel">
+              <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="nav-hub-layout mb-6">
+          <!-- Compact icon rail -->
+          <nav class="nav-hub-icon-rail" aria-label="Quick navigation">
+            <a href="#home" class="nav-hub-rail-link nav-page-link active" data-page="home" title="The Route" aria-label="The Route"><i data-lucide="compass" class="w-4 h-4"></i></a>
+            <a href="#stops" class="nav-hub-rail-link nav-page-link" data-page="stops" title="Corridor Stops" aria-label="Corridor Stops"><i data-lucide="map-pin" class="w-4 h-4"></i></a>
+            <a href="#about" class="nav-hub-rail-link nav-page-link" data-page="about" title="Stories and Vault" aria-label="Stories and Vault"><i data-lucide="book-open" class="w-4 h-4"></i></a>
+            <a href="#trains" class="nav-hub-rail-link nav-page-link" data-page="trains" title="Flagship Modes" aria-label="Flagship Modes"><i data-lucide="train" class="w-4 h-4"></i></a>
+            <a href="#games" class="nav-hub-rail-link nav-page-link" data-page="games" title="Corridor Games" aria-label="Corridor Games"><i data-lucide="gamepad-2" class="w-4 h-4"></i></a>
+            <a href="#voice" class="nav-hub-rail-link nav-page-link" data-page="voice" title="Voice Journal" aria-label="Voice Journal"><i data-lucide="mic" class="w-4 h-4"></i></a>
+          </nav>
+
+        <!-- 6 Navigation Cards Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5" id="nav-hub-items-grid">
+          
+          <!-- 1. The Route -->
+          <a href="#home" class="nav-hub-card nav-page-link p-4 rounded-2xl border-2 border-black/10 bg-white hover:border-[#D99B26] hover:bg-[#FFF9EE] transition-all flex items-start gap-3.5 group cursor-pointer active" data-page="home">
+            <div class="w-10 h-10 rounded-xl bg-[#D99B26]/15 border border-[#D99B26]/30 flex items-center justify-center text-[#D99B26] group-hover:scale-110 transition-transform shrink-0">
+              <i data-lucide="compass" class="w-5 h-5"></i>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h4 class="font-heading font-bold text-sm text-[#0A0C10] group-hover:text-[#B87C10]">The Route</h4>
+                <span class="text-[9px] font-mono uppercase font-bold text-[#D99B26] px-1.5 py-0.5 rounded bg-[#D99B26]/10">0-1600km</span>
+              </div>
+              <p class="text-xs text-[#78716C] font-sans mt-0.5 leading-snug">Cinematic corridor overview &amp; live interactive route.</p>
+            </div>
+          </a>
+
+          <!-- 2. Corridor Stops -->
+          <a href="#stops" class="nav-hub-card nav-page-link p-4 rounded-2xl border-2 border-black/10 bg-white hover:border-[#2E7D46] hover:bg-[#F2F9F4] transition-all flex items-start gap-3.5 group cursor-pointer" data-page="stops">
+            <div class="w-10 h-10 rounded-xl bg-[#2E7D46]/15 border border-[#2E7D46]/30 flex items-center justify-center text-[#2E7D46] group-hover:scale-110 transition-transform shrink-0">
+              <i data-lucide="map-pin" class="w-5 h-5"></i>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h4 class="font-heading font-bold text-sm text-[#0A0C10] group-hover:text-[#2E7D46]">Corridor Stops</h4>
+                <span class="text-[9px] font-mono uppercase font-bold text-[#2E7D46] px-1.5 py-0.5 rounded bg-[#2E7D46]/10">8 Stops</span>
+              </div>
+              <p class="text-xs text-[#78716C] font-sans mt-0.5 leading-snug">Living stations, mountain passes &amp; Karoo desert junctions.</p>
+            </div>
+          </a>
+
+          <!-- 3. Heritage Stories -->
+          <a href="#about" class="nav-hub-card nav-page-link p-4 rounded-2xl border-2 border-black/10 bg-white hover:border-[#4A52B0] hover:bg-[#F4F5FB] transition-all flex items-start gap-3.5 group cursor-pointer" data-page="about">
+            <div class="w-10 h-10 rounded-xl bg-[#4A52B0]/15 border border-[#4A52B0]/30 flex items-center justify-center text-[#4A52B0] group-hover:scale-110 transition-transform shrink-0">
+              <i data-lucide="book-open" class="w-5 h-5"></i>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h4 class="font-heading font-bold text-sm text-[#0A0C10] group-hover:text-[#4A52B0]">Stories &amp; Vault</h4>
+                <span class="text-[9px] font-mono uppercase font-bold text-[#4A52B0] px-1.5 py-0.5 rounded bg-[#4A52B0]/10">Archives</span>
+              </div>
+              <p class="text-xs text-[#78716C] font-sans mt-0.5 leading-snug">Historic archives, secret dossiers &amp; audio narrations.</p>
+            </div>
+          </a>
+
+          <!-- 4. Flagship Trains -->
+          <a href="#trains" class="nav-hub-card nav-page-link p-4 rounded-2xl border-2 border-black/10 bg-white hover:border-[#D99B26] hover:bg-[#FFF9EE] transition-all flex items-start gap-3.5 group cursor-pointer" data-page="trains">
+            <div class="w-10 h-10 rounded-xl bg-[#005691]/15 border border-[#005691]/30 flex items-center justify-center text-[#005691] group-hover:scale-110 transition-transform shrink-0">
+              <i data-lucide="train" class="w-5 h-5"></i>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h4 class="font-heading font-bold text-sm text-[#0A0C10] group-hover:text-[#005691]">Flagship Modes</h4>
+                <span class="text-[9px] font-mono uppercase font-bold text-[#005691] px-1.5 py-0.5 rounded bg-[#005691]/10">Luxury</span>
+              </div>
+              <p class="text-xs text-[#78716C] font-sans mt-0.5 leading-snug">The Blue Train &amp; Rovos Rail specifications &amp; dining.</p>
+            </div>
+          </a>
+
+          <!-- 5. Games & Bingo -->
+          <a href="#games" class="nav-hub-card nav-page-link p-4 rounded-2xl border-2 border-black/10 bg-white hover:border-[#C85028] hover:bg-[#FCF5F3] transition-all flex items-start gap-3.5 group cursor-pointer" data-page="games">
+            <div class="w-10 h-10 rounded-xl bg-[#C85028]/15 border border-[#C85028]/30 flex items-center justify-center text-[#C85028] group-hover:scale-110 transition-transform shrink-0">
+              <i data-lucide="gamepad-2" class="w-5 h-5"></i>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h4 class="font-heading font-bold text-sm text-[#0A0C10] group-hover:text-[#C85028]">Corridor Games</h4>
+                <span class="text-[9px] font-mono uppercase font-bold text-[#C85028] px-1.5 py-0.5 rounded bg-[#C85028]/10">3 Modes</span>
+              </div>
+              <p class="text-xs text-[#78716C] font-sans mt-0.5 leading-snug">Stop quizzes, Mzansi Rail Bingo &amp; build next stop puzzle.</p>
+            </div>
+          </a>
+
+          <!-- 6. Voice Journal -->
+          <a href="#voice" class="nav-hub-card nav-page-link p-4 rounded-2xl border-2 border-black/10 bg-white hover:border-[#D99B26] hover:bg-[#FFF9EE] transition-all flex items-start gap-3.5 group cursor-pointer" data-page="voice">
+            <div class="w-10 h-10 rounded-xl bg-[#D99B26]/15 border border-[#D99B26]/30 flex items-center justify-center text-[#D99B26] group-hover:scale-110 transition-transform shrink-0">
+              <i data-lucide="mic" class="w-5 h-5"></i>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h4 class="font-heading font-bold text-sm text-[#0A0C10] group-hover:text-[#B87C10]">Voice Journal</h4>
+                <span class="text-[9px] font-mono uppercase font-bold text-[#D99B26] px-1.5 py-0.5 rounded bg-[#D99B26]/10">Audio Log</span>
+              </div>
+              <p class="text-xs text-[#78716C] font-sans mt-0.5 leading-snug">Real-time speech-to-text dictation &amp; passenger diary.</p>
+            </div>
+          </a>
+
+        </div>
+        </div>
+
+        <!-- Bottom Panel Quick Toolbar -->
+        <div class="pt-4 border-t border-black/10 flex flex-wrap items-center justify-between gap-3 font-mono text-xs text-[#78716C]">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-[#2E7D46] animate-pulse"></span>
+            <span class="text-[11px] font-bold text-[#0A0C10]">Active Express: <span id="nav-hub-selected-train">The Blue Train</span></span>
+          </div>
+          <div class="text-[11px] font-semibold">
+            Tap any destination card to navigate
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Panel Backdrop for outside clicks -->
+    <div id="navHubBackdrop" class="hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-sm transition-opacity"></div>
+    <div id="mobileMenu" class="hidden md:hidden absolute top-full left-0 right-0 glass-card bg-[#F8F6F0]/98 border-t border-b border-black/10 px-6 py-6 transition-all duration-300">
+      <div class="flex flex-col gap-3.5 font-mono text-xs tracking-widest uppercase">
+        <a href="#home" class="nav-page-link py-3 px-4 rounded-lg bg-black/5 hover:bg-[#D99B26]/20 text-[#0A0C10] flex items-center gap-3 font-semibold" data-page="home">
+          <i data-lucide="compass" class="w-4 h-4 text-[#D99B26]"></i> The Route
+        </a>
+        <a href="#stops" class="nav-page-link py-3 px-4 rounded-lg bg-black/5 hover:bg-[#D99B26]/20 text-[#0A0C10] flex items-center gap-3 font-semibold" data-page="stops">
+          <i data-lucide="map-pin" class="w-4 h-4 text-[#D99B26]"></i> Corridor Stops
+        </a>
+        <a href="#about" class="nav-page-link py-3 px-4 rounded-lg bg-black/5 hover:bg-[#D99B26]/20 text-[#0A0C10] flex items-center gap-3 font-semibold" data-page="about">
+          <i data-lucide="book-open" class="w-4 h-4 text-[#D99B26]"></i> Stories
+        </a>
+        <a href="#trains" class="nav-page-link py-3 px-4 rounded-lg bg-black/5 hover:bg-[#D99B26]/20 text-[#0A0C10] flex items-center gap-3 font-semibold" data-page="trains">
+          <i data-lucide="train" class="w-4 h-4 text-[#D99B26]"></i> Modes
+        </a>
+        <a href="#games" class="nav-page-link py-3 px-4 rounded-lg bg-black/5 hover:bg-[#D99B26]/20 text-[#0A0C10] flex items-center gap-3 font-semibold" data-page="games">
+          <i data-lucide="gamepad-2" class="w-4 h-4 text-[#D99B26]"></i> Games &amp; Bingo
+        </a>
+        <a href="#voice" class="nav-page-link py-3 px-4 rounded-lg bg-black/5 hover:bg-[#D99B26]/20 text-[#0A0C10] flex items-center gap-3 font-semibold" data-page="voice">
+          <i data-lucide="mic" class="w-4 h-4 text-[#D99B26]"></i> Voice Log
+        </a>
+
+        <!-- Mobile Quick Tools Strip -->
+        <div class="grid grid-cols-2 gap-2 pt-2 border-t border-black/10">
+          <button id="mobile-gps-btn" class="py-2.5 px-3 rounded-lg bg-[#2E7D46]/15 border border-[#2E7D46]/30 text-[#0A0C10] flex items-center justify-center gap-2 font-bold text-[11px]">
+            <i data-lucide="navigation" class="w-3.5 h-3.5 text-[#2E7D46]"></i> Live GPS
+          </button>
+          <button id="mobile-accessibility-btn" class="py-2.5 px-3 rounded-lg bg-[#4A52B0]/15 border border-[#4A52B0]/30 text-[#0A0C10] flex items-center justify-center gap-2 font-bold text-[11px]">
+            <i data-lucide="eye" class="w-3.5 h-3.5 text-[#4A52B0]"></i> Blind Mode
+          </button>
+        </div>
+
+        <button id="mobile-sos-btn" class="py-2.5 px-3 rounded-lg bg-red-500/15 border border-red-500/30 text-red-700 flex items-center justify-center gap-2 font-bold text-[11px] animate-pulse">
+          <i data-lucide="phone-call" class="w-3.5 h-3.5 text-red-600"></i> Emergency SOS Hotlines
+        </button>
+
+        <div id="mobile-train-badge" class="py-3 px-4 rounded-lg bg-[#D99B26]/10 border border-[#D99B26]/30 text-[#0A0C10] flex items-center justify-between font-semibold">
+          <span class="flex items-center gap-3"><i data-lucide="train" class="w-4 h-4 text-[#D99B26]"></i> Active Train</span>
+          <span id="mobile-train-label" class="text-[10px] font-bold text-[#D99B26] uppercase">The Blue Train</span>
+        </div>
+        <button id="mobile-subscriptions-btn" class="py-3 px-4 rounded-lg bg-[#D99B26]/10 border border-[#D99B26]/30 text-[#0A0C10] flex items-center justify-between font-semibold cursor-pointer">
+          <span class="flex items-center gap-3"><i data-lucide="crown" class="w-4 h-4 text-[#D99B26]"></i> Pass Tier</span>
+          <span id="mobile-subscription-label" class="text-[10px] font-bold text-[#D99B26] uppercase">Free Journey</span>
+        </button>
+        <button id="mobile-drawer-login-btn" class="py-3 px-4 rounded-lg bg-[#D99B26] text-white flex items-center justify-center gap-2 font-bold cursor-pointer">
+          <i data-lucide="user-check" class="w-4 h-4"></i> Sign In / Account
+        </button>
+      </div>
     </div>
   </header>
-
-  <!-- CINEMATIC RAILWAY FLOATING FOLIO NAVIGATION -->
-  <div id="railway-menu-backdrop" class="fixed inset-0 bg-black/20 backdrop-blur-[2px] z-40" aria-hidden="true"></div>
-
-  <div id="railway-menu-panel" class="railway-menu-panel fixed top-24 right-4 sm:right-8 lg:right-16 w-[calc(100vw-2rem)] sm:w-[360px] bg-[#F8F6F0] z-50 rounded-2xl shadow-2xl border border-black/15 p-6 flex flex-col justify-between" role="dialog" aria-modal="true" aria-label="Railway Journey Navigation">
-    
-    <!-- Mini Header -->
-    <div class="flex items-center justify-between pb-4 border-b border-black/10">
-      <div class="flex items-center gap-2.5">
-        <span class="w-2 h-2 rounded-full bg-[#D99B26] animate-pulse"></span>
-        <span class="font-mono text-[10px] font-bold tracking-[0.2em] text-[#0A0C10] uppercase">CORRIDOR STATIONS</span>
-      </div>
-      <span class="font-mono text-[9px] text-[#B87C10] font-semibold tracking-widest uppercase">PRETORIA ➔ CT</span>
-    </div>
-
-    <!-- Main Railway Navigation Timeline with Route Line & Station Markers -->
-    <div class="py-5 relative">
-      
-      <!-- Animated Golden Railway Track Line -->
-      <div class="railway-track-spine absolute left-[11px] top-6 bottom-6 w-[2px]">
-        <div class="railway-track-progress absolute inset-0 w-full bg-gradient-to-b from-[#D99B26] via-[#C5A059] to-[#D99B26]"></div>
-      </div>
-
-      <nav class="flex flex-col gap-3.5" id="railway-nav-list">
-        
-        <!-- Station 01: The Route (Arrives from above-right with slight downward tilt) -->
-        <a href="#home" class="railway-nav-item station-01 nav-page-link group relative flex items-center justify-between pl-8 py-1.5 active" data-page="home">
-          <div class="railway-station-node absolute left-0 top-1/2 -translate-y-1/2 w-[24px] h-[24px] flex items-center justify-center">
-            <span class="station-dot w-2.5 h-2.5 rounded-full bg-[#F8F6F0] border-2 border-black/30 group-hover:border-[#D99B26] group-hover:bg-[#D99B26] transition-all duration-300"></span>
-          </div>
-          <div class="flex items-baseline gap-3">
-            <span class="font-mono text-[11px] font-bold text-[#9CA3AF] group-hover:text-[#D99B26] transition-colors">01</span>
-            <div class="flex flex-col text-left">
-              <span class="font-serif font-black text-lg text-[#0A0C10] group-hover:text-[#D99B26] group-hover:translate-x-1.5 transition-all duration-300 leading-tight">THE ROUTE</span>
-              <span class="font-sans text-[10px] text-[#6B7280] font-medium">Pretoria to Cape Town Corridor</span>
-            </div>
-          </div>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-[#D99B26] opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"></i>
-        </a>
-
-        <!-- Station 02: Corridor Stops (Arrives directly from far-right with slight upward angle) -->
-        <a href="#stops" class="railway-nav-item station-02 nav-page-link group relative flex items-center justify-between pl-8 py-1.5" data-page="stops">
-          <div class="railway-station-node absolute left-0 top-1/2 -translate-y-1/2 w-[24px] h-[24px] flex items-center justify-center">
-            <span class="station-dot w-2.5 h-2.5 rounded-full bg-[#F8F6F0] border-2 border-black/30 group-hover:border-[#D99B26] group-hover:bg-[#D99B26] transition-all duration-300"></span>
-          </div>
-          <div class="flex items-baseline gap-3">
-            <span class="font-mono text-[11px] font-bold text-[#9CA3AF] group-hover:text-[#D99B26] transition-colors">02</span>
-            <div class="flex flex-col text-left">
-              <span class="font-serif font-black text-lg text-[#0A0C10] group-hover:text-[#D99B26] group-hover:translate-x-1.5 transition-all duration-300 leading-tight">CORRIDOR STOPS</span>
-              <span class="font-sans text-[10px] text-[#6B7280] font-medium">Scheduled Halts & Passes</span>
-            </div>
-          </div>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-[#D99B26] opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"></i>
-        </a>
-
-        <!-- Station 03: Stories (Arrives sweeping from deep-right with negative tilt) -->
-        <a href="#about" class="railway-nav-item station-03 nav-page-link group relative flex items-center justify-between pl-8 py-1.5" data-page="about">
-          <div class="railway-station-node absolute left-0 top-1/2 -translate-y-1/2 w-[24px] h-[24px] flex items-center justify-center">
-            <span class="station-dot w-2.5 h-2.5 rounded-full bg-[#F8F6F0] border-2 border-black/30 group-hover:border-[#D99B26] group-hover:bg-[#D99B26] transition-all duration-300"></span>
-          </div>
-          <div class="flex items-baseline gap-3">
-            <span class="font-mono text-[11px] font-bold text-[#9CA3AF] group-hover:text-[#D99B26] transition-colors">03</span>
-            <div class="flex flex-col text-left">
-              <span class="font-serif font-black text-lg text-[#0A0C10] group-hover:text-[#D99B26] group-hover:translate-x-1.5 transition-all duration-300 leading-tight">STORIES</span>
-              <span class="font-sans text-[10px] text-[#6B7280] font-medium">Karoo Diamonds & Heritage</span>
-            </div>
-          </div>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-[#D99B26] opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"></i>
-        </a>
-
-        <!-- Station 04: Modes (Arrives from lower-right swinging into place) -->
-        <a href="#trains" class="railway-nav-item station-04 nav-page-link group relative flex items-center justify-between pl-8 py-1.5" data-page="trains">
-          <div class="railway-station-node absolute left-0 top-1/2 -translate-y-1/2 w-[24px] h-[24px] flex items-center justify-center">
-            <span class="station-dot w-2.5 h-2.5 rounded-full bg-[#F8F6F0] border-2 border-black/30 group-hover:border-[#D99B26] group-hover:bg-[#D99B26] transition-all duration-300"></span>
-          </div>
-          <div class="flex items-baseline gap-3">
-            <span class="font-mono text-[11px] font-bold text-[#9CA3AF] group-hover:text-[#D99B26] transition-colors">04</span>
-            <div class="flex flex-col text-left">
-              <span class="font-serif font-black text-lg text-[#0A0C10] group-hover:text-[#D99B26] group-hover:translate-x-1.5 transition-all duration-300 leading-tight">MODES</span>
-              <span class="font-sans text-[10px] text-[#6B7280] font-medium">The Blue Train & Rovos Rail</span>
-            </div>
-          </div>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-[#D99B26] opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"></i>
-        </a>
-
-        <!-- Station 05: Games (Arrives from below-right smoothly leveling out) -->
-        <a href="#games" class="railway-nav-item station-05 nav-page-link group relative flex items-center justify-between pl-8 py-1.5" data-page="games">
-          <div class="railway-station-node absolute left-0 top-1/2 -translate-y-1/2 w-[24px] h-[24px] flex items-center justify-center">
-            <span class="station-dot w-2.5 h-2.5 rounded-full bg-[#F8F6F0] border-2 border-black/30 group-hover:border-[#D99B26] group-hover:bg-[#D99B26] transition-all duration-300"></span>
-          </div>
-          <div class="flex items-baseline gap-3">
-            <span class="font-mono text-[11px] font-bold text-[#9CA3AF] group-hover:text-[#D99B26] transition-colors">05</span>
-            <div class="flex flex-col text-left">
-              <span class="font-serif font-black text-lg text-[#0A0C10] group-hover:text-[#D99B26] group-hover:translate-x-1.5 transition-all duration-300 leading-tight">GAMES</span>
-              <span class="font-sans text-[10px] text-[#6B7280] font-medium">Sight Solver Corridor Puzzles</span>
-            </div>
-          </div>
-          <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-[#D99B26] opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"></i>
-        </a>
-
-      </nav>
-    </div>
-
-    <!-- Mini Footer -->
-    <div class="pt-3 border-t border-black/10 flex items-center justify-between font-mono text-[9px] text-[#6B7280]">
-      <span>1,600 KM MAIN LINE</span>
-      <span class="text-[#D99B26] font-bold">SOUTH AFRICA</span>
-    </div>
-
-  </div>
 
   <!-- 4. Hero Main Section (<main>) -->
   <main id="main-content" class="relative z-10 flex-1 flex flex-col justify-between min-h-screen">
@@ -366,7 +758,7 @@
             <!-- Category Tag -->
             <div class="inline-flex items-center gap-2 mb-6 font-mono text-xs uppercase font-bold tracking-widest text-[#B87C10]">
               <span class="w-2.5 h-2.5 rounded-full bg-[#B87C10] animate-pulse"></span>
-              <span>PRETORIA TO CAPE TOWN CORRIDOR</span>
+              <span id="hero-category-tag">PRETORIA TO CAPE TOWN CORRIDOR · THE BLUE TRAIN</span>
             </div>
 
             <!-- Display Headline: Watch The Journey Unfold -->
@@ -378,13 +770,15 @@
             </span>
 
             <!-- Dark, Highly Readable Paragraph Copy -->
-            <p class="text-[#111827] font-medium max-w-md leading-relaxed mb-8 text-base sm:text-lg font-sans">
+            <p id="hero-train-description" class="text-[#111827] font-medium max-w-md leading-relaxed mb-8 text-base sm:text-lg font-sans">
               A luxury rail ticket for this route can cost tens of thousands of Rand. TrackTales traces the same line a spectrum that runs from the Highveld to the Atlantic.
             </p>
 
             <!-- Proof/Stat Stack Inline (Crisp Dark Text) -->
-            <div class="flex flex-wrap items-center gap-3 pt-4 border-t border-black/20 font-mono text-xs text-[#111827] font-semibold">
-              <span class="flex items-center gap-2"><i data-lucide="route" class="w-3.5 h-3.5 text-[#B87C10]"></i> 1,550 km</span>
+            <div id="hero-train-stats" class="flex flex-wrap items-center gap-3 pt-4 border-t border-black/20 font-mono text-xs text-[#111827] font-semibold">
+              <span class="flex items-center gap-2"><i data-lucide="route" class="w-3.5 h-3.5 text-[#B87C10]"></i> 1,600 km</span>
+              <span class="flex items-center gap-2"><i data-lucide="clock" class="w-3.5 h-3.5 text-[#B87C10]"></i> 31 Hours Express</span>
+              <span class="flex items-center gap-2"><i data-lucide="zap" class="w-3.5 h-3.5 text-[#B87C10]"></i> 90 km/h</span>
             </div>
 
           </div>
@@ -398,12 +792,19 @@
       </div>
 
       <!-- 5. Footer Controls Bar -->
-      <footer class="w-full max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16 py-6 flex items-center justify-center border-t border-black/15 relative z-10 font-mono text-xs text-[#111827] font-semibold">
+      <footer class="w-full max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-black/15 relative z-10 font-mono text-xs text-[#111827] font-semibold">
         
-        <!-- Center: Animated Scroll Indicator -->
-        <div class="flex items-center gap-2 uppercase tracking-[0.25em] text-[10px] text-[#0A0C10] animate-pulse-slow font-bold">
-          <i data-lucide="chevron-down" class="w-4 h-4 text-[#D99B26] animate-bounce-slow"></i>
-          <span>SCROLL TO EXPLORE</span>
+        <!-- Left: Route Coordinates -->
+        <div class="flex items-center gap-2 uppercase tracking-widest text-[10px] text-[#78716C] font-semibold">
+          <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#D99B26]"></i>
+          <span>25°44'S 28°11'E to 33°55'S 18°25'E</span>
+        </div>
+
+
+        <!-- Right: System Tag -->
+        <div class="flex items-center gap-2 uppercase tracking-widest text-[10px] text-[#111827] font-semibold">
+          <span class="w-2 h-2 rounded-full bg-[#2E7D46] animate-pulse"></span>
+          <span>TRACKTALES · THE RAIL RUNNERS</span>
         </div>
 
       </footer>
@@ -423,14 +824,6 @@
           <rect width="100%" height="100%" filter="url(#noiseFilter)"/>
         </svg>
 
-        <!-- Faint Railway Corridor Track Map Graphics -->
-        <svg class="absolute inset-0 w-full h-full opacity-15 stroke-[#D99B26]" xmlns="http://www.w3.org/2000/svg">
-          <path d="M-100 150 Q 400 300 900 120 T 1800 400" fill="none" stroke-width="1.5" stroke-dasharray="6 6"/>
-          <path d="M-50 450 Q 500 200 1100 500 T 2000 300" fill="none" stroke-width="1" stroke-dasharray="3 9" opacity="0.6"/>
-          <circle cx="250" cy="205" r="3" fill="#D99B26"/>
-          <circle cx="680" cy="225" r="3" fill="#D99B26"/>
-          <circle cx="1200" cy="380" r="3" fill="#D99B26"/>
-        </svg>
 
         <!-- Deep Ambient Radial Glows -->
         <div class="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-radial from-[#d99b26]/10 via-transparent to-transparent blur-3xl"></div>
@@ -442,12 +835,12 @@
         <div class="text-center max-w-3xl mx-auto mb-14">
           <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#D99B26]/10 border border-[#D99B26]/30 text-[#B87C10] font-mono text-xs font-bold tracking-widest uppercase mb-4 shadow-[0_0_20px_rgba(217,155,38,0.12)]">
             <span class="w-2 h-2 rounded-full bg-[#D99B26] animate-ping"></span>
-            <span>SOUTH AFRICAN RAIL HERITAGE · PRETORIA TO CAPE TOWN</span>
+            <span id="stops-header-corridor-tag">SOUTH AFRICAN RAIL HERITAGE · PRETORIA TO CAPE TOWN</span>
           </div>
-          <h2 class="font-heading font-extrabold text-3xl sm:text-5xl lg:text-6xl text-[#0A0C10] tracking-tight mb-4">
+          <h2 class="font-heading font-extrabold text-3xl sm:text-5xl lg:text-6xl text-[#0A0C10] tracking-tight mb-4" id="stops-heading-title">
             Corridor <span class="text-[#D99B26] italic font-serif">Stops</span>
           </h2>
-          <p class="text-[#111827] font-medium leading-relaxed font-sans text-base sm:text-lg max-w-2xl mx-auto">
+          <p id="stops-header-subtitle" class="text-[#111827] font-medium leading-relaxed font-sans text-base sm:text-lg max-w-2xl mx-auto">
             An immersive living journey tracing historic stations, mountain passes, and Karoo desert junctions along Mzansi's iconic 1,600 km rail corridor.
           </p>
         </div>
@@ -522,7 +915,7 @@
               </div>
               <div class="flex items-center justify-between">
                 <span class="text-[#8e98b0]">Corridor Route:</span>
-                <span class="font-bold">Pretoria ➔ Cape Town (1,600 km)</span>
+                <span class="font-bold">Pretoria to Cape Town (1,600 km)</span>
               </div>
               <div class="flex items-center justify-between">
                 <span class="text-[#8e98b0]">Heritage Status:</span>
@@ -541,101 +934,604 @@
     </div>
 
 
-    <!-- PAGE 2: FLAGSHIP TRAINS SHOWCASE -->
+    <!-- PAGE 2: FLAGSHIP TRAINS SHOWCASE (RENDERED FOR SELECTED TRAIN ONLY) -->
     <section id="page-trains" class="page-view pt-32 sm:pt-36 pb-20 px-6 sm:px-12 lg:px-16 max-w-[1440px] mx-auto w-full">
-      <div class="text-center max-w-2xl mx-auto mb-16">
-        <span class="px-4 py-1.5 rounded-full bg-[#D99B26]/10 border border-[#D99B26]/30 text-[#B87C10] font-mono text-xs font-bold tracking-widest uppercase inline-block mb-4">
-          SOUTH AFRICA LUXURY EXPRESS SHOWCASE
-        </span>
-        <h2 class="font-heading font-extrabold text-3xl sm:text-5xl text-[#0A0C10] mb-4">
-          The 2 <span class="text-[#B87C10] italic font-serif">Flagship</span> Trains
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <div id="trains-active-badge-tag" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D99B26]/10 border border-[#D99B26]/30 text-[#B87C10] font-mono text-xs font-bold tracking-widest uppercase mb-4 shadow-sm">
+          <i data-lucide="train" class="w-3.5 h-3.5 text-[#D99B26]"></i>
+          <span id="trains-section-badge">SELECTED TRAIN MODE</span>
+        </div>
+        <h2 id="trains-section-title" class="font-heading font-extrabold text-3xl sm:text-5xl text-[#0A0C10] mb-4">
+          The <span class="text-[#B87C10] italic font-serif">Blue Train</span>
         </h2>
-        <p class="text-[#111827] font-medium leading-relaxed font-sans">
-          Compare luxury amenities, speed, and itineraries for <strong>The Blue Train</strong> (Ultra Luxury Express) and <strong>Rovos Rail</strong> (Vintage Edwardian Safari).
+        <p id="trains-section-subtitle" class="text-[#111827] font-medium leading-relaxed font-sans max-w-2xl mx-auto">
+          Displaying complete luxury amenities, specifications, private suites, and dining for your selected train journey.
         </p>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" id="trains-container">
+      <!-- Main Train Showcase Component (Rendered dynamically for ONLY the selected train) -->
+      <div id="trains-container" class="space-y-12">
         <!-- Rendered dynamically via app.js -->
       </div>
     </section>
 
 
-    <!-- PAGE 4: SIGHT SOLVER GAMES -->
+    <!-- PAGE 4: GAMES BASED ON STOPS (100% FREE & UNLOCKED) -->
     <section id="page-games" class="page-view pt-32 sm:pt-36 pb-20 px-6 sm:px-12 lg:px-16 max-w-[1440px] mx-auto w-full">
-      <div class="text-center max-w-2xl mx-auto mb-12">
-        <span class="px-4 py-1.5 rounded-full bg-[#C85028]/10 border border-[#C85028]/30 text-[#C85028] font-mono text-xs font-bold tracking-widest uppercase inline-block mb-4">
-          INTERACTIVE SIGHT PUZZLES
-        </span>
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#C85028]/10 border border-[#C85028]/30 text-[#C85028] font-mono text-xs font-bold tracking-widest uppercase mb-4 shadow-sm">
+          <i data-lucide="gamepad-2" class="w-3.5 h-3.5 text-[#C85028]"></i>
+          <span>CORRIDOR GAMES &amp; SIGHT CHALLENGES</span>
+        </div>
         <h2 class="font-heading font-extrabold text-3xl sm:text-5xl text-[#0A0C10] mb-4">
-          Mzansi Rail <span class="text-[#C85028] italic font-serif">Sight Solver</span>
+          Games Based on <span class="text-[#C85028] italic font-serif">Stops</span>
         </h2>
-        <p class="text-[#111827] font-medium leading-relaxed font-sans">
-          Test your knowledge on South Africa's landmark sights along the Pretoria to Cape Town rail corridor. Solve a sight puzzle to trigger a <strong>Did You Know?</strong> pop-up!
+        <p class="text-[#111827] font-medium leading-relaxed font-sans max-w-2xl mx-auto">
+          Interactive games celebrating South Africa's 1,600 km rail corridor. Play stop-by-stop trivia quizzes, stamp Mzansi Rail Bingo cards, and assemble the next stop with route puzzles.
         </p>
       </div>
 
-      <!-- Game Scoreboard Bar -->
-      <div class="max-w-4xl mx-auto glass-card p-6 rounded-2xl border border-black/10 mb-8 flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
-        <div class="flex items-center gap-3">
-          <i data-lucide="award" class="w-5 h-5 text-[#D99B26]"></i>
-          <span class="text-[#0A0C10] font-semibold">Score: <strong id="game-score" class="text-[#D99B26] text-base font-bold">0</strong> pts</span>
+      <!-- Game Mode Navigation Tabs -->
+      <div class="max-w-2xl mx-auto mb-10">
+        <div class="flex items-center justify-center p-1.5 rounded-2xl bg-white/90 border border-black/15 shadow-md gap-2" id="games-mode-tabs">
+          <button type="button" data-game-tab="quiz" class="game-tab-btn flex-1 py-3 px-4 rounded-xl font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all active bg-[#C85028] text-white shadow-sm cursor-pointer">
+            <i data-lucide="help-circle" class="w-4 h-4"></i>
+            <span>Stop Quizzes</span>
+          </button>
+          <button type="button" data-game-tab="bingo" class="game-tab-btn flex-1 py-3 px-4 rounded-xl font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all bg-transparent text-[#111827] hover:bg-black/5 cursor-pointer">
+            <i data-lucide="grid" class="w-4 h-4"></i>
+            <span>Mzansi Rail Bingo</span>
+          </button>
+          <button type="button" data-game-tab="puzzle" class="game-tab-btn flex-1 py-3 px-4 rounded-xl font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all bg-transparent text-[#111827] hover:bg-black/5 cursor-pointer">
+            <i data-lucide="puzzle" class="w-4 h-4"></i>
+            <span>Build Next Stop</span>
+          </button>
         </div>
+      </div>
+
+      <!-- Overall Score & Achievement Ribbon -->
+      <div class="max-w-4xl mx-auto glass-card p-4 sm:p-6 rounded-2xl border border-black/10 mb-8 flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
         <div class="flex items-center gap-3">
-          <i data-lucide="check-circle-2" class="w-5 h-5 text-[#2E7D46]"></i>
-          <span class="text-[#0A0C10] font-semibold">Solved: <strong id="game-solved-count" class="text-[#2E7D46] text-base font-bold">0</strong> / 5 Sights</span>
+          <div class="w-9 h-9 rounded-xl bg-[#D99B26]/15 border border-[#D99B26]/30 flex items-center justify-center text-[#D99B26]">
+            <i data-lucide="award" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <span class="text-[#78716C] font-semibold text-[10px] block uppercase">Corridor Score</span>
+            <span class="text-[#0A0C10] font-bold text-base"><strong id="game-total-score" class="text-[#D99B26]">0</strong> pts</span>
+          </div>
         </div>
-        <button id="btn-reset-game" class="glass-button px-4 py-2 rounded-full text-[#111827] font-semibold hover:text-[#0A0C10] flex items-center gap-2">
-          <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Reset Game
+
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-[#2E7D46]/15 border border-[#2E7D46]/30 flex items-center justify-center text-[#2E7D46]">
+            <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <span class="text-[#78716C] font-semibold text-[10px] block uppercase">Challenges Won</span>
+            <span class="text-[#0A0C10] font-bold text-base"><strong id="game-completed-count" class="text-[#2E7D46]">0</strong> completed</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-[#4A52B0]/15 border border-[#4A52B0]/30 flex items-center justify-center text-[#4A52B0]">
+            <i data-lucide="flame" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <span class="text-[#78716C] font-semibold text-[10px] block uppercase">Corridor Streak</span>
+            <span class="text-[#0A0C10] font-bold text-base"><strong id="game-streak-count" class="text-[#4A52B0]">0</strong> in a row</span>
+          </div>
+        </div>
+
+        <button id="btn-master-reset-games" class="glass-button px-3.5 py-2 rounded-xl text-[#78716C] hover:text-[#0A0C10] flex items-center gap-1.5 text-xs font-semibold cursor-pointer">
+          <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset All Games
         </button>
       </div>
 
-      <!-- Active Game Card -->
-      <div class="max-w-4xl mx-auto glass-card p-8 rounded-3xl border border-black/10 shadow-xl" id="game-card-main">
-        <div class="flex items-center justify-between mb-6">
-          <span class="px-3.5 py-1 rounded-full bg-[#4A52B0]/20 border border-[#4A52B0]/40 text-[#4A52B0] font-mono text-xs font-bold" id="game-sight-city">Kimberley Sight Solver</span>
-          <span class="px-3.5 py-1 rounded-full bg-[#D99B26]/20 border border-[#D99B26]/40 text-[#B87C10] font-mono text-xs font-bold" id="game-sight-pts">+100 PTS</span>
-        </div>
+      <!-- GAME TAB 1: STOP-BY-STOP TRIVIA QUIZ -->
+      <div id="game-panel-quiz" class="game-panel block max-w-4xl mx-auto">
+        <div class="glass-card p-6 sm:p-10 rounded-3xl border border-black/10 shadow-xl relative bg-white">
+          <!-- Quiz Top Meta -->
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b border-black/10">
+            <div class="flex items-center gap-2">
+              <span class="px-3 py-1 rounded-full bg-[#C85028]/15 border border-[#C85028]/30 text-[#C85028] font-mono text-xs font-bold" id="quiz-stop-badge">Stop 1: Pretoria Terminus</span>
+              <span class="text-xs font-mono text-[#78716C]" id="quiz-progress-label">Question 1 of 6</span>
+            </div>
+            <span class="px-3 py-1 rounded-full bg-[#D99B26]/15 border border-[#D99B26]/30 text-[#B87C10] font-mono text-xs font-bold" id="quiz-points-badge">+100 PTS</span>
+          </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-          <div class="md:col-span-5 relative rounded-2xl overflow-hidden aspect-square border border-black/10">
-            <img id="game-sight-img" src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80" alt="South African landmark sight" class="w-full h-full object-cover">
-            <div id="game-sight-status-overlay" class="absolute inset-0 bg-[#F8F6F0]/90 flex items-center justify-center p-4 text-center font-mono text-xs text-[#B87C10] font-bold">
-              <span id="game-sight-overlay-text">Solve puzzle to unlock sight fact!</span>
+          <!-- Quiz 2-Col Body -->
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center mb-8">
+            <div class="md:col-span-5 relative rounded-2xl overflow-hidden aspect-[4/3] md:aspect-square border border-black/10 shadow-sm">
+              <img id="quiz-image" src="https://images.unsplash.com/photo-1577971132997-c10be9372519?auto=format&fit=crop&w=800&q=80" alt="Corridor Rail Stop" class="w-full h-full object-cover">
+              <div id="quiz-image-caption" class="absolute bottom-2 left-2 right-2 bg-black/70 backdrop-blur-sm text-white px-3 py-1 rounded-lg text-[10px] font-mono text-center">
+                Pretoria Jacaranda Rail Heritage
+              </div>
+            </div>
+
+            <div class="md:col-span-7 flex flex-col text-left">
+              <h3 id="quiz-question-title" class="font-heading font-bold text-xl sm:text-2xl text-[#0A0C10] mb-3 leading-snug">
+                Which historic Pretoria terminus serves as the grand luxury hub for The Blue Train and Rovos Rail?
+              </h3>
+              <p id="quiz-question-hint" class="text-xs font-sans text-[#78716C] mb-5">
+                Select the correct railway stop answer below to advance along the corridor.
+              </p>
+
+              <!-- Multiple Choice Options -->
+              <div class="grid grid-cols-1 gap-2.5 mb-4" id="quiz-options-grid">
+                <!-- Injected dynamically via JS -->
+              </div>
+
+              <!-- Feedback / Explanation Message -->
+              <div id="quiz-feedback-box" class="hidden p-4 rounded-xl border text-xs font-sans mb-2"></div>
             </div>
           </div>
 
-          <div class="md:col-span-7 flex flex-col text-left">
-            <h3 id="game-question-title" class="font-heading font-bold text-xl text-[#0A0C10] mb-3">Sight Puzzle 1: The Giant Excavation</h3>
-            <p id="game-question-prompt" class="text-[#111827] font-medium leading-relaxed mb-6 font-sans">
-              Which world-famous mining crater in Kimberley was hand-dug by 50,000 diamond miners between 1871 and 1914?
-            </p>
+          <!-- Quiz Action Footer -->
+          <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-black/10">
+            <button id="btn-quiz-prev" class="glass-button px-4 py-2.5 rounded-xl text-xs font-mono text-[#78716C] hover:text-[#0A0C10] flex items-center gap-2 font-semibold cursor-pointer">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i> Previous Stop
+            </button>
 
-            <div class="grid grid-cols-1 gap-3 mb-4" id="game-options-grid">
-              <!-- Rendered via app.js -->
+
+            <button id="btn-quiz-next" class="px-5 py-2.5 rounded-xl bg-[#C85028] text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#B5441E] transition-all flex items-center gap-2 shadow-md cursor-pointer">
+              <span>Next Stop Quiz</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <!-- Add Custom Quiz Form (Collapsible) -->
+          <div id="custom-quiz-form-wrapper" class="hidden mt-8 p-6 rounded-2xl bg-[#F8F6F0] border border-black/15 text-left">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-2">
+                <i data-lucide="plus-circle" class="w-4 h-4 text-[#D99B26]"></i>
+                <h4 class="font-heading font-bold text-base text-[#0A0C10]">Add a Custom Stop Quiz</h4>
+              </div>
+              <span class="text-[10px] font-mono text-[#78716C] uppercase">Community Corridor Trivia</span>
             </div>
 
-            <div id="game-feedback-msg" class="font-mono text-xs min-h-[24px]"></div>
+            <form id="custom-quiz-form" class="space-y-3 font-mono text-xs">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-[#111827] font-bold mb-1">Corridor Stop Name</label>
+                  <input type="text" id="custom-quiz-stop" placeholder="e.g. De Aar Junction" class="w-full px-3 py-2 rounded-xl bg-white border border-black/15 text-[#0A0C10] focus:outline-none focus:border-[#D99B26]" required>
+                </div>
+                <div>
+                  <label class="block text-[#111827] font-bold mb-1">Points Reward</label>
+                  <select id="custom-quiz-pts" class="w-full px-3 py-2 rounded-xl bg-white border border-black/15 text-[#0A0C10] focus:outline-none focus:border-[#D99B26]">
+                    <option value="100">100 Points (Standard)</option>
+                    <option value="150">150 Points (Challenging)</option>
+                    <option value="200">200 Points (Master Historian)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-[#111827] font-bold mb-1">Quiz Question</label>
+                <input type="text" id="custom-quiz-question" placeholder="e.g. What year did the first steam locomotive reach De Aar?" class="w-full px-3 py-2 rounded-xl bg-white border border-black/15 text-[#0A0C10] focus:outline-none focus:border-[#D99B26]" required>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-[#2E7D46] font-bold mb-1">Correct Answer *</label>
+                  <input type="text" id="custom-quiz-correct" placeholder="e.g. 1881" class="w-full px-3 py-2 rounded-xl bg-white border border-[#2E7D46]/40 text-[#0A0C10] focus:outline-none focus:border-[#2E7D46]" required>
+                </div>
+                <div>
+                  <label class="block text-red-600 font-bold mb-1">Wrong Option 1 *</label>
+                  <input type="text" id="custom-quiz-wrong1" placeholder="e.g. 1910" class="w-full px-3 py-2 rounded-xl bg-white border border-black/15 text-[#0A0C10] focus:outline-none focus:border-red-500" required>
+                </div>
+                <div>
+                  <label class="block text-red-600 font-bold mb-1">Wrong Option 2 *</label>
+                  <input type="text" id="custom-quiz-wrong2" placeholder="e.g. 1860" class="w-full px-3 py-2 rounded-xl bg-white border border-black/15 text-[#0A0C10] focus:outline-none focus:border-red-500" required>
+                </div>
+                <div>
+                  <label class="block text-red-600 font-bold mb-1">Wrong Option 3 *</label>
+                  <input type="text" id="custom-quiz-wrong3" placeholder="e.g. 1948" class="w-full px-3 py-2 rounded-xl bg-white border border-black/15 text-[#0A0C10] focus:outline-none focus:border-red-500" required>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-[#111827] font-bold mb-1">Explanation / Did You Know Fact</label>
+                <textarea id="custom-quiz-explanation" rows="2" placeholder="Historical note displayed when travelers answer the quiz..." class="w-full px-3 py-2 rounded-xl bg-white border border-black/15 text-[#0A0C10] focus:outline-none focus:border-[#D99B26]"></textarea>
+              </div>
+
+              <div class="flex items-center justify-end gap-2 pt-2">
+                <button type="button" id="btn-cancel-custom-quiz" class="glass-button px-4 py-2 rounded-xl text-xs font-mono text-[#78716C] hover:text-[#0A0C10] cursor-pointer">Cancel</button>
+                <button type="submit" class="px-5 py-2 rounded-xl bg-[#D99B26] text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#C98B1E] transition-all flex items-center gap-1.5 shadow-sm cursor-pointer">
+                  <i data-lucide="check" class="w-3.5 h-3.5"></i> Save &amp; Play Quiz
+                </button>
+              </div>
+            </form>
           </div>
+
         </div>
       </div>
+
+      <!-- GAME TAB 2: MZANSI RAIL CORRIDOR BINGO -->
+      <div id="game-panel-bingo" class="game-panel hidden max-w-4xl mx-auto">
+        <div class="glass-card p-6 sm:p-10 rounded-3xl border border-black/10 shadow-xl bg-white text-left">
+          
+          <!-- Bingo Header Bar -->
+          <div class="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-black/10">
+            <div>
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D99B26]/15 border border-[#D99B26]/30 text-[#B87C10] font-mono text-xs font-bold uppercase mb-1">
+                <i data-lucide="grid" class="w-3.5 h-3.5"></i>
+                <span>3x3 Rail Sight Grid</span>
+              </div>
+              <h3 class="font-heading font-extrabold text-2xl text-[#0A0C10]">Mzansi Rail Corridor Bingo</h3>
+              <p class="text-xs font-sans text-[#78716C]">Tap any landmark cell when spotted along your rail journey to stamp it. Complete any 3-in-a-row (horizontal, vertical, or diagonal) for a Bingo Win!</p>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button id="btn-reset-bingo" class="glass-button px-3.5 py-2 rounded-xl text-xs font-mono text-[#78716C] hover:text-[#0A0C10] flex items-center gap-1.5 font-semibold cursor-pointer" title="Clear stamped cells">
+                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset Stamps
+              </button>
+              <button id="btn-shuffle-bingo" class="glass-button px-3.5 py-2 rounded-xl text-xs font-mono text-[#D99B26] hover:bg-[#D99B26]/10 flex items-center gap-1.5 font-bold cursor-pointer" title="Shuffle new sights">
+                <i data-lucide="shuffle" class="w-3.5 h-3.5"></i> New Card
+              </button>
+            </div>
+          </div>
+
+          <!-- Bingo Winner Banner (Celebration) -->
+          <div id="bingo-win-banner" class="hidden mb-6 p-4 rounded-2xl bg-gradient-to-r from-[#D99B26] to-[#E0A83E] text-white shadow-lg flex items-center justify-between animate-bounce-slow">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                <i data-lucide="award" class="w-6 h-6 text-white"></i>
+              </div>
+              <div>
+                <h4 class="font-heading font-extrabold text-lg text-white">BINGO! Corridor Sight Master</h4>
+                <p class="text-xs font-mono text-white/90">You completed 3-in-a-row! +250 Bonus Corridor Points awarded.</p>
+              </div>
+            </div>
+            <span class="px-3.5 py-1.5 rounded-full bg-white text-[#D99B26] font-mono font-black text-xs uppercase tracking-wider shadow-sm">
+              +250 PTS
+            </span>
+          </div>
+
+          <!-- 3x3 Bingo Interactive Card Grid -->
+          <div id="bingo-grid-container" class="grid grid-cols-3 gap-3 sm:gap-4 aspect-square max-w-lg mx-auto mb-6">
+            <!-- 9 Bingo Cells Injected via JS -->
+          </div>
+
+          <!-- Bingo Stamp Status Bar -->
+          <div class="flex items-center justify-between pt-4 border-t border-black/10 font-mono text-xs text-[#78716C]">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#D99B26]"></span>
+              <span>Stamped: <strong id="bingo-marked-count" class="text-[#0A0C10]">0</strong> / 9 Sights</span>
+            </div>
+            <span>Status: <strong id="bingo-status-text" class="text-[#D99B26]">Tap cells to stamp</strong></span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- GAME TAB 3: BUILD NEXT STOP VIA PUZZLE -->
+      <div id="game-panel-puzzle" class="game-panel hidden max-w-4xl mx-auto">
+        <div class="glass-card p-6 sm:p-10 rounded-3xl border border-black/10 shadow-xl bg-white text-left">
+          
+          <!-- Puzzle Header Bar -->
+          <div class="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-black/10">
+            <div>
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#4A52B0]/15 border border-[#4A52B0]/30 text-[#4A52B0] font-mono text-xs font-bold uppercase mb-1">
+                <i data-lucide="puzzle" class="w-3.5 h-3.5"></i>
+                <span>Interactive Route Assembler</span>
+              </div>
+              <h3 class="font-heading font-extrabold text-2xl text-[#0A0C10]">Build Next Stop via Puzzle</h3>
+              <p class="text-xs font-sans text-[#78716C]">Sequence the rail corridor stations and flagship locomotive components from North to South in the correct geographic order.</p>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button id="btn-puzzle-mode-switch" class="glass-button px-3.5 py-2 rounded-xl text-xs font-mono text-[#4A52B0] hover:bg-[#4A52B0]/10 flex items-center gap-1.5 font-bold cursor-pointer">
+                <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> <span id="puzzle-mode-label">Switch: Station Sequence</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Puzzle Objective Card -->
+          <div class="p-4 rounded-2xl bg-[#F8F6F0] border border-black/10 mb-6 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-[#4A52B0]/15 flex items-center justify-center text-[#4A52B0]">
+                <i data-lucide="map" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h4 id="puzzle-objective-title" class="font-heading font-bold text-sm text-[#0A0C10]">Pretoria to Cape Town Route Assembler</h4>
+                <p id="puzzle-objective-desc" class="text-xs font-mono text-[#78716C]">Place the 6 corridor stops in order from Departure Hub (Pretoria) to Terminus (Cape Town).</p>
+              </div>
+            </div>
+            <span class="px-3 py-1 rounded-full bg-[#D99B26]/15 text-[#B87C10] font-mono text-xs font-bold border border-[#D99B26]/30">
+              +150 PTS
+            </span>
+          </div>
+
+          <!-- Target Placement Assembly Track (Slots) -->
+          <div class="mb-6">
+            <label class="block font-mono text-xs font-bold uppercase tracking-wider text-[#78716C] mb-3 flex items-center gap-2">
+              <i data-lucide="git-commit" class="w-3.5 h-3.5 text-[#4A52B0]"></i> Assembled Corridor Track (North to South)
+            </label>
+            <div id="puzzle-target-slots" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5">
+              <!-- Target slots injected via JS -->
+            </div>
+          </div>
+
+          <!-- Available Shuffled Station Tiles (Piece Pool) -->
+          <div class="mb-6">
+            <label class="block font-mono text-xs font-bold uppercase tracking-wider text-[#78716C] mb-3 flex items-center gap-2">
+              <i data-lucide="layers" class="w-3.5 h-3.5 text-[#D99B26]"></i> Available Stop Pieces (Tap to place in next open slot)
+            </label>
+            <div id="puzzle-pieces-pool" class="flex flex-wrap gap-2.5">
+              <!-- Available piece buttons injected via JS -->
+            </div>
+          </div>
+
+          <!-- Puzzle Feedback & Unlock Banner -->
+          <div id="puzzle-feedback-banner" class="hidden mb-6 p-4 rounded-2xl border text-xs font-sans"></div>
+
+          <!-- Puzzle Action Bar -->
+          <div class="flex items-center justify-between pt-4 border-t border-black/10 font-mono text-xs">
+            <button id="btn-reset-puzzle" class="glass-button px-4 py-2 rounded-xl text-[#78716C] hover:text-[#0A0C10] flex items-center gap-1.5 font-semibold cursor-pointer">
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Clear Slots
+            </button>
+
+            <button id="btn-verify-puzzle" class="px-6 py-2.5 rounded-xl bg-[#4A52B0] text-white font-bold uppercase tracking-wider hover:bg-[#3B429F] transition-all flex items-center gap-2 shadow-md cursor-pointer">
+              <i data-lucide="check" class="w-4 h-4"></i>
+              <span>Verify Sequence</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
     </section>
 
 
-    <!-- PAGE 5: ABOUT TRACKTALES & HERITAGE -->
-    <section id="page-about" class="page-view pt-32 sm:pt-36 pb-20 px-6 sm:px-12 lg:px-16 max-w-[1440px] mx-auto w-full">
-      <div class="text-center max-w-2xl mx-auto mb-16">
-        <span class="px-4 py-1.5 rounded-full bg-[#4A52B0]/10 border border-[#4A52B0]/30 text-[#4A52B0] font-mono text-xs font-bold tracking-widest uppercase inline-block mb-4">
-          ABOUT & HERITAGE
-        </span>
+    <!-- PAGE 5: VOICE TO TEXT RECORDING STUDIO & PASSENGER JOURNAL -->
+    <section id="page-voice" class="page-view pt-32 sm:pt-36 pb-20 px-6 sm:px-12 lg:px-16 max-w-[1440px] mx-auto w-full">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#D99B26]/10 border border-[#D99B26]/30 text-[#B87C10] font-mono text-xs font-bold tracking-widest uppercase mb-4 shadow-[0_0_20px_rgba(217,155,38,0.12)]">
+          <i data-lucide="mic" class="w-3.5 h-3.5 text-[#D99B26]"></i>
+          <span>PASSENGER SPEECH-TO-TEXT LOG</span>
+        </div>
         <h2 class="font-heading font-extrabold text-3xl sm:text-5xl text-[#0A0C10] mb-4">
-          Connecting Heritage, <span class="text-[#4A52B0] italic font-serif">Tourism & Rail</span>
+          Passenger Voice <span class="text-[#D99B26] italic font-serif">Journal</span>
         </h2>
-        <p class="text-[#111827] font-medium leading-relaxed font-sans">
-          South Africa’s rail network is the historical spine connecting Pretoria to Cape Town, carrying over 150 years of architecture, mining history, and breathtaking landscapes.
+        <p class="text-[#111827] font-medium leading-relaxed font-sans max-w-2xl mx-auto">
+          Record your spoken travel observations, landmark thoughts, and corridor reflections in real time. Our speech engine transcribes your voice directly into your personal rail journey log.
         </p>
       </div>
 
+      <!-- Main Studio & Journal 2-Column Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
+        
+        <!-- Left Col: Real-time Voice-to-Text Recording Studio (lg:col-span-7) -->
+        <div class="lg:col-span-7 glass-card p-6 sm:p-8 rounded-3xl border border-black/10 shadow-xl flex flex-col justify-between">
+          
+          <!-- Studio Top Info Bar -->
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-black/10 mb-6">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#D99B26] animate-pulse"></span>
+              <span id="voice-studio-train-badge" class="font-mono text-xs font-bold text-[#0A0C10] uppercase">The Blue Train Journey</span>
+            </div>
+            
+            <div class="flex items-center gap-2">
+              <span id="voiceRecordStatus" class="font-mono text-xs text-[#78716C] font-semibold flex items-center gap-1.5">
+                <i data-lucide="mic-off" class="w-3.5 h-3.5 text-[#78716C]"></i> Ready to Record
+              </span>
+            </div>
+          </div>
+
+          <!-- Corridor Milestone & Category Selectors -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-left">
+            <div>
+              <label class="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#78716C] mb-1.5">
+                Corridor Landmark / Stop
+              </label>
+              <select id="voiceStopSelect" class="w-full px-3.5 py-2.5 rounded-xl border border-black/15 bg-white text-xs font-mono font-semibold text-[#0A0C10] focus:outline-none focus:border-[#D99B26]">
+                <option value="Pretoria Hub">Pretoria Hub (Capital Park / Irene)</option>
+                <option value="Kimberley Big Hole">Kimberley Big Hole & Diamond Fields</option>
+                <option value="The Great Karoo">The Great Karoo Semi-Desert</option>
+                <option value="Matjiesfontein Village">Matjiesfontein Victorian Village</option>
+                <option value="Hex River Valley">Hex River Valley Mountain Passes</option>
+                <option value="Cape Town Terminal">Cape Town Terminal & Table Mountain</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#78716C] mb-1.5">
+                Journal Category
+              </label>
+              <select id="voiceCategorySelect" class="w-full px-3.5 py-2.5 rounded-xl border border-black/15 bg-white text-xs font-mono font-semibold text-[#0A0C10] focus:outline-none focus:border-[#D99B26]">
+                <option value="Route Reflection">Route Reflection</option>
+                <option value="Sights & Scenery">Sights & Scenery</option>
+                <option value="Historical Observation">Historical Observation</option>
+                <option value="Dining & Lounge Memory">Dining & Lounge Memory</option>
+                <option value="Soundscape Note">Soundscape Note</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Central Recording Interaction Station -->
+          <div class="p-6 rounded-2xl bg-[#FFFDF9] border border-[#E7E2D8] mb-6 flex flex-col items-center text-center relative overflow-hidden">
+            
+            <!-- Animated Sound Waveform Canvas -->
+            <canvas id="voiceVisualizerCanvas" class="w-full h-16 mb-4 rounded-lg bg-black/5" width="400" height="64"></canvas>
+
+            <!-- Recording Master Button & Timer -->
+            <div class="flex items-center gap-6 my-2">
+              <button id="voiceRecordBtn" class="group relative w-16 h-16 rounded-full bg-gradient-to-tr from-[#D99B26] to-[#E0A83E] text-white flex items-center justify-center shadow-lg shadow-[#D99B26]/30 hover:scale-105 active:scale-95 transition-all focus:outline-none cursor-pointer" title="Start / Stop Voice Recording">
+                <span id="voiceRecordPulseRing" class="absolute inset-0 rounded-full bg-[#D99B26]/40 animate-ping hidden pointer-events-none"></span>
+                <i data-lucide="mic" id="voiceRecordIcon" class="w-7 h-7"></i>
+              </button>
+
+              <div class="flex flex-col text-left font-mono">
+                <span id="voiceRecordTimer" class="text-2xl font-black text-[#0A0C10] tracking-wider">00:00</span>
+                <span id="voiceRecordHint" class="text-[11px] font-bold text-[#D99B26] uppercase tracking-wider">Tap Mic to Speak</span>
+              </div>
+            </div>
+
+            <!-- Speech Audio Engine Tag -->
+            <div class="mt-4 flex items-center gap-2 text-[10px] font-mono text-[#78716C] font-semibold">
+              <i data-lucide="sparkles" class="w-3 h-3 text-[#D99B26]"></i>
+              <span>Browser Speech-to-Text Recognition Active</span>
+            </div>
+          </div>
+
+          <!-- Real-time Live Transcribed Output Box -->
+          <div class="text-left mb-5">
+            <div class="flex items-center justify-between mb-2">
+              <label for="voiceTranscriptInput" class="font-mono text-[10px] font-bold uppercase tracking-wider text-[#78716C] flex items-center gap-1.5">
+                <i data-lucide="file-text" class="w-3.5 h-3.5 text-[#D99B26]"></i> Live Spoken Transcript
+              </label>
+              <div class="font-mono text-[10px] text-[#78716C] font-semibold">
+                <span id="voiceWordCount">0</span> words · <span id="voiceCharCount">0</span> chars
+              </div>
+            </div>
+
+            <textarea id="voiceTranscriptInput" rows="4" class="w-full p-4 rounded-2xl border border-black/15 bg-white text-sm font-sans text-[#0A0C10] placeholder:text-[#9CA3AF] focus:outline-none focus:border-[#D99B26] focus:ring-2 focus:ring-[#D99B26]/20 transition-all resize-y" placeholder="Speak into your microphone or tap the microphone button above to start transcribing your train story..."></textarea>
+          </div>
+
+          <!-- Studio Action Buttons -->
+          <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-black/10">
+            <div class="flex items-center gap-2">
+              <button id="btnVoiceClear" class="glass-button px-3.5 py-2 rounded-xl text-xs font-mono text-[#78716C] hover:text-[#DC2626] flex items-center gap-1.5 font-semibold cursor-pointer" title="Clear transcript">
+                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Clear
+              </button>
+
+              <button id="btnVoiceCopy" class="glass-button px-3.5 py-2 rounded-xl text-xs font-mono text-[#0A0C10] hover:text-[#D99B26] flex items-center gap-1.5 font-semibold cursor-pointer" title="Copy transcript to clipboard">
+                <i data-lucide="copy" class="w-3.5 h-3.5 text-[#D99B26]"></i> Copy
+              </button>
+
+              <button id="btnVoiceReadAloud" class="glass-button px-3.5 py-2 rounded-xl text-xs font-mono text-[#0A0C10] hover:text-[#4A52B0] flex items-center gap-1.5 font-semibold cursor-pointer" title="Listen / Read aloud transcript">
+                <i data-lucide="volume-2" class="w-3.5 h-3.5 text-[#4A52B0]"></i> Read Back
+              </button>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button id="btnVoiceSimulate" class="glass-button px-3.5 py-2 rounded-xl text-xs font-mono text-[#78716C] hover:text-[#D99B26] flex items-center gap-1.5 font-semibold cursor-pointer" title="Test with simulated rail passenger dictation">
+                <i data-lucide="play" class="w-3 h-3 text-[#D99B26]"></i> Sample Dictation
+              </button>
+
+              <button id="btnSaveVoiceEntry" class="px-5 py-2.5 rounded-xl bg-[#D99B26] text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#C98B1E] transition-all flex items-center gap-2 shadow-md shadow-[#D99B26]/20 cursor-pointer">
+                <i data-lucide="save" class="w-4 h-4"></i> Save to Journal
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Col: Passenger Saved Voice Notes & Journal Feed (lg:col-span-5) -->
+        <div class="lg:col-span-5 flex flex-col gap-5">
+          
+          <!-- Journal Header Box -->
+          <div class="glass-card p-6 rounded-3xl border border-black/10 shadow-lg text-left">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-full bg-[#D99B26]/15 border border-[#D99B26]/30 flex items-center justify-center text-[#D99B26]">
+                  <i data-lucide="book-marked" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <h3 class="font-heading font-bold text-lg text-[#0A0C10]">Saved Voice Notes</h3>
+                  <p class="font-mono text-[10px] text-[#78716C] font-semibold uppercase">Transcribed Travel Memories</p>
+                </div>
+              </div>
+
+              <span id="voiceNotesCountBadge" class="px-3 py-1 rounded-full bg-[#D99B26]/15 text-[#B87C10] font-mono text-xs font-bold border border-[#D99B26]/30">
+                0 Entries
+              </span>
+            </div>
+
+            <!-- Filter & Search Controls -->
+            <div class="space-y-2.5">
+              <div class="relative">
+                <i data-lucide="search" class="w-3.5 h-3.5 text-[#9CA3AF] absolute left-3 top-1/2 -translate-y-1/2"></i>
+                <input id="voiceSearchInput" type="text" placeholder="Search voice notes..." class="w-full pl-8 pr-3 py-2 rounded-xl border border-black/15 bg-white text-xs font-sans text-[#0A0C10] placeholder:text-[#9CA3AF] focus:outline-none focus:border-[#D99B26]">
+              </div>
+
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <button data-voice-filter="all" class="voice-filter-btn px-3 py-1 rounded-full bg-[#0A0C10] text-white font-mono text-[10px] font-bold uppercase active cursor-pointer">All</button>
+                <button data-voice-filter="blue-train" class="voice-filter-btn px-3 py-1 rounded-full bg-black/5 hover:bg-black/10 text-[#0A0C10] font-mono text-[10px] font-bold uppercase cursor-pointer">The Blue Train</button>
+                <button data-voice-filter="rovos-rail" class="voice-filter-btn px-3 py-1 rounded-full bg-black/5 hover:bg-black/10 text-[#0A0C10] font-mono text-[10px] font-bold uppercase cursor-pointer">Rovos Rail</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Saved Notes Scroll Container -->
+          <div id="voiceNotesList" class="space-y-4 max-h-[560px] overflow-y-auto pr-1">
+            <!-- Rendered dynamically via app.js -->
+          </div>
+
+          <!-- Bottom Diary Export Strip -->
+          <div class="glass-card p-4 rounded-2xl border border-black/10 flex items-center justify-between text-left font-mono text-xs">
+            <span class="text-[#78716C] font-medium text-[11px]">Save a permanent text copy</span>
+            <button id="btnExportVoiceDiary" class="glass-button px-3.5 py-1.5 rounded-full text-[#0A0C10] hover:text-[#D99B26] font-bold text-[11px] flex items-center gap-1.5 transition-all cursor-pointer">
+              <i data-lucide="download" class="w-3.5 h-3.5 text-[#D99B26]"></i> Export Diary (.txt)
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Privacy & Audio Guarantee Note -->
+      <div class="max-w-4xl mx-auto mt-12 p-4 rounded-2xl bg-white/60 border border-black/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left font-mono text-xs text-[#78716C]">
+        <div class="flex items-center gap-2.5">
+          <i data-lucide="shield-check" class="w-4 h-4 text-[#2E7D46]"></i>
+          <span>Voice audio is transcribed locally in your browser session for complete privacy.</span>
+        </div>
+        <span class="text-[10px] uppercase font-bold text-[#D99B26]">1,600 KM CORRIDOR COMPANION</span>
+      </div>
+
+    </section>
+
+
+    <!-- PAGE 5: ABOUT TRACKTALES & HERITAGE STORIES -->
+    <section id="page-about" class="page-view pt-32 sm:pt-36 pb-20 px-6 sm:px-12 lg:px-16 max-w-[1440px] mx-auto w-full">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#4A52B0]/10 border border-[#4A52B0]/30 text-[#4A52B0] font-mono text-xs font-bold tracking-widest uppercase mb-4 shadow-sm">
+          <i data-lucide="book-open" class="w-3.5 h-3.5 text-[#4A52B0]"></i>
+          <span id="stories-section-badge">HERITAGE STORIES & ARCHIVES</span>
+        </div>
+        <h2 id="stories-section-title" class="font-heading font-extrabold text-3xl sm:text-5xl text-[#0A0C10] mb-4">
+          Journey <span class="text-[#4A52B0] italic font-serif">Stories</span>
+        </h2>
+        <!-- Active Subscription Pass Status Banner -->
+        <div id="stories-sub-status-bar" class="max-w-xl mx-auto mb-8 p-3 rounded-2xl border flex items-center justify-between text-xs font-mono transition-all">
+          <div class="flex items-center gap-2.5">
+            <i data-lucide="crown" class="w-4 h-4 text-[#D99B26]"></i>
+            <span class="text-[#78716C]">Active Pass:</span>
+            <strong id="stories-active-sub-name" class="text-[#0A0C10]">Free Journey (R0)</strong>
+          </div>
+          <button id="btn-upgrade-from-stories" class="px-3 py-1 rounded-full bg-[#D99B26] text-white font-bold uppercase text-[10px] tracking-wider hover:bg-[#C98B1E] transition-all flex items-center gap-1">
+            <span>Change Pass</span>
+            <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 1. Standard Journey Stories Grid (Included in Free, Premium, Audio, Membership) -->
+      <div class="mb-16">
+        <div class="flex items-center justify-between mb-6 text-left">
+          <div>
+            <span class="text-xs font-mono font-bold uppercase tracking-widest text-[#4A52B0] block">Core Rail Chronicles</span>
+            <h3 class="font-heading font-extrabold text-2xl text-[#0A0C10]">Selected Journey Stories</h3>
+          </div>
+          <span class="text-xs font-mono text-[#78716C] font-semibold">Included in All Passes</span>
+        </div>
+        <div id="stories-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Rendered dynamically via app.js -->
+        </div>
+      </div>
+
+      <!-- 2. DEEPER HISTORICAL CONTENT & ARCHIVAL VAULT (FEATURE: Premium Journey Pack & VIP Membership) -->
+      <div id="premium-vault-section" class="mb-16">
+        <!-- Rendered dynamically via app.js (Unlocked view with dossiers vs. Locked teaser) -->
+      </div>
+
+      <!-- 3. NARRATED / LISTENABLE AUDIO STORY COMPANION (FEATURE: Audio Experience & VIP Membership) -->
+      <div id="audio-companion-section" class="mb-16">
+        <!-- Rendered dynamically via app.js (Active voice narration station vs. Locked teaser) -->
+      </div>
+
+      <!-- Heritage Pillars -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
         <div class="glass-card p-8 rounded-2xl border border-black/10 text-left">
           <div class="w-12 h-12 rounded-xl bg-[#D99B26]/15 border border-[#D99B26]/30 flex items-center justify-center text-[#D99B26] mb-6">
@@ -671,38 +1567,58 @@
 
   </main>
 
-  <!-- FULL APPLICATION FOOTER (Clean, Minimal, Heritage Luxury) -->
-  <footer class="w-full bg-[#EFECE4] border-t border-black/10 py-10 relative z-10 text-[#111827]">
+  <!-- FULL APPLICATION FOOTER -->
+  <footer class="w-full bg-[#EFECE4] border-t border-black/15 pt-16 pb-12 relative z-10 text-[#111827]">
     <div class="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16">
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
         
-        <!-- Left: Brand with Train Icon -->
-        <a href="#home" class="flex items-center gap-3 group nav-page-link" data-page="home">
-          <div class="flex items-center justify-center w-8 h-8 rounded-full bg-[#D99B26]/15 border border-[#D99B26]/40 text-[#D99B26] group-hover:border-[#D99B26] transition-colors">
-            <i data-lucide="train-front" class="w-4 h-4"></i>
-          </div>
-          <span class="font-heading font-extrabold tracking-wider text-lg text-[#0A0C10]">TRACK<span class="text-[#D99B26]">TALES</span></span>
-        </a>
+        <!-- Col 1: Brand Info with Official Logo -->
+        <div class="lg:col-span-2 flex flex-col items-start text-left">
+          <a href="#home" class="flex items-center gap-3.5 mb-4 group">
+            <img src="./images/tracktales-logo.jpg" alt="TrackTales Logo" class="w-11 h-11 rounded-full object-cover shadow-md border-2 border-[#D99B26]">
+            <div class="flex flex-col text-left">
+              <span class="font-heading font-extrabold tracking-wider text-2xl text-[#0A0C10] leading-none">TRACK<span class="text-[#D99B26]">TALES</span></span>
+              <span class="text-[9px] font-bold tracking-[0.2em] text-[#78716C] uppercase mt-1">REAL ROUTES. EXTRAORDINARY STORIES.</span>
+            </div>
+          </a>
+          <p class="text-sm text-[#111827] font-medium leading-relaxed max-w-sm">
+            A digital storytelling companion for the Pretoria to Cape Town rail corridor celebrating the timeless heritage, scenery, and culture of South Africa's iconic railways.
+          </p>
+        </div>
 
-        <!-- Right: Essential Minimal Navigation -->
-        <nav class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 font-mono text-xs tracking-wider uppercase font-semibold text-[#4B5563]">
-          <a href="#home" class="nav-page-link hover:text-[#D99B26] transition-colors" data-page="home">The Route</a>
-          <span class="text-black/20">·</span>
-          <a href="#stops" class="nav-page-link hover:text-[#D99B26] transition-colors" data-page="stops">Corridor Stops</a>
-          <span class="text-black/20">·</span>
-          <a href="#about" class="nav-page-link hover:text-[#D99B26] transition-colors" data-page="about">Stories</a>
-          <span class="text-black/20">·</span>
-          <a href="#games" class="nav-page-link hover:text-[#D99B26] transition-colors" data-page="games">Games</a>
-        </nav>
+        <!-- Col 2: Navigation Links -->
+        <div class="flex flex-col items-start text-left font-mono text-xs">
+          <h4 class="font-heading font-bold text-sm text-[#0A0C10] uppercase tracking-wider mb-4">Navigation</h4>
+          <ul class="space-y-2.5 font-semibold">
+            <li><a href="#home" class="hover:text-[#D99B26] transition-colors">The Route</a></li>
+            <li><a href="#trains" class="hover:text-[#D99B26] transition-colors">Flagship Trains</a></li>
+            <li><a href="#attractions" class="hover:text-[#D99B26] transition-colors">Sights &amp; Landmarks</a></li>
+            <li><a href="#games" class="hover:text-[#D99B26] transition-colors">Sight Solver Puzzles</a></li>
+            <li><a href="#voice" class="hover:text-[#D99B26] transition-colors">Voice Journal &amp; Log</a></li>
+            <li><a href="#about" class="hover:text-[#D99B26] transition-colors">Heritage &amp; About</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Corridor Experience -->
+        <div class="flex flex-col items-start text-left font-mono text-xs">
+          <h4 class="font-heading font-bold text-sm text-[#0A0C10] uppercase tracking-wider mb-4">Corridor Journey</h4>
+          <p class="text-[#111827] font-medium leading-relaxed mb-4">
+            Traversing 1,600 km across South Africa's heartland from the Jacaranda City to Table Mountain.
+          </p>
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/5 border border-black/15 text-[11px] text-[#B87C10] font-bold">
+            <i data-lucide="compass" class="w-3.5 h-3.5"></i>
+            <span>Pretoria to Cape Town</span>
+          </div>
+        </div>
 
       </div>
 
-      <!-- Subtle Divider & Subtitle Line -->
-      <div class="my-6 border-t border-black/10"></div>
-
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-2 font-mono text-[11px] text-[#6B7280]">
-        <span>&copy; 2026 TrackTales</span>
-        <span>Pretoria &rarr; Cape Town</span>
+      <!-- Bottom Bar -->
+      <div class="pt-8 border-t border-black/15 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-[#111827] font-semibold">
+        <div>&copy; 2026 TrackTales. All rights reserved.</div>
+        <div class="flex items-center gap-6">
+          <span>Pretoria to Cape Town Corridor</span>
+        </div>
       </div>
     </div>
   </footer>
@@ -740,6 +1656,207 @@
   </div>
 
 
+  <!-- 5. Passenger Subscription Selection Modal -->
+  <div id="subscription-modal" class="fixed inset-0 z-[110] hidden items-center justify-center bg-black/70 backdrop-blur-md p-4 transition-all" role="dialog" aria-label="Select Subscription Pass">
+    <div class="modal-content glass-card max-w-4xl w-full p-6 sm:p-9 rounded-3xl border border-[#EBE5D9] shadow-2xl relative bg-[#FAF8F5] text-[#1C1917] max-h-[92vh] overflow-y-auto">
+      
+      <!-- Close Button -->
+      <button id="subscription-modal-close" class="absolute top-5 right-5 text-[#78716C] hover:text-[#1C1917] p-2 rounded-full hover:bg-black/5 transition-colors" title="Close / Continue with current pass">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Modal Header -->
+      <div class="text-center mb-7">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-mono bg-[#D99B26]/15 text-[#A86F12] border border-[#D99B26]/30 uppercase font-extrabold tracking-wider mb-2">
+          <i data-lucide="sparkles" class="w-3 h-3 text-[#D99B26]"></i>
+          <span>Passenger Journey Passes</span>
+        </div>
+        <h3 class="font-heading font-extrabold text-2xl sm:text-3xl text-[#1C1917] tracking-tight">Select Your Journey Subscription</h3>
+        <p class="text-xs text-[#78716C] font-sans max-w-md mx-auto mt-1">
+          Choose your subscription pass to unlock South Africa rail stories, narration, and corridor explorations.
+        </p>
+      </div>
+
+      <!-- 4 Subscription Offer Cards (Directly matching user's specification table) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6" role="radiogroup" aria-label="Subscription Offers">
+        
+        <!-- Tier 1: Free Journey (R0) -->
+        <div data-sub-plan="free" class="subscription-card cursor-pointer p-5 rounded-2xl border-2 border-[#E7E2D8] bg-white transition-all hover:border-[#D99B26]/60 flex flex-col justify-between relative group active">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-[#78716C]">Acquisition & Discovery</span>
+              <span class="sub-radio w-4 h-4 rounded-full border-2 border-[#D99B26] bg-[#D99B26] flex items-center justify-center">
+                <i data-lucide="check" class="w-2.5 h-2.5 text-white stroke-[3]"></i>
+              </span>
+            </div>
+            <h4 class="font-heading font-bold text-lg text-[#1C1917]">Free Journey</h4>
+            <div class="mt-1 mb-3">
+              <span class="text-2xl font-extrabold text-[#1C1917]">R0</span>
+              <span class="text-[10px] text-[#78716C] font-mono"> / included</span>
+            </div>
+            <div class="pt-3 border-t border-[#EBE5D9] space-y-2 text-xs text-[#44403C]">
+              <div class="flex items-start gap-2">
+                <i data-lucide="check" class="w-3.5 h-3.5 text-[#D99B26] shrink-0 mt-0.5"></i>
+                <span>Interactive Route map & corridor path</span>
+              </div>
+              <div class="flex items-start gap-2">
+                <i data-lucide="check" class="w-3.5 h-3.5 text-[#D99B26] shrink-0 mt-0.5"></i>
+                <span>Selected main corridor stops</span>
+              </div>
+              <div class="flex items-start gap-2">
+                <i data-lucide="check" class="w-3.5 h-3.5 text-[#D99B26] shrink-0 mt-0.5"></i>
+                <span>Selected stories & station trivia</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-[#EBE5D9]">
+            <span class="text-[9px] font-mono uppercase text-[#78716C] font-semibold block">Purpose: Acquisition + product discovery</span>
+          </div>
+        </div>
+
+        <!-- Tier 2: Premium Journey Pack (R79) -->
+        <div data-sub-plan="premium-pack" class="subscription-card cursor-pointer p-5 rounded-2xl border-2 border-[#D99B26] bg-gradient-to-b from-[#FFF9EE] to-white shadow-lg shadow-[#D99B26]/10 flex flex-col justify-between relative group">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#D99B26] text-white text-[9px] font-mono font-extrabold uppercase tracking-widest px-3 py-0.5 rounded-full shadow-sm flex items-center gap-1">
+            <i data-lucide="star" class="w-3 h-3 fill-white"></i>
+            <span>Most Popular</span>
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-[#D99B26]">Primary Revenue Test</span>
+              <span class="sub-radio w-4 h-4 rounded-full border-2 border-[#D6CFC7] bg-transparent flex items-center justify-center">
+                <i data-lucide="check" class="w-2.5 h-2.5 text-white stroke-[3] hidden"></i>
+              </span>
+            </div>
+            <h4 class="font-heading font-bold text-lg text-[#1C1917]">Premium Pack</h4>
+            <div class="mt-1 mb-3">
+              <span class="text-2xl font-extrabold text-[#D99B26]">R79</span>
+              <span class="text-[10px] text-[#78716C] font-mono"> / journey (R49-R99)</span>
+            </div>
+            <div class="pt-3 border-t border-[#EBE5D9] space-y-2 text-xs text-[#1C1917] font-medium">
+              <div class="flex items-start gap-2">
+                <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-[#D99B26] shrink-0 mt-0.5"></i>
+                <span>Full route story set (1,600 km corridor)</span>
+              </div>
+              <div class="flex items-start gap-2">
+                <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-[#D99B26] shrink-0 mt-0.5"></i>
+                <span>Deeper historical content & archival vault</span>
+              </div>
+              <div class="flex items-start gap-2">
+                <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-[#D99B26] shrink-0 mt-0.5"></i>
+                <span>Extra trivia & Master Historian challenge</span>
+              </div>
+              <div class="flex items-start gap-2">
+                <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-[#D99B26] shrink-0 mt-0.5"></i>
+                <span>Gold collector stamps & dossiers</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-[#EBE5D9]">
+            <span class="text-[9px] font-mono uppercase text-[#A86F12] font-bold block">Purpose: Primary first revenue test</span>
+          </div>
+        </div>
+
+        <!-- Tier 3: Audio Experience (R49) -->
+        <div data-sub-plan="audio-exp" class="subscription-card cursor-pointer p-5 rounded-2xl border-2 border-[#E7E2D8] bg-white transition-all hover:border-[#2A9D8F]/60 flex flex-col justify-between relative group">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-[#2A9D8F]">Willingness-to-Pay Test</span>
+              <span class="sub-radio w-4 h-4 rounded-full border-2 border-[#D6CFC7] bg-transparent flex items-center justify-center">
+                <i data-lucide="check" class="w-2.5 h-2.5 text-white stroke-[3] hidden"></i>
+              </span>
+            </div>
+            <h4 class="font-heading font-bold text-lg text-[#1C1917]">Audio Experience</h4>
+            <div class="mt-1 mb-3">
+              <span class="text-2xl font-extrabold text-[#2A9D8F]">R49</span>
+              <span class="text-[10px] text-[#78716C] font-mono"> / audio (R39-R79)</span>
+            </div>
+            <div class="pt-3 border-t border-[#EBE5D9] space-y-2 text-xs text-[#44403C]">
+              <div class="flex items-start gap-2">
+                <i data-lucide="headphones" class="w-3.5 h-3.5 text-[#2A9D8F] shrink-0 mt-0.5"></i>
+                <span>Narrated / listenable story versions</span>
+              </div>
+              <div class="flex items-start gap-2">
+                <i data-lucide="volume-2" class="w-3.5 h-3.5 text-[#2A9D8F] shrink-0 mt-0.5"></i>
+                <span>Interactive speech synthesis & voices</span>
+              </div>
+              <div class="flex items-start gap-2">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#2A9D8F] shrink-0 mt-0.5"></i>
+                <span>Ambient Karoo rail soundscape mixer</span>
+              </div>
+              <div class="flex items-start gap-2">
+                <i data-lucide="play-circle" class="w-3.5 h-3.5 text-[#2A9D8F] shrink-0 mt-0.5"></i>
+                <span>Speed controls (1x, 1.25x, 1.5x)</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-[#EBE5D9]">
+            <span class="text-[9px] font-mono uppercase text-[#2A9D8F] font-bold block">Purpose: Second willingness-to-pay test</span>
+          </div>
+        </div>
+
+        <!-- Tier 4: Future Membership / VIP All-Access (R149) -->
+        <div data-sub-plan="membership" class="subscription-card cursor-pointer p-5 rounded-2xl border-2 border-[#E7E2D8] bg-white transition-all hover:border-[#4A52B0]/60 flex flex-col justify-between relative group">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#4A52B0] text-white text-[9px] font-mono font-extrabold uppercase tracking-widest px-3 py-0.5 rounded-full shadow-sm flex items-center gap-1">
+            <i data-lucide="crown" class="w-3 h-3"></i>
+            <span>All-Inclusive</span>
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-[#4A52B0]">Retention Model</span>
+              <span class="sub-radio w-4 h-4 rounded-full border-2 border-[#D6CFC7] bg-transparent flex items-center justify-center">
+                <i data-lucide="check" class="w-2.5 h-2.5 text-white stroke-[3] hidden"></i>
+              </span>
+            </div>
+            <h4 class="font-heading font-bold text-lg text-[#1C1917]">Future Membership</h4>
+            <div class="mt-1 mb-3">
+              <span class="text-2xl font-extrabold text-[#4A52B0]">R149</span>
+              <span class="text-[10px] text-[#78716C] font-mono"> / VIP pass</span>
+            </div>
+            <div class="pt-3 border-t border-[#EBE5D9] space-y-2 text-xs text-[#44403C]">
+              <div class="flex items-start gap-2">
+                <i data-lucide="crown" class="w-3.5 h-3.5 text-[#4A52B0] shrink-0 mt-0.5"></i>
+                <span>Ongoing access to multiple premium experiences</span>
+              </div>
+              <div class="flex items-start gap-2">
+                <i data-lucide="archive" class="w-3.5 h-3.5 text-[#4A52B0] shrink-0 mt-0.5"></i>
+                <span>All Deeper Historical Vault dossiers</span>
+              </div>
+              <div class="flex items-start gap-2">
+                <i data-lucide="headphones" class="w-3.5 h-3.5 text-[#4A52B0] shrink-0 mt-0.5"></i>
+                <span>All Narrated Audio Companions</span>
+              </div>
+              <div class="flex items-start gap-2">
+                <i data-lucide="award" class="w-3.5 h-3.5 text-[#4A52B0] shrink-0 mt-0.5"></i>
+                <span>VIP Concierge status & gold badge</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-[#EBE5D9]">
+            <span class="text-[9px] font-mono uppercase text-[#4A52B0] font-bold block">Purpose: Retention model after repeat demand</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action Footer -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-[#EBE5D9]">
+        <div class="text-xs text-[#78716C] font-sans text-center sm:text-left">
+          Selected Plan: <span id="subscription-selected-tier-name" class="font-bold text-[#D99B26]">Free Journey (R0)</span>
+        </div>
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+          <button type="button" id="subscription-skip-btn" class="w-full sm:w-auto px-4 py-3 rounded-xl border border-[#D6CFC7] text-[#44403C] text-xs font-bold hover:bg-black/5 transition-colors">
+            Continue with Free
+          </button>
+          <button type="button" id="subscription-confirm-btn" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#D99B26] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#C98B1E] transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#D99B26]/20">
+            <span id="subscription-btn-label">Activate Pass</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- Sign In / Sign Up Modal -->
   <div id="login-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 backdrop-blur-md p-4">
     <div class="modal-content glass-card max-w-md w-full p-8 rounded-3xl border border-black/15 shadow-2xl relative bg-white">
@@ -747,8 +1864,8 @@
 
       <!-- SIGN IN SECTION -->
       <div id="login-section">
-        <div class="text-center mb-6">
-          <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-[#D99B26]/15 border border-[#D99B26]/30 flex items-center justify-center text-[#D99B26]">
+        <div class="text-center mb-5">
+          <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-[#D99B26]/15 border border-[#D99B26]/30 flex items-center justify-center text-[#D99B26]">
             <i data-lucide="train-front" class="w-6 h-6"></i>
           </div>
           <h3 class="font-heading font-bold text-xl text-[#0A0C10]">Passenger <span class="text-[#D99B26]">Portal</span></h3>
@@ -758,78 +1875,574 @@
         <form id="login-form" class="space-y-4 font-mono text-xs">
           <div>
             <label class="block text-[#111827] mb-1 text-left font-bold">Passenger Email</label>
-            <input type="email" id="login-email" class="w-full px-4 py-3 rounded-xl bg-black/5 border border-black/15 text-[#0A0C10] font-semibold focus:outline-none focus:border-[#D99B26]" placeholder="passenger@tracktales.co.za" required>
+            <input type="email" id="login-email" class="w-full px-4 py-2.5 rounded-xl bg-black/5 border border-black/15 text-[#0A0C10] font-semibold focus:outline-none focus:border-[#D99B26]" placeholder="passenger@tracktales.co.za" required>
           </div>
           <div class="relative password-group">
             <label class="block text-[#111827] mb-1 text-left font-bold">Password</label>
             <div class="relative">
-              <input type="password" id="login-password" class="w-full px-4 py-3 pr-10 rounded-xl bg-black/5 border border-black/15 text-[#0A0C10] font-semibold focus:outline-none focus:border-[#D99B26]" placeholder="••••••••" required>
+              <input type="password" id="login-password" class="w-full px-4 py-2.5 pr-10 rounded-xl bg-black/5 border border-black/15 text-[#0A0C10] font-semibold focus:outline-none focus:border-[#D99B26]" placeholder="••••••••" required>
               <button type="button" class="btn-toggle-password absolute right-3 top-1/2 -translate-y-1/2 text-black/40 hover:text-black p-1">
                 <i data-lucide="eye" class="w-4 h-4 eye-icon"></i>
               </button>
             </div>
           </div>
-          <button type="submit" class="w-full py-3.5 rounded-full bg-[#D99B26] text-white font-bold uppercase tracking-wider hover:bg-[#C98B1E] transition-all flex items-center justify-center gap-2 shadow-md">
+
+          <!-- Saved Registered Passenger Journey Pass Banner in Modal -->
+          <div id="login-saved-pass-banner" class="hidden p-3 rounded-2xl bg-[#D99B26]/10 border border-[#D99B26]/30 flex items-center justify-between text-xs transition-all">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#D99B26] animate-pulse"></span>
+              <span class="text-[#78716C] font-semibold">Your Registered Journey:</span>
+            </div>
+            <span id="login-saved-pass-name" class="font-bold text-[#D99B26] font-sans">The Blue Train</span>
+          </div>
+
+          <!-- Train Choice in Modal -->
+          <div id="login-train-selector-container" class="space-y-1 pt-1 text-left">
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-[#78716C]">Select Train Journey *</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" data-train-choice="blue-train" class="splash-train-choice-btn p-2 rounded-xl border-2 text-left transition-all duration-200 active bg-[#D99B26]/15 border-[#D99B26]">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-[#1C1917] font-sans">The Blue Train</span>
+                  <span class="train-choice-radio w-3.5 h-3.5 rounded-full border-2 border-[#D99B26] bg-[#D99B26] flex items-center justify-center">
+                    <i data-lucide="check" class="w-2.5 h-2.5 text-white stroke-[3]"></i>
+                  </span>
+                </div>
+                <span class="text-[9px] text-[#D99B26] font-bold">Ultra Luxury</span>
+              </button>
+              <button type="button" data-train-choice="rovos-rail" class="splash-train-choice-btn p-2 rounded-xl border-2 text-left transition-all duration-200 border-[#E7E2D8] bg-white hover:border-[#2A9D8F]/60">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-[#1C1917] font-sans">Rovos Rail</span>
+                  <span class="train-choice-radio w-3.5 h-3.5 rounded-full border-2 border-[#D6CFC7] bg-transparent flex items-center justify-center">
+                    <i data-lucide="check" class="w-2.5 h-2.5 text-white stroke-[3] hidden"></i>
+                  </span>
+                </div>
+                <span class="text-[9px] text-[#2A9D8F] font-bold">Edwardian Safari</span>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full py-3.5 rounded-full bg-[#D99B26] text-white font-bold uppercase tracking-wider hover:bg-[#C98B1E] transition-all flex items-center justify-center gap-2 shadow-md mt-2">
             <i data-lucide="log-in" class="w-4 h-4"></i> <span id="login-btn-label">Sign In</span>
           </button>
         </form>
 
-        <div class="mt-6 pt-4 border-t border-black/10 text-center font-mono text-xs text-[#111827] font-semibold">
+        <div class="mt-5 pt-3 border-t border-black/10 text-center font-mono text-xs text-[#111827] font-semibold">
           Don't have an account? <button type="button" id="toggle-to-signup" class="text-[#D99B26] font-bold hover:underline ml-1">Create Account</button>
         </div>
       </div>
 
       <!-- SIGN UP SECTION -->
       <div id="signup-section" class="hidden">
-        <div class="text-center mb-6">
-          <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-[#D99B26]/15 border border-[#D99B26]/30 flex items-center justify-center text-[#D99B26]">
+        <div class="text-center mb-4">
+          <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-[#D99B26]/15 border border-[#D99B26]/30 flex items-center justify-center text-[#D99B26]">
             <i data-lucide="user-plus" class="w-6 h-6"></i>
           </div>
           <h3 class="font-heading font-bold text-xl text-[#0A0C10]">Create <span class="text-[#D99B26]">Account</span></h3>
           <p class="text-xs font-mono text-[#111827] font-semibold mt-1">Register for TrackTales Passenger Portal.</p>
         </div>
 
-        <form id="signup-form" class="space-y-4 font-mono text-xs">
+        <form id="signup-form" class="space-y-3 font-mono text-xs">
           <div>
-            <label class="block text-[#111827] mb-1 text-left font-bold">Full Name</label>
-            <input type="text" id="signup-name" class="w-full px-4 py-3 rounded-xl bg-black/5 border border-black/15 text-[#0A0C10] font-semibold focus:outline-none focus:border-[#D99B26]" placeholder="Sipho Ndlovu" required>
+            <label class="block text-[#111827] mb-0.5 text-left font-bold">Full Name</label>
+            <input type="text" id="signup-name" class="w-full px-3 py-2 rounded-xl bg-black/5 border border-black/15 text-[#0A0C10] font-semibold focus:outline-none focus:border-[#D99B26]" placeholder="Sipho Ndlovu" required>
           </div>
           <div>
-            <label class="block text-[#111827] mb-1 text-left font-bold">Passenger Email</label>
-            <input type="email" id="signup-email" class="w-full px-4 py-3 rounded-xl bg-black/5 border border-black/15 text-[#0A0C10] font-semibold focus:outline-none focus:border-[#D99B26]" placeholder="passenger@tracktales.co.za" required>
+            <label class="block text-[#111827] mb-0.5 text-left font-bold">Passenger Email</label>
+            <input type="email" id="signup-email" class="w-full px-3 py-2 rounded-xl bg-black/5 border border-black/15 text-[#0A0C10] font-semibold focus:outline-none focus:border-[#D99B26]" placeholder="passenger@tracktales.co.za" required>
           </div>
           <div class="relative password-group">
-            <label class="block text-[#111827] mb-1 text-left font-bold">Password</label>
+            <label class="block text-[#111827] mb-0.5 text-left font-bold">Password</label>
             <div class="relative">
-              <input type="password" id="signup-password" class="w-full px-4 py-3 pr-10 rounded-xl bg-black/5 border border-black/15 text-[#0A0C10] font-semibold focus:outline-none focus:border-[#D99B26]" placeholder="••••••••" required>
+              <input type="password" id="signup-password" class="w-full px-3 py-2 pr-10 rounded-xl bg-black/5 border border-black/15 text-[#0A0C10] font-semibold focus:outline-none focus:border-[#D99B26]" placeholder="••••••••" required>
               <button type="button" class="btn-toggle-password absolute right-3 top-1/2 -translate-y-1/2 text-black/40 hover:text-black p-1">
                 <i data-lucide="eye" class="w-4 h-4 eye-icon"></i>
               </button>
             </div>
           </div>
           <div class="relative password-group">
-            <label class="block text-[#111827] mb-1 text-left font-bold">Confirm Password</label>
+            <label class="block text-[#111827] mb-0.5 text-left font-bold">Confirm Password</label>
             <div class="relative">
-              <input type="password" id="signup-confirm-password" class="w-full px-4 py-3 pr-10 rounded-xl bg-black/5 border border-black/15 text-[#0A0C10] font-semibold focus:outline-none focus:border-[#D99B26]" placeholder="••••••••" required>
+              <input type="password" id="signup-confirm-password" class="w-full px-3 py-2 pr-10 rounded-xl bg-black/5 border border-black/15 text-[#0A0C10] font-semibold focus:outline-none focus:border-[#D99B26]" placeholder="••••••••" required>
               <button type="button" class="btn-toggle-password absolute right-3 top-1/2 -translate-y-1/2 text-black/40 hover:text-black p-1">
                 <i data-lucide="eye" class="w-4 h-4 eye-icon"></i>
               </button>
             </div>
           </div>
-          <button type="submit" class="w-full py-3.5 rounded-full bg-[#D99B26] text-white font-bold uppercase tracking-wider hover:bg-[#C98B1E] transition-all flex items-center justify-center gap-2 shadow-md">
+
+          <!-- Train Choice in Modal Signup -->
+          <div class="space-y-1 pt-1 text-left">
+            <label class="block text-[10px] font-bold uppercase tracking-wider text-[#78716C]">Preferred Train *</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" data-train-choice="blue-train" class="splash-train-choice-btn p-2 rounded-xl border-2 text-left transition-all duration-200 active bg-[#D99B26]/15 border-[#D99B26]">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-[#1C1917] font-sans">The Blue Train</span>
+                  <span class="train-choice-radio w-3.5 h-3.5 rounded-full border-2 border-[#D99B26] bg-[#D99B26] flex items-center justify-center">
+                    <i data-lucide="check" class="w-2.5 h-2.5 text-white stroke-[3]"></i>
+                  </span>
+                </div>
+                <span class="text-[9px] text-[#D99B26] font-bold">Ultra Luxury</span>
+              </button>
+              <button type="button" data-train-choice="rovos-rail" class="splash-train-choice-btn p-2 rounded-xl border-2 text-left transition-all duration-200 border-[#E7E2D8] bg-white hover:border-[#2A9D8F]/60">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold text-[#1C1917] font-sans">Rovos Rail</span>
+                  <span class="train-choice-radio w-3.5 h-3.5 rounded-full border-2 border-[#D6CFC7] bg-transparent flex items-center justify-center">
+                    <i data-lucide="check" class="w-2.5 h-2.5 text-white stroke-[3] hidden"></i>
+                  </span>
+                </div>
+                <span class="text-[9px] text-[#2A9D8F] font-bold">Edwardian Safari</span>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full py-3.5 rounded-full bg-[#D99B26] text-white font-bold uppercase tracking-wider hover:bg-[#C98B1E] transition-all flex items-center justify-center gap-2 shadow-md mt-2">
             <i data-lucide="user-check" class="w-4 h-4"></i> Sign Up
           </button>
         </form>
 
-        <div class="mt-6 pt-4 border-t border-black/10 text-center font-mono text-xs text-[#111827] font-semibold">
+        <div class="mt-5 pt-3 border-t border-black/10 text-center font-mono text-xs text-[#111827] font-semibold">
           Already have an account? <button type="button" id="toggle-to-login" class="text-[#D99B26] font-bold hover:underline ml-1">Sign In</button>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- STORY READER MODAL (<div id="story-modal">) -->
+  <div id="story-modal" class="fixed inset-0 z-[115] hidden items-center justify-center bg-black/70 backdrop-blur-md p-4 transition-all">
+    <div class="modal-content glass-card max-w-2xl w-full p-8 rounded-3xl border border-[#EBE5D9] shadow-2xl relative bg-[#FAF8F5] text-[#1C1917] max-h-[88vh] overflow-y-auto">
+      <button id="modal-close-btn" class="absolute top-6 right-6 w-9 h-9 rounded-full bg-black/5 hover:bg-black/10 text-[#1C1917] flex items-center justify-center transition-colors" title="Close Story">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="mb-6">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-mono bg-[#4A52B0]/15 text-[#4A52B0] border border-[#4A52B0]/30 uppercase font-bold tracking-wider mb-3">
+          <i data-lucide="book-open" class="w-3 h-3"></i>
+          <span id="modal-read-time">4 min read</span>
+        </div>
+        <h3 id="modal-title" class="font-heading font-extrabold text-2xl sm:text-3xl text-[#1C1917] mb-2 leading-tight">Story Title</h3>
+        <p id="modal-author" class="font-mono text-xs text-[#78716C] font-semibold uppercase tracking-wider">By TrackTales Archives</p>
+      </div>
+
+      <!-- Live Story Audio Player Bar (Unlocked for Audio Experience & VIP Membership) -->
+      <div id="modal-audio-narration-bar" class="mb-5 p-3 rounded-2xl border transition-all">
+        <!-- Rendered dynamically via app.js -->
+      </div>
+
+      <div class="w-12 h-0.5 bg-[#D99B26] mb-6"></div>
+
+      <div id="modal-body" class="font-sans text-sm sm:text-base text-[#292524] leading-relaxed space-y-4">
+        <!-- Story content inserted dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- DECLASSIFIED ARCHIVAL DOSSIER MODAL (<div id="dossier-modal">) -->
+  <div id="dossier-modal" class="fixed inset-0 z-[120] hidden items-center justify-center bg-black/75 backdrop-blur-md p-4 transition-all">
+    <div class="modal-content glass-card max-w-3xl w-full p-8 sm:p-10 rounded-3xl border-2 border-[#D99B26]/40 shadow-2xl relative bg-[#FAF8F5] text-[#1C1917] max-h-[90vh] overflow-y-auto">
+      <button id="dossier-modal-close" class="absolute top-6 right-6 w-9 h-9 rounded-full bg-black/5 hover:bg-black/10 text-[#1C1917] flex items-center justify-center transition-colors" title="Close Dossier">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center justify-between gap-4 mb-4">
+        <span id="dossier-classified-badge" class="px-3.5 py-1 rounded-full text-[10px] font-mono bg-[#ef4444]/15 text-[#ef4444] border border-[#ef4444]/30 uppercase font-extrabold tracking-widest">
+          TOP SECRET · DECLASSIFIED ARCHIVE
+        </span>
+        <span id="dossier-code" class="text-xs font-mono text-[#78716C] font-bold">DOSSIER REF: ZA-RL-1946</span>
+      </div>
+
+      <h3 id="dossier-title" class="font-heading font-extrabold text-2xl sm:text-3xl text-[#1C1917] mb-2 leading-tight">Archival Dossier Title</h3>
+      <p id="dossier-subtitle" class="font-serif italic text-sm text-[#B87C10] font-semibold mb-6">Historical archive dossier summary</p>
+
+      <div class="relative rounded-2xl overflow-hidden aspect-[16/9] mb-6 border border-[#EBE5D9] shadow-md">
+        <img id="dossier-img" src="" alt="Historical Archival Photo" class="w-full h-full object-cover">
+        <div class="absolute bottom-3 left-3 bg-black/70 backdrop-blur-sm text-white px-3 py-1 rounded-lg text-[10px] font-mono">
+          <span id="dossier-caption">Official Historical Rail Archive</span>
+        </div>
+      </div>
+
+      <div id="dossier-body" class="font-sans text-sm text-[#292524] leading-relaxed space-y-4 mb-6">
+        <!-- Archival content inserted dynamically -->
+      </div>
+
+      <div class="p-4 rounded-2xl bg-[#D99B26]/10 border border-[#D99B26]/30 flex items-center justify-between text-xs font-mono text-[#B87C10] font-bold">
+        <span class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4"></i> Official National Railway Heritage Record</span>
+        <span class="text-[10px] text-[#78716C]">Unlocked with Premium Pass</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DID YOU KNOW? GAME MODAL (<div id="did-you-know-modal">) -->
+  <div id="did-you-know-modal" class="fixed inset-0 z-[115] hidden items-center justify-center bg-black/70 backdrop-blur-md p-4 transition-all">
+    <div class="modal-content glass-card max-w-lg w-full p-8 rounded-3xl border border-[#D99B26]/40 shadow-2xl relative bg-[#FAF8F5] text-[#1C1917] max-h-[88vh] overflow-y-auto">
+      <button id="dyk-modal-close" class="absolute top-6 right-6 w-9 h-9 rounded-full bg-black/5 hover:bg-black/10 text-[#1C1917] flex items-center justify-center transition-colors" title="Close">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="text-center mb-6">
+        <div class="w-14 h-14 mx-auto mb-3 rounded-full bg-[#D99B26]/20 border border-[#D99B26]/40 flex items-center justify-center text-[#D99B26]">
+          <i data-lucide="sparkles" class="w-7 h-7"></i>
+        </div>
+        <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-[#B87C10] block mb-1">Sight Unlocked</span>
+        <h3 class="font-heading font-extrabold text-2xl text-[#1C1917]">Did You Know?</h3>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-white border border-[#EBE5D9] mb-6 shadow-sm">
+        <p id="dyk-fact-text" class="text-sm font-sans text-[#1C1917] leading-relaxed italic">
+          Fact details loaded dynamically.
+        </p>
+      </div>
+
+      <div id="dyk-meta-info" class="font-mono text-xs text-[#78716C] space-y-2 mb-6">
+        <!-- Location / status info -->
+      </div>
+
+      <button id="dyk-btn-next-puzzle" class="w-full py-3.5 rounded-full bg-[#D99B26] text-white font-mono font-bold text-xs uppercase tracking-wider hover:bg-[#C98B1E] transition-all flex items-center justify-center gap-2 shadow-md">
+        <span>Continue Exploring Sights</span>
+        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- LIVE GPS CORRIDOR TRACKER MODAL (<div id="gpsModal">) -->
+  <div id="gpsModal" class="fixed inset-0 z-[125] hidden items-center justify-center bg-black/75 backdrop-blur-md p-4 transition-all" role="dialog" aria-label="Live GPS Corridor Tracker">
+    <div class="modal-content glass-card max-w-2xl w-full p-6 sm:p-8 rounded-3xl border-2 border-[#2E7D46]/40 shadow-2xl relative bg-[#FAF8F5] text-[#1C1917] max-h-[92vh] overflow-y-auto">
+      
+      <!-- Close Button -->
+      <button id="gps-modal-close" class="absolute top-5 right-5 text-[#78716C] hover:text-[#1C1917] p-2 rounded-full hover:bg-black/5 transition-colors" title="Close GPS Tracker">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Modal Header -->
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 rounded-2xl bg-[#2E7D46]/15 border border-[#2E7D46]/30 flex items-center justify-center text-[#2E7D46]">
+          <i data-lucide="navigation" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#2E7D46]/10 text-[#2E7D46] font-mono text-[10px] font-bold uppercase tracking-wider mb-1">
+            <span class="w-2 h-2 rounded-full bg-[#2E7D46] animate-pulse"></span>
+            <span id="gps-live-status-pill">100% Free · No Subscription Required</span>
+          </div>
+          <h3 class="font-heading font-extrabold text-2xl text-[#0A0C10]">Live GPS Corridor Tracker</h3>
+          <p class="text-xs font-mono text-[#78716C]">Pretoria to Cape Town 1,600 km Rail Corridor</p>
+        </div>
+      </div>
+
+      <!-- Real-Time Geolocation Readout Card -->
+      <div class="p-5 rounded-2xl bg-white border border-[#E7E2D8] shadow-sm mb-6">
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[#E7E2D8] mb-3">
+          <div class="flex items-center gap-2">
+            <span id="gps-pulse-dot" class="w-2.5 h-2.5 rounded-full bg-[#78716C]"></span>
+            <span id="gps-status-text" class="font-mono text-xs font-bold text-[#0A0C10]">GPS Standby: Tap Enable to Track</span>
+          </div>
+          <span id="gps-accuracy-badge" class="px-2.5 py-0.5 rounded-full bg-black/5 text-[#78716C] font-mono text-[10px] font-bold">
+            Accuracy: --
+          </span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-left font-mono">
+          <div class="p-2.5 rounded-xl bg-[#F8F6F0]">
+            <span class="text-[9px] uppercase tracking-wider text-[#78716C] block">Latitude</span>
+            <strong id="gps-lat" class="text-xs font-bold text-[#0A0C10] truncate block">--</strong>
+          </div>
+          <div class="p-2.5 rounded-xl bg-[#F8F6F0]">
+            <span class="text-[9px] uppercase tracking-wider text-[#78716C] block">Longitude</span>
+            <strong id="gps-lng" class="text-xs font-bold text-[#0A0C10] truncate block">--</strong>
+          </div>
+          <div class="p-2.5 rounded-xl bg-[#F8F6F0]">
+            <span class="text-[9px] uppercase tracking-wider text-[#78716C] block">Est. Speed</span>
+            <strong id="gps-speed" class="text-xs font-bold text-[#0A0C10]">-- km/h</strong>
+          </div>
+          <div class="p-2.5 rounded-xl bg-[#F8F6F0]">
+            <span class="text-[9px] uppercase tracking-wider text-[#78716C] block">Heading</span>
+            <strong id="gps-heading" class="text-xs font-bold text-[#0A0C10]">Southbound</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nearest Corridor Landmark & Distance Card -->
+      <div class="p-5 rounded-2xl bg-[#FFF9EE] border border-[#D99B26]/40 mb-6 text-left">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-[#B87C10] flex items-center gap-1.5">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> Nearest Corridor Landmark
+          </span>
+          <span id="gps-nearest-distance" class="px-2.5 py-0.5 rounded-full bg-[#D99B26] text-white font-mono text-[11px] font-bold">
+            -- km away
+          </span>
+        </div>
+
+        <h4 id="gps-nearest-name" class="font-heading font-bold text-xl text-[#0A0C10] mb-1">
+          Pretoria Capital Park Terminal
+        </h4>
+        <p id="gps-nearest-desc" class="text-xs font-sans text-[#44403C] leading-relaxed mb-3">
+          Northern starting hub for The Blue Train and Rovos Rail. Enable GPS to locate your precise position relative to the 1,600 km corridor stops.
+        </p>
+
+        <!-- Corridor Progress Bar -->
+        <div class="space-y-1.5 pt-2 border-t border-[#D99B26]/20">
+          <div class="flex items-center justify-between font-mono text-[11px]">
+            <span class="text-[#78716C]">Corridor Journey Progress:</span>
+            <strong id="gps-corridor-pct" class="text-[#D99B26] font-bold">0%</strong>
+          </div>
+          <div class="w-full h-2.5 rounded-full bg-black/10 overflow-hidden">
+            <div id="gps-progress-bar" class="h-full bg-gradient-to-r from-[#2E7D46] via-[#D99B26] to-[#C85028] transition-all duration-500" style="width: 0%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7 Corridor Stop Milestones List -->
+      <div class="mb-6 text-left">
+        <h5 class="font-mono text-xs font-bold uppercase tracking-wider text-[#78716C] mb-2.5 flex items-center gap-1.5">
+          <i data-lucide="route" class="w-3.5 h-3.5 text-[#2E7D46]"></i>
+          <span>Corridor Proximity Milestones</span>
+        </h5>
+        <div id="gps-milestones-list" class="space-y-2 font-mono text-xs max-h-48 overflow-y-auto pr-1">
+          <!-- Injected dynamically via JS -->
+        </div>
+      </div>
+
+      <!-- GPS Control Action Buttons -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-[#E7E2D8]">
+        <div class="flex items-center gap-2">
+          <button id="btn-toggle-device-gps" class="px-5 py-2.5 rounded-xl bg-[#2E7D46] text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#256638] transition-all flex items-center gap-2 shadow-md cursor-pointer">
+            <i data-lucide="crosshair" class="w-4 h-4"></i>
+            <span id="btn-toggle-gps-label">Enable Live GPS</span>
+          </button>
+
+          <button id="btn-simulate-gps" class="glass-button px-4 py-2.5 rounded-xl text-xs font-mono text-[#D99B26] hover:bg-[#D99B26]/10 flex items-center gap-1.5 font-bold cursor-pointer" title="Simulate riding the train along the corridor">
+            <i data-lucide="play" class="w-3.5 h-3.5"></i>
+            <span id="btn-simulate-gps-label">Simulate Ride</span>
+          </button>
+        </div>
+
+        <button id="btn-copy-gps-coords" class="glass-button px-4 py-2.5 rounded-xl text-xs font-mono text-[#0A0C10] hover:text-[#2E7D46] flex items-center gap-1.5 font-semibold cursor-pointer">
+          <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+          <span>Share Location</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ACCESSIBILITY SUITE MODAL FOR BLIND & LOW-VISION TRAVELERS (<div id="accessibilityModal">) -->
+  <div id="accessibilityModal" class="fixed inset-0 z-[125] hidden items-center justify-center bg-black/75 backdrop-blur-md p-4 transition-all pointer-events-auto" role="dialog" aria-label="Accessibility Settings">
+    <div class="modal-content glass-card max-w-xl w-full p-6 sm:p-8 rounded-3xl border-2 border-[#4A52B0]/40 shadow-2xl relative bg-[#FAF8F5] text-[#1C1917] max-h-[92vh] overflow-y-auto pointer-events-auto">
+      
+      <!-- Close Button -->
+      <button id="accessibility-modal-close" class="absolute top-5 right-5 text-[#78716C] hover:text-[#1C1917] p-2 rounded-full hover:bg-black/5 transition-colors" title="Close Accessibility Settings">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Modal Header -->
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 rounded-2xl bg-[#4A52B0]/15 border border-[#4A52B0]/30 flex items-center justify-center text-[#4A52B0]">
+          <i data-lucide="eye" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#4A52B0]/10 text-[#4A52B0] font-mono text-[10px] font-bold uppercase tracking-wider mb-1">
+            <i data-lucide="sparkles" class="w-3 h-3"></i>
+            <span>Inclusive Passenger Travel</span>
+          </div>
+          <h3 class="font-heading font-extrabold text-2xl text-[#0A0C10]">Blind &amp; Low-Vision Suite</h3>
+          <p class="text-xs font-mono text-[#78716C]">Audio screen narration, contrast controls, and text scaling</p>
+        </div>
+      </div>
+
+      <!-- Settings Controls List -->
+      <div class="space-y-4 mb-6 text-left">
+        
+        <!-- Setting 1: Screen Reader Auto-Narrator (Web Speech) -->
+        <div data-a11y-setting-card class="p-4 rounded-2xl bg-white border border-[#E7E2D8] flex items-center justify-between">
+          <div class="pr-4">
+            <h4 class="font-heading font-bold text-sm text-[#0A0C10] flex items-center gap-2">
+              <i data-lucide="volume-2" class="w-4 h-4 text-[#4A52B0]"></i> Screen Reader Audio Narrator
+            </h4>
+            <p class="text-xs font-sans text-[#78716C] mt-0.5">Automatically speaks out loud buttons, corridor stops, stories, and quiz choices when focused or clicked.</p>
+          </div>
+          <label for="toggle-screen-reader" class="relative inline-flex items-center cursor-pointer shrink-0">
+            <input type="checkbox" id="toggle-screen-reader" class="sr-only peer">
+            <div class="w-11 h-6 bg-black/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#4A52B0]"></div>
+          </label>
+        </div>
+
+        <!-- Setting 2: High Contrast Mode -->
+        <div data-a11y-setting-card class="p-4 rounded-2xl bg-white border border-[#E7E2D8] flex items-center justify-between">
+          <div class="pr-4">
+            <h4 class="font-heading font-bold text-sm text-[#0A0C10] flex items-center gap-2">
+              <i data-lucide="contrast" class="w-4 h-4 text-[#0A0C10]"></i> High Contrast Dark Canvas
+            </h4>
+            <p class="text-xs font-sans text-[#78716C] mt-0.5">Applies an ultra-high contrast dark canvas with crisp white typography for low-vision clarity.</p>
+          </div>
+          <label for="toggle-high-contrast" class="relative inline-flex items-center cursor-pointer shrink-0">
+            <input type="checkbox" id="toggle-high-contrast" class="sr-only peer">
+            <div class="w-11 h-6 bg-black/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0A0C10]"></div>
+          </label>
+        </div>
+
+        <!-- Setting 3: Large Font Size Scaling -->
+        <div data-a11y-setting-card class="p-4 rounded-2xl bg-white border border-[#E7E2D8] flex items-center justify-between">
+          <div class="pr-4">
+            <h4 class="font-heading font-bold text-sm text-[#0A0C10] flex items-center gap-2">
+              <i data-lucide="type" class="w-4 h-4 text-[#D99B26]"></i> Large Font Scaling (+25%)
+            </h4>
+            <p class="text-xs font-sans text-[#78716C] mt-0.5">Increases base text size, button labels, and descriptions for improved readability.</p>
+          </div>
+          <label for="toggle-large-font" class="relative inline-flex items-center cursor-pointer shrink-0">
+            <input type="checkbox" id="toggle-large-font" class="sr-only peer">
+            <div class="w-11 h-6 bg-black/20 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#D99B26]"></div>
+          </label>
+        </div>
+
+        <!-- Setting 4: Voice Speech Speed -->
+        <div class="p-4 rounded-2xl bg-white border border-[#E7E2D8]">
+          <div class="flex items-center justify-between mb-2">
+            <label for="accessibility-speech-rate" class="font-heading font-bold text-sm text-[#0A0C10] flex items-center gap-2">
+              <i data-lucide="gauge" class="w-4 h-4 text-[#2E7D46]"></i> Speech Speed Rate
+            </label>
+            <span id="speech-rate-label" class="font-mono text-xs font-bold text-[#4A52B0]">1.0x (Normal)</span>
+          </div>
+          <input type="range" id="accessibility-speech-rate" min="0.7" max="1.5" step="0.1" value="1.0" class="w-full accent-[#4A52B0] cursor-pointer">
+        </div>
+
+      </div>
+
+      <!-- Quick Action Controls -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-[#E7E2D8]">
+        <button type="button" id="btn-read-current-page" class="px-5 py-2.5 rounded-xl bg-[#4A52B0] text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#3B429F] transition-all flex items-center gap-2 shadow-md cursor-pointer">
+          <i data-lucide="play-circle" class="w-4 h-4"></i> Read Page Aloud
+        </button>
+
+        <button type="button" id="btn-stop-all-speech" class="glass-button px-4 py-2.5 rounded-xl text-xs font-mono text-red-600 hover:bg-red-50 flex items-center gap-1.5 font-bold cursor-pointer">
+          <i data-lucide="square" class="w-3.5 h-3.5"></i> Stop Speech
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- EMERGENCY HOTLINE & PASSENGER SOS PORTAL MODAL (<div id="emergencyModal">) -->
+  <div id="emergencyModal" class="fixed inset-0 z-[130] hidden items-center justify-center bg-black/80 backdrop-blur-md p-4 transition-all" role="dialog" aria-label="Emergency Hotlines">
+    <div class="modal-content glass-card max-w-2xl w-full p-6 sm:p-8 rounded-3xl border-2 border-red-500/50 shadow-2xl relative bg-[#FAF8F5] text-[#1C1917] max-h-[92vh] overflow-y-auto">
+      
+      <!-- Close Button -->
+      <button id="emergency-modal-close" class="absolute top-5 right-5 text-[#78716C] hover:text-[#1C1917] p-2 rounded-full hover:bg-black/5 transition-colors" title="Close Emergency Portal">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Modal Header -->
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 rounded-2xl bg-red-500/15 border border-red-500/30 flex items-center justify-center text-red-600 animate-pulse">
+          <i data-lucide="phone-call" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-red-500/10 text-red-600 font-mono text-[10px] font-bold uppercase tracking-wider mb-1">
+            <span class="w-2 h-2 rounded-full bg-red-600 animate-ping"></span>
+            <span>24/7 South Africa Rail Safety &amp; SOS</span>
+          </div>
+          <h3 class="font-heading font-extrabold text-2xl text-[#0A0C10]">Emergency Hotlines</h3>
+          <p class="text-xs font-mono text-[#78716C]">Direct dispatch contacts for railway security, medical &amp; train operations</p>
+        </div>
+      </div>
+
+      <!-- Quick 1-Tap SOS Beacon Generator Card -->
+      <div class="p-5 rounded-2xl bg-gradient-to-r from-red-50 to-orange-50 border border-red-200 mb-6 text-left">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-mono font-bold uppercase tracking-wider text-red-700 flex items-center gap-1.5">
+            <i data-lucide="radio" class="w-4 h-4 text-red-600 animate-pulse"></i> One-Tap GPS Distress Beacon
+          </span>
+          <span class="text-[10px] font-mono text-[#78716C]">Automatic Location Formatting</span>
+        </div>
+        <p class="text-xs font-sans text-[#44403C] mb-4">
+          Generates a complete emergency dispatch message with your live GPS coordinates, nearest railway stop, and selected train details to share immediately with responders.
+        </p>
+        
+        <div class="flex flex-wrap gap-2">
+          <button id="btn-generate-sos-beacon" class="px-4 py-2.5 rounded-xl bg-red-600 text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-red-700 transition-all flex items-center gap-2 shadow-md cursor-pointer">
+            <i data-lucide="send" class="w-3.5 h-3.5"></i> Copy GPS SOS Message
+          </button>
+          <a href="tel:10111" class="px-4 py-2.5 rounded-xl bg-[#0A0C10] text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-black/80 transition-all flex items-center gap-2 shadow-md">
+            <i data-lucide="phone" class="w-3.5 h-3.5 text-red-500"></i> Dial 10111
+          </a>
+        </div>
+        <div id="sos-beacon-output" class="hidden mt-3 p-3 rounded-xl bg-white border border-red-300 font-mono text-xs text-[#0A0C10] select-all"></div>
+      </div>
+
+      <!-- Official Emergency Hotlines List -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 text-left">
+        
+        <!-- SAPS Railway Police -->
+        <a href="tel:0860010111" class="p-4 rounded-2xl bg-white border border-[#E7E2D8] hover:border-red-500 hover:shadow-md transition-all flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[10px] font-mono font-bold uppercase text-red-600">Police Dispatch</span>
+              <i data-lucide="phone" class="w-3.5 h-3.5 text-red-600 group-hover:scale-110 transition-transform"></i>
+            </div>
+            <h4 class="font-heading font-bold text-sm text-[#0A0C10]">SAPS Railway Police</h4>
+            <p class="text-xs text-[#78716C] font-sans">National rail corridor security and crime reporting.</p>
+          </div>
+          <div class="mt-3 pt-2 border-t border-[#E7E2D8] font-mono font-bold text-xs text-red-600">
+            0860 010 111 / 10111
+          </div>
+        </a>
+
+        <!-- Transnet Rail Security & Crime-Stop -->
+        <a href="tel:0800212795" class="p-4 rounded-2xl bg-white border border-[#E7E2D8] hover:border-red-500 hover:shadow-md transition-all flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[10px] font-mono font-bold uppercase text-red-600">Transnet Freight & Rail</span>
+              <i data-lucide="phone" class="w-3.5 h-3.5 text-red-600 group-hover:scale-110 transition-transform"></i>
+            </div>
+            <h4 class="font-heading font-bold text-sm text-[#0A0C10]">Transnet Rail Security</h4>
+            <p class="text-xs text-[#78716C] font-sans">Track hazards, infrastructure alerts & corridor control.</p>
+          </div>
+          <div class="mt-3 pt-2 border-t border-[#E7E2D8] font-mono font-bold text-xs text-red-600">
+            0800 212 795 (Toll-Free)
+          </div>
+        </a>
+
+        <!-- National Medical / Ambulance Emergency -->
+        <a href="tel:112" class="p-4 rounded-2xl bg-white border border-[#E7E2D8] hover:border-red-500 hover:shadow-md transition-all flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[10px] font-mono font-bold uppercase text-red-600">Medical / Paramedics</span>
+              <i data-lucide="phone" class="w-3.5 h-3.5 text-red-600 group-hover:scale-110 transition-transform"></i>
+            </div>
+            <h4 class="font-heading font-bold text-sm text-[#0A0C10]">Ambulance &amp; Rescue</h4>
+            <p class="text-xs text-[#78716C] font-sans">National emergency medical response and dispatch.</p>
+          </div>
+          <div class="mt-3 pt-2 border-t border-[#E7E2D8] font-mono font-bold text-xs text-red-600">
+            112 (Cellular) / 10177
+          </div>
+        </a>
+
+        <!-- Luxury Train Concierge Hotlines -->
+        <div class="p-4 rounded-2xl bg-white border border-[#E7E2D8] flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[10px] font-mono font-bold uppercase text-[#D99B26]">Guest Support</span>
+              <i data-lucide="headphones" class="w-3.5 h-3.5 text-[#D99B26]"></i>
+            </div>
+            <h4 class="font-heading font-bold text-sm text-[#0A0C10]">Flagship Concierge</h4>
+            <p class="text-xs text-[#78716C] font-sans">The Blue Train (+27 12 334 8459)<br>Rovos Rail (+27 12 315 8242)</p>
+          </div>
+          <div class="mt-3 pt-2 border-t border-[#E7E2D8] font-mono font-bold text-[11px] text-[#0A0C10]">
+            24/7 Passenger Duty Line
+          </div>
+        </div>
+
+      </div>
+
+      <div class="p-3.5 rounded-xl bg-black/5 font-mono text-[11px] text-[#78716C] flex items-center gap-2">
+        <i data-lucide="info" class="w-4 h-4 text-[#0A0C10] shrink-0"></i>
+        <span>Always notify the train conductor / train manager immediately during onboard emergencies.</span>
+      </div>
+
+    </div>
+  </div>
+
+
   <!-- Main JavaScript App Logic -->
-  <script src="./js/app.js?v=1.5"></script>
+  <script src="./js/app.js?v=3.0"></script>
 
 </body>
 </html>
