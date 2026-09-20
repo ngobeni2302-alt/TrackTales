@@ -20,7 +20,7 @@ class TicketRequest(BaseModel):
     cabin_type: str
     travel_date: str
     passengers_count: int = 1
-    special_requests: Optional[str] = ""
+    special_requests: Optional[str] = "gh"
 
 # --- In-Memory Railway Data ---
 
