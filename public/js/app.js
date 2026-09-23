@@ -10117,16 +10117,25 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       const scoreUnitStreak = document.getElementById('score-unit-streak');
       const btnResetGamesLabel = document.getElementById('btn-reset-games-label');
 
-      if (scoreLabelScore && dict.score_label_score) scoreLabelScore.textContent = dict.score_label_score;
-      if (scoreUnitPts && dict.score_unit_pts) scoreUnitPts.textContent = dict.score_unit_pts;
-      if (scoreLabelWon && dict.score_label_won) scoreLabelWon.textContent = dict.score_label_won;
-      if (scoreUnitCompleted && dict.score_unit_completed) scoreUnitCompleted.textContent = dict.score_unit_completed;
-      if (scoreLabelStreak && dict.score_label_streak) scoreLabelStreak.textContent = dict.score_label_streak;
-      if (scoreUnitStreak && dict.score_unit_in_a_row) scoreUnitStreak.textContent = dict.score_unit_in_a_row;
-      if (btnResetGamesLabel && dict.btn_reset_games) btnResetGamesLabel.textContent = dict.btn_reset_games;
+      if (scoreLabelScore) scoreLabelScore.textContent = dict.score_label_score || 'CORRIDOR SCORE';
+      if (scoreUnitPts) scoreUnitPts.textContent = dict.score_unit_pts || 'pts';
+      if (scoreLabelWon) scoreLabelWon.textContent = dict.score_label_won || 'CHALLENGES WON';
+      if (scoreUnitCompleted) scoreUnitCompleted.textContent = dict.score_unit_completed || 'completed';
+      if (scoreLabelStreak) scoreLabelStreak.textContent = dict.score_label_streak || 'CORRIDOR STREAK';
+      if (scoreUnitStreak) scoreUnitStreak.textContent = dict.score_unit_in_a_row || 'in a row';
+      if (btnResetGamesLabel) btnResetGamesLabel.textContent = dict.btn_reset_games || 'Reset All Games';
 
       const quizHint = document.getElementById('quiz-question-hint');
-      if (quizHint && dict.quiz_subtext) quizHint.textContent = dict.quiz_subtext;
+      if (quizHint) quizHint.textContent = dict.quiz_subtext || 'Select the correct railway stop answer below to advance along the corridor.';
+
+      const btnQuizPrevLabel = document.getElementById('btn-quiz-prev-label');
+      const btnQuizNextLabel = document.getElementById('btn-quiz-next-label');
+      if (btnQuizPrevLabel) btnQuizPrevLabel.textContent = dict.quiz_prev_stop || 'Previous Stop';
+      if (btnQuizNextLabel) btnQuizNextLabel.textContent = dict.quiz_next_stop || 'Next Stop Quiz';
+
+      if (window.TrackTalesRenderQuiz) {
+        window.TrackTalesRenderQuiz();
+      }
 
       // Route Assembler / Puzzle Mode
       const puzzleTrackTitle = document.getElementById('puzzle-track-title');
@@ -10465,14 +10474,965 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
     const customQuizForm = document.getElementById('custom-quiz-form');
     const cancelCustomQuizBtn = document.getElementById('btn-cancel-custom-quiz');
 
+    const QUIZ_TRANSLATIONS = {
+      en: {
+        question_label: "Question",
+        of_label: "of",
+        pts_label: "PTS",
+        correct_heading: "Correct!",
+        incorrect_heading: "Not quite right!",
+        points_awarded: "Points Awarded.",
+        questions: [
+          {
+            stop: "Pretoria Terminus",
+            badge: "Stop 1: Pretoria Terminus",
+            caption: "Pretoria Jacaranda City & Victorian Rail Works",
+            question: "Which historic Pretoria terminus serves as the northern luxury hub for The Blue Train and Rovos Rail?",
+            options: ["Capital Park Station", "Park Station Johannesburg", "Centurion Gautrain Hub", "Mamelodi Depot"],
+            explanation: "Pretoria Capital Park was built in Victorian style and has welcomed discerning rail travelers traversing across southern Africa since the late 19th century."
+          },
+          {
+            stop: "Kimberley Big Hole",
+            badge: "Stop 2: Kimberley Big Hole",
+            caption: "Kimberley Diamond Vaults & Historic Crater",
+            question: "How many diamond miners hand-dug the massive Kimberley Big Hole between 1871 and 1914?",
+            options: ["Approximately 50,000 miners", "Around 2,000 miners", "Over 500,000 miners", "Only 500 miners"],
+            explanation: "Between 1871 and 1914, roughly 50,000 miners excavated the Big Hole entirely by pick and shovel, yielding over 2,720 kilograms of diamonds."
+          },
+          {
+            stop: "De Aar Junction",
+            badge: "Stop 3: De Aar Junction",
+            caption: "De Aar Steam Crossroads of Southern Africa",
+            question: "Why did De Aar historically earn fame across southern Africa's rail network?",
+            options: ["It is the second most important railway junction connecting inland lines", "It was the site of the first South African gold strike", "It hosted the 1994 presidential inauguration", "It is the highest mountain peak in the Karoo"],
+            explanation: "De Aar features over 110 kilometers of railway track lines and 29 rail tracks in its central classification yard, earning its title as the steam crossroads of southern Africa."
+          },
+          {
+            stop: "The Great Karoo",
+            badge: "Stop 4: The Great Karoo Desert",
+            caption: "Vast Great Karoo Desert Plains & Starry Skies",
+            question: "What distinctive acoustic engineering keeps The Blue Train passenger cabins whisper-quiet through the windy Karoo?",
+            options: ["Gold-coated acoustic double glazing windows", "Lead plates installed under carpets", "Wooden sound baffles", "Rubber locomotive wheels"],
+            explanation: "Gold dust is laminated inside the double-glazed panoramic windows to reflect desert solar heat and isolate external railway sounds for supreme comfort."
+          },
+          {
+            stop: "Matjiesfontein Village",
+            badge: "Stop 5: Matjiesfontein Village",
+            caption: "Preserved 1890 Victorian Railway Village",
+            question: "Which legendary Victorian hotel in Matjiesfontein hosted Lord Randolph Churchill and Cecil John Rhodes?",
+            options: ["The Lord Milner Hotel", "The Mount Nelson Hotel", "The Carlton Hotel", "The Cape Marine Lodge"],
+            explanation: "The Lord Milner Hotel was completed in 1899 and served as a military hospital and social hub during the Anglo-Boer war."
+          },
+          {
+            stop: "Cape Town Terminus",
+            badge: "Stop 6: Cape Town Terminus",
+            caption: "Cape Town Terminus in the shadow of Table Mountain",
+            question: "What is the total rail distance traversed from Pretoria to Cape Town on this legendary journey?",
+            options: ["1,600 Kilometers", "850 Kilometers", "3,200 Kilometers", "500 Kilometers"],
+            explanation: "The full luxury rail corridor extends 1,600 kilometers across 4 provinces, taking 31 hours on The Blue Train and 3 days on Rovos Rail."
+          }
+        ]
+      },
+      af: {
+        question_label: "Vraag",
+        of_label: "van",
+        pts_label: "PTN",
+        correct_heading: "Reg!",
+        incorrect_heading: "Nie heeltemal reg nie!",
+        points_awarded: "Punte Toegeken.",
+        questions: [
+          {
+            stop: "Pretoria Eindstasie",
+            badge: "Halte 1: Pretoria Eindstasie",
+            caption: "Pretoria Jakarandastad & Viktoriaanse Spoorwegwerke",
+            question: "Watter historiese Pretoria-eindstasie dien as die noordelike luukse spilpunt vir Die Bloutrein en Rovos Rail?",
+            options: ["Capital Park Stasie", "Park Stasie Johannesburg", "Centurion Gautrain Spilpunt", "Mamelodi Depot"],
+            explanation: "Pretoria Capital Park is in Viktoriaanse styl gebou en verwelkom sedert die laat 19de eeu veeleisende spoorwegreisigers."
+          },
+          {
+            stop: "Kimberley Groot Gat",
+            badge: "Halte 2: Kimberley Groot Gat",
+            caption: "Kimberley Diamantkluis & Historiese Krater",
+            question: "Hoeveel diamantdelwers het die massiewe Kimberley Groot Gat tussen 1871 en 1914 gegrawe?",
+            options: ["Sowat 50 000 delwers", "Omtrent 2 000 delwers", "Meer as 500 000 delwers", "Slegs 500 delwers"],
+            explanation: "Tussen 1871 en 1914 het ongeveer 50 000 delwers die Groot Gat met pik en graaf uitgegrawe."
+          },
+          {
+            stop: "De Aar Aansluiting",
+            badge: "Halte 3: De Aar Aansluiting",
+            caption: "De Aar Stoomkruispad van Suider-Afrika",
+            question: "Hoekom het De Aar histories roem verwerf oor Suider-Afrika se spoorwegnetwerk?",
+            options: ["Dit is die tweede belangrikste spoorwegaansluiting wat binnelandse lyne verbind", "Dit was die terrein van die eerste Suid-Afrikaanse goudvonds", "Dit het die 1994 presidensiële inhuldiging aangebied", "Dit is die hoogste bergpiek in die Karoo"],
+            explanation: "De Aar beskik oor meer as 110 kilometer spoorlyne in sy sentrale klassifikasiewerf."
+          },
+          {
+            stop: "Die Groot Karoo",
+            badge: "Halte 4: Die Groot Karoo Woestyn",
+            caption: "Wye Groot Karoo Woestynvlaktes & Sterrelug",
+            question: "Watter kenmerkende akoestiese ingenieurswese hou Die Bloutrein-passasiershutte stil?",
+            options: ["Goudbedekte akoestiese dubbelglasvensters", "Loodplate onder matte", "Houtklankdempers", "Rubberspoorwielbande"],
+            explanation: "Goudstof is binne die panoramavensters gelamineer om woestynsonhitte te mekaar en geluid te isoleer."
+          },
+          {
+            stop: "Matjiesfontein Dorp",
+            badge: "Halte 5: Matjiesfontein Dorp",
+            caption: "Gewaardeerde 1890 Viktoriaanse Spoorwegdorp",
+            question: "Watter legendariese Viktoriaanse hotel in Matjiesfontein het Lord Randolph Churchill gehuisves?",
+            options: ["Die Lord Milner Hotel", "Die Mount Nelson Hotel", "Die Carlton Hotel", "Die Cape Marine Lodge"],
+            explanation: "Die Lord Milner Hotel is in 1899 voltooi en het gedurende die Anglo-Boereoorlog as hospitaal gedien."
+          },
+          {
+            stop: "Kaapstad Eindstasie",
+            badge: "Halte 6: Kaapstad Eindstasie",
+            caption: "Kaapstad Eindstasie in die skadu van Tafelberg",
+            question: "Wat is die totale spoorafstand vanaf Pretoria na Kaapstad op hierdie legendariese reis?",
+            options: ["1 600 Kilometer", "850 Kilometer", "3 200 Kilometer", "500 Kilometer"],
+            explanation: "Die volle luukse spoorwegkorridor strek oor 1 600 kilometer oor 4 provinsies."
+          }
+        ]
+      },
+      zu: {
+        question_label: "Umbuzo",
+        of_label: "kwi",
+        pts_label: "PTS",
+        correct_heading: "Kuyo!",
+        incorrect_heading: "Akulungile impela!",
+        points_awarded: "Amaphuzu Anikeziwe.",
+        questions: [
+          {
+            stop: "Pretoria Terminus",
+            badge: "Isitobhi 1: Pretoria Terminus",
+            caption: "Pretoria Jacaranda City & Victorian Rail Works",
+            question: "Yisiphi isiteshi sasePretoria somlando esisebenza njengendawo engenhla ye-The Blue Train ne-Rovos Rail?",
+            options: ["Isiteshi se-Capital Park", "Isiteshi se-Park Johannesburg", "Centurion Gautrain Hub", "Mamelodi Depot"],
+            explanation: "I-Pretoria Capital Park yakhiwa ngesitayela sase-Victorian yamukela abagibeli bezitimela ngo-1800."
+          },
+          {
+            stop: "Kimberley Big Hole",
+            badge: "Isitobhi 2: Kimberley Big Hole",
+            caption: "Kimberley Diamond Vaults & Historic Crater",
+            question: "Baphi abavukuzi bedayimane abambha umgodi omkhulu we-Kimberley Big Hole phakathi kuka-1871 no-1914?",
+            options: ["Cishe abavukuzi abangu-50,000", "Abavukuzi abangu-2,000", "Ngaphezu kwabavukuzi abangu-500,000", "Abavukuzi abangu-500 kuphela"],
+            explanation: "Phakathi kuka-1871 no-1914, abavukuzi abayizi-50,000 bambha umgodi besebenzisa amapiki namahosha."
+          },
+          {
+            stop: "De Aar Junction",
+            badge: "Isitobhi 3: De Aar Junction",
+            caption: "De Aar Steam Crossroads of Southern Africa",
+            question: "Kungani i-De Aar yazuza udumo olukhulu kunethiwekhi yezitimela yaseNingizimu ne-Afrika?",
+            options: ["Yiyona ndawo yesibili ebalulekile yokuxhumanisa imizila yangaphakathi", "Yayiyindawo yokuqala yokuthola igolide", "Yamukela ukugcotshwa kwasemthethweni kuka-1994", "Yiyona ntaba ephakeme kakhulu eKaroo"],
+            explanation: "I-De Aar inemizila yezitimela engaphezu kwamakhilomitha amakhulu ayi-110."
+          },
+          {
+            stop: "The Great Karoo",
+            badge: "Isitobhi 4: The Great Karoo Desert",
+            caption: "Vast Great Karoo Desert Plains & Starry Skies",
+            question: "Yiluphi unjiniyela lomsindo ogcina amagumbi e-The Blue Train ethula du phakathi komoya waseKaroo?",
+            options: ["Amafasitela ane-gold-coated amagilasi amabili", "Amatshe omthofu anqwabelene", "Amapulangwe anqanda umsindo", "Amasondo erabha esitimela"],
+            explanation: "Uthuli lwagolide luhlanganiswe ngaphakathi kwamafasitela e-panoramic ukuze lubuyisele ukushisa."
+          },
+          {
+            stop: "Matjiesfontein Village",
+            badge: "Isitobhi 5: Matjiesfontein Village",
+            caption: "Preserved 1890 Victorian Railway Village",
+            question: "Yihhotela liphi lase-Victorian eMatjiesfontein elamukela u-Lord Randolph Churchill?",
+            options: ["The Lord Milner Hotel", "The Mount Nelson Hotel", "The Carlton Hotel", "The Cape Marine Lodge"],
+            explanation: "I-Lord Milner Hotel yaqeda ukwakhiwa ngo-1899 yasebenza njensphesheli yesibhedlela sezempi."
+          },
+          {
+            stop: "Cape Town Terminus",
+            badge: "Isitobhi 6: Cape Town Terminus",
+            caption: "Cape Town Terminus in the shadow of Table Mountain",
+            question: "Yiyiphi ingqikithi yebhange yomzila wesitimela osuka ePretoria uya eKapa?",
+            options: ["Amakhilomitha angu-1,600", "Amakhilomitha angu-850", "Amakhilomitha angu-3,200", "Amakhilomitha angu-500"],
+            explanation: "Umzila ophelele wesitimela sokunethezeka udlula amakhilomitha ayi-1,600 ezifundazweni ezi-4."
+          }
+        ]
+      },
+      xh: {
+        question_label: "Umbuzo",
+        of_label: "kwi",
+        pts_label: "PTS",
+        correct_heading: "Ichanile!",
+        incorrect_heading: "Ayichananga kakuhle!",
+        points_awarded: "Amaphuzu Anikezelweyo.",
+        questions: [
+          {
+            stop: "Pretoria Terminus",
+            badge: "Isitophi 1: Pretoria Terminus",
+            caption: "Pretoria Jacaranda City & Victorian Rail Works",
+            question: "Siphi isiteshi sasePretoria sembali esisebenza njengendawo yaphezulu ye-The Blue Train ne-Rovos Rail?",
+            options: ["Isiteshi sase-Capital Park", "Isiteshi sase-Park Johannesburg", "Centurion Gautrain Hub", "Mamelodi Depot"],
+            explanation: "I-Pretoria Capital Park yakhiwa ngesitayile se-Victorian yakwamkela abahambi bezitimela."
+          },
+          {
+            stop: "Kimberley Big Hole",
+            badge: "Isitophi 2: Kimberley Big Hole",
+            caption: "Kimberley Diamond Vaults & Historic Crater",
+            question: "Bangaphi abavukuzi be-diamant abemba umgodi omkhulu we-Kimberley Big Hole phakathi kuka-1871 no-1914?",
+            options: ["Cishe abavukuzi abangama-50,000", "Abavukuzi abangama-2,000", "Ngaphezulu kwabavukuzi abangama-500,000", "Abavukuzi abangama-500 kuphela"],
+            explanation: "Phakathi kuka-1871 no-1914, abavukuzi bemba umgodi omkhulu bebenzisa izipiki neefosholo."
+          },
+          {
+            stop: "De Aar Junction",
+            badge: "Isitophi 3: De Aar Junction",
+            caption: "De Aar Steam Crossroads of Southern Africa",
+            question: "Kutheni le nto i-De Aar yazuzayo udumo lwembali kumzila wezitimela wase-Afrika eseMazantsi?",
+            options: ["Yeyona ndawo yesibini ebalulekileyo edibanisa imizila langaphakathi", "Yayiyindawo yokuqala yokufumaneka kwegolide", "Yamkela ukugcotshwa komongameli ngo-1994", "Yeyona ntaba ephakamileyo eKaroo"],
+            explanation: "I-De Aar inemizila yezitimela engaphezulu kwekhulu neshumi leekhilomitha."
+          },
+          {
+            stop: "The Great Karoo",
+            badge: "Isitophi 4: The Great Karoo Desert",
+            caption: "Vast Great Karoo Desert Plains & Starry Skies",
+            question: "Luwuphi ubunjineli bomsindo obugcina amagumbi e-The Blue Train ezolile phakathi komoya waseKaroo?",
+            options: ["Iiglasi ezinegolide laminated ezimbini", "Iiplani zelad ngaphantsi meekhaphethi", "Amaplanga anqanda umsindo", "Amasondo erabha esitimela"],
+            explanation: "Uthuli legolide luhlanganiswe ngaphantsi amafestile anamaphaneli amabini."
+          },
+          {
+            stop: "Matjiesfontein Village",
+            badge: "Isitophi 5: Matjiesfontein Village",
+            caption: "Preserved 1890 Victorian Railway Village",
+            question: "Yiyiphi ihotele ye-Victorian eMatjiesfontein eyo-yakwamkela u-Lord Randolph Churchill?",
+            options: ["The Lord Milner Hotel", "The Mount Nelson Hotel", "The Carlton Hotel", "The Cape Marine Lodge"],
+            explanation: "I-Lord Milner Hotel yagqitywa ngo-1899 yaza yasebenza njengospatala wezomkhosi."
+          },
+          {
+            stop: "Cape Town Terminus",
+            badge: "Isitophi 6: Cape Town Terminus",
+            caption: "Cape Town Terminus in the shadow of Table Mountain",
+            question: "Yiyiphi ingqikithi yomzila wesitimela ukusuka ePretoria uya eKapa kolu hambo lwembali?",
+            options: ["Iikhilomitha ezili-1,600", "Iikhilomitha ezingama-850", "Iikhilomitha ezazi-3,200", "Iikhilomitha ezingama-500"],
+            explanation: "Umzila opheleleyo wezitimela zobunewunewu uluphala iikhilomitha ezili-1,600."
+          }
+        ]
+      },
+      de: {
+        question_label: "Frage",
+        of_label: "von",
+        pts_label: "PKT",
+        correct_heading: "Richtig!",
+        incorrect_heading: "Nicht ganz richtig!",
+        points_awarded: "Punkte Vergeben.",
+        questions: [
+          {
+            stop: "Pretoria Endstation",
+            badge: "Halt 1: Pretoria Endstation",
+            caption: "Pretoria Jacarandastadt & Viktorianische Eisenbahnwerke",
+            question: "Welche historische Endstation in Pretoria dient als nördlicher Luxusknotenpunkt für den Blue Train und Rovos Rail?",
+            options: ["Capital Park Bahnhof", "Park Station Johannesburg", "Centurion Gautrain Knotenpunkt", "Mamelodi Depot"],
+            explanation: "Pretoria Capital Park wurde im viktorianischen Stil erbaut und empfängt anspruchsvolle Zugreisende seit dem späten 19. Jahrhundert."
+          },
+          {
+            stop: "Kimberley Big Hole",
+            badge: "Halt 2: Kimberley Big Hole",
+            caption: "Kimberley Diamanttresore & Historischer Krater",
+            question: "Wie viele Diamantenbergleute gruben das riesige Kimberley Big Hole zwischen 1871 und 1914 von Hand?",
+            options: ["Ca. 50.000 Bergleute", "Etwa 2.000 Bergleute", "Über 500.000 Bergleute", "Nur 500 Bergleute"],
+            explanation: "Zwischen 1871 und 1914 hoben rund 50.000 Bergleute das Big Hole aus."
+          },
+          {
+            stop: "De Aar Knotenpunkt",
+            badge: "Halt 3: De Aar Knotenpunkt",
+            caption: "De Aar Dampfkreuzung des südlichen Afrikas",
+            question: "Warum erlangte De Aar historisch Berühmtheit im Eisenbahnnetz des südlichen Afrikas?",
+            options: ["Es ist der zweitwichtigste Eisenbahnknotenpunkt, der Inlandsstrecken verbindet", "Es war der Ort des ersten südafrikanischen Goldfundes", "Es beherbergte die präsidentielle Amtseinführung 1994", "Es ist der höchste Bergteil in der Karoo"],
+            explanation: "De Aar verfügt über mehr als 110 Kilometer Gleisstrecken auf seinem zentralen Bahnhofsgelände."
+          },
+          {
+            stop: "Die Große Karoo",
+            badge: "Halt 4: Die Große Karoo-Wüste",
+            caption: "Weite Ebenen der Großen Karoo & Sternenhimmel",
+            question: "Welche besondere Akustiktechnik hält die Kabinen des Blue Train durch die windige Karoo flüsterleise?",
+            options: ["Goldbeschichtete akustische Doppelglasfenster", "Bleiplatten unter Teppichen", "Holzschalldämpfer", "Gummierte Zugräder"],
+            explanation: "Goldschicht ist in den doppelt verglasten Panoramafenstern laminiert."
+          },
+          {
+            stop: "Dorf Matjiesfontein",
+            badge: "Halt 5: Dorf Matjiesfontein",
+            caption: "Erhaltenes viktorianisches Eisenbahndorf von 1890",
+            question: "Welches legendäre viktorianische Hotel in Matjiesfontein beherbergte Lord Randolph Churchill?",
+            options: ["Das Lord Milner Hotel", "Das Mount Nelson Hotel", "Das Carlton Hotel", "Die Cape Marine Lodge"],
+            explanation: "Das Lord Milner Hotel wurde 1899 fertiggestellt und diente als Militärkrankenhaus."
+          },
+          {
+            stop: "Kapstadt Endstation",
+            badge: "Halt 6: Kapstadt Endstation",
+            caption: "Kapstadt Endstation im Schatten des Tafelbergs",
+            question: "Wie lang ist die gesamte Bahnstrecke von Pretoria nach Kapstadt auf dieser legendären Reise?",
+            options: ["1.600 Kilometer", "850 Kilometer", "3.200 Kilometer", "500 Kilometer"],
+            explanation: "Der gesamte Luxusschienenkorridor erstreckt sich über 1.600 Kilometer."
+          }
+        ]
+      },
+      fr: {
+        question_label: "Question",
+        of_label: "sur",
+        pts_label: "PTS",
+        correct_heading: "Correct !",
+        incorrect_heading: "Pas tout à fait !",
+        points_awarded: "Points Attribués.",
+        questions: [
+          {
+            stop: "Terminus de Pretoria",
+            badge: "Arrêt 1: Terminus de Pretoria",
+            caption: "Pretoria Ville des Jacarandas & Ateliers Ferroviaires",
+            question: "Quel terminus historique de Pretoria sert de hub de luxe nord pour Le Blue Train et Rovos Rail ?",
+            options: ["Gare de Capital Park", "Gare de Park Johannesburg", "Hub Gautrain Centurion", "Dépôt de Mamelodi"],
+            explanation: "Pretoria Capital Park a été construit dans un style victorien et accueille les voyageurs exigeants depuis la fin du XIXe siècle."
+          },
+          {
+            stop: "Big Hole de Kimberley",
+            badge: "Arrêt 2: Big Hole de Kimberley",
+            caption: "Coffres de Diamants & Cratère Historique de Kimberley",
+            question: "Combien de mineurs de diamants ont creusé à la main le Big Hole de Kimberley entre 1871 et 1914 ?",
+            options: ["Environ 50 000 mineurs", "Environ 2 000 mineurs", "Plus de 500 000 mineurs", "Seulement 500 mineurs"],
+            explanation: "Entre 1871 et 1914, environ 50 000 mineurs ont excavé le Big Hole uniquement à la pioche et à la pelle."
+          },
+          {
+            stop: "Jonction de De Aar",
+            badge: "Arrêt 3: Jonction de De Aar",
+            caption: "Carrefour à Vapeur de De Aar d'Afrique Australe",
+            question: "Pourquoi De Aar a-t-il historiquement acquis sa renommée sur le réseau ferroviaire d'Afrique australe ?",
+            options: ["C'est la deuxième jonction ferroviaire la plus importante reliant les lignes intérieures", "C'était le site de la première découverte d'or sud-africaine", "Il a accueilli l'investiture présidentielle de 1994", "C'est le plus haut sommet de montagne du Karoo"],
+            explanation: "De Aar possède plus de 110 kilomètres de voies ferrées."
+          },
+          {
+            stop: "Le Grand Karoo",
+            badge: "Arrêt 4: Désert du Grand Karoo",
+            caption: "Plaines du Désert du Karoo & Ciel Étoilé",
+            question: "Quelle ingénierie acoustique préserve le silence absolu dans les cabines du Blue Train à travers le Karoo ?",
+            options: ["Vitrage acoustique double teinté à l'or", "Plaques de plomb sous les tapis", "Déflecteurs en bois", "Roues de locomotive en caoutchouc"],
+            explanation: "De la poussière d'or est laminée à l'intérieur des vitres panoramiques."
+          },
+          {
+            stop: "Village de Matjiesfontein",
+            badge: "Arrêt 5: Village de Matjiesfontein",
+            caption: "Village Ferroviaire Victorien Preservé de 1890",
+            question: "Quel hôtel victorien légendaire à Matjiesfontein a accueilli Lord Randolph Churchill ?",
+            options: ["L'Hôtel Lord Milner", "L'Hôtel Mount Nelson", "L'Hôtel Carlton", "Le Cape Marine Lodge"],
+            explanation: "L'Hôtel Lord Milner a été achevé en 1899 et a servi d'hôpital militaire."
+          },
+          {
+            stop: "Terminus de Le Cap",
+            badge: "Arrêt 6: Terminus de Le Cap",
+            caption: "Terminus de Le Cap à l'ombre de la Montagne de la Table",
+            question: "Quelle est la distance ferroviaire totale parcourue entre Pretoria et Le Cap lors de ce voyage légendaire ?",
+            options: ["1 600 Kilomètres", "850 Kilomètres", "3 200 Kilomètres", "500 Kilomètres"],
+            explanation: "Le corridor ferroviaire de luxe s'étend sur 1 600 kilomètres à travers 4 provinces."
+          }
+        ]
+      },
+      nl: {
+        question_label: "Vraag",
+        of_label: "van",
+        pts_label: "PTN",
+        correct_heading: "Correct!",
+        incorrect_heading: "Niet helemaal juist!",
+        points_awarded: "Punten Toegekend.",
+        questions: [
+          {
+            stop: "Pretoria Eindstation",
+            badge: "Halte 1: Pretoria Eindstation",
+            caption: "Pretoria Jacarandastad & Victoriaanse Spoorwegwerken",
+            question: "Welk historisch eindstation in Pretoria dient als de noordelijke luxe hub voor The Blue Train en Rovos Rail?",
+            options: ["Capital Park Station", "Park Station Johannesburg", "Centurion Gautrain Hub", "Mamelodi Depot"],
+            explanation: "Pretoria Capital Park is gebouwd in victoriaanse stijl en verwelkomt sinds het einde van de 19e eeuw treinreizigers."
+          },
+          {
+            stop: "Kimberley Big Hole",
+            badge: "Halte 2: Kimberley Big Hole",
+            caption: "Kimberley Diamantkluizen & Historische Krater",
+            question: "Hoeveel diamantdelvers groeven het massieve Kimberley Big Hole tussen 1871 en 1914 met de hand uit?",
+            options: ["Ongeveer 50.000 delvers", "Ongeveer 2.000 delvers", "Meer dan 500.000 delvers", "Slechts 500 delvers"],
+            explanation: "Tussen 1871 en 1914 groeven ongeveer 50.000 delvers het Big Hole uit."
+          },
+          {
+            stop: "De Aar Knooppunt",
+            badge: "Halte 3: De Aar Knooppunt",
+            caption: "De Aar Stoomkruispunt van Zuidelijk Afrika",
+            question: "Waarom vergaarde De Aar historisch faam op het spoorwegnet van zuidelijk Afrika?",
+            options: ["Het is het op één na belangrijkste spoorwegknooppunt dat binnenlandse lijnen verbindt", "Het was de plek van de eerste goudvondst", "Het ontving de presidentiële inauguratie van 1994", "Het is de hoogste bergtop in de Karoo"],
+            explanation: "De Aar beschikt over meer dan 110 kilometer spoorlijn op zijn centrale sorteerterrein."
+          },
+          {
+            stop: "De Grote Karoo",
+            badge: "Halte 4: De Grote Karoo Woestijn",
+            caption: "Uitgestrekte Karoo Woestijnvlaktes & Sterrenhemel",
+            question: "Welke akoestische techniek houdt de cabines van The Blue Train stil door de Karoo?",
+            options: ["Met goud gecoate akoestische dubbele beglazing", "Loden platen onder het tapijt", "Houten geluidsdempers", "Rubberen treinwielen"],
+            explanation: "Goudstof is gelamineerd in de panoramische ramen met dubbel glas."
+          },
+          {
+            stop: "Matjiesfontein Dorp",
+            badge: "Halte 5: Matjiesfontein Dorp",
+            caption: "Bewaard Victoriaans Spoorwegdorp uit 1890",
+            question: "Welk legendarisch victoriaans hotel in Matjiesfontein ontving Lord Randolph Churchill?",
+            options: ["Het Lord Milner Hotel", "Het Mount Nelson Hotel", "Het Carlton Hotel", "De Cape Marine Lodge"],
+            explanation: "Het Lord Milner Hotel werd voltooid in 1899 en diende als militair hospitaal."
+          },
+          {
+            stop: "Kaapstad Eindstation",
+            badge: "Halte 6: Kaapstad Eindstation",
+            caption: "Kaapstad Eindstation in de schaduw van de Tafelberg",
+            question: "Wat is de totale spoorafstand van Pretoria naar Kaapstad op deze legendarische reis?",
+            options: ["1.600 Kilometer", "850 Kilometer", "3.200 Kilometer", "500 Kilometer"],
+            explanation: "De volledige luxe spoorlijn strekt zich uit over 1.600 kilometer door 4 provincies."
+          }
+        ]
+      },
+      es: {
+        question_label: "Pregunta",
+        of_label: "de",
+        pts_label: "PTS",
+        correct_heading: "¡Correcto!",
+        incorrect_heading: "¡No del todo correcto!",
+        points_awarded: "Puntos Otorgados.",
+        questions: [
+          {
+            stop: "Terminus de Pretoria",
+            badge: "Parada 1: Terminus de Pretoria",
+            caption: "Pretoria Ciudad Jacaranda & Talleres Victorianos",
+            question: "¿Qué término histórico de Pretoria sirve como el centro de lujo del norte para The Blue Train y Rovos Rail?",
+            options: ["Estación Capital Park", "Estación Park Johannesburgo", "Hub Centurion Gautrain", "Depósito Mamelodi"],
+            explanation: "Pretoria Capital Park fue construido en estilo victoriano y ha recibido a viajeros desde finales del siglo XIX."
+          },
+          {
+            stop: "Big Hole de Kimberley",
+            badge: "Parada 2: Big Hole de Kimberley",
+            caption: "Bóvedas de Diamantes de Kimberley & Cráter Histórico",
+            question: "¿Cuántos mineros de diamantes excavaron a mano el enorme Big Hole de Kimberley entre 1871 y 1914?",
+            options: ["Aproximadamente 50,000 mineros", "Alrededor de 2,000 mineros", "Más de 500,000 mineros", "Solo 500 mineros"],
+            explanation: "Entre 1871 y 1914, unos 50,000 mineros excavaron el Big Hole con pico y pala."
+          },
+          {
+            stop: "Empalme De Aar",
+            badge: "Parada 3: Empalme De Aar",
+            caption: "Encrucijada a Vapor De Aar del Sur de África",
+            question: "¿Por qué De Aar obtuvo históricamente fama en la red ferroviaria del sur de África?",
+            options: ["Es el segundo empalme ferroviario más importante que conecta líneas interiores", "Fue el lugar del primer hallazgo de oro", "Albergó la inauguración presidencial de 1994", "Es el pico más alto en el Karoo"],
+            explanation: "De Aar cuenta con más de 110 kilómetros de vías férreas en su patio de clasificación."
+          },
+          {
+            stop: "El Gran Karoo",
+            badge: "Parada 4: Desierto del Gran Karoo",
+            caption: "Llanuras del Desierto del Karoo & Cielos Estrellados",
+            question: "¿Qué ingeniería acústica mantiene las cabinas de The Blue Train silenciosas a través del Karoo?",
+            options: ["Ventanas acústicas de doble cristal con capa de oro", "Placas de plomo bajo las alfombras", "Deflectores de madera", "Ruedas de tren de goma"],
+            explanation: "El polvo de oro está laminado dentro de las ventanas panorámicas de doble cristal."
+          },
+          {
+            stop: "Pueblo Matjiesfontein",
+            badge: "Parada 5: Pueblo Matjiesfontein",
+            caption: "Pueblo Ferroviario Victoriano Conservado de 1890",
+            question: "¿Qué legendario hotel victoriano en Matjiesfontein albergó a Lord Randolph Churchill?",
+            options: ["El Hotel Lord Milner", "El Hotel Mount Nelson", "El Hotel Carlton", "El Cape Marine Lodge"],
+            explanation: "El Hotel Lord Milner se completó en 1899 y sirvió como hospital militar."
+          },
+          {
+            stop: "Terminus de Ciudad del Cabo",
+            badge: "Parada 6: Terminus de Ciudad del Cabo",
+            caption: "Terminus de Ciudad del Cabo a la sombra de Table Mountain",
+            question: "¿Cuál es la distancia ferroviaria total recorrida de Pretoria a Ciudad del Cabo en este viaje?",
+            options: ["1,600 Kilómetros", "850 Kilómetros", "3,200 Kilómetros", "500 Kilómetros"],
+            explanation: "El corredor ferroviario de lujo se extiende a lo largo de 1,600 kilómetros."
+          }
+        ]
+      },
+      it: {
+        question_label: "Domanda",
+        of_label: "di",
+        pts_label: "PT",
+        correct_heading: "Corretto!",
+        incorrect_heading: "Non proprio corretto!",
+        points_awarded: "Punti Assegnati.",
+        questions: [
+          {
+            stop: "Capolinea di Pretoria",
+            badge: "Fermata 1: Capolinea di Pretoria",
+            caption: "Pretoria Città delle Jacarande & Officine Vittoriane",
+            question: "Quale storico capolinea di Pretoria funge da hub di lusso settentrionale per The Blue Train e Rovos Rail?",
+            options: ["Stazione di Capital Park", "Stazione Park Johannesburg", "Hub Centurion Gautrain", "Deposito Mamelodi"],
+            explanation: "Pretoria Capital Park è stata costruita in stile vittoriano e accoglie viaggiatori dal tardo XIX secolo."
+          },
+          {
+            stop: "Big Hole di Kimberley",
+            badge: "Fermata 2: Big Hole di Kimberley",
+            caption: "Cave di Diamanti & Cratere Storico di Kimberley",
+            question: "Quanti minatori di diamanti hanno scavato a mano il grande Big Hole tra il 1871 e il 1914?",
+            options: ["Circa 50.000 minatori", "Circa 2.000 minatori", "Oltre 500.000 minatori", "Solo 500 minatori"],
+            explanation: "Tra il 1871 e il 1914, circa 50.000 minatori hanno scavato il Big Hole."
+          },
+          {
+            stop: "Snodo di De Aar",
+            badge: "Fermata 3: Snodo di De Aar",
+            caption: "De Aar Crocevia a Vapore dell'Africa Meridionale",
+            question: "Perché De Aar ha ottenuto fama storica nella rete ferroviaria dell'Africa meridionale?",
+            options: ["È il secondo snodo ferroviario più importante che collega le linee interne", "È stato il luogo della prima scoperta d'oro", "Ha ospitato l'inaugurazione presidenziale del 1994", "È la vetta più alta del Karoo"],
+            explanation: "De Aar vanta oltre 110 chilometri di binari ferroviari."
+          },
+          {
+            stop: "Il Grande Karoo",
+            badge: "Fermata 4: Deserto del Grande Karoo",
+            caption: "Pianure del Deserto del Karoo & Cieli Stellati",
+            question: "Quale ingegneria acustica mantiene le cabine del Blue Train silenziose nel Karoo?",
+            options: ["Doppi vetri acustici con strato d'oro", "Piastre di piombo sotto i tappeti", "Pannelli fonoassorbenti in legno", "Ruote del treno in gomma"],
+            explanation: "La polvere d'oro è laminata all'interno dei doppi vetri panoramici."
+          },
+          {
+            stop: "Villaggio di Matjiesfontein",
+            badge: "Fermata 5: Villaggio di Matjiesfontein",
+            caption: "Villaggio Ferroviario Vittoriano Conservato del 1890",
+            question: "Quale leggendario hotel vittoriano a Matjiesfontein ha ospitato Lord Randolph Churchill?",
+            options: ["Il Lord Milner Hotel", "Il Mount Nelson Hotel", "Il Carlton Hotel", "Il Cape Marine Lodge"],
+            explanation: "Il Lord Milner Hotel è stato completato nel 1899 e ha servito come ospedale militare."
+          },
+          {
+            stop: "Capolinea di Città del Capo",
+            badge: "Fermata 6: Capolinea di Città del Capo",
+            caption: "Capolinea di Città del Capo all'ombra della Table Mountain",
+            question: "Qual è la distanza ferroviaria totale percorsa da Pretoria a Città del Capo in questo viaggio?",
+            options: ["1.600 Chilometri", "850 Chilometri", "3.200 Chilometri", "500 Chilometri"],
+            explanation: "Il corridoio ferroviario di lusso si estende per 1.600 chilometri."
+          }
+        ]
+      },
+      pt: {
+        question_label: "Pergunta",
+        of_label: "de",
+        pts_label: "PTS",
+        correct_heading: "Correto!",
+        incorrect_heading: "Não está totalmente correto!",
+        points_awarded: "Pontos Atribuídos.",
+        questions: [
+          {
+            stop: "Término de Pretória",
+            badge: "Paragem 1: Término de Pretória",
+            caption: "Pretória Cidade Jacarandá & Oficinas Vitorianas",
+            question: "Qual histórico término de Pretória serve como centro de luxo do norte para The Blue Train e Rovos Rail?",
+            options: ["Estação Capital Park", "Estação Park Joanesburgo", "Hub Centurion Gautrain", "Depósito Mamelodi"],
+            explanation: "Pretória Capital Park foi construído em estilo vitoriano e acolhe viajantes desde o final do século XIX."
+          },
+          {
+            stop: "Big Hole de Kimberley",
+            badge: "Paragem 2: Big Hole de Kimberley",
+            caption: "Cofres de Diamantes & Cratera Histórica de Kimberley",
+            question: "Quantos mineiros de diamantes escavaram à mão o Big Hole de Kimberley entre 1871 e 1914?",
+            options: ["Aproximadamente 50.000 mineiros", "Cerca de 2.000 mineiros", "Mais de 500.000 mineiros", "Apenas 500 mineiros"],
+            explanation: "Entre 1871 e 1914, cerca de 50.000 mineiros escavaram o Big Hole."
+          },
+          {
+            stop: "Entroncamento de De Aar",
+            badge: "Paragem 3: Entroncamento de De Aar",
+            caption: "Cruzamento a Vapor de De Aar da África Austral",
+            question: "Por que De Aar ganhou fama histórica na rede ferroviária da África Austral?",
+            options: ["É o segundo entroncamento ferroviário mais importante a ligar linhas interiores", "Foi o local da primeira descoberta de ouro", "Acolheu a posse presidencial de 1994", "É o pico de montanha mais alto do Karoo"],
+            explanation: "De Aar possui mais de 110 quilómetros de vias férreas."
+          },
+          {
+            stop: "O Grande Karoo",
+            badge: "Paragem 4: Deserto do Grande Karoo",
+            caption: "Planícies do Deserto do Karoo & Céus Estrelados",
+            question: "Que engenharia acústica mantém as cabines do Blue Train silenciosas através do Karoo?",
+            options: ["Janelas acústicas duplas revestidas a ouro", "Placas de chumbo sob carpetes", "Deflectores de som em madeira", "Rodas de comboio em borracha"],
+            explanation: "Pó de ouro é laminado nas janelas panorâmicas duplas."
+          },
+          {
+            stop: "Vila de Matjiesfontein",
+            badge: "Paragem 5: Vila de Matjiesfontein",
+            caption: "Vila Ferroviária Vitoriana Preservada de 1890",
+            question: "Que lendário hotel vitoriano em Matjiesfontein hospedou Lord Randolph Churchill?",
+            options: ["O Lord Milner Hotel", "O Mount Nelson Hotel", "O Carlton Hotel", "O Cape Marine Lodge"],
+            explanation: "O Lord Milner Hotel foi concluído em 1899 e serviu como hospital militar."
+          },
+          {
+            stop: "Término do Cabo",
+            badge: "Paragem 6: Término do Cabo",
+            caption: "Término da Cidade do Cabo à sombra da Montanha da Mesa",
+            question: "Qual é a distância ferroviária total percorrida de Pretória à Cidade do Cabo nesta viagem?",
+            options: ["1.600 Quilómetros", "850 Quilómetros", "3.200 Quilómetros", "500 Quilómetros"],
+            explanation: "O corredor ferroviário de luxo estende-se por 1.600 quilómetros."
+          }
+        ]
+      },
+      zh: {
+        question_label: "问题",
+        of_label: "共",
+        pts_label: "分",
+        correct_heading: "回答正确！",
+        incorrect_heading: "回答不够准确！",
+        points_awarded: "获得积分。",
+        questions: [
+          {
+            stop: "比勒陀利亚终点站",
+            badge: "第 1 站：比勒陀利亚终点站",
+            caption: "比勒陀利亚紫楹花城与维多利亚时代铁路车间",
+            question: "比勒陀利亚哪座历史悠久的终点站是蓝色列车和罗沃斯铁路的北部奢华枢纽？",
+            options: ["首都公园车站", "约翰内斯堡公园车站", "豪登列车桑顿枢纽", "马梅洛迪车辆段"],
+            explanation: "比勒陀利亚首都公园车站建于维多利亚时代，自19世纪末以来一直接待高端铁路旅客。"
+          },
+          {
+            stop: "金伯利大洞",
+            badge: "第 2 站：金伯利大洞",
+            caption: "金伯利钻石金库与历史矿坑",
+            question: "在1871年至1914年间，约有多少名钻石矿工徒手挖掘了巨大的金伯利大洞？",
+            options: ["约 50,000 名矿工", "约 2,000 名矿工", "超过 500,000 名矿工", "仅 500 名矿工"],
+            explanation: "在1871年至1914年间，约50,000名矿工挖掘了大洞，产出了超过2,720千克钻石。"
+          },
+          {
+            stop: "德阿尔枢纽",
+            badge: "第 3 站：德阿尔枢纽",
+            caption: "德阿尔南部非洲蒸汽铁路十字路口",
+            question: "为什么德阿尔在历史上在南部非洲铁路网中享有盛誉？",
+            options: ["它是连接内陆铁路线的第二大重要铁路枢纽", "它是南非首次发现黄金的地方", "它举办了1994年总统就职典礼", "它是卡鲁地区最高的山峰"],
+            explanation: "德阿尔在其中央编组站拥有超过110公里的铁路线。"
+          },
+          {
+            stop: "大卡鲁沙漠",
+            badge: "第 4 站：大卡鲁沙漠",
+            caption: "辽阔的大卡鲁沙漠平原与璀璨星空",
+            question: "哪项独特的声学工程使蓝色列车在穿过大风的卡鲁沙漠时保持极度安静？",
+            options: ["镀金声学双层玻璃窗", "地毯下安装的铅板", "木质隔音板", "橡胶机车轮"],
+            explanation: "金粉被层压在双层全景窗户内，以反射热量并隔绝外部噪音。"
+          },
+          {
+            stop: "马杰斯方丹村",
+            badge: "第 5 站：马杰斯方丹村",
+            caption: "保存完好的1890年维多利亚时代铁路村落",
+            question: "马杰斯方丹哪家传奇的维多利亚时代酒店接待过伦道夫·丘吉尔勋爵？",
+            options: ["米尔纳勋爵酒店", "纳尔逊山酒店", "卡尔顿酒店", "开普海洋客栈"],
+            explanation: "米尔纳勋爵酒店于1899年建成，在英布战争期间用作军医院。"
+          },
+          {
+            stop: "开普敦终点站",
+            badge: "第 6 站：开普敦终点站",
+            caption: "桌山阴影下的开普敦终点站",
+            question: "在这段传奇旅程中，从比勒陀利亚到开普敦穿越的总铁路距离是多少？",
+            options: ["1,600 公里", "850 公里", "3,200 公里", "500 公里"],
+            explanation: "整个奢华铁路走廊跨越4个省份，绵延1,600公里。"
+          }
+        ]
+      },
+      ja: {
+        question_label: "質問",
+        of_label: "/",
+        pts_label: "PT",
+        correct_heading: "正解！",
+        incorrect_heading: "惜しい！",
+        points_awarded: "ポイント獲得。",
+        questions: [
+          {
+            stop: "プレトリア終点駅",
+            badge: "第1駅: プレトリア終点駅",
+            caption: "プレトリア・ジャカランダシティ＆ヴィクトリア朝鉄道工場",
+            question: "ブルートレインとロボスレイルの北部ラグジュアリーハブとなる歴史的なプレトリアの終着駅はどれですか？",
+            options: ["キャピタルパーク駅", "ヨハネスブルグパーク駅", "センチュリオン・ゴートレインハブ", "マメロディデポ"],
+            explanation: "プレトリア・キャピタルパーク駅はヴィクトリア様式で建設され、19世紀後半から乗客を迎えています。"
+          },
+          {
+            stop: "キンバリー・ビッグホール",
+            badge: "第2駅: キンバリー・ビッグホール",
+            caption: "キンバリー・ダイヤモンド保管库＆歴史的クレーター",
+            question: "1871年から1914年の間に、手掘りで巨大なキンバリー・ビッグホールを掘ったダイヤモンド採掘手は何人ですか？",
+            options: ["約50,000人", "約2,000人", "500,000人以上", "わずか500人"],
+            explanation: "1871年から1914年の間に、約50,000人の採掘手がピッケルとスコップだけで掘削しました。"
+          },
+          {
+            stop: "デ・アールジャンクション",
+            badge: "第3駅: デ・アールジャンクション",
+            caption: "南部アフリカの蒸気機関車クロスロード",
+            question: "デ・アールは歴史的に南部アフリカの鉄道網でなぜ有名になったのですか？",
+            options: ["内陸線を結ぶ2番目に重要な鉄道ジャンクション", "南アフリカ初の金鉱発見地", "1994年の大統領就任式の会場", "カルーで最も高い山峰"],
+            explanation: "デ・アールは110km以上の線路を有し、南部アフリカの蒸気クロスロードの称号を得ました。"
+          },
+          {
+            stop: "グレート・カルー",
+            badge: "第4駅: グレート・カルー砂漠",
+            caption: "広大なグレート・カルー砂漠平原と星空",
+            question: "風の強いカルーを通過する際、ブルートレインの客室を静寂に保つ特徴的な音響技術は何ですか？",
+            options: ["金コーティング音響二重ガラス窓", "カーペット下の鉛プレート", "木製防音板", "ゴム製機関車車輪"],
+            explanation: "金粉が二重ガラスのパノラマ窓内にラミネートされています。"
+          },
+          {
+            stop: "マチェスフォンテイン村",
+            badge: "第5駅: マチェスフォンテイン村",
+            caption: "保存された1890年代ヴィクトリア朝の鉄道村",
+            question: "マチェスフォンテインの伝説的なヴィクトリア朝ホテルで、ランドルフ・チャーチル卿が滞在したホテルは？",
+            options: ["ロード・ミルナー・ホテル", "マウント・ネルソン・ホテル", "カールトン・ホテル", "ケープ・マリン・ロッジ"],
+            explanation: "ロード・ミルナー・ホテルは1899年に完成し、ボーア戦争中には野戦病院として機能しました。"
+          },
+          {
+            stop: "ケープタウン終点駅",
+            badge: "第6駅: ケープタウン終点駅",
+            caption: "テーブルマウンテンの影にそびえるケープタウン終点駅",
+            question: "この伝説的な旅でプレトリアからケープタウンまで走破する全鉄道距離はいくらですか？",
+            options: ["1,600 キロメートル", "850 キロメートル", "3,200 キロメートル", "500 キロメートル"],
+            explanation: "全豪華鉄道回廊は4つの州にわたり1,600キロメートルに及びます。"
+          }
+        ]
+      },
+      ko: {
+        question_label: "질문",
+        of_label: "/",
+        pts_label: "점",
+        correct_heading: "정답입니다!",
+        incorrect_heading: "아쉽게도 틀렸습니다!",
+        points_awarded: "점수 획득.",
+        questions: [
+          {
+            stop: "프리토리아 종착역",
+            badge: "정거장 1: 프리토리아 종착역",
+            caption: "프리토리아 자카란다 시티 및 빅토리아 양식 철도 공작창",
+            question: "블루 트레인과 로보스 레일의 북부 럭셔리 허브 역할을 하는 역사적인 프리토리아 종착역은 어디인가요?",
+            options: ["캐피털 파크 역", "요하네스버그 파크 역", "센추리온 가우트레인 허브", "마멜로디 차량기지"],
+            explanation: "프리토리아 캐피털 파크 역은 빅토리아 양식으로 지어졌으며 19세기 말부터 철도 여행객을 맞이해 왔습니다."
+          },
+          {
+            stop: "킴벌리 빅 홀",
+            badge: "정거장 2: 킴벌리 빅 홀",
+            caption: "킴벌리 다이아몬드 금고 및 역사적 분화구",
+            question: "1871년에서 1914년 사이에 수작업으로 거대한 킴벌리 빅 홀을 판 다이아몬드 광부는 몇 명인가요?",
+            options: ["약 50,000명의 광부", "약 2,000명의 광부", "500,000명 이상의 광부", "단 500명의 광부"],
+            explanation: "1871년과 1914년 사이에 약 50,000명의 광부가 곡괭이와 삽만으로 채굴했습니다."
+          },
+          {
+            stop: "디 아르 분기점",
+            badge: "정거장 3: 디 아르 분기점",
+            caption: "남부 아프리카의 디 아르 증기 교차로",
+            question: "디 아르는 역사적으로 남부 아프리카 철도망에서 왜 명성을 얻었나요?",
+            options: ["내륙 노선을 연결하는 두 번째로 중요한 철도 분기점입니다", "남아프리카 최초의 금 발견지였습니다", "1994년 대통령 취임식이 열린 곳입니다", "카루에서 가장 높은 산봉우리입니다"],
+            explanation: "디 아르는 110km 이상의 철도 노선을 갖추고 있습니다."
+          },
+          {
+            stop: "대한 카루 사막",
+            badge: "정거장 4: 대한 카루 사막",
+            caption: "광활한 대한 카루 사막 평원 및 별빛 하늘",
+            question: "바람 부는 카루를 지날 때 블루 트레인 객실을 조용하게 유지하는 음향 공학 기술은 무엇인가요?",
+            options: ["금 코팅 음향 이중 유리창", "카펫 아래 설치된 납판", "목재 음향 차단판", "고무 기관차 바퀴"],
+            explanation: "이중 파노라마 유리창 내부에 금가루가 적층되어 있습니다."
+          },
+          {
+            stop: "마키스폰테인 마을",
+            badge: "정거장 5: 마키스폰테인 마을",
+            caption: "보존된 1890년대 빅토리아 양식 철도 마을",
+            question: "마키스폰테인에서 랜드돌프 처칠 경이 묵었던 전설적인 빅토리아 양식 호텔은 어디인가요?",
+            options: ["로드 밀너 호텔", "마운트 넬슨 호텔", "칼턴 호텔", "케이프 마린 로지"],
+            explanation: "로드 밀너 호텔은 1899년에 완공되었으며 군 병원 역할을 했습니다."
+          },
+          {
+            stop: "케이프타운 종착역",
+            badge: "정거장 6: 케이프타운 종착역",
+            caption: "테이블 마운틴 그림자 아래 케이프타운 종착역",
+            question: "이 전설적인 여정에서 프리토리아에서 케이프타운까지 주행하는 총 철도 거리는 얼마인가요?",
+            options: ["1,600 킬로미터", "850 킬로미터", "3,200 킬로미터", "500 킬로미터"],
+            explanation: "전체 럭셔리 철도 회랑은 1,600km에 달합니다."
+          }
+        ]
+      },
+      hi: {
+        question_label: "प्रश्न",
+        of_label: "का",
+        pts_label: "अंक",
+        correct_heading: "सही उत्तर!",
+        incorrect_heading: "बिलकुल सही नहीं!",
+        points_awarded: "अंक प्रदान किए गए।",
+        questions: [
+          {
+            stop: "प्रिटोरिया टर्मिनस",
+            badge: "पड़ाव 1: प्रिटोरिया टर्मिनस",
+            caption: "प्रिटोरिया जकारंडा सिटी और विक्टोरियन रेल वर्क्स",
+            question: "प्रिटोरिया का कौन सा ऐतिहासिक टर्मिनस द ब्लू ट्रेन और रोवोस रेल के लिए उत्तरी लक्जरी हब के रूप में कार्य करता है?",
+            options: ["कैपिटल पार्क स्टेशन", "पार्क स्टेशन जोहान्सबर्ग", "सेंटूरियन गॉट्रेन हब", "मामेलौडी डिपो"],
+            explanation: "प्रिटोरिया कैपिटल पार्क विक्टोरियन शैली में बनाया गया था।"
+          },
+          {
+            stop: "किम्बरली बिग होल",
+            badge: "पड़ाव 2: किम्बरली बिग होल",
+            caption: "किम्बरली डायमंड वॉल्ट्स और ऐतिहासिक क्रेटर",
+            question: "1871 और 1914 के बीच कितने हीरा खनिकों ने विशाल किम्बरली बिग होल को हाथों से खोदा था?",
+            options: ["लगभग 50,000 खनिक", "लगभग 2,000 खनिक", "500,000 से अधिक खनिक", "केवल 500 खनिक"],
+            explanation: "1871 और 1914 के बीच, लगभग 50,000 खनिकों ने खुदाई की थी।"
+          },
+          {
+            stop: "डी आर जंक्शन",
+            badge: "पड़ाव 3: डी आर जंक्शन",
+            caption: "दक्षिणी अफ्रीका का डी आर स्टीम क्रॉसरोड्स",
+            question: "डी आर ने ऐतिहासिक रूप से दक्षिणी अफ्रीका के रेल नेटवर्क में प्रसिद्धि क्यों अर्जित की?",
+            options: ["यह अंतर्देशीय लाइनों को जोड़ने वाला दूसरा सबसे महत्वपूर्ण रेलवे जंक्शन है", "यह पहली दक्षिण अफ्रीकी सोना खोज की जगह थी", "इसने 1994 के राष्ट्रपति पद के शपथ ग्रहण की मेजबानी की", "यह करू की सबसे ऊंची पर्वत चोटी है"],
+            explanation: "डी आर में 110 किलोमीटर से अधिक रेलवे ट्रैक लाइनें हैं।"
+          },
+          {
+            stop: "द ग्रेट करू",
+            badge: "पड़ाव 4: द ग्रेट करू रेगिस्तान",
+            caption: "विशाल ग्रेट करू रेगिस्तानी मैदान और तारों भरे आसमान",
+            question: "कौन सी ध्वनिक इंजीनियरिंग द ब्लू ट्रेन के केबिनों को करू रेगिस्तान में शांत रखती है?",
+            options: ["गोल्ड-कोटेड ध्वनिक डबल ग्लेज़िंग खिड़कियां", "कालीन के नीचे सीसे की प्लेटें", "लकड़ी के साउंड बैफल्स", "रबर लोकोमोटिव पहिए"],
+            explanation: "डबल-ग्लेज़्ड पैनोरमिक खिड़कियों के अंदर सोने की धूल लामिनेटेड होती है।"
+          },
+          {
+            stop: "मैटजीसफॉन्टेन विलेज",
+            badge: "पड़ाव 5: मैटजीसफॉन्टेन विलेज",
+            caption: "संरक्षित 1890 विक्टोरियन रेलवे विलेज",
+            question: "मैटजीसफॉन्टेन के किस प्रसिद्ध विक्टोरियन होटल में लॉर्ड रैंडोल्फ चर्चिल ठहरे थे?",
+            options: ["द लॉर्ड मिलनर होटल", "द माउंट नेल्सन होटल", "द कार्लटन होटल", "द केप मरीन लॉज"],
+            explanation: "लॉर्ड मिलनर होटल 1899 में पूरा हुआ था।"
+          },
+          {
+            stop: "केप टाउन टर्मिनस",
+            badge: "पड़ाव 6: केप टाउन टर्मिनस",
+            caption: "टेबल माउंटेन की छाया में केप टाउन टर्मिनस",
+            question: "इस यात्रा में प्रिटोरिया से केप टाउन तक कुल कितनी रेल दूरी तय की जाती है?",
+            options: ["1,600 किलोमीटर", "850 किलोमीटर", "3,200 किलोमीटर", "500 किलोमीटर"],
+            explanation: "पूरा लक्जरी रेल गलियारा 1,600 किलोमीटर तक फैला है।"
+          }
+        ]
+      },
+      ru: {
+        question_label: "Вопрос",
+        of_label: "из",
+        pts_label: "ОЧК",
+        correct_heading: "Правильно!",
+        incorrect_heading: "Не совсем верно!",
+        points_awarded: "Очков Начислено.",
+        questions: [
+          {
+            stop: "Конечная Претория",
+            badge: "Остановка 1: Претория",
+            caption: "Претория Город Джакаранды и Викторианские Мастерские",
+            question: "Какая историческая станция Претории служит северным узлом роскоши для The Blue Train и Rovos Rail?",
+            options: ["Станция Capital Park", "Станция Park Йоханнесбург", "Узел Centurion Gautrain", "Депо Мамелоди"],
+            explanation: "Претория Capital Park была построена в викторианском стиле и принимает путешественников с конца XIX века."
+          },
+          {
+            stop: "Кимберли Большая Дыра",
+            badge: "Остановка 2: Кимберли Большая Дыра",
+            caption: "Алмазные Хранилища Кимберли и Исторический Кратер",
+            question: "Сколько добытчиков алмазов вручную выкопали гигантскую Большую дыру в Кимберли с 1871 по 1914 год?",
+            options: ["Около 50 000 шахтеров", "Около 2 000 шахтеров", "Более 500 000 шахтеров", "Всего 500 шахтеров"],
+            explanation: "С 1871 по 1914 год около 50 000 шахтеров выкопали Большую дыру."
+          },
+          {
+            stop: "Узел Де-Аар",
+            badge: "Остановка 3: Узел Де-Аар",
+            caption: "Паровой Перекресток Де-Аар Южной Африки",
+            question: "Почему Де-Аар прославился в истории железнодорожнои сети Южнои Африки?",
+            options: ["Это второи по важности железнодорожныи узел, соединяющии внутренние линии", "Здесь было найдено первое золото в ЮАР", "Здесь проходила инаугурация президента 1994 года", "Это самая высокая горная вершина в Кару"],
+            explanation: "Де-Аар насчитывает более 110 километров путеи."
+          },
+          {
+            stop: "Большое Кару",
+            badge: "Остановка 4: Пустыня Большое Кару",
+            caption: "Равнины Пустыни Кару и Звездное Небо",
+            question: "Какая акустическая технология обеспечивает тишину в купе The Blue Train в Кару?",
+            options: ["Окна с двойным остеклением с золотым напылением", "Свинцовые пластины под коврами", "Деревянные звукоизоляторы", "Резиновые колеса локомотива"],
+            explanation: "Золотая пыль ламинирована внутри панорамных окон."
+          },
+          {
+            stop: "Деревня Матжисфонтейн",
+            badge: "Остановка 5: Деревня Матжисфонтейн",
+            caption: "Сохранившаяся Викторианская Железнодорожная Деревня 1890 Года",
+            question: "Какой легендарный викторианский отель в Матжисфонтейне принимал Лорда Черчилля?",
+            options: ["Отель Лорд Милнер", "Отель Маунт Нельсон", "Отель Карлтон", "Кейп Марин Лобби"],
+            explanation: "Отель Лорд Милнер был построен в 1899 году."
+          },
+          {
+            stop: "Конечная Кейптаун",
+            badge: "Остановка 6: Конечная Кейптаун",
+            caption: "Конечная Кейптаун в тени Столовой горы",
+            question: "Каково общее расстояние по железной дороге от Претории до Кейптауна в этом легендарном путешествии?",
+            options: ["1 600 Километров", "850 Километров", "3 200 Километров", "500 Километров"],
+            explanation: "Роскошный железнодорожный коридор простирается на 1 600 километров."
+          }
+        ]
+      },
+      ar: {
+        question_label: "السؤال",
+        of_label: "من",
+        pts_label: "نقطة",
+        correct_heading: "إجابة صحيحة!",
+        incorrect_heading: "غير صحيح تمامًا!",
+        points_awarded: "تم منح النقاط.",
+        questions: [
+          {
+            stop: "محطة بريتوريا النهائية",
+            badge: "المحطة 1: بريتوريا النهائية",
+            caption: "مدينة الجاكاراندة بريتوريا وأعمال السكك الحديدية الفيكتورية",
+            question: "أي محطة بريتوريا تاريخية تعمل كمركز فاخر شمالي للقطار الأزرق وقطار روفوس رايل؟",
+            options: ["محطة كابيتال بارك", "محطة بارك جوهانسبرغ", "مركز سنتوريون جوترين", "مستودع ماميلودي"],
+            explanation: "تم بناء محطة كابيتال بارك في بريتوريا بالطراز الفيكتوري وتستقبل المسافرين منذ أواخر القرن التاسع عشر."
+          },
+          {
+            stop: "حفرة كيمبرلي الكبيرة",
+            badge: "المحطة 2: حفرة كيمبرلي الكبيرة",
+            caption: "خزائن ألماس كيمبرلي والفوهة التاريخية",
+            question: "كم عدد عمال مناجم الألماس الذين حفروا حفرة كيمبرلي الكبيرة يدويًا بين عامي 1871 و1914؟",
+            options: ["حوالي 50,000 عامل منجم", "حوالي 2,000 عامل منجم", "أكثر من 500,000 عامل منجم", "500 عامل فقط"],
+            explanation: "بين عامي 1871 و1914، حفر ما يقرب من 50 ألف عامل حفرة كيمبرلي بالمعاول والرفوش."
+          },
+          {
+            stop: "تقاطع دي آر",
+            badge: "المحطة 3: تقاطع دي آر",
+            caption: "تقاطع دي آر البخاري لجنوب إفريقيا",
+            question: "لماذا اكتسبت دي آر شهرة تاريخية عبر شبكة السكك الحديدية في جنوب إفريقيا؟",
+            options: ["إنها ثاني أهم تقاطع سكك حديدية يربط الخطوط الداخلية", "كانت موقع أول اكتشاف للذهب في جنوب إفريقيا", "استضافت حفل التنصيب الرئاسي عام 1994", "إنها أعلى قمة جبلية في كارو"],
+            explanation: "تضم دي آر أكثر من 110 كيلومترات من خطوط السكك الحديدية."
+          },
+          {
+            stop: "كارو الكبرى",
+            badge: "المحطة 4: صحراء كارو الكبرى",
+            caption: "سهول صحراء كارو الكبرى وسماء مرصعة بالنجوم",
+            question: "ما هي الهندسة الصوتية المميزة التي تحافظ على هدوء مقصورات القطار الأزرق في صحراء كارو؟",
+            options: ["نوافذ زجاجية مزدوجة مغطاة بطبقة من الذهب", "ألواح رصاص تحت السجاد", "حواجز صوتية خشبية", "عجلات قطار مطاطية"],
+            explanation: "تم دمج غبار الذهب داخل النوافذ البانورامية مزدوجة الزجاج."
+          },
+          {
+            stop: "قرية ماتجيسفونتين",
+            badge: "المحطة 5: قرية ماتجيسفونتين",
+            caption: "قرية السكك الحديدية الفيكتورية المحفوظة عام 1890",
+            question: "أي فندق فيكتوري أسطوري في ماتجيسفونتين استضاف اللورد راندولف تشرشل وسيسيل جون رودس؟",
+            options: ["فندق اللورد ميلنر", "فندق ماウント نيلسون", "فندق كارلتون", "نزل كيب مارين"],
+            explanation: "تم الانتهاء من بناء فندق اللورد ميلنر عام 1899 وعمل كمستشفى عسكري."
+          },
+          {
+            stop: "محطة كيب تاون النهائية",
+            badge: "المحطة 6: محطة كيب تاون النهائية",
+            caption: "محطة كيب تاون في ظل جبل الطاولة",
+            question: "ما هي المسافة الإجمالية التي قطعتها السكك الحديدية من بريتوريا إلى كيب تاون في هذه الرحلة؟",
+            options: ["1,600 كيلومتر", "850 كيلومتر", "3,200 كيلومتر", "500 كيلومتر"],
+            explanation: "يمتد ممر السكك الحديدية الفاخر بطول 1,600 كيلومتر عبر 4 مقاطعات."
+          }
+        ]
+      }
+    };
+
+    function getQuizQuestionInLanguage(index, rawQ) {
+      const lang = window.TrackTalesLanguageCode || 'en';
+      const pack = QUIZ_TRANSLATIONS[lang] || QUIZ_TRANSLATIONS.en;
+      if (pack && pack.questions && pack.questions[index]) {
+        const qTr = pack.questions[index];
+        return {
+          ...rawQ,
+          badge: qTr.badge || rawQ.badge,
+          caption: qTr.caption || rawQ.caption,
+          question: qTr.question || rawQ.question,
+          options: qTr.options || rawQ.options,
+          explanation: qTr.explanation || rawQ.explanation,
+          _langPack: pack
+        };
+      }
+      return { ...rawQ, _langPack: QUIZ_TRANSLATIONS.en };
+    }
+
     function renderQuizQuestion(index) {
       currentQuizIndex = index;
-      const q = STOP_QUIZZES[currentQuizIndex];
-      if (!q) return;
+      const rawQ = STOP_QUIZZES[currentQuizIndex];
+      if (!rawQ) return;
+      const q = getQuizQuestionInLanguage(currentQuizIndex, rawQ);
+      const langPack = q._langPack || QUIZ_TRANSLATIONS.en;
 
       if (quizStopBadge) quizStopBadge.textContent = q.badge;
-      if (quizProgressLabel) quizProgressLabel.textContent = `Question ${currentQuizIndex + 1} of ${STOP_QUIZZES.length}`;
-      if (quizPointsBadge) quizPointsBadge.textContent = `+${q.points} PTS`;
+      if (quizProgressLabel) quizProgressLabel.textContent = `${langPack.question_label} ${currentQuizIndex + 1} ${langPack.of_label} ${STOP_QUIZZES.length}`;
+      if (quizPointsBadge) quizPointsBadge.textContent = `+${q.points} ${langPack.pts_label}`;
       if (quizImg) quizImg.src = q.image;
       if (quizCaption) quizCaption.textContent = q.caption;
       if (quizTitle) quizTitle.textContent = q.question;
@@ -10500,9 +11460,12 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       }
     }
 
+    window.TrackTalesRenderQuiz = () => renderQuizQuestion(currentQuizIndex);
+
     function handleQuizAnswer(selectedIdx, q) {
       const isCorrect = selectedIdx === q.correctIndex;
       const optionBtns = quizOptionsGrid.querySelectorAll('.quiz-option-btn');
+      const langPack = q._langPack || QUIZ_TRANSLATIONS.en;
       
       optionBtns.forEach((b, idx) => {
         b.disabled = true;
@@ -10526,11 +11489,11 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
           quizFeedbackBox.className = 'p-4 rounded-xl border border-[#2E7D46]/30 bg-[#2E7D46]/10 text-[#2E7D46] text-xs font-sans text-left space-y-1';
           quizFeedbackBox.innerHTML = `
-            <div class="font-bold flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4"></i> Correct! +${q.points} Points Awarded.</div>
+            <div class="font-bold flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4"></i> ${langPack.correct_heading} +${q.points} ${langPack.points_awarded}</div>
             <div>${q.explanation}</div>
           `;
           if (window.TrackTalesAnnounce) {
-            window.TrackTalesAnnounce(`Correct answer! +${q.points} points. ${q.explanation}`);
+            window.TrackTalesAnnounce(`${langPack.correct_heading} +${q.points}. ${q.explanation}`);
           }
         } else {
           streakCount = 0;
@@ -10538,11 +11501,11 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
           quizFeedbackBox.className = 'p-4 rounded-xl border border-red-200 bg-red-50 text-red-700 text-xs font-sans text-left space-y-1';
           quizFeedbackBox.innerHTML = `
-            <div class="font-bold flex items-center gap-1.5"><i data-lucide="alert-circle" class="w-4 h-4"></i> Not quite right!</div>
+            <div class="font-bold flex items-center gap-1.5"><i data-lucide="alert-circle" class="w-4 h-4"></i> ${langPack.incorrect_heading}</div>
             <div>${q.explanation}</div>
           `;
           if (window.TrackTalesAnnounce) {
-            window.TrackTalesAnnounce(`Incorrect. ${q.explanation}`);
+            window.TrackTalesAnnounce(`${langPack.incorrect_heading} ${q.explanation}`);
           }
         }
         if (window.lucide) lucide.createIcons();
