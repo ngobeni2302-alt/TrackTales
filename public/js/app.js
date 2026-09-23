@@ -3758,7 +3758,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       const navHubSelectedTrain = document.getElementById('nav-hub-selected-train');
       if (navHubSelectedTrain) navHubSelectedTrain.textContent = shortTrainName;
       if (navTrainBadge) {
-        navTrainBadge.className = `glass-button px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full text-xs font-mono text-[#0A0C10] flex items-center gap-1.5 shadow-sm ${isBlue ? 'border-[#D99B26]/40 bg-[#D99B26]/10' : 'border-[#2A9D8F]/40 bg-[#2A9D8F]/10'}`;
+        navTrainBadge.className = `glass-button px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-xs font-mono text-[#0A0C10] flex items-center gap-1.5 shadow-sm transition-all cursor-pointer hidden md:flex ${isBlue ? 'border-[#D99B26]/40 bg-[#D99B26]/10 hover:bg-[#D99B26]/25 hover:border-[#D99B26]' : 'border-[#2A9D8F]/40 bg-[#2A9D8F]/10 hover:bg-[#2A9D8F]/25 hover:border-[#2A9D8F]'}`;
         const icon = navTrainBadge.querySelector('i');
         if (icon) icon.className = `w-3.5 h-3.5 ${isBlue ? 'text-[#D99B26]' : 'text-[#2A9D8F]'}`;
       }
@@ -3768,7 +3768,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         mobileTrainLabel.className = `text-[10px] font-bold uppercase ${isBlue ? 'text-[#D99B26]' : 'text-[#2A9D8F]'}`;
       }
       if (mobileTrainBadge) {
-        mobileTrainBadge.className = `py-3 px-4 rounded-lg border text-[#0A0C10] flex items-center justify-between font-semibold ${isBlue ? 'bg-[#D99B26]/10 border-[#D99B26]/30' : 'bg-[#2A9D8F]/10 border-[#2A9D8F]/30'}`;
+        mobileTrainBadge.className = `w-full py-3 px-4 rounded-lg border text-[#0A0C10] flex items-center justify-between font-semibold cursor-pointer transition-all ${isBlue ? 'bg-[#D99B26]/10 hover:bg-[#D99B26]/20 border-[#D99B26]/30' : 'bg-[#2A9D8F]/10 hover:bg-[#2A9D8F]/20 border-[#2A9D8F]/30'}`;
       }
 
       // 4. Update Right Panel Interactive Cards
@@ -5454,6 +5454,48 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       if (cleanPath !== '' || hash !== '#' + targetHash) {
         window.location.replace('/#' + targetHash);
       }
+    }
+
+    window.TrackTalesSwitchPage = switchPage;
+
+    // Relocated Flagship Modes Navigation:
+    // Clicking the active train badge (The Blue Train or Rovos Rail) navigates directly to that train's flagship mode details!
+    const openSelectedTrainFlagshipMode = (e) => {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      const selectedTrain = localStorage.getItem('tracktales_selected_train') || 'blue-train';
+      if (typeof renderTrains === 'function') {
+        renderTrains(selectedTrain);
+      }
+      switchPage('trains');
+      window.location.hash = '#trains';
+      if (window.closeNavHubPanel) {
+        window.closeNavHubPanel();
+      }
+      const mobileMenu = document.getElementById('mobileMenu');
+      if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.add('hidden');
+      }
+      const pageTrains = document.getElementById('page-trains');
+      if (pageTrains) {
+        pageTrains.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+
+    const navTrainBadge = document.getElementById('nav-train-badge');
+    const mobileTrainBadge = document.getElementById('mobile-train-badge');
+    const btnNavHubTrain = document.getElementById('btn-nav-hub-train');
+
+    if (navTrainBadge) {
+      navTrainBadge.addEventListener('click', openSelectedTrainFlagshipMode);
+    }
+    if (mobileTrainBadge) {
+      mobileTrainBadge.addEventListener('click', openSelectedTrainFlagshipMode);
+    }
+    if (btnNavHubTrain) {
+      btnNavHubTrain.addEventListener('click', openSelectedTrainFlagshipMode);
     }
 
     if (window.location.hash) {
