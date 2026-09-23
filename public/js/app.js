@@ -276,6 +276,1651 @@
     }
   ];
 
+  // --- Multilingual Story Translations Engine (16 Supported Languages) ---
+  const STORY_TRANSLATIONS = {
+    'story-1': {
+      zu: {
+        title: "Umzila Wegolide: Indlela Amadayimane Negolide Abakha Ngayo Isitimela",
+        author: "Inhlangano Yemlando Yezitimela",
+        summary: "Ngawo-1870, ukutholakala kwamadayimane e-Kimberley kwaqala umncintiswano wezobunjiniyela ngaphesheya kwehlane lase-Karoo.",
+        content: "Phambi kokuba izitimela zeze e-Kimberley ngo-1885, uhambo luphuma e-Kapa lwathatha amaviki amaningi ngezinqola zezinkomo. Ukufika kwesitimela kwaguqula iNingizimu Afrika ngezobunjiniyela ze-Hex River Pass ezambiwa ngesandla emawalandi wedwala ukuze imishini esindayo ifike emayini."
+      },
+      xh: {
+        title: "Umzila Wegolide: Indlela Iteku Negolide Ezakha Ngayo Uloliwe",
+        author: "Umbutho Wembane Yololiwe",
+        summary: "Ngosuku lwe-1870, ukufunyanwa kwezinto zexabiso eKimberley kwaza nenkqubo entsha kanjineli kulo lonke ilizwe laseKaroo.",
+        content: "Phesheya kohambo lokufika kwezo loliwe eKimberley ngo-1885, indlela yaseKapa yayithatha iiveki ezininzi ngeenqwelo zeenkomo. Ukufika kweloliwe kutshintshe uMzantsi Afrika kakhulu kunye neendledlana zaseHex River Pass."
+      },
+      af: {
+        title: "Die Goue Spoor: Hoe Diamante & Goud Suid-Afrika se Spoorweë Gebou Het",
+        author: "Spoorwegerfenisstigting",
+        summary: "In die 1870's het die ontdekking van diamante in Kimberley 'n dringende ingenieursresies oor die Karoo ontketen.",
+        content: "Voordat stoomlokomotiewe Kimberley in 1885 bereik het, het reis vanaf Kaapstad weke met ossewaens oor die Karoo geneem. Die koms van die ysterperd het Suid-Afrika ingrypend verander. Ingenieurswonders soos die Hexrivierpas het swaar masjinerie na die myne gebring."
+      },
+      st: {
+        title: "Tsela ya Gauta: Ka moo Ditaemane le Gauta di Ahileng ka teng Seporo",
+        author: "Lefapha la Nalane ya Diterene",
+        summary: "Lilemong tsa bo-1870, ho sibolloa ha ditaemane e Kimberley ho ile hoa simolla lebelo la boenjinihere lehoatateng la Karoo.",
+        content: "Pele diterene tsa mouoane di fihla Kimberley ka 1885, leeto ho tloha Cape Town le ne le nka libeke tse ngata ka dikariki tsa dikgomo. Ho fihla ha terene ho ile hoa fetola Afrika Borwa le litsela tsa Hex River Pass."
+      },
+      tn: {
+        title: "Tsela ya Gauta: Ka fa Ditaemane le Gauta di Agileng ka teng Seporo",
+        author: "Mosekaseki wa Boswa jwa Seporo",
+        summary: "Mo dingwageng tsa bo-1870, go bonwa ga ditaemane kwa Kimberley go ne ga simolola kgaisano ya boenjinihere mo nageng ya Karoo.",
+        content: "Pele diterene di goroga kwa Kimberley ka 1885, loeto go tswa Cape Town lo ne lo tsaya dibeke ka dikoloi tsa dikgomo. Terene e ne ya fetola Afrika Borwa fela thata."
+      },
+      nso: {
+        title: "Tsela ya Gauta: Ka moo Ditaemane le Gauta di Agilego ka gona Terene",
+        author: "Mokgatlo wa Bohwa bja Terene",
+        summary: "Leminageng ya bo-1870, go hwetswa ga ditaemane lehella la Kimberley go thomile lebelo la boenjinihere lehamong la Karoo.",
+        content: "Pele diterene di fihla Kimberley ka 1885, leeto go tloga Cape Town le ne le tsea dibeke tše ntši. Terene e feditše ya fetola Afrika Borwa."
+      },
+      ts: {
+        title: "Ndlela ya Nsuku: Ndlela leyi Tiyimane ni Nsuku swi Akeke ha yona Xitimela",
+        author: "Vhuvi Byi wa Khale bya Switimela",
+        summary: "Eka malembe ya bo-1870, ku kumiwa ka tiyimane eKimberley swi sungule phikizano ya vuenjhiniyera eka mananga ya Karoo.",
+        content: "Loko xitimela xi nga se fika eKimberley hi 1885, riendzo ku suka eCape Town a ri teka mavhiki yo tala hi tigolonyi ta tihomu. Ku fika ka xitimela swi cincile Afrika-Dzonga."
+      },
+      ss: {
+        title: "Umgboco Welegolide: Indlela Emadayimane Neligolide Latakha Ngayo Isitimela",
+        author: "Inhlangano Yemlandvo Wesitimela",
+        summary: "Nga-1870, kutfolakala kwemadayimane eKimberley kwacala umncintiswano webunjiniyela ehalaneni laseKaroo.",
+        content: "Ngembi kwekutsi titimela tifike eKimberley nga-1885, luhambo lolusuka eCape Town belutsatsa emaviki lamanyenti. Kufika kwesitimela kwagucula Ningizimu Afrika."
+      },
+      ve: {
+        title: "Ndila ya Musuku: Ka mvelele ya Dzaimane na Musuku zwo fhataho Tshitimela",
+        author: "Khoro ya Vhufa ha Zwitimela",
+        summary: "Kha minwaha ya 1870, u wanala ha dzaimane Kimberley zwo thoma phikizano ya vhuinjiniere lundani lwa Karoo.",
+        content: "Musi zwitimela zvisi athu u swika Kimberley nga 1885, lwendo u bva Cape Town lwo dzhia dzivhege dzinzhi. U swika ha tshitimela zwo shandukisa Afrika Tshipembe."
+      },
+      nr: {
+        title: "Indlela Yegolide: Indlela Amadayimane Negolide Abakha Ngayo Isitimela",
+        author: "Isebe LemiBhalo YeZitimela",
+        summary: "Ngeminyaka yo-1870, ukutholakala kwamadayimane e-Kimberley kwathoma umphikiswano wezobunjiniyela e-Karoo.",
+        content: "Ngaphambi kobana izitimela zifike e-Kimberley ngo-1885, uhambo olusuka e-Cape Town beluthatha amaviki amanengi. Ukufika kwesitimela kwatjhugulula i-Afrika Esingezansi."
+      },
+      de: {
+        title: "Die goldene Spur: Wie Diamanten & Gold Südafrikas Eisenbahn bauten",
+        author: "Eisenbahnerbe-Stiftung",
+        summary: "In den 1870er Jahren löste der Fund von Diamanten in Kimberley ein technisches Wettrüsten in der Karoo-Wüste aus.",
+        content: "Bevor 1885 die ersten Dampflokomotiven Kimberley erreichten, dauerte die Reise von Kapstadt mit dem Ochsenwagen Wochen durch die glühende Karoo. Das Eintreffen der Eisenbahn verwandelte Südafrika. Ingenieurswunder wie der Hex-River-Pass ermöglichten den Transport schwerer Maschinen zu den Minen."
+      },
+      fr: {
+        title: "La voie dorée : Comment les diamants et l'or ont bâti le chemin de fer d'Afrique du Sud",
+        author: "Fondation du patrimoine ferroviaire",
+        summary: "Dans les années 1870, la découverte de diamants à Kimberley a déclenché une course d'ingénierie à travers le désert du Karoo.",
+        content: "Avant l'arrivée de la vapeur à Kimberley en 1885, le voyage depuis Le Cap prenait des semaines en chariot à bœufs. L'arrivée du cheval de fer a transformé l'Afrique du Sud. Des prouesses comme le col de la Hex River ont permis aux machines lourdes d'atteindre les mines."
+      },
+      nl: {
+        title: "Het Gouden Spoor: Hoe diamanten & goud de spoorwegen van Zuid-Afrika bouwden",
+        author: "Spoorwegerfgoed Stichting",
+        summary: "In de jaren 1870 ontketende de vondst van diamanten in Kimberley een ingenieuse strijd door de Karoo-woestijn.",
+        content: "Voordat stoomtreinen Kimberley in 1885 bereikten, duurde de reis vanuit Kaapstad weken met de ossewa. De komst van het ijzeren paard veranderde Zuid-Afrika voorgoed. Ingenieurswonderen zoals de Hexrivierpas brachten zware machines naar de mijnen."
+      },
+      es: {
+        title: "La Vía Dorada: Cómo los diamantes y el oro construyeron el ferrocarril de Sudáfrica",
+        author: "Fundación del Patrimonio Ferroviario",
+        summary: "En la década de 1870, el descubrimiento de diamantes en Kimberley desató una carrera de ingeniería en el desierto del Karoo.",
+        content: "Antes de que la locomotora llegara a Kimberley en 1885, viajar desde Ciudad del Cabo requería semanas en carro de bueyes. La llegada del tren de hierro transformó a Sudáfrica. Hazañas como el paso del río Hex permitieron trasladar maquinaria pesada a las minas."
+      },
+      it: {
+        title: "La Via Dorata: Come diamanti e oro hanno costruito la ferrovia del Sudafrica",
+        author: "Fondazione Patrimonio Ferroviario",
+        summary: "Negli anni 1870, la scoperta di diamanti a Kimberley scatenò una corsa ingegneristica attraverso il deserto del Karoo.",
+        content: "Prima che le locomotive a vapore raggiungessero Kimberley nel 1885, il viaggio da Città del Capo richiedeva settimane in carro a buoi. L'arrivo del cavallo di ferro trasformò il Sudafrica."
+      },
+      pt: {
+        title: "Trilho de Ouro: Como diamantes e ouro construíram a ferrovia da África do Sul",
+        author: "Fundação do Patrimônio Ferroviário",
+        summary: "Na década de 1870, a descoberta de diamantes em Kimberley desencadeou uma corrida de engenharia pelo deserto do Karoo.",
+        content: "Antes de as locomotivas chegarem a Kimberley em 1885, a viagem a partir da Cidade do Cabo levava semanas em carros de bois. A chegada do cavalo de ferro transformou a África do Sul."
+      },
+      zh: {
+        title: "黄金轨道：钻石与黄金如何塑造南非铁路",
+        author: "铁路历史遗产基金会",
+        summary: "1870年代，金伯利钻石的发现引发了一场穿越卡鲁沙漠的重大工程竞赛。",
+        content: "在1885年蒸汽机车抵达金伯利之前，从开普敦出发需要乘坐数周的牛车穿越酷热的卡鲁地区。钢铁战马的到来彻底改变了南非，像海克斯河隘口这样的工程奇迹使得重型机械得以运抵矿区。"
+      },
+      ja: {
+        title: "黄金の線路：ダイヤモンドと金が築いた南アフリカ鉄道",
+        author: "鉄道歴史遺産トラスト",
+        summary: "1870年代、キンバリーでのダイヤモンド発見がカルー砂漠を越える大規模な鉄道建設競走を引き起こしました。",
+        content: "1885年に蒸気機関車がキンバリーに到達する前、ケープタウンからの旅は牛車で数週間を要しました。鉄の馬の到来は南アフリカを一変させ、ヘックス川峠のような建築の奇跡が鉱山へ重型機械を運び込みました。"
+      },
+      ko: {
+        title: "황금의 선로: 다이아몬드와 금이 세운 남아프리카 철도",
+        author: "철도 역사 유산 재단",
+        summary: "1870년대 킴벌리에서 다이아몬드가 발견되면서 카루 사막을 관통하는 철도 엔지니어링 경주가 시작되었습니다.",
+        content: "1885년 증기 기관차가 킴벌리에 도착하기 전에는 케이프타운에서 우마차로 수주일에 걸쳐 이동해야 했습니다. 철마의 도입은 남아프리카를 근본적으로 바꾸어 놓았습니다."
+      },
+      hi: {
+        title: "द गोल्डन ट्रैक: कैसे हीरे और सोने ने दक्षिण अफ्रीका के रेलवे का निर्माण किया",
+        author: "रेल इतिहास विरासत ट्रस्ट",
+        summary: "1870 के दशक में, किम्बरली में हीरों की खोज ने कारू रेगिस्तान में एक इंजीनियरिंग दौड़ शुरू की।",
+        content: "1885 में किम्बरली तक भाप इंजनों के पहुँचने से पहले, केप टाउन से यात्रा में हफ़्तों बैलगाड़ी का सफ़र लगता था। लोहे के घोड़े के आगमन ने दक्षिण अफ्रीका को बदल दिया।"
+      },
+      ru: {
+        title: "Золотой путь: Как алмазы и золото построили железные дороги ЮАР",
+        author: "Фонд железнодорожного наследия",
+        summary: "В 1870-х годах открытие алмазов в Кимберли вызвало настоящую инженерную гонку через пустыню Кару.",
+        content: "До того как паровозы достигли Кимберли в 1885 году, путешествие из Кейптауна занимало недели на волах. Появление железной дороги навсегда изменило Южную Африку."
+      },
+      ar: {
+        title: "المسار الذهبي: كيف بنى الألماس والذهب سكك حديد جنوب أفريقيا",
+        author: "مؤسسة تراث تاريخ السكك الحديدية",
+        summary: "في سبعينيات القرن التاسع عشر، أدى اكتشاف الألماس في كيمبرلي إلى سباق هندسي عبر صحراء كارو.",
+        content: "قبل وصول القاطرات البخارية إلى كيمبرلي عام 1885، كانت الرحلة من كيب تاون تستغرق أسابيع بواسطة عربات الثيران. أحدث وصول الحصان الحديدي تحولاً جذرياً في جنوب أفريقيا."
+      }
+    },
+    'story-2': {
+      zu: {
+        title: "Umlando We-Blue Train: Iminyaka Engaphezu Kwema-75 Yezikhashana Zobukhosi",
+        author: "Amalungelo e-TrackTales",
+        summary: "Ekuqaleni yaziwa ngokuthi 'Union Limited' ngo-1923, isitimela sathola umbala waso oluhlaza sasemoyeni phakathi ne-World War II.",
+        content: "Amakhosi, amadoda nabafazi abasezingeni eliphezulu bahambe ekhaphethini elide lase-Blue Train. Kusukela u-Nelson Mandela amukela izivakashi zakwamanye amazwe kuyo, isitimela sihlala singcwele sazamukeli."
+      },
+      xh: {
+        title: "Ilifa le-Blue Train: Iminyaka engama-75+ Yothando Lwasemsebenzini",
+        author: "Amagunya e-TrackTales",
+        summary: "Ekuqaleni yabizwa ngokuba 'Union Limited' ngo-1923, itreni yafumana idyasi yayo ebluu eyaziwayo evekini yeWorld War II.",
+        content: "Oukumkani, ookumkanikazi nabaphathi bee-ofisi babe kwikhaphethi ze-Blue Train. Ukusuka ku-Nelson Mandela osingatha abakhenkethi basemzini, le treni iseyindawo enobubele obuphezulu."
+      },
+      af: {
+        title: "Die Blou Trein se Erfenis: 75+ Jaar van Presidensiële Romanse",
+        author: "TrackTales Argiewe",
+        summary: "Oorspronklik genoem die 'Union Limited' in 1923, het die trein sy ikoniese koningsblou kleur gedurende die Tweede Wêreldoorlog gekry.",
+        content: "Konings, koninginne, staatsmanne en kultuurikone het op die diep mat van Die Blou Trein getree. Van Nelson Mandela wat buitelandse ampsdraers ontvang het tot Hollywood-sterre wat Karoo-sonsondergange aanskou het."
+      },
+      st: {
+        title: "Lefa la Terene ya Blue: Dilemo tse fetang 75 tsa Borena",
+        author: "Diphallo tsa TrackTales",
+        summary: "E ne e bitsoa 'Union Limited' ka 1923, terene e ile ea fumana mebala e meputsoa ea borena nakong ea Ntoa ea II ea Lefatše.",
+        content: "Marena, mafumahali le baetapele ba ile ba tsamaea likhapeteng tsa Terene ea Blue. Ho tloha ho Nelson Mandela ha a amogela baeti ba machaba, terene e ntse e le sebaka sa mabothobotho."
+      },
+      tn: {
+        title: "Boswa jwa Terene ya Blue: Dingwaga di le 75+ tsa Borena",
+        author: "Polokelo ya TrackTales",
+        summary: "E bidiwa 'Union Limited' ka 1923, terene e ne ya tsaya mmala o moputswa wa borena mo Ntweng ya II ya Lefatse.",
+        content: "Dikgosi le baetapele ba tsamaile mo dikhapeteng tsa Terene ya Blue. Go tswa ho Nelson Mandela go ya kwa baeting ba machaba."
+      },
+      nso: {
+        title: "Bohwa bja Terene ya Blue: Mengwaga e fetago 75 ya Borena",
+        author: "Bobolokelo bja TrackTales",
+        summary: "E be e bitšwa 'Union Limited' ka 1923, terene e amogetše mmala o moputswa nakong ya Ntwa ya II ya Lefase.",
+        content: "Marena le baetapele ba tsamaile godimo ga dikhapete tša Terene ya Blue."
+      },
+      ts: {
+        title: "Ndhavuko wa Terene ya Blue: Malembe yo tlula 75 ya Vuhosi",
+        author: "Vuhlayiselo bya TrackTales",
+        summary: "Eka masungulo a ri 'Union Limited' hi 1923, xitimela xi kumile muvala wa wasi lowu vangamaka hi Nyimpi ya Vumbirhi ya Misava.",
+        content: "Tihosi ni varhangeri va fambile eka makhaphethi ya Terene ya Blue."
+      },
+      ss: {
+        title: "Lifa leSitimela lesiluhlaza: Iminyaka lengetulu kwe-75 yeBukhosi",
+        author: "Imibhalo ye-TrackTales",
+        summary: "Ekucaleni besibitwa ngekutsi 'Union Limited' ngo-1923, sitimela satfola umbala wesiluhlaza eNtweni yesiBili yeMhlaba.",
+        content: "Emakhosi nebaholi behamba emakhaphetini eSitimela lesiLuhlaza."
+      },
+      ve: {
+        title: "Vhufa ha Tshitimela Tshitshu: Minwaha ya u fhira 75 ya Vhuhosi",
+        author: "Vhulungelo ha TrackTales",
+        summary: "Tsho thoma u vhidzwa 'Union Limited' nga 1923, tshitimela tsho wana muvhala wa lutombo u fhiraho Nndwa ya vhuvhili ya Shango.",
+        content: "Mahosi na vharangaphanda vho tshimbila kha khaphethi ya Tshitimela Tshitshu."
+      },
+      nr: {
+        title: "Ilifa Lesitimela Esiluhlaza: Iminyaka Engaphezu Kwee-75 Yebukhosi",
+        author: "Umsunguli we-TrackTales",
+        summary: "Ekuqaleni sabizwa ngokobana 'Union Limited' ngo-1923, isitimela sahlobiswa ngombala oluhlaza okwesibhakabhaka eNtweni yesiBili yePasi.",
+        content: "Amakhosi nabaphathi bahamba ekhaphethini lesitimela esiluhlaza."
+      },
+      de: {
+        title: "Das Erbe des Blauen Zuges: 75+ Jahre präsidentielle Eleganz",
+        author: "TrackTales Archiv",
+        summary: "1923 als 'Union Limited' getauft, erhielt der Zug im Zweiten Weltkrieg seinen ikonischen blauen Anstrich.",
+        content: "Könige, Staatsmänner und Kulturikonen wandelten auf den Teppichen des Blauen Zuges. Von Nelson Mandela bis hin zu Filmstars bleibt der Zug ein schwimmendes Heiligtum der 5-Sterne-Gastfreundschaft."
+      },
+      fr: {
+        title: "L'héritage du Blue Train : Plus de 75 ans de romance présidentielle",
+        author: "Archives TrackTales",
+        summary: "Initialement nommé 'Union Limited' en 1923, le train a reçu sa couleur bleu roi pendant la Seconde Guerre mondiale.",
+        content: "Rois, reines et chefs d'État ont foulé les tapis moelleux du Blue Train. De Nelson Mandela accueillant des dignitaires aux stars d'Hollywood admirant les couchers de soleil du Karoo."
+      },
+      nl: {
+        title: "Het Erfgoed van The Blue Train: 75+ jaar koninklijke grandeur",
+        author: "TrackTales Archieven",
+        summary: "Oorspronkelijk 'Union Limited' genoemd in 1923, kreeg de trein zijn iconische blauwe kleur tijdens WOII.",
+        content: "Koningen, koninginnen en staatslieden stapten op de tapijten van The Blue Train. Van Nelson Mandela tot Hollywood-sterren, de trein blijft een vliegend 5-sterren heiligdom."
+      },
+      es: {
+        title: "El Legado del Tren Azul: Más de 75 años de elegancia presidencial",
+        author: "Archivos TrackTales",
+        summary: "Bautizado en 1923 como 'Union Limited', el tren adquirió su icónico color azul durante la Segunda Guerra Mundial.",
+        content: "Reyes, reinas y mandatarios han recorrido los pasillos del Tren Azul. Desde Nelson Mandela recibiendo dignatarios hasta estrellas de Hollywood viendo atardeceres en el Karoo."
+      },
+      it: {
+        title: "L'Eredità del Blue Train: Oltre 75 anni di eleganza presidenziale",
+        author: "Archivi TrackTales",
+        summary: "Nato nel 1923 come 'Union Limited', il treno acquistò il suo iconico colore blu durante la Seconda Guerra Mondiale.",
+        content: "Re, regine e statisti hanno passeggiato sui tappeti del Blue Train. Da Nelson Mandela alle star di Hollywood, il treno rimane un santuario a 5 stelle."
+      },
+      pt: {
+        title: "O Legado do Blue Train: Mais de 75 anos de elegância presidencial",
+        author: "Arquivos TrackTales",
+        summary: "Originalmente chamado 'Union Limited' em 1923, o trem adquiriu sua icônica cor azul durante a Segunda Guerra Mundial.",
+        content: "Reis, rainhas e estadistas caminharam pelos tapetes do Blue Train. De Nelson Mandela a estrelas de Hollywood, o trem permanece um santuário de luxo."
+      },
+      zh: {
+        title: "蓝色列车传奇：75年以上的总统级奢华典范",
+        author: "TrackTales 档案馆",
+        summary: "1923年最初被称为“联合限时号”，该列车在第二次世界大战期间披上了标志性的皇室蓝涂装。",
+        content: "国王、王后、政要和文化巨擘都曾踏上蓝色列车的新厚地毯。从纳尔逊·曼德拉在此款待外国元首，到好莱坞巨星在此欣赏卡鲁夕阳，列车始终是五星级礼遇的移动圣殿。"
+      },
+      ja: {
+        title: "ブルートレインの遺産：75年以上の大統領級エレガンス",
+        author: "TrackTales アーカイブ",
+        summary: "1923年に「ユニオン・リミテッド」として誕生し、第二次世界大戦中に象徴的なロイヤルブルーの塗装をまといました。",
+        content: "国王、女王、政治家、文化人がブルートレインの絨毯を踏みしめてきました。ネルソン・マンデラが国賓を迎えた場所から、ハリウッドスターがカルーの夕日を眺める場所まで、今も5つ星の動くオアシスであり続けています。"
+      },
+      ko: {
+        title: "블루 트레인의 유산: 75년 이상의 대통령급 럭셔리 여정",
+        author: "TrackTales 아카이브",
+        summary: "1923년 '유니온 리미티드'로 시작해 제2차 세계대전 중 특유의 로열 블루 외관을 갖추게 되었습니다.",
+        content: "국왕, 여왕, 국가원수 및 문화계 인사들이 블루 트레인의 카페트를 거닐었습니다. 넬슨 만델라가 국빈을 맞이하던 순간부터 할리우드 스타들의 카루 일몰 감상까지, 최고의 5성급 안식처로 남아 있습니다."
+      },
+      hi: {
+        title: "द ब्लू ट्रेन की विरासत: 75+ वर्षों का अध्यक्षीय लालित्य",
+        author: "TrackTales अभिलेखागार",
+        summary: "1923 में मूल रूप से 'यूनियन लिमिटेड' नाम दिया गया, ट्रेन ने द्वितीय विश्व युद्ध के दौरान अपना प्रतिष्ठित नीला रंग हासिल किया।",
+        content: "राजाओं, रानियों और राजनेताओं ने द ब्लू ट्रेन के कालीनों पर कदम रखा है। नेल्सन मंडेला द्वारा विदेशी गणमान्य व्यक्तियों की मेजबानी करने से लेकर कारू के सूर्यास्त देखने वाले हॉलीवुड सितारों तक।"
+      },
+      ru: {
+        title: "Наследие Blue Train: Более 75 лет президентского величия",
+        author: "Архивы TrackTales",
+        summary: "Первоначально названный 'Union Limited' в 1923 году, поезд получил свой фирменный синий цвет в годы Второй мировой войны.",
+        content: "Короли, королевы и государственные деятели ступали по коврам поезда Blue Train. От Нельсона Манделы до голливудских звезд — поезд остается передвижным 5-звездочным оазисом."
+      },
+      ar: {
+        title: "إرث القطار الأزرق: أكثر من 75 عاماً من الفخامة الرئاسية",
+        author: "أرشيف TrackTales",
+        summary: "سمي في البداية 'يونايتد ليمتد' عام 1923، وحصل القطار على طلاءه الأزرق الملكي الأيقوني خلال الحرب العالمية الثانية.",
+        content: "مشى الملوك والملكات ورجال الدولة على سجادة القطار الأزرق الفاخرة. من استضافة نيلسون مانديلا لكبار الشخصيات إلى نجوم هوليوود الذين شاهدوا غروب الشمس في كارو."
+      }
+    },
+    'story-3': {
+      zu: {
+        title: "U-Rohan Vos Nemlando Ye-Rovos Rail",
+        author: "Iphephandaba Zezitimela e-Afrika",
+        summary: "Indlela intshisekelo yendoda eyodwa yokuvuselela izitimela zakudala eyakha ngayo inkampani yezitimela zewaneli phambili emhlabeni.",
+        content: "Ngo-1989, u-Rohan Vos wathenga izimoto zezitimela zakudala enombono wohambo lomndeni. Lowo msebenzi wakhula waba i-Rovos Rail ezibazisayo nezibani zethusi e-Pretoria."
+      },
+      xh: {
+        title: "URohan Vos Nembali ye-Rovos Rail",
+        author: "Ipepha le-Rail e-Afrika",
+        summary: "Indlela uthando lomntu omnye lokulungisa iinjini ze-steam ezindala olwadala ngayo inkampani yotyelelo ngololiwe enobubele.",
+        content: "Ngo-1989, uRohan Vos wathenga izitimela zakudala ngeliphupha lohambo lomsapho. Loo projekthi yaba yi-Rovos Rail ePretoria."
+      },
+      af: {
+        title: "Rohan Vos & Die Legende van Rovos Rail",
+        author: "Afrikaanse Spoorwegkoerant",
+        summary: "Hoe een man se passie vir die restourasie van vintage stoomwaens die wêreld se mees opulente treinsafari-maatskappy geskep het.",
+        content: "In 1989 het Rohan Vos vintage treinwaens gekoop met die droom van familiestoomreise. Daardie projek het ontwikkel in Rovos Rail."
+      },
+      st: {
+        title: "Rohan Vos le Pale ea Rovos Rail",
+        author: "Koranta ea Diterene tsa Afrika",
+        summary: "Ka moo takatso ea monna a le mong ea ho nchafatsa diterene tsa khale e hlahisitseng khampani e kholo ea diterene ho la lefatše.",
+        content: "Ka 1989, Rohan Vos o ile a reka likariki tsa khale tsa terene ho fihlela toro ea leeto le leapa. Morero oo oa hlahisa Rovos Rail."
+      },
+      tn: {
+        title: "Rohan Vos le Pale ya Rovos Rail",
+        author: "Kuranta ya Diterene tsa Afrika",
+        summary: "Ka fa keletso ya monna a le mong ya go tsosa diterene tsa bogologolo e tlhodileng khamphani e kgolo ya diterene.",
+        content: "Ka 1989, Rohan Vos o rekile dikariki tsa bogologolo mme ka moso ya nna Rovos Rail."
+      },
+      nso: {
+        title: "Rohan Vos le Pale ya Rovos Rail",
+        author: "Kuranta ya Terene ya Afrika",
+        summary: "Ka moo thagafalo ya monna a tee ya go renoveta diterene tša kgale e hlotšego khampani e kgolo ya diterene.",
+        content: "Ka 1989, Rohan Vos o rekile diterene tša kgale tša ba Rovos Rail."
+      },
+      ts: {
+        title: "Rohan Vos ni Muxaka wa Rovos Rail",
+        author: "Nhlanganelo ya Switimela ya Afrika",
+        summary: "Ndlela leyi ku navela ka wanuna un'we eka ku pfuxeta switimela swa khale swi tumbuluxeke khamphani leyikulu ya switimela.",
+        content: "Hi 1989, Rohan Vos u xavile switimela swa khale swi humesa Rovos Rail."
+      },
+      ss: {
+        title: "Rohan Vos neMlandvo weRovos Rail",
+        author: "Tindzaba teSitimela e-Afrika",
+        summary: "Indlela inshisekelo yekuvuselela titimela takadzeni leyakha ngayo inkampani lekhulu ye-Rovos Rail.",
+        content: "Ngo-1989, Rohan Vos watsenga titimela takadzeni mase kuba yi-Rovos Rail."
+      },
+      ve: {
+        title: "Rohan Vos na Ngano ya Rovos Rail",
+        author: "Gurannwenda ya Zwitimela u bva Afrika",
+        summary: "Ka mvelele ya lufuno lwa munna muthihi lwa u vhuedzedza zwitimela zwa kale zwo fhataho khamphani khulwane ya Rovos Rail.",
+        content: "Nga 1989, Rohan Vos o renga zwitimela zwa kale nahone zwa mbo vha Rovos Rail."
+      },
+      nr: {
+        title: "URohan Vos Nomlando we-Rovos Rail",
+        author: "Ikoranta yeZitimela e-Afrika",
+        summary: "Indlela ikhanuko yomuntu munye yokuvuselela iinjini zakudala eyakha ngayo inkampani ye-Rovos Rail.",
+        content: "Ngo-1989, u-Rohan Vos wathenga iinqola zakudala mase kwaba yi-Rovos Rail e-Pretoria."
+      },
+      de: {
+        title: "Rohan Vos & Die Legende von Rovos Rail",
+        author: "Afrikanische Eisenbahn-Zeitung",
+        summary: "Wie die Leidenschaft eines Mannes für die Restaurierung alter Dampfzüge das luxuriöseste Zugsafari-Unternehmen erschuf.",
+        content: "1989 kaufte Rohan Vos historische Zugwagons mit dem Traum von Familienreisen. Daraus wurde Rovos Rail. Heute restaurieren Handwerker in Pretoria Edwardianische Holzinterieurs und Messinglampen in Handarbeit."
+      },
+      fr: {
+        title: "Rohan Vos et la légende de Rovos Rail",
+        author: "Gazette ferroviaire africaine",
+        summary: "Comment la passion d'un homme pour la restauration de wagons anciens a créé la compagnie de safaris ferroviaires la plus luxueuse au monde.",
+        content: "En 1989, Rohan Vos a acheté des wagons anciens pour voyager en famille. Ce projet s'est transformé en Rovos Rail. Aujourd'hui, les artisans de Pretoria restaurent à la main les intérieurs en bois et les lampes en laiton."
+      },
+      nl: {
+        title: "Rohan Vos & De Legende van Rovos Rail",
+        author: "Afrikaanse Spoorwegkrant",
+        summary: "Hoe de passie van één man voor het restaureren van stoomtreinen 's werelds meest luxueuze treinsafari-bedrijf creëerde.",
+        content: "In 1989 kocht Rohan Vos historische rijtuigen voor familiereizen. Dat project groeide uit tot Rovos Rail. Tegenwoordig restaureren vaklieden in Pretoria edwardiaanse houten interieurs met de hand."
+      },
+      es: {
+        title: "Rohan Vos y la leyenda de Rovos Rail",
+        author: "Gaceta Ferroviaria Africana",
+        summary: "Cómo la pasión de un hombre por restaurar vagones antiguos creó la empresa de safaris en tren más lujosa del mundo.",
+        content: "En 1989, Rohan Vos compró vagones de época para viajes familiares. Ese proyecto se convirtió en Rovos Rail. Hoy en día, artesanos en Pretoria restauran a mano interiores de madera del periodo eduardiano y lámparas de latón."
+      },
+      it: {
+        title: "Rohan Vos e la Leggenda di Rovos Rail",
+        author: "Gazzetta Ferroviaria Africana",
+        summary: "Come la passione di un uomo nel restaurare vecchie carrozze a vapore ha creato la società di safari in treno più lussuosa del mondo.",
+        content: "Nel 1989, Rohan Vos acquistò carrozze d'epoca per viaggi di famiglia, dando vita a Rovos Rail. Oggi artigiani a Pretoria restaurano a mano interni in legno edwardiano e lampade in ottone."
+      },
+      pt: {
+        title: "Rohan Vos e a Lenda do Rovos Rail",
+        author: "Gazeta Ferroviária Africana",
+        summary: "Como a paixão de um homem por restaurar locomotivas a vapor criou a empresa de safári de trem mais luxuosa do mundo.",
+        content: "Em 1989, Rohan Vos comprou vagões antigos para viagens em família. Esse projeto tornou-se o Rovos Rail. Hoje, artesãos em Pretória restauram à mão interiores de madeira e lâmpadas de latão."
+      },
+      zh: {
+        title: "罗汉·沃斯与洛沃斯铁路的传奇",
+        author: "非洲铁路报",
+        summary: "一个人对修复复古蒸汽火车的热情如何缔造了世界上最奢华的列车游猎公司。",
+        content: "1989年，罗汉·沃斯购买了复古车厢，本想用于家庭旅行。这一项目最终发展成为著名的洛沃斯铁路。如今在比勒陀利亚，手工技师们精心修复1920年代爱德华时代的木质内饰与黄铜灯具。"
+      },
+      ja: {
+        title: "ロハン・ボスとロボス・レールの伝説",
+        author: "アフリカン・レイル・ガゼット",
+        summary: "ヴィンテージ蒸気機関車の修復にかける一人の男の情熱が、世界最高峰の豪華列車サファリ企業を生み出しました。",
+        content: "1989年、ロハン・ボスは家族旅行の夢を抱いて古びた客車を購入し、それがロボス・レールへと結実しました。現在プレトリアの職人達が1920年代のエドワーディアン調の木造内装と真鍮ランプを丁寧に手作業で復元しています。"
+      },
+      ko: {
+        title: "로한 보스와 로보스 레일의 전설",
+        author: "아프리카 철도 저널",
+        summary: "클래식 증기 기관차를 복원하려는 한 남자의 열정이 세계에서 가장 호화로운 철도 사파리 회사를 만들었습니다.",
+        content: "1989년 로한 보스는 가족 여행을 위해 오랜 객차를 매입하였고, 이 프로젝트는 로보스 레일로 발전했습니다. 오늘날 프레토리아의 장인들은 1920년대 에드워드 양식의 목재 인테리어와 황동 램프를 정성껏 수작업으로 복원합니다."
+      },
+      hi: {
+        title: "रोहन वोस और रोवोस रेल की किंवदंती",
+        author: "अफ्रीकी रेल गजट",
+        summary: "पुराने भाप इंजनों को बहाल करने के एक व्यक्ति के जुनून ने दुनिया की सबसे शानदार ट्रेन सफारी कंपनी कैसे बनाई।",
+        content: "1989 में, रोहन वोस ने पारिवारिक यात्राओं के सपने के साथ पुराने डिब्बे खरीदे। वह परियोजना रोवोस रेल में बदल गई। आज प्रिटोरिया में कारीगर सागौन के लकड़ी के अंदरूनी हिस्सों और पीतल के लैंपों को हाथ से बहाल करते हैं।"
+      },
+      ru: {
+        title: "Рохан Вос и легенда Rovos Rail",
+        author: "Африканская железнодорожная газета",
+        summary: "Как страсть одного человека к реставрации старинных паровозов создала самую роскошную компанию железнодорожных сафари в мире.",
+        content: "В 1989 году Рохан Вос купил старинные вагоны для семейных поездок, и этот проект вырос в Rovos Rail. Сегодня мастера в Претории вручную восстанавливают эдвардианские деревянные интерьеры и латунные лампы."
+      },
+      ar: {
+        title: "روهان فوس وأسطورة روفوس ريل",
+        author: "جريدة السكك الحديدية الأفريقية",
+        summary: "كيف أن شغف رجل واحد بترميم القاطرات البخارية القديمة أنشأ أفخم شركة رحلات سفاري بالقطار في العالم.",
+        content: "في عام 1989، اشترى روهان فوس عربات قطار قديمة بهدف الرحلات العائلية، وتطورت تلك الفكرة إلى روفوس ريل. واليوم يرمم الحرفيون في بريتوريا الديكورات الخشبية القديمة والمصابيح النحاسية يدوياً."
+      }
+    },
+    'story-4': {
+      zu: {
+        title: "Ukudla Okuconsisa Amathe Ezitimeneni: Ukupheka Kwamapulani Asezingeni Eliphezulu",
+        author: "Inhlangano Yezokudla Yase-Kapa",
+        summary: "Ngaleyo ndlela amakhishi azitimeneni apheka inyama ye-Karoo lamb nokudla okumnandi ngenkathi isitimela sihamba nge-90 km/h.",
+        content: "Abapheki kuyo i-Blue Train balungisa ukudla okusha ngenkathi kuphanyazwa. Njalo kusihlwa, abagibeli bagqoka okusezingeni eliphezulu ukudla inyama yewundlu lase-Karoo neminye imino."
+      },
+      xh: {
+        title: "Ukutya Okumangalisayo Ololiwe: Umpheki Osenyangweni",
+        author: "Iphepha Lokuhlola Ukutya laseKapa",
+        summary: "Kukhikhini zeloliwe apho kuphekwa khona inyama ye-Karoo lamb xa iloliwe ihamba nge-90 km/h.",
+        content: "Abapheki be-Blue Train balungiselela ukutya okutsha xa itreni ihamba. Rhatya ngalinye abakhweli banxiba kakuhle ukutya ukutya okumnandi kakhulu."
+      },
+      af: {
+        title: "Spysenyse op die Spoor: 5-Ster Kulinêre Meesterskap",
+        author: "Kaapse Fynproewer Resensie",
+        summary: "Binne die silwerdiens-kombuise wat Karoo-lam, Knysna-osters en bekroonde Kaapse wyne teen 90 km/h bedien.",
+        content: "Sjefs aan boord van Die Blou Trein berei vars fynproewersgeregte in beweging voor. Elke aand trek passasiers formeel aan vir 'n silwerdiensbanket met Karoo-lam en fyn wyne."
+      },
+      st: {
+        title: "Lijo tsa Mabothobotho Tereneng: Bonono ba ho Pheha ba 5-Star",
+        author: "Tlhahlobo ea Lijo tsa Cape",
+        summary: "Ka har'a likhitla tsa terene tse servang nama ea Karoo lamb le beine tsa Cape ka lebelo la 90 km/h.",
+        content: "Baphehi ba Terene ea Blue ba pheha lijo tse ncha nakong ea leeto. Mantsiboea mang le mang baeti ba apara hantle bakeng sa lijo tsa vesebole."
+      },
+      tn: {
+        title: "Dijo tsa Mabothobotho mo Tereneng: Go Apeha ga 5-Star",
+        author: "Tshekatsheko ya Dijo tsa Cape",
+        summary: "Mo nkung ya terene e e servang nama ya Karoo lamb le beine tsa Cape ka 90 km/h.",
+        content: "Baapei mo Tereneng ya Blue ba apeha dijo tse di ncha mo loetong."
+      },
+      nso: {
+        title: "Dijo tša Mabothobotho Tereneng: Bongaka bja ho Apeha bja 5-Star",
+        author: "Tshekatsheko ya Dijo tsa Cape",
+        summary: "Ka khitšhing ya terene ye e servago nama ya Karoo lamb le beine tsa Cape ka 90 km/h.",
+        content: "Baapei ba Terene ya Blue ba apeha dijo tša mabothobotho nakong ya leeto."
+      },
+      ts: {
+        title: "Swakudya swo Ziya eka Xitimela: Vutshila bya 5-Star bya ho Sweka",
+        author: "Nxopaxopo wa Swakudya wa Cape",
+        summary: "Endzeni ka khichi ya xitimela leyi phakulaka nyama ya Karoo lamb ni vhinyo ya Cape hi 90 km/h.",
+        content: "Vasweki eka Terene ya Blue va sweka swakudya swo tsakisa hi nkarhi wa riendzo."
+      },
+      ss: {
+        title: "Kudla lokumnandzi eSitimeleni: Vuciko be-5-Star Lekupheka",
+        author: "Inhlolovo yeKudla yaseCape",
+        summary: "Ekhatsi ekhishini lesitimela lelesevisa inyama yeKaroo lamb novelini yaseCape nge-90 km/h.",
+        content: "Bapeki basesitimeleni lesiluhlaza bapheka kudla lokusha ngesikhatsi luhambo luhamba."
+      },
+      ve: {
+        title: "Zwiliwa zwa Vhudi kha Tshitimela: Vhutsila ha 5-Star ha u Bika",
+        author: "Tseduluso ya Zwiliwa ya Cape",
+        summary: "Nga ngomu ha khitshi ya tshitimela ine ya nnea nama ya Karoo lamb na waini ya Cape nga 90 km/h.",
+        content: "Vhabiki kha Tshitimela Tshitshu vha bika zwiliwa zwiswa musi tshitimela tshi tshi khou tshimbila."
+      },
+      nr: {
+        title: "Ukudla Okunandi Esitimeleni: Ukupheka Kwephelo le-5-Star",
+        author: "Ikoranta yoKudla yase-Cape",
+        summary: "Ngaphakathi kwekhishi lesitimela elipheka inyama ye-Karoo lamb newayini yase-Cape nge-90 km/h.",
+        content: "Abapheki beSitimela Esiluhlaza balungisa ukudla okutjha nakuhambwako."
+      },
+      de: {
+        title: "Gastronomie auf Schienen: 5-Sterne Kulinaria",
+        author: "Cape Epicure Review",
+        summary: "Kulinarische Meisterwerke in der Silber-Gourmetküche bei 90 km/h mit Karoo-Lamm und Kap-Weinen.",
+        content: "Die Köche an Bord des Blauen Zuges bereiten frische Gourmetgerichte während der Fahrt zu. Jeden Abend kleiden sich die Passagiere formell für ein Bankett mit Karoo-Lamm und erlesenen Weinen aus Stellenbosch."
+      },
+      fr: {
+        title: "Gastronomie sur rails : Maîtrise culinaire 5 étoiles",
+        author: "Cape Epicure Review",
+        summary: "Dans les cuisines servant agneau du Karoo, huîtres de Knysna et grands crus du Cap à 90 km/h.",
+        content: "Les chefs à bord du Blue Train préparent des mets raffinés en mouvement. Chaque soir, les passagers revêtent des tenues de soirée pour un festin au service d'argent."
+      },
+      nl: {
+        title: "Culinaire hoogstandjes op de rails: 5-sterren gastronomie",
+        author: "Cape Epicure Review",
+        summary: "In de keukens die Karoo-lam, Knysna-oesters en topwijnen uit de Kaap serveren bij 90 km/u.",
+        content: "De sjefs aan boord van The Blue Train bereiden verse gerechten in volle vaart. Elke avond kleden passagiers zich formeel voor een banket met Karoo-lam en fijne wijnen."
+      },
+      es: {
+        title: "Gastronomía sobre rieles: Maestría culinaria de 5 estrellas",
+        author: "Cape Epicure Review",
+        summary: "En las cocinas que sirven cordero de Karoo, ostras de Knysna y vinos de alta gama a 90 km/h.",
+        content: "Los chefs a bordo del Tren Azul preparan platos de alta cocina en movimiento. Cada noche, los pasajeros se visten de etiqueta para un banquete de servicio de plata."
+      },
+      it: {
+        title: "Gastronomia su rotaie: Maestria culinaria a 5 stelle",
+        author: "Cape Epicure Review",
+        summary: "Nelle cucine di bordo che servono agnello del Karoo, ostriche di Knysna e pregiati vini del Capo a 90 km/h.",
+        content: "Gli chef a bordo del Blue Train preparano raffinate prelibatezze in movimento. Ogni sera i passeggeri indossano abiti formali per un banchetto con servizio in argento."
+      },
+      pt: {
+        title: "Gastronomia nos trilhos: Maestria culinária 5 estrelas",
+        author: "Cape Epicure Review",
+        summary: "Nas cozinhas que servem cordeiro do Karoo, ostras de Knysna e vinhos premiados a 90 km/h.",
+        content: "Os chefs a bordo do Blue Train preparam pratos sofisticados em pleno movimento. Todas as noites, os passageiros vestem-se formalmente para um banquete."
+      },
+      zh: {
+        title: "铁轨上的饕餮盛宴：五星级烹饪艺术",
+        author: "开普美食评论",
+        summary: "在以时速90公里行驶的列车银盘厨房内，享用卡鲁羊肉、克尼斯纳生蚝与获奖名酒。",
+        content: "蓝色列车上的大厨在列车行驶中现场烹饪新鲜的高级料理。每天傍晚，乘客们身着正装享用银盘大餐，品味卡鲁嫩羊排与斯泰伦博斯风味佳酿。"
+      },
+      ja: {
+        title: "線路上の美食：5つ星の料理芸術",
+        author: "ケープ・エピキュア・レビュー",
+        summary: "時速90kmで走る車内で、カルーラム、ナイズナ・オイスター、銘醸ワインを提供するシルバーサービスの厨房。",
+        content: "ブルートレインのシェフ達は走行中に新鮮な極上料理を調理します。毎晩、乗客はフォーマルな装いに身を包み、カルーラムや選り好みのワインを堪能します。"
+      },
+      ko: {
+        title: "레일 위의 미식: 5성급 파인 다이닝",
+        author: "케이프 에피큐어 리뷰",
+        summary: "시속 90km로 달리는 열차에서 카루 램, 나이즈나 굴, 최고급 케이프 와인을 선사하는 실버 서비스 주방.",
+        content: "블루 트레인의 셰프들은 이동 중에 신선한 최고급 요리를 준비합니다. 매일 저녁 승객들은 드레스 코드를 갖추고 카루 램과 최고급 와인이 어우러진 실버 서비스 만찬에 참여합니다."
+      },
+      hi: {
+        title: "पटरियों पर व्यंजन: 5-स्टार पाक कला",
+        author: "केप एपिक्योर समीक्षा",
+        summary: "90 किमी/घंटे की रफ्तार से कारू मेमने, नाइसना सीप और केप वाइन परोसने वाली रसोई के भीतर।",
+        content: "द ब्लू ट्रेन के शेफ़ चलती ट्रेन में ताज़ा बेहतरीन व्यंजन तैयार करते हैं। हर शाम, यात्री चांदी की सेवा वाली दावत के लिए औपचारिक पोशाक पहनते हैं।"
+      },
+      ru: {
+        title: "Гастрономия на рельсах: 5-звездочное кулинарное мастерство",
+        author: "Обзор Cape Epicure",
+        summary: "В кухнях поезда, подающих ягнятину Кару, устрицы Кнайсна и элитные вина Капского региона на скорости 90 км/ч.",
+        content: "Шеф-повара на борту Blue Train готовят изысканные блюда прямо во время движения. Каждый вечер пассажиры надевают вечерние наряды для изысканного банкета."
+      },
+      ar: {
+        title: "طهي فاخر على السكك الحديدية: فنون طهي 5 نجوم",
+        author: "مجلة كيب إبيكيو",
+        summary: "داخل مطابخ تقديم لحم ضأن كارو ومحار نايسنا ونبيذ الكيب الفاخر بسرعة 90 كم/ساعة.",
+        content: "يطهو الطهاة على متن القطار الأزرق أطباقاً فاخرة طازجة أثناء حركة القطار. في كل مساء، يرتدي الركاب الملابس الرسمية لحضور مأدبة فاخرة."
+      }
+    },
+    'story-5': {
+      zu: {
+        title: "Ishabhu lase-Capital Park: Ukunikeza Impilo Ezitimeneni Zakudala Ze-Steam",
+        author: "Gazethi Yezitimela Zomlando",
+        summary: "Indlela abasunguli bekhono e-Capital Park abavuselela ngayo izimoto zangomnyaka we-1920 nezitimela ze-steam.",
+        content: "Ekhaya le-Rovos Rail e-Capital Park, e-Pretoria, abacwali abangaphezu kwe-100 bavuselela ama-fremu amapulangwe e-teak nokuhlanza izibani zethusi ngezitimela ze-Class 19D ne-25NC."
+      },
+      xh: {
+        title: "I-Capital Park Workshop: Ukunika Ubomi kwi-Steam zakudala",
+        author: "Ipepha le-Steam neLifa",
+        summary: "Indlela abasebenzi eCapital Park abalungisa ngayo izitimela zakudala nezitimela ze-steam.",
+        content: "Kwi-ofisi ye-Rovos Rail eCapital Park, ePretoria, abasebenzi abangaphezu kwe-100 balungisa iincango zethala nokucoca izibane zethusi kwi-steam ezindala."
+      },
+      af: {
+        title: "Capital Park Werkswinkel: Nuwe Lewe vir Vintage Stoom",
+        author: "Stoom & Erfenis Koerant",
+        summary: "Hoe meesterambagslui by Capital Park 1920's Edwardiaanse waens en historiese stoomlokomotiewe restoureer.",
+        content: "By Rovos Rail se hoofkwartier in Capital Park, Pretoria, restoureer meer as 100 ambagslui teakhoutvensterrame en poleer koperlampe vir Klas 19D en 25NC stoomlokomotiewe."
+      },
+      st: {
+        title: "Wokshopo ea Capital Park: Ho Fana ka Bophelo ho Diterene tsa Khale",
+        author: "Koranta ea Diterene le Lefa",
+        summary: "Ka moo baahi ba Capital Park ba nchafatsang likariki tsa 1920 le diterene tsa mouoane ka teng.",
+        content: "Ntlo-khōlō ea Rovos Rail e Capital Park, Pretoria, e na le basebetsi ba fetang 100 ba nchafatsang lehong le mabone a koporo bakeng sa diterene tsa khale."
+      },
+      tn: {
+        title: "Wokshopo ya Capital Park: Go Fana ka Botshelo mo Ditereneng tsa Bogologolo",
+        author: "Kuranta ya Diterene tsa Boswa",
+        summary: "Ka fa batseki ba Capital Park ba ba nchafatsang diterene tsa 1920 tsa mouoane.",
+        content: "Kwa ntlokgolo ya Rovos Rail kwa Capital Park, Pretoria, babereki ba feta 100 ba ba nchafatsang dikariki tsa bogologolo."
+      },
+      nso: {
+        title: "Wokshopo ya Capital Park: Go Fana ka Bophelo Tereneng tša Kgale",
+        author: "Kuranta ya Terene ya Bohwa",
+        summary: "Ka moo baahi ba Capital Park ba renovetago diterene tša 1920 tša mouoane.",
+        content: "Hedikwata ya Rovos Rail e Capital Park, Pretoria, e na le babereki ba fetago 100 ba renovetago lehung le mabone a koporo."
+      },
+      ts: {
+        title: "Wokshopu ya Capital Park: Ku Nyika Vutomi eka Switimela swa Khale",
+        author: "Muxaka wa Switimela swa Ndhavuko",
+        summary: "Ndlela leyi vatshila eCapital Park va pfuxetaka switimela swa 1920 swa mpfhuka.",
+        content: "Eka ntsindza wa Rovos Rail eCapital Park, Pretoria, vatshila vo tlula 100 va pfuxeta mhandzi ni timbone ta nsuku txa xitimela."
+      },
+      ss: {
+        title: "I-Capital Park Workshop: Kuniye Bupilo eSitimeleni leba-Steam",
+        author: "Indzaba yeSitimela neLifa",
+        summary: "Indlela bentzi base-Capital Park lekuhlobisa titimela taka-1920 tema-steam.",
+        content: "Ema-ofisini e-Rovos Rail eCapital Park, Pretoria, bentzi labangetulu kwa-100 bahlobisa titimela takadzeni tema-steam."
+      },
+      ve: {
+        title: "Wokshopu ya Capital Park: U Nnea Vhutshilo kha Zwitimela zwa Kale",
+        author: "Gurannwenda ya Zwitimela zwa Vhufa",
+        summary: "Ka mvelele ya vhashumi Capital Park vha vhuedzedzaho zwitimela zwa 1920 zwa steam.",
+        content: "Khuluwanesho ya Rovos Rail Capital Park, Pretoria, i na vhashumi vha fhiraho 100 vhane vha khou vhuedzedza zwitimela zwa steam."
+      },
+      nr: {
+        title: "I-Workshop ye-Capital Park: Ukunikela Ipilweni kwiZitimela zakudala",
+        author: "Ikoranta yeZitimela zaKudala",
+        summary: "Indlela abasebenzi e-Capital Park abavuselela ngayo iinqola zabo-1920 neenzini ze-steam.",
+        content: "Ekhaya le-Rovos Rail e-Capital Park, e-Pretoria, abasebenzi abangaphezu kwe-100 bavuselela iinqola zakudala neemfremu zomthi mase bahlobise neenzini ze-steam."
+      },
+      de: {
+        title: "Werkstatt Capital Park: Neues Leben für historische Dampfloks",
+        author: "Dampf & Erbe Zeitung",
+        summary: "Wie Meisterhandwerker in Capital Park Wagons der 1920er Jahre und Dampflokomotiven restaurieren.",
+        content: "Im Hauptquartier von Rovos Rail in Capital Park, Pretoria, restaurieren über 100 Handwerker Teakholzfenster und Messinglampen für historische Dampflokomotiven der Klasse 19D und 25NC."
+      },
+      fr: {
+        title: "Atelier de Capital Park : Donner vie aux anciennes locomotives à vapeur",
+        author: "Gazette Vapeur & Patrimoine",
+        summary: "Comment les maîtres artisans de Capital Park restaurent wagons des années 1920 et locomotives à vapeur.",
+        content: "Au siège de Rovos Rail à Capital Park, Pretoria, plus de 100 artisans restaurent minutieusement cadres en teck et lampes en laiton pour les locomotives à vapeur historiques de classe 19D et 25NC."
+      },
+      nl: {
+        title: "Capital Park Werkplaats: Nieuw leven voor historische stoomtreinen",
+        author: "Stoom & Erfgoed Krant",
+        summary: "Hoe meester-ambachtslieden in Capital Park 1920-rijtuigen en stoomlocomotieven restaureren.",
+        content: "Op het hoofdkantoor van Rovos Rail in Capital Park, Pretoria, restaurieren meer dan 100 ambachtslieden teakhouten ramen en koperen lampen voor historische Class 19D en 25NC stoomlocomotieven."
+      },
+      es: {
+        title: "Taller Capital Park: Dando vida a la locomotora de vapor clásica",
+        author: "Gaceta de Vapor y Patrimonio",
+        summary: "Cómo artesanos en Capital Park restauran vagones de los años 1920 y locomotoras históricas.",
+        content: "En la sede de Rovos Rail en Capital Park, Pretoria, más de 100 artesanos restauran marcos de teca y pulen lámparas de latón para las históricas locomotoras de vapor de las clases 19D y 25NC."
+      },
+      it: {
+        title: "Officina di Capital Park: Nuova vita ai treni a vapore d'epoca",
+        author: "Gazzetta Vapore e Patrimonio",
+        summary: "Come i maestri artigiani di Capital Park restaurano carrozze anni '20 e storiche locomotive a vapore.",
+        content: "Nel quartier generale di Rovos Rail a Capital Park, Pretoria, oltre 100 artigiani restaurano infissi in teak e lampade in ottone per le storiche locomotive a vapore Classe 19D e 25NC."
+      },
+      pt: {
+        title: "Oficina de Capital Park: Dando vida a locomotivas a vapor vintage",
+        author: "Gazeta de Vapor e Patrimônio",
+        summary: "Como mestres artesãos em Capital Park restauram vagões dos anos 1920 e locomotivas históricas.",
+        content: "Na sede do Rovos Rail em Capital Park, Pretória, mais de 100 artesãos restauram caixilhos de teca e polem lâmpadas de latão para as históricas locomotivas a vapor das classes 19D e 25NC."
+      },
+      zh: {
+        title: "首都公园车间：为复古蒸汽机车赋予新生",
+        author: "蒸汽与遗产报",
+        summary: "首都公园的工匠大师们如何精心修复1920年代爱德华时代的车厢与历史蒸汽机车。",
+        content: "在比勒陀利亚首都公园的洛沃斯铁路总部，100多名工匠精心修复柚木窗框，抛光纯黄铜灯具，重建历史悠久的19D与25NC级蒸汽机车。"
+      },
+      ja: {
+        title: "キャピタル・パーク工房：ヴィンテージ蒸気機関車に息吹を",
+        author: "スチーム＆ヘリテージ・ガゼット",
+        summary: "キャピタル・パークの熟練職人が1920年代の客車や歴史的蒸気機関車をどのように修復しているか。",
+        content: "プレトリアのキャピタル・パークにあるロボス・レール本社では、100名以上の職人がチーク材の窓枠や真鍮ランプを磨き上げ、歴史的なClass 19Dや25NC蒸気機関車を再構築しています。"
+      },
+      ko: {
+        title: "캐피털 파크 워크숍: 클래식 증기 기관차에 새 숨결을",
+        author: "증기 및 유산 저널",
+        summary: "캐피털 파크의 숙련된 장인들이 1920년대 객차와 역사적인 증기 기관차를 복원하는 과정.",
+        content: "프레토리아 캐피털 파크의 로보스 레일 본사에서는 100여 명의 장인들이 티크 목재 창틀과 황동 램프를 정성껏 복원하고 클래식 19D 및 25NC 증기 기관차를 재건합니다."
+      },
+      hi: {
+        title: "कैपिटल पार्क वर्कशॉप: विंटेज स्टीम इंजनों में नई जान फूंकना",
+        author: "स्टीम एंड हेरिटेज गजट",
+        summary: "कैपिटल पार्क के मास्टर कारीगर 1920 के दशक के डिब्बों और ऐतिहासिक भाप इंजनों को कैसे बहाल करते हैं।",
+        content: "प्रिटोरिया के कैपिटल पार्क में रोवोस रेल के मुख्यालय में, 100 से अधिक कारीगर सागौन की लकड़ी के फ़्रेम और पीतल के लैंपों को चमकाते हैं और क्लास 19D इंजनों का पुनर्निर्माण करते हैं।"
+      },
+      ru: {
+        title: "Мастерская Капитал Парк: Новая жизнь старинных паровозов",
+        author: "Газета «Паровозное наследие»",
+        summary: "Как мастера в Капитал Парке реставрируют вагоны 1920-х годов и исторические паровозы.",
+        content: "В штаб-квартире Rovos Rail в Претории более 100 мастеров реставрируют тиковые рамы и полируют латунные лампы для исторических паровозов серий 19D и 25NC."
+      },
+      ar: {
+        title: "ورشة كابيتال بارك: إحياء القاطرات البخارية القديمة",
+        author: "جريدة البخار والتراث",
+        summary: "كيف يرمم الحرفيون في كابيتال بارك عربات عشرينيات القرن الماضي والقاطرات البخارية التاريخية.",
+        content: "في مقر روفوس ريل في كابيتال بارك ببريتوريا، يرمم أكثر من 100 حرفي إطارات خشب التك والمصابيح النحاسية ويقوّون قاطرات البخار الكلاسيكية."
+      }
+    }
+  };
+
+  function getStoryInLanguage(story, langCode) {
+    if (!story) return story;
+    const lang = langCode || window.TrackTalesLanguageCode || localStorage.getItem('tracktales_lang') || 'en';
+    if (lang === 'en' || !STORY_TRANSLATIONS[story.id] || !STORY_TRANSLATIONS[story.id][lang]) {
+      return story;
+    }
+    const tr = STORY_TRANSLATIONS[story.id][lang];
+    return {
+      ...story,
+      title: tr.title || story.title,
+      summary: tr.summary || story.summary,
+      content: tr.content || story.content,
+      author: tr.author || story.author
+    };
+  }
+
+  // --- Multilingual Archival Dossiers Translations Engine ---
+  const DOSSIER_TRANSLATIONS = {
+    'bt-dossier-1': {
+      zu: {
+        title: "1946 Ukuhambisa Isihloko Sasebukhosini Segolide Sempi",
+        subtitle: "Imisebenzi Yasebusuku Ephephile E-Pretoria Kuya e-Simon's Town Naval Dock",
+        summary: "Ngaphansi kokuthula komsakazo, isitimela esasengaphambili kwaso i-Blue Train sasithwala amatoni egolide e-Reserve Bank ngaphesheya kwe-Karoo."
+      },
+      xh: {
+        title: "1946 Ukuthutha Igolide Semfazwe Esifihlakeleyo",
+        subtitle: "Imisebenzi Yasebusuku ePretoria ukuya e-Simon's Town Naval Dock",
+        summary: "Ngaphandle konxibelelwano, eyangaphambili ye-Blue Train yayithatha igolide eninzi ye-Reserve Bank ngaphaya kweKaroo."
+      },
+      af: {
+        title: "1946 Oorlogstyd Goudstaaf Geheime Vervoer",
+        subtitle: "Geklassifiseerde Nagbedrywighede vanaf Pretoria na Simonstad Vlootdok",
+        summary: "Onder absolute radiostilte het Die Blou Trein se voorganger tonne Suid-Afrikaanse Reserwebank-goud deur die Karoo vervoer."
+      },
+      st: {
+        title: "1946 Leeto la Sephiri la Gauta ea Ntoa",
+        subtitle: "Tsosoloso ea Bosiu ho tloha Pretoria ho ya Simon's Town Naval Dock",
+        summary: "Tlas'a tholo ea radiyo, terene pele ho Blue Train e ile ea jara litone tsa gauta ea Reserve Bank ho parola Karoo."
+      },
+      tn: {
+        title: "1946 Loeto lwa Sephiri lwa Gauta ya Ntwa",
+        summary: "Ntle le seromamowa, terene ya pele ho Blue Train e ne ya tsaya gauta ya Reserve Bank go ralala Karoo."
+      },
+      nso: {
+        title: "1946 Leeto la Sephiri la Gauta ya Ntwa",
+        summary: "Ntle le dithulaganyo tša radiyo, terene ya pele ga Blue Train e rwele gauta ya Reserve Bank go ralala Karoo."
+      },
+      ts: {
+        title: "1946 Riendzo ra Xihundla ra Nsuku wa Nyimpi",
+        summary: "Eka ku mihela ka moya, xitimela xa khale xa Blue Train xi rhwale ti-ton ta nsuku wa Reserve Bank eka mananga ya Karoo."
+      },
+      ss: {
+        title: "1946 Luhambo lweFihlo leGolide yeNtfo",
+        summary: "Ngaphandle kwekukhuluma kwasemoyeni, sitimela lesingaphambili kwe-Blue Train belutsatsa igolide ye-Reserve Bank ngeKaroo."
+      },
+      ve: {
+        title: "1946 Lwendo lwa Tshiphiri lwa Musuku wa Nndwa",
+        summary: "Musi hu si na muya wa nndwa, tshitimela tsha kale tsha Blue Train tsho hwala musuku wa Reserve Bank lundani lwa Karoo."
+      },
+      nr: {
+        title: "1946 Ukuthuthwa kweGolide yeNtweni eFihliweko",
+        summary: "Ngaphandle kwemiyalezo yomoya, isitimela sangaphambili se-Blue Train beluthatha igolide ye-Reserve Bank e-Karoo."
+      }
+    },
+    'bt-dossier-2': {
+      zu: {
+        title: "Izibani Ezinombala Wegolide We-24K Nokundiza Kwe-Speed",
+        summary: "Indlela abasunguli banjiniyela baseNingizimu Afrika abafake ngayo igolide elingama-24K kumafasitela ukuze bavikele ukushisa kwasemathangeni e-Karoo."
+      },
+      xh: {
+        title: "Iglasi e-24K Yegolide Nezitimela Ezinesantya Esiphezulu",
+        summary: "Indlela iinjineli zaseMzantsi Afrika ezabeka ngayo igolide ye-24K kwiifestile zololiwe ukuthintela ubushushu baseKaroo."
+      },
+      af: {
+        title: "Lugkussing Hoëspoed-bogie & 24K Goud Akustiese Beglasing",
+        summary: "Hoe Suid-Afrikaanse ingenieurs suiwer 24-karaat goud op dubbelglasvensters geëns het om 45°C Karoo-hittegolwe te trotseer."
+      },
+      st: {
+        title: "Metsi a Gauta ea 24K le Lintlha tsa Terene ea Lebelo",
+        summary: "Ka moo baenjinihere ba hlahisitseng gauta ea 24K fensetereng ho thibela mofuthu o moholo oa lehoatata la Karoo."
+      },
+      tn: {
+        title: "Dipone tsa Gauta ya 24K le Diterene tsa Lebelo",
+        summary: "Ka fa baenjinihere ba dirileng gauta mo difensetereng tsa terene go thibela mogote wa Karoo."
+      },
+      nso: {
+        title: "Metsi a Gauta ya 24K le Diterene tša Lebelo",
+        summary: "Ka moo baenjinihere ba tsentseng gauta ya 24K lifensetereng go thibela mofutho wa Karoo."
+      },
+      ts: {
+        title: "Swayitimani swa Nsuku wa 24K ni Xitimela xa Rivilo",
+        summary: "Ndlela leyi vaenjhiniyera va vekeke nsuku wa 24K eka mahlelo ya mafasitere ku sivela hisa ra Karoo."
+      },
+      ss: {
+        title: "Emafasitela eGolide le-24K neSitimela seLuhlobo loLuphakeme",
+        summary: "Indlela baenjiniyela labafaka ngayo igolide le-24K emafasiteleni kute kuvikelwe kushisa kwaseKaroo."
+      },
+      ve: {
+        title: "Zwipilili zwa Musuku wa 24K na Tshitimela tsha Luuvho",
+        summary: "Ka mvelele ye vhainjiniere vha vhea musuku wa 24K kha mafasitere u thivhela mufhiso wa Karoo."
+      },
+      nr: {
+        title: "Amagilasi weGolide le-24K neZitimela zeSipidi",
+        summary: "Indlela ababunjiniyela abafaka ngayo igolide le-24K emafasitereni ukususa ukutjhisa kwe-Karoo."
+      }
+    },
+    'bt-dossier-3': {
+      zu: {
+        title: "Umzamo Wokweba Igolide E-Karoo Ebusuku ngo-1963",
+        summary: "Umzamo omkhulu wokubulala isisefo ebusuku phakathi kwe-Kimberley ne-Beaufort West owaholela ekuvikelekeni kwanamuhla."
+      },
+      xh: {
+        title: "Ulingo lokuQhekeza i-Vault ye-Diamond eKaroo ngo-1963",
+        summary: "Ulingo olumangalisayo ebusuku phakathi kweKimberley neBeaufort West olwenza ukuba kusebenze ukhuseleko olutsha kakhulu."
+      },
+      af: {
+        title: "Die Groot Karoo Middernag Diamantkluise Poging",
+        summary: "'n Dramatiese poging tot middernagtelike kluisbraak tydens die rit tussen Kimberley en Beaufort-Wes."
+      },
+      st: {
+        title: "Lekatiko la ho utswa Gauta e Karoo ka 1963",
+        summary: "Lekatiko le leholo la bosiu pakeng tsa Kimberley le Beaufort West le hlotseng tsamaiso e ncha ea tshireletso."
+      },
+      tn: {
+        title: "Leko la go utswa Ditaemane mo Karoo ka 1963",
+        summary: "Leko le legolo la bosigo fa gare ga Kimberley le Beaufort West le le tlhodileng tshireletso e ntshwa."
+      },
+      nso: {
+        title: "Leko la go utswa Ditaemane Karoo ka 1963",
+        summary: "Leko le legolo la bosego gare ga Kimberley le Beaufort West le le hlotšego tshireletso ye ntšha."
+      },
+      ts: {
+        title: "Ku ringeta ku yiva Tiyimane eKaroo hi 1963",
+        summary: "Ku ringeta lokukulu ka vusiku exikarhi ka Kimberley ni Beaufort West loku tswaleke vuhlayiseki byintshwa."
+      },
+      ss: {
+        title: "EmaZamo yekutswela Emadayimane eKaroo ngo-1963",
+        summary: "Emazamo lamakhulu ebusuku emkhatsini weKimberley neBeaufort West lakha kuvikeleka lokusha."
+      },
+      ve: {
+        title: "U lingedza u tswa Dzaimane Karoo nga 1963",
+        summary: "U lingedza vhukuma vhukati ha Kimberley na Beaufort West ha u ita vhutsireledzi vhuswa."
+      },
+      nr: {
+        title: "Umlingo wokuTjhwathula Amadayimane e-Karoo ngo-1963",
+        summary: "Umlingo omkhulu ebusuku hlangana kwe-Kimberley ne-Beaufort West owalethe ukuvikeleka okutjha."
+      }
+    },
+    'rr-dossier-1': {
+      zu: {
+        title: "Ukuvuselelwa Kwezitimela Zakudala Ze-Steam e-Witbank",
+        summary: "Umlando oyingqayizivele wokuhlula phansi izimoto zezitimela nezimayini e-Witbank nase-Capital Park ngezandla zabaqeqeshi."
+      },
+      xh: {
+        title: "Ukuvuselelwa kwe-Steam e-Witbank ku-Capital Park",
+        summary: "Ibali elibonisa indlela uRohan Vos ahlangula ngayo iinjini ze-steam ezindala kwi-Witbank n e-Capital Park."
+      },
+      af: {
+        title: "Die Witbank Stoom Kerkhof Herreseining",
+        summary: "Die waaghalsige stigtersverhaal van die redding van Klas 19D en Klas 25NC stoomlokomotiewe wat vir die smeltoond bestem was."
+      },
+      st: {
+        title: "Nchafatso ea Diterene tsa Khale tsa Witbank",
+        summary: "Pale e kholo ea ho pholosa diterene tsa mouoane tsa Class 19D le Class 25NC Capital Park."
+      },
+      tn: {
+        title: "Tsosoloso ya Diterene tsa Bogologolo mo Witbank",
+        summary: "Pale ya go boloka diterene tsa mouoane tsa Class 19D le 25NC kwa Capital Park."
+      },
+      nso: {
+        title: "Renovetšo ya Diterene tša Kgale tša Witbank",
+        summary: "Kanegelo ya go phološa diterene tša mouoane tša Class 19D le 25NC Capital Park."
+      },
+      ts: {
+        title: "Ku Pfuxetiwa ka Switimela swa Khale eWitbank",
+        summary: "Mhungu lowukulu wa ku ponisa switimela swa 19D ni 25NC eCapital Park."
+      },
+      ss: {
+        title: "Kuvuselelwa kweTitimela te-Steam eWitbank",
+        summary: "Indzaba yekusindzisa titimela tema-steam te-Class 19D ne-25NC eCapital Park."
+      },
+      ve: {
+        title: "U Vhuedzedza Zwitimela zwa Steam Witbank",
+        summary: "Ngano khulwane ya u lamulela zwitimela zwa 19D na 25NC Capital Park."
+      },
+      nr: {
+        title: "Ukuvuseleleka kweZitimela ze-Steam e-Witbank",
+        summary: "Indaba yokuhlangula izitimela ze-Class 19D ne-25NC e-Capital Park."
+      }
+    },
+    'rr-dossier-2': {
+      zu: {
+        title: "Imibhalo Yemfanelo Yempi Yase-Matjiesfontein ngo-1899",
+        summary: "I-Telegraph yesikhathi sempi ye-Anglo-Boer eyashicilelwa phakathi kuka-Lord Milner nekomkhulu lezempi."
+      },
+      xh: {
+        title: "Imithombo ye-Telegraph ye-Anglo-Boer War eMatjiesfontein",
+        summary: "Imithombo yoqobo kaLord Milner nabaphathi basemantshingeni ngo-1899 eMatjiesfontein."
+      },
+      af: {
+        title: "1899 Anglo-Boereoorlog Militêre Telegrawe van Matjiesfontein",
+        summary: "Oorspronklike transmissies tussen Lord Milner en die Britse Hoofkwartier."
+      },
+      st: {
+        title: "Meqolo ea Ntoa ea Anglo-Boer Matjiesfontein ka 1899",
+        summary: "Meleko ea pele pakeng tsa Lord Milner le ntlo-khōlō ea ntoa Matjiesfontein."
+      },
+      tn: {
+        title: "Makwalo a Ntwa ya Anglo-Boer kwa Matjiesfontein ka 1899",
+        summary: "Makwalo a ntlha gare ga Lord Milner le diofisi tsa ntwa kwa Matjiesfontein."
+      },
+      nso: {
+        title: "Mangwalo a Ntwa ya Anglo-Boer Matjiesfontein ka 1899",
+        summary: "Mangwalo a ntlha gare ga Lord Milner le ntlokgolo ya ntwa."
+      },
+      ts: {
+        title: "Papila ra Nyimpi ya Anglo-Boer eMatjiesfontein hi 1899",
+        summary: "Mamapila ya ntiyiso exikarhi ka Lord Milner ni ntsindza wa nyimpi."
+      },
+      ss: {
+        title: "Ema-Telegraph ye-Anglo-Boer War eMatjiesfontein ngo-1899",
+        summary: "Imibhalo yamambala emkhatsini wa-Lord Milner ne-hhovisi lenkhulu yentfo."
+      },
+      ve: {
+        title: "Zwiberetshi zwa Nndwa ya Anglo-Boer Matjiesfontein nga 1899",
+        summary: "Zwiberetshi zwa vhukuma vhukati ha Lord Milner na ofisi khulwane ya nndwa."
+      },
+      nr: {
+        title: "Imilayezo yeNtweni ya-1899 e-Matjiesfontein",
+        summary: "Imilayezo yamambala hlangana kuka-Lord Milner nabaphathi be-ntweni."
+      }
+    },
+    'rr-dossier-3': {
+      zu: {
+        title: "I-Log Yezimoto Zamapulangwe Ze-Edwardian Ze-Teak",
+        summary: "Amaphepha nabaqeqeshi bezobuciko abavuselela amapulangwe e-teak angomnyaka we-1920 e-Capital Park."
+      },
+      xh: {
+        title: "I-Log ye-Edwardian Teak Carriage Restoration",
+        summary: "Imithetho yokulungiswa kweefremu zeenkuni zakudala zaseCapital Park Workshops."
+      },
+      af: {
+        title: "Die Edwardiaanse Teakhout Wa Restourasie Logs",
+        summary: "Gedetailleerde restourasieverslae wat die meesterambagstegnieke toon wat gebruik is om 1920's houtpanele te bewaar."
+      },
+      st: {
+        title: "Litlaleho tsa ho Nchafatsa Diterene tsa Lehong tsa Edwardian",
+        summary: "Litlaleho tse hlakileng tsa ho nchafatsa lehong la teak la bo-1920 Capital Park."
+      },
+      tn: {
+        title: "Pego ya go Nchafatsa Diterene tsa Edwardian Teak",
+        summary: "Dipego tsa go dira dikariki tsa lehung la 1920 kwa Capital Park Workshops."
+      },
+      nso: {
+        title: "Pego ya go Renoveta Diterene tša Lehung tša Edwardian",
+        summary: "Dipego tša go renoveta diphanele tša lehung tša 1920 Capital Park."
+      },
+      ts: {
+        title: "Rhekhodo ya ku Pfuxeta Milenge ya Mhandzi ya Edwardian",
+        summary: "Tirhekhodo ta ku pfuxeta mhandzi ya 1920 eCapital Park Workshops."
+      },
+      ss: {
+        title: "Imibhalo yeKuhlobisa Titimela temPahla te-Edwardian Teak",
+        summary: "Imibhalo yekulungisa emapulangwe e-teak taka-1920 eCapital Park."
+      },
+      ve: {
+        title: "Zwirekhodo zwa u Vhuedzedza Zwithu zwa Muri wa Edwardian",
+        summary: "Zwirekhodo zwa u vhuedzedza muri wa 1920 Capital Park Workshops."
+      },
+      nr: {
+        title: "Amarekhodi wokuVuselela iinQola zeMthi ze-Edwardian",
+        summary: "Amarekhodi wokulungisa iinqola zomthi ze-1920 e-Capital Park Workshops."
+      }
+    }
+  };
+
+  function getDossierInLanguage(dossier, langCode) {
+    if (!dossier) return dossier;
+    const lang = langCode || window.TrackTalesLanguageCode || localStorage.getItem('tracktales_lang') || 'en';
+    if (lang === 'en' || !DOSSIER_TRANSLATIONS[dossier.id] || !DOSSIER_TRANSLATIONS[dossier.id][lang]) {
+      return dossier;
+    }
+    const tr = DOSSIER_TRANSLATIONS[dossier.id][lang];
+    return {
+      ...dossier,
+      title: tr.title || dossier.title,
+      summary: tr.summary || dossier.summary,
+      subtitle: tr.subtitle || dossier.subtitle
+    };
+  }
+
+  const TRAIN_TRANSLATIONS = {
+    'blue-train': {
+      zu: {
+        name: 'Isitimela Esibluu (The Blue Train)',
+        tagline: 'Iwindi LoMphefumulo WaseNingizimu Afrika',
+        category: 'Isitimela Esibizayo Sesezingeni Eliphezulu',
+        speed: '90 km/h (Uhambo Olushelelayo Nolupholile)',
+        duration: 'Izora Ezingu-31 (1,600 km)',
+        description: 'Isitimela Esibluu sekuwulokhu kuyisibonakaliso sohambo lwesitimela esisezingeni eliphezulu kusukela ngo-1946. Ekuhambeni okuya eningizimu ukusuka ePretoria kuya eKapa, abagibeli behla eKimberley ukubuka iBig Hole nomnyuziyamu wedayimane.',
+        departure_hub: 'Isiteshi sasePretoria Park / Irene Lounge (09:00 AM)',
+        arrival_hub: 'Isiteshi saseKapa (17:30 PM Usuku 2)',
+        highlights: [
+          'Uhambo oluqondisiwe eKimberley Big Hole naseNyuziyamu yeDayimane',
+          'Inkonzo yomsebenzi omkhulu (Butler) ama-awa angu-24 kuyo yonke indlu',
+          'Amagumbi okugeza emabula anezindawo zokugeza eziphelele',
+          'Ukudla okunomsoco kwezifundo ezinye zi-5 ezihambisana newayini',
+          'Imoto yebha yama-Gentlemen ezihlinzeka ngecigar nekonyaki'
+        ]
+      },
+      xh: {
+        name: 'ITreni Ebluu (The Blue Train)',
+        tagline: 'Ifestile yomphefumlo waseMzantsi Afrika',
+        category: 'ITreni ye-Luxury Express',
+        speed: '90 km/h (Uhambo Oluntofontofo)',
+        duration: 'Iiyure zi-31 (1,600 km)',
+        description: 'ITreni Ebluu ibiyeyona treni inethezekileyo kwasusela ngo-1946. Uhambo oluya emzantsi ukusuka ePretoria isinga eKapa lubandakanya ukuma eKimberley ukubuka iBig Hole.',
+        departure_hub: 'Isitishi sasePretoria Park / Irene Lounge (09:00 AM)',
+        arrival_hub: 'Isitishi saseKapa (17:30 PM Usuku 2)',
+        highlights: [
+          'Uhambo olukhokelwayo eKimberley Big Hole nemyuziyam yedayimani',
+          'Inkonzo ye-Butler ezinikeleyo ii-24/7 kuyo yonke isuti',
+          'Amagumbi okuhlamba emarmore anezitya zokuhlamba ezizeleyo',
+          'Izidlo ezihle ze-5-course gourmets ezihamba newayini entsha',
+          'I-Club Car ene-Cuban cigars nekonyaki vito'
+        ]
+      },
+      af: {
+        name: 'Die Blou Trein',
+        tagline: '\'n Venster na die Ziel van Suid-Afrika',
+        category: 'Ultra Luukse Sneltrein',
+        speed: '90 km/h (Gerieflike Luukse Reis)',
+        duration: '31 Uur (1,600 km)',
+        description: 'Die Blou Trein is sedert 1946 sinoniem met luukse treinreise. Op die suidwaartse reis vanaf Pretoria na Kaapstad stap passasiers af in Kimberley vir \'n begeleide toer van die beroemde Groot Gat.',
+        departure_hub: 'Pretoria Park-stasie / Irene Lounge (09:00)',
+        arrival_hub: 'Kaapstad-stasie (17:30 Dag 2)',
+        highlights: [
+          'Begeleide toer van Kimberley se Groot Gat en Diamantmuseum',
+          '24/7 Toegewyde persoonlike butlerdiens in elke suite',
+          'En-suite marmerbadkamers met volle grootte baddens',
+          'Fynproewer 5-gang etes met silwerdiens en Kaapse wynpassing',
+          'Herenklub-swaaiwa met Kubaanse sigare en edel kognak'
+        ]
+      },
+      de: {
+        name: 'Der Blaue Zug (The Blue Train)',
+        tagline: 'Ein Fenster zur Seele Südafrikas',
+        category: 'Ultra-Luxus-Express',
+        speed: '90 km/h (Sanftes Luxusreisen)',
+        duration: '31 Stunden (1.600 km)',
+        description: 'Der Blaue Zug steht seit 1946 für luxuriöse Zugreisen. Auf der Fahrt nach Süden von Pretoria nach Kapstadt nehmen die Passagiere an einem geführten Ausflug in Kimberley teil, um das berühmte Big Hole zu besuchen.',
+        departure_hub: 'Bahnhof Pretoria Park / Irene Lounge (09:00 Uhr)',
+        arrival_hub: 'Bahnhof Kapstadt (17:30 Uhr Tag 2)',
+        highlights: [
+          'Geführte Tour durch das Big Hole & Diamantenmuseum in Kimberley',
+          '24/7 Persönlicher Butler-Service in jeder Suite',
+          'En-suite Marmorbäder mit vollgestatteten Badewannen',
+          'Gourmet 5-Gänge-Menü mit Silberservice & edler Weinbegleitung',
+          'Herren-Clubwagen mit kubanischen Zigarren & edlem Cognac'
+        ]
+      },
+      fr: {
+        name: 'Le Train Bleu (The Blue Train)',
+        tagline: 'Une Fenêtre sur l\'Âme de l\'Afrique du Sud',
+        category: 'Express de Grand Luxe',
+        speed: '90 km/h (Voyage de Luxe Fluide)',
+        duration: '31 Heures (1 600 km)',
+        description: 'Le Train Bleu est synonyme de voyage ferroviaire de luxe depuis 1946. Lors du trajet vers le sud de Pretoria à Le Cap, les passagers bénéficient d\'une excursion guidée à Kimberley pour visiter le fameux Big Hole.',
+        departure_hub: 'Gare de Pretoria Park / Salon Irene (09h00)',
+        arrival_hub: 'Gare de Le Cap (17h30 Jour 2)',
+        highlights: [
+          'Visite guidée du Big Hole et du Musée de la Mine de Diamant à Kimberley',
+          'Service de majordome personnel dédié 24h/24 et 7j/7 dans chaque suite',
+          'Salles de bains en marbre attenantes avec baignoires',
+          'Dîner gastronomique 5 services avec service d\'argent et vins fins du Cap',
+          'Voiture-salon Club avec cigares cubains et cognacs d\'exception'
+        ]
+      },
+      nl: {
+        name: 'De Blauwe Trein (The Blue Train)',
+        tagline: 'Een Venster op de Ziel van Zuid-Afrika',
+        category: 'Ultra Luxe Express',
+        speed: '90 km/h (Comfortabel Luxe Reizen)',
+        duration: '31 Uur (1.600 km)',
+        description: 'De Blauwe Trein staat sinds 1946 synoniem voor luxe treinreizen. Op de zuidwaartse reis van Pretoria naar Kaapstad maken passagiers een begeleide excursie in Kimberley bij het beroemde Big Hole.',
+        departure_hub: 'Pretoria Park Station / Irene Lounge (09:00 uur)',
+        arrival_hub: 'Kaapstad Station (17:30 uur Dag 2)',
+        highlights: [
+          'Rondleiding door het beroemde Big Hole & Diamantmuseum in Kimberley',
+          '24/7 Toegewijde persoonlijke butler-service in elke suite',
+          'En-suite marmeren badkamers met ligbad',
+          'Gastronomisch 5-gangendiner met zilverservice en wijnarrangement',
+          'Heren Clubwagon met Cubaanse sigaren en fijne cognac'
+        ]
+      },
+      es: {
+        name: 'El Tren Azul (The Blue Train)',
+        tagline: 'Una Ventana al Alma de Sudáfrica',
+        category: 'Expreso de Gran Lujo',
+        speed: '90 km/h (Viaje de Lujo Suave)',
+        duration: '31 Horas (1,600 km)',
+        description: 'El Tren Azul ha sido sinónimo de viajes en tren de lujo desde 1946. En el viaje hacia el sur desde Pretoria a Ciudad del Cabo, los pasajeros disfrutan de una excursión guiada en Kimberley para ver el famoso Big Hole.',
+        departure_hub: 'Estación Pretoria Park / Salón Irene (09:00 AM)',
+        arrival_hub: 'Estación de Ciudad del Cabo (17:30 PM Día 2)',
+        highlights: [
+          'Visita guiada al Big Hole y Museo de la Mina de Diamantes en Kimberley',
+          'Servicio de mayordomo personal dedicado 24/7 en cada suite',
+          'Baños de mármol en suite con bañeras completas',
+          'Cena gourmet de 5 tiempos con servicio de plata y maridaje de vinos',
+          'Coche Club para caballeros con puros cubanos y coñac fino'
+        ]
+      },
+      it: {
+        name: 'Il Treno Blu (The Blue Train)',
+        tagline: 'Una Finestra sull\'Anima del Sudafrica',
+        category: 'Espresso di Gran Lusso',
+        speed: '90 km/h (Viaggio di Lusso Fluido)',
+        duration: '31 Ore (1.600 km)',
+        description: 'Il Treno Blu è sinonimo di viaggi ferroviari di lusso dal 1946. Durante il viaggio verso sud da Pretoria a Città del Capo, i passeggeri effettuano un\'escursione guidata a Kimberley presso il famoso Big Hole.',
+        departure_hub: 'Stazione di Pretoria Park / Irene Lounge (09:00)',
+        arrival_hub: 'Stazione di Città del Capo (17:30 Giorno 2)',
+        highlights: [
+          'Visita guidata al Big Hole e Museo della Miniera di Diamanti di Kimberley',
+          'Servizio maggiordomo personale dedicato 24/7 in ogni suite',
+          'Bagni in marmo en-suite con vasche da bagno',
+          'Cena gourmet da 5 portate con servizio d\'argento e abbinamento vini',
+          'Carrozza Club per gentiluomini con sigari cubani e cognac pregiati'
+        ]
+      },
+      pt: {
+        name: 'O Comboio Azul (The Blue Train)',
+        tagline: 'Uma Janela para a Alma da África do Sul',
+        category: 'Expresso de Ultra Luxo',
+        speed: '90 km/h (Viagem de Luxo Suave)',
+        duration: '31 Horas (1.600 km)',
+        description: 'O Comboio Azul é sinónimo de viagens de comboio de luxo desde 1946. Na viagem rumo ao sul de Pretoria para a Cidade do Cabo, os passageiros desfrutam de uma excursão guiada em Kimberley para ver o famoso Big Hole.',
+        departure_hub: 'Estação de Pretoria Park / Salão Irene (09:00)',
+        arrival_hub: 'Estação da Cidade do Cabo (17:30 Dia 2)',
+        highlights: [
+          'Passeio guiado ao Big Hole e Museu da Mina de Diamantes em Kimberley',
+          'Serviço de mordomo pessoal dedicado 24/7 em cada suite',
+          'Casas de banho em mármore en-suite com banheiras',
+          'Jantar gourmet de 5 pratos com serviço de prata e harmonização de vinhos',
+          'Carruagem Club com charutos cubanos e conhaques finos'
+        ]
+      },
+      zh: {
+        name: '蓝色列车 (The Blue Train)',
+        tagline: '通往南非灵魂之窗',
+        category: '顶级豪华快车',
+        speed: '90 公里/小时 (平稳舒适的奢华之旅)',
+        duration: '31 小时 (1,600 公里)',
+        description: '自1946年以来，蓝色列车一直是奢华铁路旅行的代名词。在从比勒陀利亚前往开普敦的南行旅途中，乘客将在金伯利下车，由专业导游带领游览著名的“大洞”（Big Hole）及钻石矿博物馆。',
+        departure_hub: '比勒陀利亚朴克车站 / 艾琳贵宾厅 (09:00)',
+        arrival_hub: '开普敦车站 (第2天 17:30)',
+        highlights: [
+          '金伯利大洞与钻石矿山博物馆导览游',
+          '每间套房配备24/7专属私人管家服务',
+          '附设全尺寸浴缸的奢华大理石独立浴室',
+          '5道菜高级银器晚宴及开普敦名酒搭配',
+          '配备古巴雪茄与顶级干邑的绅士俱乐部车厢'
+        ]
+      },
+      ja: {
+        name: 'ブルー・トレイン (The Blue Train)',
+        tagline: '南アフリカの魂を映す車窓',
+        category: 'ウルトラ・ラグジュアリー特急',
+        speed: '90 km/h (スムーズで快適なラグジュアリー走行)',
+        duration: '31 時間 (1,600 km)',
+        description: 'ブルー・トレインは1946年以来、豪華列車の代名詞となっています。プレトリアからケープタウンへの南行の旅では、キンバリーで途中下車し、有名なビッグホールとダイヤモンド鉱山博物館のガイド付きツアーをお楽しみいただけます。',
+        departure_hub: 'プレトリア・パーク駅 / アイリーン・ラウンジ (09:00)',
+        arrival_hub: 'ケープタウン駅 (2日目 17:30)',
+        highlights: [
+          'キンバリーのビッグホール＆ダイヤモンド鉱山博物館ツアー',
+          '全客室に24時間対応の専属バトラーサービス',
+          'フルサイズバスタブ付きの大理石バスタブ付きバスルーム',
+          '銀食器で味わう5コースの豪華ディナーとケープワインペアリング',
+          'キューバ産シガーと高級コニャックを備えたクラブカー'
+        ]
+      },
+      ko: {
+        name: '블루 트레인 (The Blue Train)',
+        tagline: '남아프리카 공화국의 영혼을 담은 창문',
+        category: '울트라 럭셔리 특급 열차',
+        speed: '90 km/h (부드럽고 편안한 럭셔리 주행)',
+        duration: '31 시간 (1,600 km)',
+        description: '블루 트레인은 1946년 이래 럭셔리 기차 여행의 대명사였습니다. 프리토리아에서 케이프타운으로 향하는 하행선 여정 중 승객들은 킴벌리에 내려 유명한 빅 홀과 다이아몬드 광산 박물관 가이드 투어를 가집니다.',
+        departure_hub: '프리토리아 파크역 / 아이린 라운지 (09:00 AM)',
+        arrival_hub: '케이프타운역 (2일차 17:30 PM)',
+        highlights: [
+          '킴벌리 빅 홀 및 다이아몬드 광산 박물관 가이드 투어',
+          '모든 스위트룸 24/7 전담 개인 버틀러 서비스',
+          '대형 욕조가 구비된 대리석 전용 욕실',
+          '은식기로 제공되는 5코스 고급 정찬 및 케ープ 와인 페어링',
+          '쿠바 시가와 고급 코냑이 마련된 클럽 카'
+        ]
+      },
+      hi: {
+        name: 'द ब्लू ट्रेन (The Blue Train)',
+        tagline: 'दक्षिण अफ्रीका की आत्मा की खिड़की',
+        category: 'अल्ट्रा लक्जरी एक्सप्रेस',
+        speed: '90 किमी/घंटा (आरामदायक लक्जरी यात्रा)',
+        duration: '31 घंटे (1,600 किमी)',
+        description: 'द ब्लू ट्रेन 1946 से लक्जरी रेल यात्रा का पर्याय रही है। प्रिटोरिया से केप टाउन की दक्षिण दिशा की यात्रा पर, यात्री प्रसिद्ध बिग होल और डायमंड माइन संग्रहालय के निर्देशित दौरे के लिए किम्बरली में उतरते हैं।',
+        departure_hub: 'प्रिटोरिया पार्क स्टेशन / आइरीन लाउंज (09:00 AM)',
+        arrival_hub: 'केप टाउन स्टेशन (17:30 PM दिन 2)',
+        highlights: [
+          'किम्बरली बिग होल और डायमंड माइन संग्रहालय का निर्देशित दौरा',
+          'हर सुइट में 24/7 समर्पित व्यक्तिगत बटलर सेवा',
+          'संगमरमर के स्नानघर पूर्ण आकार के बाथटब के साथ',
+          'सिल्वर सर्विस और वाइन के साथ 5-कोर्स लक्जरी डिनर',
+          'क्यूबन सिगार और फाइन कॉन्यैक के साथ क्लब कार'
+        ]
+      },
+      ru: {
+        name: 'Голубой Поезд (The Blue Train)',
+        tagline: 'Окно в Душу Южной Африки',
+        category: 'Ультра-Люкс Экспресс',
+        speed: '90 км/ч (Плавное Люксовое Путешествие)',
+        duration: '31 Час (1 600 км)',
+        description: 'Голубой поезд с 1946 года является синонимом роскошных железнодорожных путешествий. Во время южного путешествия из Претории в Кейптаун пассажиры совершают экскурсию в Кимберли с посещением знаменитой Большой дыры.',
+        departure_hub: 'Вокзал Претория Парк / Зал Айрин (09:00)',
+        arrival_hub: 'Вокзал Кейптаун (17:30 День 2)',
+        highlights: [
+          'Экскурсия к Большой дыре и Музею алмазных копей в Кимберли',
+          '24/7 Персональный дворецкий в каждом люксе',
+          'Мраморные ванные комнаты с полноценной ванной',
+          'Изысканный ужин из 5 блюд с серебряным сервизом и вином',
+          'Клубный вагон с кубинскими сигарами и элитным коньяком'
+        ]
+      },
+      ar: {
+        name: 'القطار الأزرق (The Blue Train)',
+        tagline: 'نافذة على روح جنوب إفريقيا',
+        category: 'قطار سريّع فاخر للغاية',
+        speed: '90 كم/ساعة (سفر فاخر ومريح)',
+        duration: '31 ساعة (1600 كم)',
+        description: 'كان القطار الأزرق مرادفًا للسفر الفاخر عبر السكك الحديدية منذ عام 1946. في الرحلة المتجهة جنوبًا من بريتوريا إلى كيب تاون، ينزل الركاب في كيمبرلي في جولة مع مرشد لرؤية الثقب الكبير الشهير ومتحف مناجم الألماس.',
+        departure_hub: 'محطة بريتوريا بارك / صالة إيرين (09:00 صباحًا)',
+        arrival_hub: 'محطة كيب تاون (17:30 مساءً اليوم الثاني)',
+        highlights: [
+          'جولة مع مرشد في الثقب الكبير ومتحف مناجم الألماس في كيمبرلي',
+          'خدمة نخب كبار الشخصيات (خادم شخصي) 24/7 في كل جناح',
+          'حمام رخامي خاص يحتوي على حوض استحمام كامل',
+          'عشاء فاخر مكون من 5 أطباق مع خدمة فضية ومشروبات مختارة',
+          'عربة نادٍ خاصة تحتوي على السيجار الكوبي والكونياك الفاخر'
+        ]
+      }
+    }
+  };
+
+  function getSceneryHighlightsInLanguage(trainId, langCode) {
+    const isBlue = trainId === 'blue-train';
+    const lang = langCode || 'en';
+
+    const blueScenery = {
+      af: [
+        { title: "Die Groot Karoo Sonsondergang & Wüstenhorisonne", vantage: "Panorama-sitkamer van die Waarnemingswa", time_window: "Laat Midden-namiddag tot Goue Uur", icon: "sun", desc: "Ervaar die oneindige platkoppies en akasia-silhoeëtte van die Karoo in 'n gloeiende purper en goud deur panoramiese glas van vloer tot plafon.", tips: "Daag 30 minute voor skemer by die waarnemingswa op vir uitstekende leunstoel-sitplekke." },
+        { title: "Hexrivier Bergpas & Spoorweėtunnels", vantage: "Klubwa & Sitkamervensters", time_window: "Oggend Afkoms na die Wes-Kaap", icon: "mountain", desc: "Bewonder hoe die trein deur toringhoë sandsteenreekse en die 13,5 km-tunnelsisteem na smaragagtige wingerdvalleie kronkel.", tips: "Sit aan die regterkant van die sitkamerwa vir 'n pragtige uitsig oor die bergravyn." },
+        { title: "Kamfersdam Flamingo Soutpanne", vantage: "Panoramiese Vensters & Eetwa", time_window: "Benadering tot Kimberley Spoorwegaansluiting", icon: "compass", desc: "Sien tienduisende kleiner flaminke wat die soutpanwaters in pastelpienk kleur reg langs die spoorlyn.", tips: "Hê jou kamera gereed wanneer swerms in golwe langs die trein opstyg." },
+        { title: "Hoëveld Oop Goudvelde & Grasvelde", vantage: "Panoramiese Sitkamer & Klubwa", time_window: "Pretoria & Gauteng Vertrek", icon: "layers", desc: "Aanskou die rolled hoë-hoogte savanne en historiese mynhope wat oorgaan in die wye oop uitgestrektheid van die sentrale plato.", tips: "Beste geniet met oggend-espresso terwyl die trein kruisspoed bereik." }
+      ],
+      zu: [
+        { title: "Ukushona KweLanga eKaroo Ne-Horizons YaseHlathini", vantage: "Indlu Yokubuka Ene-Panoramic Glass", time_window: "Ntambama Kuya Ekolweni Lwegolide", icon: "sun", desc: "Zizwe izintaba ezingapheli ne-akasia zaseKaroo ezikhanya ngokubomvu negolide ngengilazi esuka phansi kuya phezulu.", tips: "Fika endlini yokubuka imizuzu engu-30 ngaphambi kokuhlwa ukuze uthole izihlalo ezinhle." },
+        { title: "Izintaba Ze-Hex River Nezinqolobane Zesitimela", vantage: "Amawindi Endlu Yeklabhu Nesitolo", time_window: "Ekuseni Okuya eNyakatho Kapa", icon: "mountain", desc: "Bukela isitimela sizulazula ezintabeni zesanti nezinqolobane zamakhilomitha angu-13.5 eziya emijondolo yewayini.", tips: "Hlala ngakwesokudla sendlu ye-lounge ukubuka imifula yezintaba." },
+        { title: "Amadamu Ase-Kamfers Dam Ama-Flamingo", vantage: "Amawindi Endlu Yokudla", time_window: "Eduze Neziteshi Zesitimela saseKimberley", icon: "compass", desc: "Bona amawaka ama-flamingos ekhanyisa amanzi ngombala opinki eduze nomzila wesitimela.", tips: "Lungiselela ikhamera yakho njengoba izinyoni zindiza eduze kwesitimela." },
+        { title: "Amasimu Egolide Nezinkundla Zase-Highveld", vantage: "Indlu Yokubuka Neklabhu", time_window: "Ukusuka ePretoria naseGauteng", icon: "layers", desc: "Bukela i-savannah ephakeme nomlando wezimayini ujulise indawo enkulu yasekhaya.", tips: "Kumnandi kakhulu nge-espresso yakusasa lapho isitimela sifinyelela ijubane lwaso." }
+      ],
+      xh: [
+        { title: "Ukutshona Kwelanga e-Karoo Ne-Horizons Yasentlango", vantage: "Ikhabhin Yokubukela Ene-Glass", time_window: "Malanga Ukusa Kwiyure yegolide", icon: "sun", desc: "Ziva iintlaba ezingapheliyo ze-Karoo ezikhanya ngombala obomvu negolide ngengilazi ukusuka phantsi ukuya phezulu.", tips: "Fika kwikhabhin yokubukela imizuzu engu-30 ngaphambi kokutshona kwelanga." },
+        { title: "Intaba ze-Hex River Nemingxuma Ye-Treni", vantage: "Ifestile Ze-Club Car", time_window: "Kwakusasa Ukuya eNtshona Kapa", icon: "mountain", desc: "Buka itreni izulazula ezintabeni nasekuhambeni kwemingxuma ye-13.5 km eziya kwiintlambo zeediliya.", tips: "Hlala kwicala lasekunene le-lounge ukuze ubone imilambo yezintaba." },
+        { title: "Amadama e-Kamfers Dam Ama-Flamingo", vantage: "Ifestile Panorama Ne-Dining Car", time_window: "Ukondela kwi-Junction yaseKimberley", icon: "compass", desc: "Bona amawakawaka ee-flamingos ezitshintsha umbala wamanzi ngombala opinki eceleni komzila.", tips: "Yiba nekhamera yakho ilungile xa iintaka ziphakamela phezulu eceleni kwenetreni." },
+        { title: "Amalimi Egolide e-Highveld ne-Grasslands", vantage: "I-Panoramic Lounge ne-Club Car", time_window: "Ukusuka ePretoria ne-Gauteng", icon: "layers", desc: "Buka i-savannah ye-Highveld kunye neendawo zemigodi ezindala zitshintsha ziye kwithafa elikhulu centro.", tips: "Kumnandi nge-espresso yakusasa xa itreni ifikelela kuisantya esiphezulu." }
+      ],
+      de: [
+        { title: "Sonnenuntergang in der Großen Karoo & Wüstenhorizonte", vantage: "Panoramalounge des Aussichtswagens", time_window: "Später Nachmittag bis Goldene Stunde", icon: "sun", desc: "Erleben Sie die unendlichen Inselberge und Akaziensilhouetten der Karoo in glühendem Purpur und Gold durch bodentiefes Panoramaglas.", tips: "Seien Sie 30 Minuten vor der Dämmerung im Aussichtswagen für die besten Sesselplätze." },
+        { title: "Hex River Bergpass & Eisenbahntunnel", vantage: "Clubwagen- & Loungefenster", time_window: "Morgendliche Fahrt ins Westkap", icon: "mountain", desc: "Staunen Sie, wie sich der Zug durch mächtige Sandsteingebirge und das 13,5 km lange Tunnelsystem in smaragdgrüne Weinbautäler schlängelt.", tips: "Sitzen Sie auf der rechten Seite des Lounge-Wagens für spektakuläre Schluchtenblicke." },
+        { title: "Kamfers Dam Flamingo-Salzseen", vantage: "Panoramafenster & Speisewagen", time_window: "Annäherung an den Bahnknotenpunkt Kimberley", icon: "compass", desc: "Beobachten Sie zehntausende Zwergflamingos, die das Wasser der Salzpfanne direkt neben den Gleisen in Pastellrosa tauchen.", tips: "Halten Sie Ihre Kamera bereit, wenn Schwärme in Wellen neben dem Zug aufsteigen." },
+        { title: "Highveld Goldfelder & Grasland", vantage: "Panoramalounge & Clubwagen", time_window: "Abfahrt in Pretoria & Gauteng", icon: "layers", desc: "Sehen Sie zu, wie die hügelige Hochland-Savanne und historischen Minenhalden in die weite Ebene des zentralen Plateaus übergehen.", tips: "Am besten bei einem morgendlichen Espresso zu genießen, wenn der Zug Reisegeschwindigkeit erreicht." }
+      ],
+      fr: [
+        { title: "Coucher de Soleil sur le Grand Karoo & Horizons du Désert", vantage: "Voiture-Salon Panoramique", time_window: "Fin d'Après-midi à l'Heure Dorée", icon: "sun", desc: "Admirez les inselbergs infinis et les silhouettes d'acacias du Karoo baignés de pourpre et d'or à travers d'immenses baies vitrées.", tips: "Arrivez à la voiture panoramique 30 minutes avant le crépuscule pour les meilleurs fauteuils." },
+        { title: "Col de la Hex River & Tunnels Ferroviaires", vantage: "Voiture-Club & Fenêtres du Salon", time_window: "Descente Matinale vers le Cap-Occidental", icon: "mountain", desc: "Émerveillez-vous devant le train serpentant à travers les montagnes de grès et le système de tunnels de 13,5 km menant aux vallées viticoles.", tips: "Asseyez-vous du côté droit du salon pour une vue vertigineuse sur les ravins." },
+        { title: "Marais Salants aux Flamingos de Kamfers Dam", vantage: "Baies Panoramiques & Voiture-Restaurant", time_window: "Approche de la Jonction de Kimberley", icon: "compass", desc: "Observez des dizaines de milliers de flamants roses teinter les eaux en rose pastel juste le long de la voie ferrée.", tips: "Préparez votre appareil photo lorsque les vols s'envolent en vagues le long du train." },
+        { title: "Champs d'Or du Highveld & Prairie", vantage: "Salon Panoramique & Voiture-Club", time_window: "Départ de Pretoria & Gauteng", icon: "layers", desc: "Regardez la savane d'altitude et les anciens terrils céder la place à l'immensité du plateau central.", tips: "À savourer avec un espresso matinal pendant que le train atteint sa vitesse de croisière." }
+      ],
+      nl: [
+        { title: "Grote Karoo Zonsondergang & Woestijnhorizons", vantage: "Panoramalounge Observatiewagon", time_window: "Namiddag tot Gouden Uur", icon: "sun", desc: "Ervaar de oneindige tafelbergen en acaciasilhoeëtten van de Karoo in gloeiend purper en goud door vloer-tot-plafond glas.", tips: "Kom 30 minuten voor zonsondergang naar de observatiewagon voor de beste fauteuils." },
+        { title: "Hexrivier Bergpas & Spoorwegtunnels", vantage: "Clubwagon & Lounge Ramen", time_window: "Ochtend Afdaling naar West-Kaap", icon: "mountain", desc: "Bewonder hoe de trein door steile zandsteenketens en het 13,5 km lange tunnelsysteem naar smaragdgroene wijndalen kronkelt.", tips: "Zit aan de rechterkant van de loungewagon voor een spectaculair uitzicht op de bergkloof." },
+        { title: "Kamfersdam Flamingo Zoutpannen", vantage: "Panoramaramen & Eetwagon", time_window: "Nadering van Kimberley Spoorwegknooppunt", icon: "compass", desc: "Aanschouw tienduizenden kleine flamingo's die het water van de zoutpan in pastelroze kleuren direct langs het spoor.", tips: "Houd je camera gereed als zwermen in golven langs de trein opstijgen." },
+        { title: "Hoogveld Goudvelden & Graslanden", vantage: "Panoramalounge & Clubwagon", time_window: "Pretoria & Gauteng Vertrek", icon: "layers", desc: "Zie de glooiende hooglandsavanne en historische mijnhopen overgaan in de weidse vlakte van het centrale plateau.", tips: "Het beste te genieten met een ochtendespresso als de trein op cruisesnelheid komt." }
+      ],
+      es: [
+        { title: "Atardecer en el Gran Karoo y Horizontes del Desierto", vantage: "Salón Panorámico del Coche Observatorio", time_window: "Tarde hasta la Hora Dorada", icon: "sun", desc: "Contemple las infinitas colinas y siluetas de acacias del Karoo bañadas en púrpura y oro a través de ventanales panorámicos de piso a techo.", tips: "Llegue al coche observatorio 30 minutos antes del atardecer para asegurar los mejores sillones." },
+        { title: "Paso de Montaña Hex River y Túneles Ferroviarios", vantage: "Coche Club y Ventanales del Salón", time_window: "Descenso Matutino al Cabo Occidental", icon: "mountain", desc: "Maravíllese mientras el tren serpentea entre cordilleras de arenisca y el sistema de túneles de 13.5 km hacia valles de viñedos verde esmeralda.", tips: "Siéntese en el lado derecho del coche salón para disfrutar de vistas impresionantes del desfiladero." },
+        { title: "Salinas de Flamingos de Kamfers Dam", vantage: "Ventanales Panorámicos y Coche Comedor", time_window: "Aproximación al Empalme de Kimberley", icon: "compass", desc: "Presencie decenas de miles de flamencos tiñendo las aguas saladas en rosa pastel justo al lado de las vías.", tips: "Tenga su cámara lista cuando las bandadas alcancen el vuelo junto al tren." },
+        { title: "Campos de Oro y Pastizales del Highveld", vantage: "Salón Panorámico y Coche Club", time_window: "Salida de Pretoria y Gauteng", icon: "layers", desc: "Observe la sabana de gran altitud y las históricas minas dar paso a la vasta extensión de la meseta central.", tips: "Ideal para disfrutar con un café expreso matutino mientras el tren alcanza velocidad de crucero." }
+      ],
+      it: [
+        { title: "Tramonto nel Grande Karoo & Orizzonti del Deserto", vantage: "Lounge Panoramica della Carrozza Osservatorio", time_window: "Tardo Pomeriggio fino all'Ora Dorata", icon: "sun", desc: "Vivi le infinite colline e le sagome di acacia del Karoo immerse in un rosso porpora e oro attraverso vetrate a tutta altezza.", tips: "Arriva nella carrozza osservatorio 30 minuti prima del tramonto per i posti migliori." },
+        { title: "Passo Montano Hex River & Gallerie Ferroviarie", vantage: "Finestre Carrozza Club & Lounge", time_window: "Discesa Mattutina verso il Capo Occidentale", icon: "mountain", desc: "Ammira il treno che serpeggia tra imponenti catene di arenaria e il sistema di gallerie di 13,5 km verso valli di vigneti smeraldo.", tips: "Siediti sul lato destro della carrozza lounge per una vista mozzafiato sulle gole." },
+        { title: "Saline dei Fenicotteri di Kamfers Dam", vantage: "Finestre Panoramiche & Carrozza Ristorante", time_window: "Avvicinamento allo Snodo di Kimberley", icon: "compass", desc: "Osserva decine di migliaia di fenicotteri rosa che tingono le acque della salina di rosa pastello proprio accanto ai binari.", tips: "Tieni la fotocamera pronta quando gli stormi prendono il volo a fianco del treno." },
+        { title: "Campi Dorati & Praterie dell'Highveld", vantage: "Lounge Panoramica & Carrozza Club", time_window: "Partenza da Pretoria e Gauteng", icon: "layers", desc: "Guarda la savana ad alta quota e i cumuli delle miniere storiche cedere il passo alla vasta distesa dell'altopiano centrale.", tips: "Da gustare con un espresso mattutino mentre il treno raggiunge la velocità di crociera." }
+      ],
+      pt: [
+        { title: "Pôr do Sol no Grande Karoo & Horizontes do Deserto", vantage: "Salão Panorâmico da Carruagem Observatório", time_window: "Fim da Tarde até à Hora Dourada", icon: "sun", desc: "Sinta as infinitas colinas e silhuetas de acácia do Karoo banhadas em púrpura e ouro através de janelas panorâmicas do chão ao teto.", tips: "Chegue à carruagem observatório 30 minutos antes do anoitecer para obter os melhores lugares." },
+        { title: "Desfiladeiro Hex River & Túneis Ferroviários", vantage: "Janelas da Carruagem Club & Salão", time_window: "Descida Matinal para o Cabo Ocidental", icon: "mountain", desc: "Maravilhe-se enquanto o comboio serpenteia pelas cordilheiras de arenito e pelo sistema de túneis de 13,5 km até vales de vinhedos verde-esmeralda.", tips: "Sente-se do lado direito da carruagem salão para vistas deslumbrantes da ravina." },
+        { title: "Salinas de Flamingos de Kamfers Dam", vantage: "Janelas Panorâmicas & Carruagem Restaurante", time_window: "Aproximação ao Cruzamento de Kimberley", icon: "compass", desc: "Testemunhe dezenas de milhares de flamingos tingindo as águas salgadas em rosa pastel mesmo ao lado dos carris.", tips: "Tenha a câmara pronta quando os bandos levantarem voo em ondas ao lado do comboio." },
+        { title: "Campos de Ouro & Pastagens do Highveld", vantage: "Salão Panorâmico & Carruagem Club", time_window: "Partida de Pretoria & Gauteng", icon: "layers", desc: "Observe a savana de alta altitude e os depósitos mineiros históricos a dar lugar à vasta extensão do planalto central.", tips: "Excelente para desfrutar com um café matinal enquanto o comboio atinge a velocidade de cruzeiro." }
+      ],
+      zh: [
+        { title: "大卡鲁日落与沙漠地平线", vantage: "全景观览车厢包厢", time_window: "傍晚至黄金时刻", icon: "sun", desc: "透过落地全景玻璃，尽情体验卡鲁高原无尽平顶山丘与金合欢树剪影在夕阳余晖下染上的深红与金色。", tips: "请于黄昏前30分钟到达观景车厢，以抢占舒适的靠窗沙发座位。" },
+        { title: "海克斯河山谷隘口与铁路隧道群", vantage: "俱乐部车厢与观景窗", time_window: "晨间降落至西开普省", icon: "mountain", desc: "赞叹列车蜿蜒穿过雄伟的砂岩山脉以及长达13.5公里的隧道系统，驶入翡翠般的葡萄园山谷。", tips: "坐在休息车厢右侧，可欣赏山谷峡谷的壮丽全景。" },
+        { title: "坎弗斯水坝火烈鸟盐沼", vantage: "全景车窗与餐车", time_window: "接近金伯利铁路枢纽", icon: "compass", desc: "亲眼目睹数万只小火烈鸟将铁轨旁边的盐沼水域染成梦幻的淡粉红色。", tips: "当鸟群沿铁路线成群起飞时，请务必准备好相机。" },
+        { title: "高地广阔金矿区与草原", vantage: "全景休息室与俱乐部车厢", time_window: "比勒陀利亚与豪登省出发", icon: "layers", desc: "看着起伏的高原草原和历史悠久的矿山废石堆逐渐过渡为中央高原的浩瀚天地。", tips: "当列车达到巡航速度时，品尝一杯晨间浓缩咖啡效果最佳。" }
+      ],
+      ja: [
+        { title: "グレート・カルーの夕日と砂漠の水平線", vantage: "展望車パノラマラウンジ", time_window: "夕方からゴールデンアワー", icon: "sun", desc: "天井から床までのパノラマ玻璃越しに、夕陽の赤と金に染まるカルーの平頂山やアカシアのシルエットをご堪能ください。", tips: "黄昏の30分前に展望車へお越しいただくと、特等席のアームチェアを確保できます。" },
+        { title: "ヘックス・リバー山脈峠と鉄道トンネル群", vantage: "クラブカー＆ラウンジ窓", time_window: "朝の西ケープ州への降下", icon: "mountain", desc: "列車がそびえ立つ砂岩山脈と13.5kmのトンネル群を抜け、エメラルド色の葡萄畑の谷へと進む様子をご覧ください。", tips: "渓谷の絶景を楽しむには、ラウンジカーの右側の席がおすすめです。" },
+        { title: "カムファーズ・ダムのフラミンゴ塩湖", vantage: "パノラマウィンドウ＆ダイニングカー", time_window: "キンバリー分岐点への接近", icon: "compass", desc: "線路のすぐ脇にある塩湖の水面をパステルピンクに染める何万羽ものフラミンゴの群れを目撃できます。", tips: "鳥の群れが列車と並んで飛び立つ瞬間に備えて、カメラをご用意ください。" },
+        { title: "ハイベルドの金鉱地帯と大草原", vantage: "パノラマラウンジ＆クラブカー", time_window: "プレトリア＆ハウテン出発", icon: "layers", desc: "高地のサバンナと歴史的な鉱山跡が、中央 plateau の大草原へと移り変わる風景をお楽しみください。", tips: "列車が巡航速度に達した頃、モーニングエスプレッソと共にお楽しみいただくのが最高です。" }
+      ],
+      ko: [
+        { title: "그레이트 카루의 일몰과 사막의 지평선", vantage: "전망차 파노라마 라운지", time_window: "늦은 오후부터 골든 아워", icon: "sun", desc: "바닥에서 천장까지 연결된 파노라마 유리창을 통해 붉은빛과 금빛으로 물드는 카루의 아카시아 실루엣을 감상하세요.", tips: "일몰 30분 전에 전망차에 도착하시면 최고의 창가 안락의자를 확보하실 수 있습니다." },
+        { title: "헥스 리버 산악 고개 및 철도 터널", vantage: "클럽 카 및 라운지 창가", time_window: "아침 웨스턴 케이프 진입", icon: "mountain", desc: "열차가 장엄한 사암 산맥과 13.5 km 터널 구간을 지나 에메랄드빛 포도밭 계곡으로 굽이쳐 들어가는 장관을 확인하세요.", tips: "계곡 절경을 감상하시려면 라운지 카 오른쪽 좌석에 앉으시는 것이 좋습니다." },
+        { title: "캄퍼스 담 플라밍고 염호", vantage: "파노라마 창문 및 식당차", time_window: "킴벌리 분기점 진입 시", icon: "compass", desc: "수만 마리의 플라밍고가 철로 바로 옆 염호 수면을 파스텔 핑크빛으로 물들이는 장관을 목격하세요.", tips: "새 떼가 열차와 함께 날아오를 때를 대비해 카메라를 준비해 두세요." },
+        { title: "하이벨드 금광 지대와 초원", vantage: "파노라마 라운지 및 클럽 카", time_window: "프리토리아 및 하우텡 출발", icon: "layers", desc: "완만한 고지대 사바나와 역사적인 광산 지대가 중앙 고원의 광활한 대지로 변해가는 모습을 관찰하세요.", tips: "열차가 정상 속도에 도달했을 때 모닝 에스프레소와 함께 즐기시는 것을 추천합니다." }
+      ],
+      hi: [
+        { title: "ग्रेट करू सूर्यास्त और रेगिस्तानी क्षितिज", vantage: "ऑब्जर्वेशन कार पैनोरमिक लाउंज", time_window: "देर दोपहर से सुनहरा घंटा", icon: "sun", desc: "फर्श से छत तक कांच की खिड़कियों के माध्यम से करू के लाल और सुनहरे रंग में रंगे विशाल पहाड़ियों और बबूल के पेड़ों के दृश्यों का अनुभव करें।", tips: "सर्वोत्तम आर्मचेयर बैठने के लिए गोधूलि से 30 मिनट पहले ऑब्जर्वेशन कार में पहुँचें।" },
+        { title: "हेक्स रिवर माउंटेन पास और रेलवे सुरंगे", vantage: "क्लब कार और लाउंज खिड़कियां", time_window: "सुबह पश्चिमी केप में उतरना", icon: "mountain", desc: "बलुआ पत्थर की पर्वत श्रृंखलाओं और 13.5 किमी सुरंग प्रणाली के माध्यम से अंगूर के बागों की घाटियों में गुजरती ट्रेन को देखकर चकित हों।", tips: "पहाड़ी घाटी के दृश्यों के लिए लाउंज कार के दाहिने तरफ बैठें।" },
+        { title: "कामफर्स डैम फ्लेमिंगो साल्ट पैन", vantage: "पैनोरमिक खिड़कियां और डाइनिंग कार", time_window: "किम्बरली रेल जंक्शन के पास", icon: "compass", desc: "रेल की पटरियों के ठीक साथ खारे पानी को गुलाबी रंग में रंगने वाले हजारों फ्लेमिंगो पक्षियों को देखें।", tips: "जब पक्षी ट्रेन के साथ उड़ान भरें तो अपना कैमरा तैयार रखें।" },
+        { title: "हाईवेल्ड सोने के मैदान और घास के मैदान", vantage: "पैनोरमिक लाउंज और क्लब कार", time_window: "प्रिटोरिया और गोटेंग प्रस्थान", icon: "layers", desc: "ऊंचाई वाले सवाना और ऐतिहासिक खदानों को मध्य पठार के विशाल मैदान में बदलते देखें।", tips: "सुबह के एस्प्रेसो के साथ सबसे अच्छा आनंद लिया जाता है जब ट्रेन अपनी गति पकड़ती है।" }
+      ],
+      ru: [
+        { title: "Закат в Великом Кару и Пустынные Горизонты", vantage: "Панорамный Салон Вагона-Обсерватории", time_window: "Поздний Дневной Свет - Золотой Час", icon: "sun", desc: "Насладитесь бескрайними холмами и силуэтами акаций Кару, окрашенными в пурпурные и золотые тона сквозь панорамные окна от пола до потолка.", tips: "Приходите в вагон-обсерваторию за 30 минут до заката, чтобы занять лучшие кресла." },
+        { title: "Горный Перевал Хекс-Ривер и Железнодорожные Тоннели", vantage: "Окна Клубного Вагона и Салона", time_window: "Утренний Спуск в Западный Кап", icon: "mountain", desc: "Полюбуйтесь, как поезд извивается среди величественных песчаниковых гор и 13,5-километровой системы тоннелей к виноградным долинам.", tips: "Садитесь с правой стороны вагона-салона, чтобы увидеть ущелья во всей красоте." },
+        { title: "Солончаки Фламинго в Камферс-Дам", vantage: "Панорамные Окна и Вагон-Ресторан", time_window: "Приближение к Железнодорожному Узлу Кимберли", icon: "compass", desc: "Узрите десятки тысяч малых фламинго, окрашивающих воды солончака в пастельно-розовый цвет прямо вдоль путей.", tips: "Держите камеру наготове, когда стаи взлетают волнами вдоль поезда." },
+        { title: "Золотые Поля и Злаковые Равнины Хайвелда", vantage: "Панорамный Салон и Клубный Вагон", time_window: "Отправление из Претории и Гаутенга", icon: "layers", desc: "Наблюдайте, как высокогорная саванна и исторические терриконы сменяются бескрайними просторами центрального плато.", tips: "Лучше всего наслаждаться утренним эспрессо, когда поезд набирает крейсерскую скорость." }
+      ],
+      ar: [
+        { title: "غروب الشمس في كارو الكبرى وآفاق الصحراء", vantage: "صالة عربة المراقبة البانورامية", time_window: "أواخر بعد الظهر إلى الساعة الذهبية", icon: "sun", desc: "استمتع بمشاهدة التلال الشاسعة وظلال أشجار الأكاسيا في كارو المغطاة باللون القرمزي والذهبي عبر نوافذ بانورامية من الأرض إلى السقف.", tips: "وصل إلى عربة المراقبة قبل 30 دقيقة من الغروب للحصول على أفضل المقاعد." },
+        { title: "ممر جبل هيكس ريفر وأنفاق السكك الحديدية", vantage: "نوافذ عربة النادي والصالة", time_window: "النزول الصباحي إلى كيب الغربية", icon: "mountain", desc: "اندهش عندما يلتف القطار بين سلاسل الجبال الرملية الشاهقة ونظام الأنفاق البالغ طوله 13.5 كم إلى وديان مزارع الكروم.", tips: "اجلس على الجانب الأيمن من عربة الصالة لمشاهدة الممرات الجبلية المذهلة." },
+        { title: "بحيرة فلامنجو في سد كامفرز", vantage: "نوافذ بانورامية وعربة الطعام", time_window: "الاقتراب من تقاطع سكة حديد كيمبرلي", icon: "compass", desc: "شاهد عشرات الآلاف من طيور الفلامنجو تلون مياه البحيرة باللون الوردي الفاتح بجوار مسارات القطار مباشرة.", tips: "اجعل كاميرتك جاهزة عندما تطير أسراب الطيور بجانب القطار." },
+        { title: "حقول الذهب والمراعي في هايفيلد", vantage: "صالة بانورامية وعربة النادي", time_window: "المغادرة من بريتوريا وهاوتينج", icon: "layers", desc: "شاهد السافانا المرتفعة ومناجم الذهب التاريخية وهي تتحول إلى المساحة الشاسعة للهضبة المركزية.", tips: "يفضل الاستمتاع بها مع قهوة إسبريسو الصباح عندما يصل القطار إلى سرعته الكاملة." }
+      ]
+    };
+
+    if (isBlue) {
+      return blueScenery[lang] || [
+        { title: "The Great Karoo Sunset & Desert Horizons", vantage: "Observation Car Panoramic Lounge", time_window: "Late Afternoon to Golden Hour", icon: "sun", desc: "Experience the infinite flat-topped kopjes and acacia silhouettes of the Karoo bathed in glowing crimson and gold through floor-to-ceiling panoramic glass.", tips: "Arrive at the Observation Car 30 minutes before twilight for prime armchair seating." },
+        { title: "Hex River Mountain Pass & Railway Tunnels", vantage: "Club Car & Lounge Windows", time_window: "Morning Descent into Western Cape", icon: "mountain", desc: "Marvel as the train snakes through towering sandstone ranges and the 13.5 km tunnel system into emerald vineyard valleys.", tips: "Sit on the right side of the lounge car for sheer mountain ravine views." },
+        { title: "Kamfers Dam Flamingo Salt Pans", vantage: "Panoramic Windows & Dining Car", time_window: "Approaching Kimberley Rail Junction", icon: "compass", desc: "Witness tens of thousands of lesser flamingos tinting the salt pan waters in pastel pink right along the rail tracks.", tips: "Have your camera ready as flocks take flight in waves alongside the train." },
+        { title: "Highveld Open Goldfields & Grasslands", vantage: "Panoramic Lounge & Club Car", time_window: "Pretoria & Gauteng Departure", icon: "layers", desc: "Watch the rolling high-altitude savannah and historic mine dumps transition into the wide-open expanse of the central plateau.", tips: "Best enjoyed with morning espresso as the train reaches cruising speed." }
+      ];
+    } else {
+      return [
+        { title: "Open-Air Balcony Sunset & Stargazing", vantage: "Rear Open Observation Balcony", time_window: "Twilight to Deep Desert Night", icon: "sparkles", desc: "Step onto the open teak balcony at the very rear of the train. Feel the crisp Karoo air and watch the tracks vanish under a starry Milky Way.", tips: "The open balcony offers 100% glare-free photography and an immersive soundscape." },
+        { title: "Hex River Mountain Viaducts & 4 Tunnels", vantage: "Observation Car & Teak Balcony", time_window: "Day 3 Morning Winelands Descent", icon: "mountain", desc: "The vintage train negotiates the steep 1-in-40 gradient through 4 historic mountain tunnels with views over Cape Dutch homesteads.", tips: "The rear balcony provides stunning views of the curved train winding across stone viaducts." },
+        { title: "Matjiesfontein Victorian Desert Village", vantage: "Observation Lounge & Open Balcony", time_window: "Afternoon Arrival in Little Karoo", icon: "compass", desc: "Glide into the preserved 19th-century railway village of Matjiesfontein, framed by the rugged Witteberge peaks and cast-iron lamps.", tips: "Listen for the traditional bugle call summoning passengers to the platform." },
+        { title: "Vaal River Crossing & Maize Triangle", vantage: "1920s Dining Car & Suites", time_window: "Day 1 Afternoon Highveld Transit", icon: "wind", desc: "Cross the Vaal River border into the Free State plains, watching springbok and native birdlife scatter across the grasslands.", tips: "Keep watch from the wood-framed picture windows during afternoon high tea." }
+      ];
+    }
+  }
+
+  function getDiningInLanguage(trainId, langCode) {
+    const isBlue = trainId === 'blue-train';
+    const lang = langCode || 'en';
+
+    const blueDining = {
+      af: [
+        { title: "5-Gang Fynproewer Silwerdiens", icon: "utensils", desc: "Sjefs van wêreldgehalte berei vars Suid-Afrikaanse geregte voor, insluitend Karoolamsvleis, Knysna-oesters en Kaaps-Maleise fusie, bedien op fyn porselein met kristalglasware en wynpassings." },
+        { title: "Die Swaaiwa & Hoëtee", icon: "coffee", desc: "Weelderige fluweelsitplekke, wye panoramiese vensters en klassieke musiek skep die perfekte opset vir middaaghoëtee met handgemaakte gebak." },
+        { title: "Die Klubwa", icon: "wine", desc: "'n Intieme herenklub-atmosfeer met warm houtpanele, edel ou kognak, Kubaanse sigare en 'n geanotateerde biblioteek." }
+      ],
+      zu: [
+        { title: "Inkonzo Yevesi LezoKudla NeWayini ze-5-Course", icon: "utensils", desc: "Abapheki abakhulu balungisa ukudla okusha kwaseNingizimu Afrika okufaka iwundlu laseKaroo, izimbaza zaseKnysna, ne-Cape Malay fusion, kulethwa emaphathini amahle aphalazelwe ngengilazi yekristalu newayini." },
+        { title: "Imoto Yelounge & Iti Eliphakeme", icon: "coffee", desc: "Izihlalo zevelvet ezithambile, amafasitela abukekayo anombono omkhulu, nomculo wasendulo kudala indawo enhle yetiye lantambama namakhekhe athandekayo." },
+        { title: "Imoto YeKlabhu", icon: "wine", desc: "Indawo esondelelene yeklabhu yamadoda enezimbambo zokhuni ezifudumele, amakhonyakhile anamathuba amadala, ama-cigars aseCuba, nomtapo wolwazi ocwaningiwe." }
+      ],
+      xh: [
+        { title: "Izidlo ezikhethekileyo ze-5-Course Silver Service", icon: "utensils", desc: "Aabapheki abaphezulu balungisa ukudla okutsha kwaseMzantsi Afrika kubandakanya iyakala laseKaroo, iimbaza zaseKnysna, nentlanganisela yaseCape Malay, inikezelwa kwimiphetho ye-china nakwiiglasi zekristale." },
+        { title: "I-Lounge Car ne-High Tea", icon: "coffee", desc: "Izihlalo ze-velvet ezithambileyo, iifestile ezinkulu, nomculo weklasiki udala indawo egqibeleleyo yeti yasemva kwemini namakhekhe abunjwe ngezandla." },
+        { title: "I-Club Car", icon: "wine", desc: "Indawo eyodwa yeklabhu yamadoda enemiqadi yomthi efudumeleyo, iikonyaki ezindala ezintle, iisikali zaseCuba, nethala leencwadi elikhethiweyo." }
+      ],
+      de: [
+        { title: "5-Gänge-Gourmet-Silberservice", icon: "utensils", desc: "Meisterköche bereiten frische südafrikanische Küche zu, darunter Karoo-Lamm, Knysna-Austern und Cape-Malay-Fusion, serviert auf feinstem Porzellan mit Kristallgläsern und passenden Weinen." },
+        { title: "Der Salongewagen & Nachmittagstee", icon: "coffee", desc: "Edle Samtsitze, große Panoramafenster und klassische Musik schaffen die perfekte Kulisse für den Nachmittagstee mit handgefertigter Patisserie." },
+        { title: "Der Clubwagen", icon: "wine", desc: "Eine intime Herrenclub-Atmosphäre mit warmer Holzvertäfelung, edlem Vintage-Cognac, kubanischen Zigarren und einer kuratierten Bibliothek." }
+      ],
+      fr: [
+        { title: "Service en Argent Gastronomique 5 Plats", icon: "utensils", desc: "Des chefs cuisiniers préparent une cuisine sud-africaine fraîche incluant l'agneau du Karoo, les huîtres de Knysna et la fusion Cape Malay, servie sur porcelaine fine avec verrerie en cristal et accords mets-vins." },
+        { title: "Voiture-Salon & Thé de l'Après-Midi", icon: "coffee", desc: "Des sièges en velours moelleux, de larges baies panoramiques et de la musique classique créent le cadre parfait pour le thé de l'après-midi accompagné de pâtisseries artisanales." },
+        { title: "Voiture-Club", icon: "wine", desc: "Une atmosphère intime de club pour gentlemen avec de chaleureux lambris en bois, des cognacs millésimés raffinés, des cigares cubains et une bibliothèque sélectionnée." }
+      ],
+      nl: [
+        { title: "5-Gangen Gastronomische Zilverservice", icon: "utensils", desc: "Chef-koks bereiden verse Zuid-Afrikaanse gerechten, waaronder Karoo-lamsvlees, Knysna-oesters en Cape Malay-fusie, geserveerd op fijn porselein met kristallen glazen en bijpassende wijnen." },
+        { title: "Het Rijtuig & High Tea", icon: "coffee", desc: "Zachte fluwelen stoelen, brede panoramische ramen en klassieke muziek creëren de perfecte sfeer voor afternoon high tea met ambachtelijk gebak." },
+        { title: "De Clubcar", icon: "wine", desc: "Een intieme herenclubsfeer met warme houtpanelen, fijne vintage cognacs, Cubaanse sigaren en een gecureerde bibliotheek." }
+      ],
+      es: [
+        { title: "Servicio de Plata Gourmet de 5 Tiempos", icon: "utensils", desc: "Chefs galardonados preparan gastronomía sudafricana fresca como cordero de Karoo, ostras de Knysna y fusión Cape Malay, servida en vajilla fina con cristalería y maridaje de vinos." },
+        { title: "Coche Salón y Té de la Tarde", icon: "coffee", desc: "Asientos de terciopelo, amplios ventanales panorámicos y música clásica crean el ambiente perfecto para el té de la tarde con repostería artesanal." },
+        { title: "El Coche Club", icon: "wine", desc: "Un ambiente íntimo de club con paneles de madera cálida, finos coñacs añejos, puros cubanos y una biblioteca seleccionada." }
+      ],
+      it: [
+        { title: "Servizio d'Argento Gourmet a 5 Portate", icon: "utensils", desc: "Master chef preparano una fresca cucina sudafricana tra cui agnello del Karoo, ostriche di Knysna e fusion Cape Malay, serviti su porcellane fini con bicchieri di cristallo e abbinamenti di vini." },
+        { title: "Carrozza Lounge & Tè del Pomeriggio", icon: "coffee", desc: "Morbide sedute in velluto, ampie vetrate panoramiche e musica classica creano l'atmosfera perfetta per il tè del pomeriggio accompagnato da pasticceria artigianale." },
+        { title: "La Carrozza Club", icon: "wine", desc: "Un'intima atmosfera da club per gentiluomini con caldi pannelli in legno, pregiati cognac d'epoca, sigari cubani e una biblioteca selezionata." }
+      ],
+      pt: [
+        { title: "Serviço de Prata Gourmet de 5 Pratos", icon: "utensils", desc: "Chefs renomados preparam gastronomia sul-africana fresca incluindo cordeiro do Karoo, ostras de Knysna e fusão Cape Malay, servida em porcelana fina com copos de cristal e harmonização de vinhos." },
+        { title: "Carruagem Lounge & Chá da Tarde", icon: "coffee", desc: "Assentos de veludo, amplas janelas panorâmicas e música clássica criam o cenário perfeito para o chá da tarde com pastelaria artesanal." },
+        { title: "A Carruagem Club", icon: "wine", desc: "Um ambiente íntimo de clube para cavalheiros com painéis de madeira acolhedores, conhaques vintage finos, charutos cubanos e uma biblioteca selecionada." }
+      ],
+      zh: [
+        { title: "五道菜尊贵银器餐饮服务", icon: "utensils", desc: "名厨精心烹制包括卡鲁羊肉、克尼斯纳蚝和开普马来融合料理在内的精美南非美食，使用精美瓷器、水晶高脚杯并搭配侍酒师推荐佳酿。" },
+        { title: "全景休息车厢与下午茶", icon: "coffee", desc: "长绒天鹅绒座椅、宽阔的全景车窗和古典音乐，为享用手作精致糕点的下午茶营造出完美氛围。" },
+        { title: "绅士俱乐部车厢", icon: "wine", desc: "私密高雅的绅士俱乐部氛围，配备温馨的木质壁板、珍藏名贵干邑、古巴雪茄以及精选图书馆。" }
+      ],
+      ja: [
+        { title: "5コース・高貴なシルバーディナーサービス", icon: "utensils", desc: "カルー産子羊、克尼斯纳牡蛎、ケープ・マレー・フュージョンなど、南アフリカの新鮮な厳選食材を最高級磁器とクリスタルグラス、ソムリエ厳選ワインと共にご提供。" },
+        { title: "ラウンジカー＆アフタヌーンティー", icon: "coffee", desc: "豪華なベルベットシート、広大なパノラマウィンドウ、クラシック音楽が、ハンドメイドの洋菓子と共にいただく午後のハイティーの最高のひとときを演出します。" },
+        { title: "ザ・クラブカー", icon: "wine", desc: "温かみのある木目調パネル、ヴィンテージコニャック、キューバ産シガー、厳選されたライブラリーを備えた上質な紳士クラブの雰囲気を演出。" }
+      ],
+      ko: [
+        { title: "5코스 고품격 실버 서비스 식사", icon: "utensils", desc: "마스터 셰프가 카루 양고기, 니스나 굴, 케이프 말레이 퓨전 등 신선한 남아프리카 요리를 최고급 도자기와 크리스탈 글라스, 소믈리에 와인 페어링과 함께 준비합니다." },
+        { title: "라운지 카 & 하이 티", icon: "coffee", desc: "폭신한 벨벳 좌석, 넓은 파노라마 창문, 클래식 음악이 수제 패티세리와 함께 즐기는 애프터눈 하이 티의 완벽한 분위기를 연출합니다." },
+        { title: "더 클럽 카", icon: "wine", desc: "따뜻한 원목 패널, 고급 빈티지 코냑, 쿠바 시가, 엄선된 라이브러리를 갖춘 아늑한 젠틀맨 클럽 분위기를 제공합니다." }
+      ],
+      hi: [
+        { title: "5-कोर्स लक्जरी सिल्वर सर्विस डाइनिंग", icon: "utensils", desc: "मास्टर शेफ करू मेमने, नाइस्ना सीप और केप मलय व्यंजन सहित ताजा दक्षिण अफ्रीकी व्यंजन तैयार करते हैं, जो ठीक चीनी मिट्टी के बर्तनों और वाइन के साथ परोसे जाते हैं।" },
+        { title: "द लाउंज कार और हाई टी", icon: "coffee", desc: "आलीशान मखमली बैठने की जगह, चौड़ी पैनोरमिक खिड़कियां और शास्त्रीय संगीत दोपहर की चाय और हस्तनिर्मित पेस्ट्री के लिए सही माहौल बनाते हैं।" },
+        { title: "द क्लब कार", icon: "wine", desc: "लकड़ी की सजावट, पुरानी कोन्याक, क्यूबा सिगार और एक क्यूरेटेड पुस्तकालय के साथ एक अंतरंग पुरुषों का क्लब माहौल।" }
+      ],
+      ru: [
+        { title: "Gourmet Silver Service из 5 Блюд", icon: "utensils", desc: "Шеф-повара готовят свежие блюда южноафриканской кухни, включая ягненка Кару, найсненских устриц и фьюжн Кейп-Малай, подаваемые на изысканном фарфоре с хрусталем и вином." },
+        { title: "Вагон-Салон и Дневной Чай", icon: "coffee", desc: "Бархатные кресла, панорамные окна и классическая музыка создают идеальную атмосферу для послеполуденного чаепития с авторской выпечкой." },
+        { title: "Вагон-Клуб", icon: "wine", desc: "Уютная атмосфера джентльменского клуба с деревянными панелями, выдержанным коньяком, кубинскими сигарами и библиотекой." }
+      ],
+      ar: [
+        { title: "خدمة الفضة الفاخرة مكونة من 5 أطباق", icon: "utensils", desc: "يطهو كبار الطهاة المأكولات الفاخرة من جنوب أفريقيا بما في ذلك لحم الضأن والمحار، وتُقدم على أدوات صينية فاخرة وزجاج كريستالي." },
+        { title: "عربة الاستراحة وشاي بعد الظهيرة", icon: "coffee", desc: "مقاعد مخملية فاخرة، ونوافذ بانورامية واسعة، وموسيقى كلاسيكية تخلق الأجواء المثالية لشاي بعد الظهيرة مع الحلويات." },
+        { title: "عربة النادي", icon: "wine", desc: "أجواء نادي السادة الخاص مع ألواح خشبية دافئة، والمشروبات الفاخرة، والسجائر الكوبية، ومكتبة منتقاة." }
+      ]
+    };
+
+    if (isBlue) {
+      return blueDining[lang] || [
+        { title: "5-Course Gourmet Silver Service", icon: "utensils", desc: "Master chefs prepare fresh South African cuisine including Karoo lamb, Knysna oysters, and Cape Malay fusion, served on fine china with crystal glassware and sommelier wine pairings." },
+        { title: "The Lounge Car & High Tea", icon: "coffee", desc: "Plush velvet seating, wide panoramic windows, and classical music create the perfect setting for afternoon high tea with handcrafted patisseries." },
+        { title: "The Club Car", icon: "wine", desc: "An intimate gentlemen's club atmosphere with warm wood paneling, fine vintage cognacs, Cuban cigars, and a curated library." }
+      ];
+    }
+    return [
+      { title: "1920s Dining Saloon & Fine Cape Wines", icon: "utensils", desc: "Pre-1950s teak-paneled dining car with period-style victorian tableware, roasted Karoo venison, and award-winning Stellenbosch vintages." },
+      { title: "Observation Lounge & Afternoon High Tea", icon: "coffee", desc: "Deep leather armchairs, open-air rear balcony, and freshly baked scones served during afternoon Karoo transit." },
+      { title: "Gentlemen's Club Lounge & Library", icon: "wine", desc: "Polished mahogany paneling, single malt whiskies, cigars, and vintage rail map archives for discerning travelers." }
+    ];
+  }
+
+  function getLocomotiveHeritageInLanguage(trainId, langCode) {
+    const isBlue = trainId === 'blue-train';
+    const lang = langCode || 'en';
+
+    const blueHeritage = {
+      af: {
+        title: "Dubbelkrag Hoëspoed-spoorweningenieurswese",
+        desc: "Toegerus met gespesialiseerde luggeveerde draaistelle en goudgecoate dubbelglasvensters, gly Die Blou Trein bijkans geruisloos oor Suid-Afrika se ruwe Karoo-terrein.",
+        specs: [
+          { label: "Kruisspoed", val: "90 km/h (Gladde Lugvering)" },
+          { label: "Lokomotiefkrag", val: "Dubbel Elektries & Dieselelektries" },
+          { label: "Akoestiese Glas", val: "Goudgecoate Termiese Dubbelglas" },
+          { label: "Presidensiële Geskiedenis", val: "75+ Jaar · Mandela & Wêreldmonarge" }
+        ]
+      },
+      zu: {
+        title: "Ubunjiniyela Bamasitimela Anamandla Amabili Asheshayo",
+        desc: "Ifakwe amabhogi akhethekile amisiwe anama-air-cushioned namafasitela anezingqimba ezimbili ezivikelwe ngegolide, Isitimela Esibluu sihamba ngomoya cishe ngokuthula ezindaweni ezimbi zaseKaroo eNingizimu Afrika.",
+        specs: [
+          { label: "Ijubane Lokuhamba", val: "90 km/h (Ukumiswa Komoya Okushelelayo)" },
+          { label: "Amandla Esitimela", val: "Ugesi Osebenzisa Ugesi ne-Diesel" },
+          { label: "Ingilazi Yomsindo", val: "Ingilazi Ekabili Eyalulwe ngeGolide" },
+          { label: "Umlando WeziNhloko", val: "Imnyaka engu-75+ · U-Mandela nAbabusi" }
+        ]
+      },
+      xh: {
+        title: "Ubunjineli Bikaloliwe Onamandla Amabini Akhawulezayo",
+        desc: "Ifakwe amavili akhethekileyo anomoya neefestile ezigqunywe ngegolide, ITreni Ebluu ihamba ngokungxola kancinci kummandla warhabaxa wemihlaba yaseKaroo.",
+        specs: [
+          { label: "Isantya Sokuqhuba", val: "90 km/h (Uhambo Olushelelayo)" },
+          { label: "Amandla Kaloliwe", val: "I-Electric ne-Diesel-Electric" },
+          { label: "Iglasi Yomsindo", val: "Iglasi Egcwelwe ngeGolide" },
+          { label: "Imbali Yomongameli", val: "Iminyaka engu-75+ · U-Mandela noKumkani" }
+        ]
+      },
+      de: {
+        title: "Dual-Power Hochgeschwindigkeits-Eisenbahntechnik",
+        desc: "Ausgestattet mit spezialisierten luftgefederten Drehgestellen und goldbeschichteten Doppelglasfenstern gleitet Der Blaue Zug nahezu lautlos über das raue Karoo-Terrain Südafrikas.",
+        specs: [
+          { label: "Reisegeschwindigkeit", val: "90 km/h (Sanfte Luftfederung)" },
+          { label: "Lokomotivleistung", val: "Dual Elektro- & Diesel-Elektrisch" },
+          { label: "Schallschutzglas", val: "Goldbeschichtete Doppelverglasung" },
+          { label: "Präsidentengeschichte", val: "75+ Jahre · Mandela & Weltmonarchen" }
+        ]
+      },
+      fr: {
+        title: "Ingénierie Ferroviaire à Grande Vitesse Bi-Mode",
+        desc: "Équipé de bogies à suspension pneumatique spécialisés et de vitres isolantes à double vitrage dorées à l'or fin, Le Train Bleu glisse presque silencieusement à travers le relief rocailleux du Karoo.",
+        specs: [
+          { label: "Vitesse de Croisière", val: "90 km/h (Suspension Pneumatique Douce)" },
+          { label: "Puissance de la Locomotive", val: "Bi-Mode Électrique & Diesel-Électrique" },
+          { label: "Verre Acoustique", val: "Double Vitrage Thermique Plaqué Or" },
+          { label: "Histoire Présidentielle", val: "75+ Ans · Mandela & Monarques Mondiaux" }
+        ]
+      },
+      nl: {
+        title: "Dual-Power Hogesnelheidstrein Engineering",
+        desc: "Uitgerust met gespecialiseerde luchtgeveerde draaistellen en goudgecoate dubbele ramen glijdt De Blauwe Trein vrijwel geluidloos over het ruige Karoo-terrein.",
+        specs: [
+          { label: "Cruisesnelheid", val: "90 km/u (Zachte Luchtvering)" },
+          { label: "Locomotiefvermogen", val: "Dual Elektrisch & Diesel-Elektrisch" },
+          { label: "Akoestisch Glas", val: "Goudgecoat Thermisch Dubbel Glas" },
+          { label: "Presidentiële Historie", val: "75+ Jaar · Mandela & Wereldmonarchen" }
+        ]
+      },
+      es: {
+        title: "Ingeniería Ferroviaria Bi-Modo de Alta Velocidad",
+        desc: "Equipado con bogies de suspensión neumática y ventanas térmicas de doble panel bañadas en oro, El Tren Azul se desliza casi en silencio por el terreno del Karoo.",
+        specs: [
+          { label: "Velocidad de Crucero", val: "90 km/h (Suspensión Neumática Suave)" },
+          { label: "Potencia de la Locomotora", val: "Bi-Modo Eléctrico y Diésel-Eléctrico" },
+          { label: "Cristal Acústico", val: "Doble Cristal Térmico con Baño de Oro" },
+          { label: "Historia Presidencial", val: "75+ Años · Mandela y Monarcas Mundiales" }
+        ]
+      },
+      it: {
+        title: "Ingegneria Ferroviaria ad Alta Velocità Bi-Modale",
+        desc: "Dotato di carrelli con sospensioni pneumatiche e finestrini a doppio vetro termico placcati in oro, Il Treno Blu scivola quasi in silenzio sul territorio del Karoo.",
+        specs: [
+          { label: "Velocità di Crociera", val: "90 km/h (Sospensioni Pneumatiche Fluidhe)" },
+          { label: "Potenza Locomotiva", val: "Bi-Modale Elettrico e Diesel-Elettrico" },
+          { label: "Vetro Acustico", val: "Doppio Vetro Termico Placcato Oro" },
+          { label: "Storia Presidenziale", val: "75+ Anni · Mandela e Monarchi Mondiali" }
+        ]
+      },
+      pt: {
+        title: "Engenharia Ferroviária Bi-Modo de Alta Velocidade",
+        desc: "Equipado com bogies de suspensão pneumática e janelas térmicas duplas revestidas a ouro, O Comboio Azul desliza quase em silêncio pelo terreno do Karoo.",
+        specs: [
+          { label: "Velocidade de Cruzeiro", val: "90 km/h (Suspensão Pneumática Suave)" },
+          { label: "Potência da Locomotiva", val: "Bi-Modo Elétrico e Diesel-Elétrico" },
+          { label: "Vidro Acústico", val: "Vidro Duplo Térmico com Revestimento a Ouro" },
+          { label: "História Presidencial", val: "75+ Anos · Mandela e Monarcas Mundiais" }
+        ]
+      },
+      zh: {
+        title: "双动力高速铁路工程技术",
+        desc: "蓝色列车配备专门的气垫悬挂转向架和镀金隔热双层玻璃车窗，在南非坎坷的卡鲁高原上近乎无声地平稳行驶。",
+        specs: [
+          { label: "巡航速度", val: "90 公里/小时 (平稳气垫悬挂)" },
+          { label: "机车动力", val: "电力与柴电力双动力" },
+          { label: "隔音玻璃", val: "镀金隔热双层真空玻璃" },
+          { label: "总统与元首历史", val: "75+ 年历史 · 曼德拉与世界君主" }
+        ]
+      },
+      ja: {
+        title: "デュアルパワー高速鉄道工学",
+        desc: "特殊なエアサスペンション台車と金粉コーティング二重断熱ガラスを備え、ザ・ブルー・トレインは荒々しいカルーの台地をほぼ無音で滑らかに走破します。",
+        specs: [
+          { label: "巡航速度", val: "90 km/h (滑らかなエアサスペンション)" },
+          { label: "機関車動力", val: "電気＆ディーゼル電気のデュアル動力" },
+          { label: "遮音ガラス", val: "金コーティング二重断熱遮音ガラス" },
+          { label: "大統領・元首の歴史", val: "75年以上の歴史 · マンデラ氏や世界君主" }
+        ]
+      },
+      ko: {
+        title: "듀얼 파워 고속 철도 공학",
+        desc: "특수 에어 쿠션 서스펜션 대차와 금분 코팅 이중 단열 유리창을 갖춘 더 블루 트레인은 남아프리카의 거친 카루 지형을 거의 무소음으로 미끄러지듯 주행합니다.",
+        specs: [
+          { label: "운행 속도", val: "90 km/h (부드러운 에어 서스펜션)" },
+          { label: "기관차 동력", val: "전기 및 디젤-전기 듀얼 파워" },
+          { label: "차음 유리", val: "금 코팅 이중 단열 차음 유리" },
+          { label: "대통령 및 역사", val: "75년 이상의 역사 · 만델라 및 세계 국왕" }
+        ]
+      },
+      hi: {
+        title: "ड्यूल-पावर हाई-स्पीड रेल इंजीनियरिंग",
+        desc: "विशेष एयर-कुशन सस्पेंशन और सोने की परत वाली इंसुलेटेड खिड़कियों से लैस, द ब्लू ट्रेन दक्षिण अफ्रीका के करू इलाके में लगभग चुपचाप चलती है।",
+        specs: [
+          { label: "क्रूज़िंग गति", val: "90 किमी/घंटा (स्मूथ एयर सस्पेंशन)" },
+          { label: "लोकोमोटिव पावर", val: "ड्यूल इलेक्ट्रिक और डीजल-इलेक्ट्रिक" },
+          { label: "ध्वनि इन्सुलेशन ग्लास", val: "गोल्ड-कोटेड डबल ग्लास" },
+          { label: "राष्ट्रपति का इतिहास", val: "75+ वर्ष · मंडेला और विश्व राजा" }
+        ]
+      },
+      ru: {
+        title: "Двухрежимная Высокоскоростная Железнодорожная Инженерия",
+        desc: "Оснащенный пневматическими тележками и двойными стеклами с золотым напылением, Синий Поезд бесшумно скользит по суровой местности Кару.",
+        specs: [
+          { label: "Крейсерская Скорость", val: "90 км/ч (Плавная Пневмоподвеска)" },
+          { label: "Мощность Локомотива", val: "Двухрежимный Электро и Дизель-Электро" },
+          { label: "Акустическое Стекло", val: "Двойной Стеклопакет с Напылением Золота" },
+          { label: "Президентская История", val: "75+ Лет · Мандела и Монархи Мира" }
+        ]
+      },
+      ar: {
+        title: "هندسة السكك الحديدية عالية السرعة مزدوجة الطاقة",
+        desc: "مزود بعربات تعليق هوائية خاصة ونوافذ مزدوجة عازلة مطلية بالذهب، ينزلق القطار الأزرق بهدوء تام عبر أراضي كارو.",
+        specs: [
+          { label: "سرعة الإبحار", val: "90 كم/ساعة (تعليق هوائي سلس)" },
+          { label: "قوة القاطرة", val: "كهربائي مزدوج وديزل-كهربائي" },
+          { label: "الزجاج العازل للصوت", val: "زجاج مزدوج عازل مطلي بالذهب" },
+          { label: "التاريخ الرئاسي", val: "أكثر من 75 عاماً · مانديلا وملوك العالم" }
+        ]
+      }
+    };
+
+    if (isBlue) {
+      return blueHeritage[lang] || {
+        title: "Dual-Power High-Speed Rail Engineering",
+        desc: "Equipped with specialized air-cushioned suspension bogies and gold-dusted insulated double-pane windows, The Blue Train glides almost silently across South Africa's rugged Karoo terrain.",
+        specs: [
+          { label: "Cruising Speed", val: "90 km/h (Smooth Air-Suspension)" },
+          { label: "Locomotive Power", val: "Dual Electric & Diesel-Electric" },
+          { label: "Acoustic Glass", val: "Gold-Coated Thermal Double Glazing" },
+          { label: "Presidential History", val: "75+ Years · Mandela & World Monarchs" }
+        ]
+      };
+    }
+    return {
+      title: "Class 6 & 15E Steam & Diesel Heritage",
+      desc: "Rovos Rail operates meticulously restored Class 6 and 15E vintage locomotives alongside modern diesel engines for heavy mountain grade ascents.",
+      specs: [
+        { label: "Cruising Speed", val: "60 km/h (Vintage Sightseeing)" },
+        { label: "Locomotive Power", val: "Steam & Diesel Traction" },
+        { label: "Craftsmanship", val: "Solid Teak & Brass Carriage Restorations" },
+        { label: "Heritage Era", val: "1920s Vintage Rail Luxury" }
+      ]
+    };
+  }
+
+  function getTrainInLanguage(train, langCode) {
+    if (!train) return train;
+    const lang = langCode || window.TrackTalesLanguageCode || localStorage.getItem('tracktales_lang') || 'en';
+    if (lang === 'en' || !TRAIN_TRANSLATIONS[train.id] || !TRAIN_TRANSLATIONS[train.id][lang]) {
+      return {
+        ...train,
+        scenery_highlights: train.scenery_highlights || getSceneryHighlightsInLanguage(train.id, lang),
+        dining: train.dining || getDiningInLanguage(train.id, lang),
+        locomotive_heritage: train.locomotive_heritage || getLocomotiveHeritageInLanguage(train.id, lang)
+      };
+    }
+    const tr = TRAIN_TRANSLATIONS[train.id][lang];
+    return {
+      ...train,
+      name: tr.name || train.name,
+      tagline: tr.tagline || train.tagline,
+      category: tr.category || train.category,
+      speed: tr.speed || train.speed,
+      duration: tr.duration || train.duration,
+      description: tr.description || train.description,
+      departure_hub: tr.departure_hub || train.departure_hub,
+      arrival_hub: tr.arrival_hub || train.arrival_hub,
+      highlights: tr.highlights || train.highlights,
+      scenery_highlights: tr.scenery_highlights || getSceneryHighlightsInLanguage(train.id, lang),
+      dining: tr.dining || getDiningInLanguage(train.id, lang),
+      locomotive_heritage: tr.locomotive_heritage || getLocomotiveHeritageInLanguage(train.id, lang)
+    };
+  }
+
   // --- App State ---
   let appData = {
     trains: FALLBACK_TRAINS,
@@ -431,33 +2076,45 @@
     const descEl = document.getElementById('hero-train-description');
     const statsEl = document.getElementById('hero-train-stats');
 
+    const langCode = window.TrackTalesLanguageCode || localStorage.getItem('tracktales_lang') || 'en';
+    const dict = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[langCode]) ? TRANSLATIONS[langCode] : {};
+
     if (tagEl) {
-      tagEl.textContent = isBlue 
-        ? 'PRETORIA TO CAPE TOWN CORRIDOR · THE BLUE TRAIN' 
-        : 'CAPITAL PARK TO CAPE TOWN CORRIDOR · ROVOS RAIL SAFARI';
+      if (isBlue) {
+        tagEl.textContent = dict.hero_tag_blue || 'PRETORIA TO CAPE TOWN CORRIDOR · THE BLUE TRAIN';
+      } else {
+        tagEl.textContent = dict.hero_tag_rovos || 'CAPITAL PARK TO CAPE TOWN CORRIDOR · ROVOS RAIL SAFARI';
+      }
       tagEl.className = isBlue ? 'text-[#B87C10]' : 'text-[#2A9D8F]';
     }
 
     if (descEl) {
-      descEl.textContent = isBlue
-        ? 'A luxury rail ticket for this route can cost tens of thousands of Rand. TrackTales traces the same line—a 1,600 km 5-star spectrum running from the Highveld through Kimberley to the Atlantic ocean.'
-        : 'Step aboard "The Most Luxurious Train in the World". An extraordinary 3-day, 1,600 km vintage Edwardian journey spanning the golden Highveld, Kimberley diamond mines, the Great Karoo, and Matjiesfontein.';
+      if (isBlue) {
+        descEl.textContent = dict.hero_desc_blue || dict.hero_desc || 'A luxury rail ticket for this route can cost tens of thousands of Rand. TrackTales traces the same line—a 1,600 km 5-star spectrum running from the Highveld through Kimberley to the Atlantic ocean.';
+      } else {
+        descEl.textContent = dict.hero_desc_rovos || 'Step aboard "The Most Luxurious Train in the World". An extraordinary 3-day, 1,600 km vintage Edwardian journey spanning the golden Highveld, Kimberley diamond mines, the Great Karoo, and Matjiesfontein.';
+      }
     }
 
     if (statsEl) {
+      const routeText = dict.hero_stat_route || '1,600 km';
+      const durationText = isBlue ? (dict.hero_stat_duration_blue || '31 Hours Express') : (dict.hero_stat_duration_rovos || '3 Days / 48 Hours');
+      const speedText = isBlue ? (dict.hero_stat_speed_blue || '90 km/h Air-Suspension') : (dict.hero_stat_speed_rovos || '60 km/h Restored Steam');
+      const excursionText = isBlue ? (dict.hero_stat_excursion_blue || 'Kimberley Diamond Excursion') : (dict.hero_stat_excursion_rovos || 'Kimberley & Matjiesfontein');
+
       if (isBlue) {
         statsEl.innerHTML = `
-          <span class="flex items-center gap-2"><i data-lucide="route" class="w-3.5 h-3.5 text-[#B87C10]"></i> 1,600 km</span>
-          <span class="flex items-center gap-2"><i data-lucide="clock" class="w-3.5 h-3.5 text-[#B87C10]"></i> 31 Hours Express</span>
-          <span class="flex items-center gap-2"><i data-lucide="zap" class="w-3.5 h-3.5 text-[#B87C10]"></i> 90 km/h Air-Suspension</span>
-          <span class="flex items-center gap-2"><i data-lucide="gem" class="w-3.5 h-3.5 text-[#B87C10]"></i> Kimberley Diamond Excursion</span>
+          <span class="flex items-center gap-2"><i data-lucide="route" class="w-3.5 h-3.5 text-[#B87C10]"></i> ${routeText}</span>
+          <span class="flex items-center gap-2"><i data-lucide="clock" class="w-3.5 h-3.5 text-[#B87C10]"></i> ${durationText}</span>
+          <span class="flex items-center gap-2"><i data-lucide="zap" class="w-3.5 h-3.5 text-[#B87C10]"></i> ${speedText}</span>
+          <span class="flex items-center gap-2"><i data-lucide="gem" class="w-3.5 h-3.5 text-[#B87C10]"></i> ${excursionText}</span>
         `;
       } else {
         statsEl.innerHTML = `
-          <span class="flex items-center gap-2"><i data-lucide="route" class="w-3.5 h-3.5 text-[#2A9D8F]"></i> 1,600 km</span>
-          <span class="flex items-center gap-2"><i data-lucide="clock" class="w-3.5 h-3.5 text-[#2A9D8F]"></i> 3 Days / 48 Hours</span>
-          <span class="flex items-center gap-2"><i data-lucide="flame" class="w-3.5 h-3.5 text-[#2A9D8F]"></i> 60 km/h Restored Steam</span>
-          <span class="flex items-center gap-2"><i data-lucide="landmark" class="w-3.5 h-3.5 text-[#2A9D8F]"></i> Kimberley & Matjiesfontein</span>
+          <span class="flex items-center gap-2"><i data-lucide="route" class="w-3.5 h-3.5 text-[#2A9D8F]"></i> ${routeText}</span>
+          <span class="flex items-center gap-2"><i data-lucide="clock" class="w-3.5 h-3.5 text-[#2A9D8F]"></i> ${durationText}</span>
+          <span class="flex items-center gap-2"><i data-lucide="flame" class="w-3.5 h-3.5 text-[#2A9D8F]"></i> ${speedText}</span>
+          <span class="flex items-center gap-2"><i data-lucide="landmark" class="w-3.5 h-3.5 text-[#2A9D8F]"></i> ${excursionText}</span>
         `;
       }
     }
@@ -471,100 +2128,44 @@
     const titleEl = document.getElementById('trains-section-title');
     const subtitleEl = document.getElementById('trains-section-subtitle');
 
-    const train = (appData.trains || FALLBACK_TRAINS).find(t => t.id === trainId) || FALLBACK_TRAINS[0];
+    const langCode = window.TrackTalesLanguageCode || localStorage.getItem('tracktales_lang') || 'en';
+    const dict = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[langCode]) ? TRANSLATIONS[langCode] : {};
+
+    const rawTrain = (appData.trains || FALLBACK_TRAINS).find(t => t.id === trainId) || FALLBACK_TRAINS[0];
+    const train = getTrainInLanguage(rawTrain, langCode);
+
     const isBlue = train.id === 'blue-train';
     const otherTrainId = isBlue ? 'rovos-rail' : 'blue-train';
-    const otherTrainName = isBlue ? 'Rovos Rail Safari' : 'The Blue Train';
+    const otherTrainRaw = (appData.trains || FALLBACK_TRAINS).find(t => t.id === otherTrainId) || FALLBACK_TRAINS[1];
+    const otherTrain = getTrainInLanguage(otherTrainRaw, langCode);
+    const otherTrainName = otherTrain.name;
     const accentColor = isBlue ? '#D99B26' : '#2A9D8F';
     const accentDark = isBlue ? '#B87C10' : '#1F7A6F';
 
     if (badgeEl) {
-      badgeEl.textContent = `SELECTED TRAIN: ${train.name.toUpperCase()}`;
+      const selectedBadgeText = dict.trains_selected_badge || 'SELECTED TRAIN:';
+      badgeEl.textContent = `${selectedBadgeText} ${train.name.toUpperCase()}`;
       if (badgeEl.parentElement) {
         badgeEl.parentElement.className = `inline-flex items-center gap-2 px-4 py-1.5 rounded-full ${isBlue ? 'bg-[#D99B26]/10 border-[#D99B26]/30 text-[#B87C10]' : 'bg-[#2A9D8F]/10 border-[#2A9D8F]/30 text-[#2A9D8F]'} font-mono text-xs font-bold tracking-widest uppercase mb-4 shadow-sm`;
       }
     }
 
     if (titleEl) {
-      titleEl.innerHTML = isBlue 
-        ? `The <span class="text-[#B87C10] italic font-serif">Blue Train</span>` 
-        : `Rovos <span class="text-[#2A9D8F] italic font-serif">Rail Safari</span>`;
+      if (isBlue) {
+        titleEl.innerHTML = dict.trains_title_blue || `The <span class="text-[#B87C10] italic font-serif">Blue Train</span>`;
+      } else {
+        titleEl.innerHTML = dict.trains_title_rovos || `Rovos <span class="text-[#2A9D8F] italic font-serif">Rail Safari</span>`;
+      }
     }
 
     if (subtitleEl) {
-      subtitleEl.textContent = train.tagline + ' · Complete luxury suites, dining, and specifications for your selected train journey.';
+      subtitleEl.textContent = train.tagline + ' · ' + (dict.trains_subtitle_suffix || 'Complete luxury suites, dining, and specifications for your selected train journey.');
     }
 
     if (!container) return;
 
     // Scenery & Viewing Highlights HTML
-    const sceneryHighlights = train.scenery_highlights || (isBlue ? [
-      {
-        title: "The Great Karoo Sunset & Desert Horizons",
-        vantage: "Observation Car Panoramic Lounge",
-        time_window: "Late Afternoon to Golden Hour",
-        icon: "sun",
-        desc: "Experience the infinite flat-topped kopjes and acacia silhouettes of the Karoo bathed in glowing crimson and gold through floor-to-ceiling panoramic glass.",
-        tips: "Arrive at the Observation Car 30 minutes before twilight for prime armchair seating."
-      },
-      {
-        title: "Hex River Mountain Pass & Railway Tunnels",
-        vantage: "Club Car & Lounge Windows",
-        time_window: "Morning Descent into Western Cape",
-        icon: "mountain",
-        desc: "Marvel as the train snakes through towering sandstone ranges and the 13.5 km tunnel system into emerald vineyard valleys.",
-        tips: "Sit on the right side of the lounge car for sheer mountain ravine views."
-      },
-      {
-        title: "Kamfers Dam Flamingo Salt Pans",
-        vantage: "Panoramic Windows & Dining Car",
-        time_window: "Approaching Kimberley Rail Junction",
-        icon: "compass",
-        desc: "Witness tens of thousands of lesser flamingos tinting the salt pan waters in pastel pink right along the rail tracks.",
-        tips: "Have your camera ready as flocks take flight in waves alongside the train."
-      },
-      {
-        title: "Highveld Open Goldfields & Grasslands",
-        vantage: "Panoramic Lounge & Club Car",
-        time_window: "Pretoria & Gauteng Departure",
-        icon: "layers",
-        desc: "Watch the rolling high-altitude savannah and historic mine dumps transition into the wide-open expanse of the central plateau.",
-        tips: "Best enjoyed with morning espresso as the train reaches cruising speed."
-      }
-    ] : [
-      {
-        title: "Open-Air Balcony Sunset & Stargazing",
-        vantage: "Rear Open Observation Balcony",
-        time_window: "Twilight to Deep Desert Night",
-        icon: "sparkles",
-        desc: "Step onto the open teak balcony at the very rear of the train. Feel the crisp Karoo air and watch the tracks vanish under a starry Milky Way.",
-        tips: "The open balcony offers 100% glare-free photography and an immersive soundscape."
-      },
-      {
-        title: "Hex River Mountain Viaducts & 4 Tunnels",
-        vantage: "Observation Car & Teak Balcony",
-        time_window: "Day 3 Morning Winelands Descent",
-        icon: "mountain",
-        desc: "The vintage train negotiates the steep 1-in-40 gradient through 4 historic mountain tunnels with views over Cape Dutch homesteads.",
-        tips: "The rear balcony provides stunning views of the curved train winding across stone viaducts."
-      },
-      {
-        title: "Matjiesfontein Victorian Desert Village",
-        vantage: "Observation Lounge & Open Balcony",
-        time_window: "Afternoon Arrival in Little Karoo",
-        icon: "compass",
-        desc: "Glide into the preserved 19th-century railway village of Matjiesfontein, framed by the rugged Witteberge peaks and cast-iron lamps.",
-        tips: "Listen for the traditional bugle call summoning passengers to the platform."
-      },
-      {
-        title: "Vaal River Crossing & Maize Triangle",
-        vantage: "1920s Dining Car & Suites",
-        time_window: "Day 1 Afternoon Highveld Transit",
-        icon: "wind",
-        desc: "Cross the Vaal River border into the Free State plains, watching springbok and native birdlife scatter across the grasslands.",
-        tips: "Keep watch from the wood-framed picture windows during afternoon high tea."
-      }
-    ]);
+    const sceneryHighlights = train.scenery_highlights || getSceneryHighlightsInLanguage(train.id, langCode);
 
     const sceneryHTML = sceneryHighlights.map(item => `
       <div class="glass-card p-6 sm:p-7 rounded-3xl border border-black/10 flex flex-col justify-between hover:border-[${accentColor}]/50 transition-all shadow-sm group text-left">
@@ -590,7 +2191,7 @@
           <div class="flex items-start gap-2 text-xs font-sans text-[#44403C]">
             <i data-lucide="compass" class="w-4 h-4 text-[${accentColor}] shrink-0 mt-0.5"></i>
             <div>
-              <strong class="font-mono text-[10px] uppercase font-bold text-[#0A0C10] block">Vantage Point Tip</strong>
+              <strong class="font-mono text-[10px] uppercase font-bold text-[#0A0C10] block">${dict.label_vantage_tip || 'Vantage Point Tip'}</strong>
               <span>${item.tips}</span>
             </div>
           </div>
@@ -631,7 +2232,7 @@
                 <span class="px-3.5 py-1 rounded-full text-xs font-mono font-extrabold uppercase ${isBlue ? 'bg-[#D99B26]/20 text-[#B87C10] border border-[#D99B26]/40' : 'bg-[#2A9D8F]/20 text-[#2A9D8F] border border-[#2A9D8F]/40'}">
                   ${train.category}
                 </span>
-                <span class="text-xs font-mono text-[#78716C] font-semibold">${train.frequency}</span>
+                <span class="text-xs font-mono text-[#78716C] font-semibold">${train.frequency || (isBlue ? 'Weekly Departures' : 'Scheduled Departures')}</span>
               </div>
 
               <h3 class="font-heading font-extrabold text-3xl sm:text-4xl text-[#0A0C10] mb-2">${train.name}</h3>
@@ -642,15 +2243,15 @@
             <!-- Quick Specs Grid -->
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-6 border-t border-black/15 font-mono text-xs">
               <div class="p-3 rounded-xl bg-black/5 border border-black/10">
-                <span class="text-[10px] text-[#78716C] uppercase block font-bold">Speed</span>
+                <span class="text-[10px] text-[#78716C] uppercase block font-bold">${dict.label_speed || 'Speed'}</span>
                 <span class="font-bold text-[#0A0C10]">${train.speed}</span>
               </div>
               <div class="p-3 rounded-xl bg-black/5 border border-black/10">
-                <span class="text-[10px] text-[#78716C] uppercase block font-bold">Duration</span>
+                <span class="text-[10px] text-[#78716C] uppercase block font-bold">${dict.label_duration || 'Duration'}</span>
                 <span class="font-bold text-[#0A0C10]">${train.duration}</span>
               </div>
               <div class="p-3 rounded-xl bg-black/5 border border-black/10 col-span-2 sm:col-span-1">
-                <span class="text-[10px] text-[#78716C] uppercase block font-bold">Corridor</span>
+                <span class="text-[10px] text-[#78716C] uppercase block font-bold">${dict.label_corridor || 'Corridor'}</span>
                 <span class="font-bold text-[#0A0C10]">1,600 km</span>
               </div>
             </div>
@@ -659,11 +2260,11 @@
             <div class="mt-4 p-4 rounded-xl ${isBlue ? 'bg-[#D99B26]/10 border border-[#D99B26]/25' : 'bg-[#2A9D8F]/10 border border-[#2A9D8F]/25'} text-xs font-mono">
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
-                  <span class="text-[10px] font-bold uppercase text-[#78716C] block">Departure Hub</span>
+                  <span class="text-[10px] font-bold uppercase text-[#78716C] block">${dict.label_departure_hub || 'Departure Hub'}</span>
                   <span class="font-bold text-[#0A0C10]">${train.departure_hub}</span>
                 </div>
                 <div>
-                  <span class="text-[10px] font-bold uppercase text-[#78716C] block">Terminus Station</span>
+                  <span class="text-[10px] font-bold uppercase text-[#78716C] block">${dict.label_terminus_station || 'Terminus Station'}</span>
                   <span class="font-bold text-[#0A0C10]">${train.arrival_hub}</span>
                 </div>
               </div>
@@ -674,13 +2275,13 @@
             <div class="relative rounded-2xl overflow-hidden aspect-[4/3] border border-black/15 shadow-md">
               <img src="${train.image_url}" alt="${train.name}" class="w-full h-full object-cover">
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6">
-                <span class="text-white font-mono text-xs font-bold tracking-wider uppercase">${train.route_summary}</span>
+                <span class="text-white font-mono text-xs font-bold tracking-wider uppercase">${isBlue ? 'Southbound: Pretoria (Irene/Park) -> Kimberley -> Cape Town' : 'Southbound: Pretoria (Capital Park) -> Kimberley -> Matjiesfontein -> Cape Town'}</span>
               </div>
             </div>
 
             <!-- Highlights Checklist -->
             <div class="p-5 rounded-2xl bg-white/80 border border-black/10">
-              <span class="text-[11px] font-mono font-bold text-[#0A0C10] uppercase tracking-wider block mb-3">Signature Experience Highlights</span>
+              <span class="text-[11px] font-mono font-bold text-[#0A0C10] uppercase tracking-wider block mb-3">${dict.trains_highlights_title || 'Signature Experience Highlights'}</span>
               <ul class="space-y-2 text-xs font-sans text-[#111827] font-medium">
                 ${(train.highlights || []).map(h => `
                   <li class="flex items-start gap-2">
@@ -699,10 +2300,10 @@
       <div class="text-left mt-12">
         <div class="mb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
           <div>
-            <span class="text-xs font-mono font-bold text-[${accentColor}] uppercase tracking-widest block">Scenic Splendor &amp; Vantage Points</span>
-            <h3 class="font-heading font-extrabold text-2xl sm:text-3xl text-[#0A0C10]">Corridor Scenery &amp; Viewing Highlights</h3>
+            <span class="text-xs font-mono font-bold text-[${accentColor}] uppercase tracking-widest block">${dict.trains_scenery_badge || 'Scenic Splendor & Vantage Points'}</span>
+            <h3 class="font-heading font-extrabold text-2xl sm:text-3xl text-[#0A0C10]">${dict.trains_scenery_title || 'Corridor Scenery & Viewing Highlights'}</h3>
           </div>
-          <span class="text-xs font-mono text-[#78716C] font-semibold">Pretoria to Cape Town · 1,600 km</span>
+          <span class="text-xs font-mono text-[#78716C] font-semibold">${dict.trains_scenery_sub || 'Pretoria to Cape Town · 1,600 km'}</span>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           ${sceneryHTML}
@@ -712,8 +2313,8 @@
       <!-- SECTION 3: ONBOARD GASTRONOMY & LOUNGE CARS -->
       <div class="text-left mt-12">
         <div class="mb-6">
-          <span class="text-xs font-mono font-bold text-[${accentColor}] uppercase tracking-widest block">Culinary &amp; Social</span>
-          <h3 class="font-heading font-extrabold text-2xl sm:text-3xl text-[#0A0C10]">Onboard Fine Dining &amp; Lounges</h3>
+          <span class="text-xs font-mono font-bold text-[${accentColor}] uppercase tracking-widest block">${dict.trains_culinary_badge || 'Culinary & Social'}</span>
+          <h3 class="font-heading font-extrabold text-2xl sm:text-3xl text-[#0A0C10]">${dict.trains_dining_title || 'Onboard Fine Dining & Lounges'}</h3>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           ${diningHTML}
@@ -723,7 +2324,7 @@
       <!-- SECTION 4: LOCOMOTIVE & ENGINEERING HERITAGE -->
       <div class="text-left mt-12 glass-card p-8 rounded-3xl border border-black/15 shadow-sm">
         <div class="mb-6">
-          <span class="text-xs font-mono font-bold text-[${accentColor}] uppercase tracking-widest block">Technical Specs & History</span>
+          <span class="text-xs font-mono font-bold text-[${accentColor}] uppercase tracking-widest block">${dict.trains_specs_badge || 'Technical Specs & History'}</span>
           <h3 class="font-heading font-extrabold text-2xl sm:text-3xl text-[#0A0C10]">${train.locomotive_heritage?.title || 'Locomotive Engineering'}</h3>
           <p class="text-sm text-[#111827] font-medium leading-relaxed font-sans max-w-3xl mt-2">${train.locomotive_heritage?.desc || ''}</p>
         </div>
@@ -731,44 +2332,15 @@
           ${specsHTML}
         </div>
       </div>
-
-      <!-- INTERACTIVE TRAIN SWITCHER BANNER -->
-      <div class="p-6 sm:p-8 rounded-3xl bg-white/90 border border-black/15 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-6 text-left mt-12">
-        <div class="flex items-center gap-4">
-          <div class="w-12 h-12 rounded-2xl ${isBlue ? 'bg-[#2A9D8F]/20 text-[#2A9D8F]' : 'bg-[#D99B26]/20 text-[#B87C10]'} flex items-center justify-center flex-shrink-0">
-            <i data-lucide="shuffle" class="w-6 h-6"></i>
-          </div>
-          <div>
-            <h4 class="font-heading font-bold text-lg text-[#0A0C10]">Switch to ${otherTrainName}?</h4>
-            <p class="text-xs text-[#78716C] font-sans">Toggle your view anytime to explore South Africa's other premier luxury rail journey.</p>
-          </div>
-        </div>
-        <button id="btn-switch-train-action" class="px-6 py-3 rounded-full text-xs font-mono font-bold uppercase tracking-wider text-white shadow-md hover:scale-105 transition-all flex items-center gap-2 flex-shrink-0 ${isBlue ? 'bg-[#2A9D8F] hover:bg-[#238276]' : 'bg-[#D99B26] hover:bg-[#B87C10]'}" data-target-train="${otherTrainId}">
-          <i data-lucide="train" class="w-4 h-4"></i> Switch to ${otherTrainName}
-        </button>
-      </div>
     `;
-
-    // Attach switch button handler
-    const switchBtn = document.getElementById('btn-switch-train-action');
-    if (switchBtn) {
-      switchBtn.addEventListener('click', () => {
-        const target = switchBtn.getAttribute('data-target-train');
-        if (window.TrackTalesSetSelectedTrain) {
-          window.TrackTalesSetSelectedTrain(target);
-          const section = document.getElementById('page-trains');
-          if (section) section.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
-    }
 
     if (window.lucide && typeof window.lucide.createIcons === 'function') {
       window.lucide.createIcons();
     }
   }
 
-  const STORY_EXPANDED_CONTEXT = `
-This journey is best understood as a chain of decisions rather than a single dramatic moment. Engineers, railway workers, station staff, cooks, guides, and passengers each shaped what the route became. A timetable might appear simple on paper, but behind every departure were surveys, maintenance inspections, water supplies, repair workshops, and people who knew how to read the changing conditions of the land. The railway succeeded when all of those small systems worked together.
+  const STORY_EXPANDED_CONTEXT_MAP = {
+    en: `This journey is best understood as a chain of decisions rather than a single dramatic moment. Engineers, railway workers, station staff, cooks, guides, and passengers each shaped what the route became. A timetable might appear simple on paper, but behind every departure were surveys, maintenance inspections, water supplies, repair workshops, and people who knew how to read the changing conditions of the land. The railway succeeded when all of those small systems worked together.
 
 The landscape also carried its own history. The Highveld opened into broad grasslands and old mining country. Kimberley connected the story of diamonds with the movement of machinery and people. Beyond the junctions, the Karoo demanded patience: long horizons, dry air, sudden weather, and stations separated by great distances. Near the Western Cape, the route tightened into valleys and mountain passes before reaching vineyards, suburbs, and the Atlantic edge. Each section gave the journey a different character.
 
@@ -776,16 +2348,128 @@ Local communities were never merely scenery. They supplied labour, food, service
 
 Preservation is therefore an active responsibility. A carriage, locomotive, station, or dining tradition survives only when people repair it, document it, teach its skills, and make room for new audiences. Modern passengers can enjoy polished wood, old photographs, careful meals, and wide views while also asking whose work made the experience possible. The past becomes useful when it is treated as evidence, not decoration.
 
-As the train moves, details gather into memory: a platform lamp in the evening, a meal served while the horizon turns gold, a workshop door opening before sunrise, or the sound of wheels changing rhythm on a bridge. These moments connect technology with place. They show why railway stories remain powerful in South Africa: the track is infrastructure, archive, workplace, viewpoint, and meeting place at once. A full journey does not simply pass through history. It gives history time to unfold.`;
+As the train moves, details gather into memory: a platform lamp in the evening, a meal served while the horizon turns gold, a workshop door opening before sunrise, or the sound of wheels changing rhythm on a bridge. These moments connect technology with place. They show why railway stories remain powerful in South Africa: the track is infrastructure, archive, workplace, viewpoint, and meeting place at once. A full journey does not simply pass through history. It gives history time to unfold.`,
+    af: `Hierdie reis word die beste verstaan as 'n reeks besluite eerder as 'n enkele dramatiese oomblik. Ingenieurs, spoorwegwerkers, stasiepersoneel, kokke, gidse en passasiers het elkeen gevorm wat die roete geword het. 'n Roosterskema lyk dalk eenvoudig op papier, maar agter elke vertrek was daar opnames, onderhoudinspeksies, watervoorrade en herstelwerkswinkels.
+
+Die landskap het ook sy eie geskiedenis gedra. Die Hoëveld het oopgegaan in breë grasvelde en ou myngebiede. Kimberley het die verhaal van diamante verbind met die beweging van masjinerie en mense. Die Karoo het geduld vereis: lang horisonne, droë lug en stasies wat deur groot afstande geskei is.
+
+Plaaslike gemeenskappe was nooit bloot dekor nie. Hulle het arbeid, voedsel, dienste en stories verskaf. Spoorwegdorpe het rondom uitwykspore en waterpunte gegroei, en baie families het hul lewens rondom die koms en vertrek van treine gebou.
+
+Bewaring is dus 'n aktiewe verantwoordelikheid. 'n Wa, lokomotief of stasie oorleef slegs wanneer mense dit herstel en dokumenteer. Passasiers kan vandag die afgeronde hout en pragtige uitsigte geniet terwyl hulle ook waardeer wie se werk hierdie ervaring moontlik gemaak het.`,
+    zu: `Lolu hambo luqondakala kangcono njengomxokozelo wezinqumo kunomzuzu owodwa ocacile. Onjiniyela, abasebenzi bezitimela, abasebenzi beziteshi, abapheki nabagibeli basiza ekubunjweni kwalomzila. Uhlelo lungabonakala lulula ephepheni, kodwa emva kwakho konke ukuhamba kwakukhona ukuhlola nabasebenzi abanolwazi.
+
+Indawo inomlando wayo ngokufanayo. I-Highveld yavuleka yaba amadlelo abanzi nezwane lezimayini ezindala. I-Kimberley yaxhumanisa indaba yamadayimane nokuhamba kwemishini nabantu. I-Karoo idinga ukubekezela ngebanga elide nesimo sezulu esitshashazayo.
+
+Imiphakathi yasendaweni yayingesiwo umbukiso kuphela. Yanikeza abasebenzi, ukudla, izinsiza nezindaba. Amadolobha ezitimela akhula eduze kweziteshi namanzi, imindeni eminingi yakha impilo yayo ngokufika nokuhamba kwezitimela.
+
+Ukugcinwa kwamagugu kungumsebenzi obalulekile. Inqola, isitimela noma isiteshi kuphila kuphela uma abantu bakulungisa futhi bakubhale phansi.`,
+    xh: `Luhambo luqondakala ngcono njengothungelelwano lwezigqibo kunomzuzu omnye omangalisayo. Ababunjiniyela, abasebenzi bakaloliwe, abasebenzi bezitishi nabakhweli bancedise ekubunjweni kwalo mzila.
+
+Iliizwe linembali yalo. I-Highveld ivuleke kwimimandla enengca nendawo zeemayini ezindala. I-Kimberley idibanise ibali lezinto zexabiso nohambo meenqwelwana nabantu. IKaroo idinga umonde ngemigama emide.
+
+Abahlali bendawo abazange babe ngumbukiso nje. Banikeze ngomsebenzi, ukutya neempahla. Iidolophu zakhiwa kufupi nezitishi namanzi.
+
+Ukugcina ilifa ngumsebenzi obalulekileyo. Iloliwe okanye isitishi siphila kuphela xa abantu besilungisa baze basibhale phantsi.`,
+    de: `Diese Reise lässt sich am besten als eine Kette von Entscheidungen verstehen und nicht als ein einziger dramatischer Moment. Ingenieure, Eisenbahner, Bahnhofspersonal, Köche, Reiseleiter und Passagiere haben alle dazu beigetragen, was diese Route geworden ist. Ein Fahrplan mag auf dem Papier einfach erscheinen, aber hinter jeder Abfahrt steckten Vermessungen, Wartungsinspektionen, Wasserversorgung und Reparaturwerkstätten.
+
+Auch die Landschaft trug ihre eigene Geschichte. Das Highveld öffnete sich in weite Graslandschaften und altes Bergbaugebiet. Kimberley verband die Geschichte der Diamanten mit der Bewegung von Maschinen und Menschen. Jenseits der Knotenpunkte verlangte die Karoo Geduld: weite Horizonte, trockene Luft und Bahnhöfe, die durch große Entfernungen getrennt waren.
+
+Lokale Gemeinschaften waren nie bloß Kulisse. Sie lieferten Arbeit, Nahrung, Dienstleistungen, Geschichten und Geländekenntnisse. Eisenbahnstädte wuchsen um Ausweichgleise und Wasserstellen herum, und viele Familien bauten ihr Arbeitsleben um die Ankunft und Abfahrt von Zügen herum auf.
+
+Denkmalpflege ist daher eine aktive Verantwortung. Ein Waggon, eine Lokomotive oder eine Bahnhofstradition überlebt nur, wenn Menschen sie reparieren, dokumentieren und Fähigkeiten weitergeben.`,
+    fr: `Ce voyage se comprend mieux comme une chaîne de décisions plutôt que comme un seul moment dramatique. Ingénieurs, cheminots, personnel de gare, cuisiniers, guides et passagers ont tous contribué à façonner cet itinéraire. Un horaire peut sembler simple sur le papier, mais derrière chaque départ se trouvaient des relevés, des inspections d'entretien, des approvisionnements en eau et des ateliers de réparation.
+
+Le paysage portait également sa propre histoire. Le Highveld s'ouvrait sur de vastes prairies et un ancien pays minier. Kimberley a lié l'histoire des diamants au mouvement des machines et des hommes. Au-delà des jonctions, le Karoo exigeait de la patience : de longs horizons, un air sec et des gares séparées par de grandes distances.
+
+Les communautés locales n'ont jamais été un simple décor. Elles ont fourni du travail, de la nourriture, des services et des histoires. Les villes ferroviaires ont grandi autour des voies d'évitement et des points d'eau, et de nombreuses familles ont construit leur vie autour de l'arrivée et du départ des trains.
+
+La préservation est donc une responsabilité active. Une voiture, une locomotive ou une tradition ferroviaire ne survit que si les gens la réparent, la documentent et transmettent ses compétences.`,
+    nl: `Deze reis kan het beste worden begrepen als een reeks beslissingen in plaats van één enkel dramatisch moment. Ingenieurs, spoorwegarbeiders, stationspersoneel, koks en passagiers hebben allemaal bijgedragen aan wat de route is geworden. Een dienstregeling lijkt op papier misschien eenvoudig, maar achter elk vertrek schuilden inspecties, watervoorraden en reparatiewerkplaatsen.
+
+Het landschap droeg ook zijn eigen geschiedenis. Het Hoogveld opende zich in uitgestrekte graslanden en oud mijnbouwgebied. Kimberley verbond het verhaal van diamanten met de beweging van machines en mensen. De Karoo vereiste geduld: verre horizonten, droge lucht en stations gescheiden door grote afstanden.
+
+Lokale gemeenschappen waren nooit louter decor. Ze leverden arbeid, voedsel, diensten en verhalen. Spoorwegsteden groeiden rond passeersporen en waterpunten, en veel families bouwden hun leven op rond de aankomst en het vertrek van treinen.
+
+Behoud is daarom een actieve verantwoordelijkheid. Een rijtuig, locomotief of station overleeft alleen als mensen het repareren, documenteren en vaardigheden doorgeven.`,
+    es: `Este viaje se entiende mejor como una cadena de decisiones más que como un único momento dramático. Ingenieros, trabajadores ferroviarios, personal de estación, cocineros, guías y pasajeros contribuyeron a dar forma a esta ruta. Un horario puede parecer simple sobre el papel, pero detrás de cada salida había inspecciones, suministros de agua y talleres de reparación.
+
+El paisaje también albergaba su propia historia. El Highveld se abría en amplias praderas y tierras mineras antiguas. Kimberley conectó la historia de los diamantes con el movimiento de maquinaria y personas. Más allá de los empalmes, el Karoo exigía paciencia: horizontes lejanos, aire seco y estaciones separadas por grandes distancias.
+
+Las comunidades locales nunca fueron mero paisaje. Aportaron trabajo, comida, servicios e historias. Los pueblos ferroviarios crecieron alrededor de desvíos y puntos de agua, y muchas familias construyeron sus vidas en torno a la llegada y salida de los trenes.
+
+La preservación es por tanto una responsabilidad activa. Un vagón, una locomotora o una estación solo sobreviven cuando la gente los repara, los documenta y transmite sus conocimientos.`,
+    it: `Questo viaggio si comprende meglio come una catena di decisioni piuttosto che come un singolo momento drammatico. Ingegneri, ferrovieri, personale di stazione, cuochi, guide e passeggeri hanno tutti contribuito a plasmare questo percorso. Un orario può sembrare semplice sulla carta, ma dietro ogni partenza c'erano ispezioni, forniture d'acqua e officine di riparazione.
+
+Il paesaggio portava con sé la propria storia. L'Highveld si apriva in ampie praterie e vecchie terre minerarie. Kimberley collegò la storia dei diamanti con il movimento di macchinari e persone. Il Karoo richiedeva pazienza: lunghi orizzonti, aria asciutta e stazioni separate da grandi distanze.
+
+Le comunità locali non sono mai state un semplice scenario. Hanno fornito lavoro, cibo, servizi e storie. Le città ferroviarie sono cresciute attorno a scambi e punti d'acqua, e molte famiglie hanno costruito la propria vita attorno all'arrivo e alla partenza dei treni.
+
+La conservazione è quindi una responsabilità attiva. Una carrozza, una locomotiva o una stazione sopravvivono solo quando le persone le riparano, le documentano e ne tramandano le competenze.`,
+    pt: `Esta jornada é melhor compreendida como uma cadeia de decisões em vez de um único momento dramático. Engenheiros, ferroviários, funcionários de estação, cozinheiros, guias e passageiros ajudaram a moldar esta rota. Um horário pode parecer simples no papel, mas por trás de cada partida havia inspeções, suprimentos de água e oficinas de reparo.
+
+A paisagem também carregava sua própria história. O Highveld abria-se em vastas pastagens e antigas terras de mineração. Kimberley conectou a história dos diamantes com o movimento de máquinas e pessoas. O Karoo exigia paciência: horizontes distantes, ar seco e estações separadas por grandes distâncias.
+
+As comunidades locais nunca foram mero cenário. Elas forneceram trabalho, comida, serviços e histórias. As cidades ferroviárias cresceram ao redor de desvios e pontos de água, e muitas famílias construíram suas vidas ao redor da chegada e partida dos trens.
+
+A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomotiva ou uma estação só sobrevivem quando as pessoas os reparam, os documentam e transmitem suas habilidades.`,
+    zh: `这段旅程最好被理解为一系列决策的延续，而非单一的戏剧性时刻。工程师、铁路工人、车站人员、厨师、导游和乘客共同塑造了这条路线的传奇。时刻表在纸面上看似简单，但每一次发车的背后都凝聚着线路勘测、检修维护、给水保供以及维修车间的辛勤付出。
+
+沿途风光同样孕育着厚重历史。高原腹地向广袤无垠的大草原与古老矿区延伸；金伯利将钻石传奇与机械及人群的流动紧密相连；而在枢纽之外，卡鲁沙漠考验着人们的耐心——辽阔的平线、干燥的气候以及相隔甚远的车站。
+
+当地社区绝非仅仅是沿途风景。他们提供了劳动力、餐饮服务、传奇故事与地理地形经验。许多铁路小镇围绕水源地和避让线发展壮大，无数家庭的生计紧紧围绕着列车的到发而运转。
+
+因此，文化保护是一项长期的责任。唯有不断修复、记录并传承技能，车厢、机车与车站传统才能历久弥新。`,
+    ja: `この旅は、単一のドラマチックな瞬間ではなく、意志決定の積み重ねとして理解されるべきです。エンジニア、鉄道作業員、駅員、料理人、ガイド、そして乗客が一体となってこのルートを創り上げました。ダイヤグラムは紙の上では単純に見えますが、すべての出発の陰には測量、点検、給水、修復工房のたゆまぬ努力がありました。
+
+風景もまた自らの歴史を物語っています。ハイベルドは広大な草原と古くからの鉱山地帯へと開け、キンバリーはダイヤモンドの物語と機械や人々の移動を結びつけました。カルー砂漠は地平線と乾燥した空気、遠く離れた駅での忍耐を要求しました。
+
+地元コミュニティは単なる車窓の風景ではありませんでした。労働力、食料、サービス、そして物語を提供しました。給水所や退避線の周りに鉄道の町が育ち、多くの家族が列車の発着とともに生活を築きました。
+
+したがって、保存は積極的な責任です。客車、機関車、駅の tradition は、人々が修理し、記録し、技術を継承して初めて生き続けます。`,
+    ko: `이 여정은 단 하나의 극적인 순간이라기보다는 여러 결정의 연속으로 이해하는 것이 가장 좋습니다. 엔지니어, 철도 승무원, 역 직원, 요리사, 가이드, 승객 모두가 이 노선의 역사를 함께 만들었습니다. 시간표는 종이 위에서 간단해 보일지 모르지만, 모든 출발 뒤에는 현장 조사, 정비 점검, 용수 공급, 수리 워크숍이 있었습니다.
+
+경관 역시 독자적인 역사를 담고 있습니다. 하이벨트는 넓은 초원과 오래된 광산지대로 이어지며, 킴벌리는 다이아몬드 이야기와 기계 및 사람들의 이동을 연결했습니다. 카루 지대는 먼 지평선과 건조한 공기, 먼 거리로 떨어진 역들로 인내를 요구했습니다.
+
+지역 사회는 결코 단순한 배경에 그치지 않았습니다. 노동력, 식량, 서비스, 이야기를 제공했습니다. 철도 마을은 수로와 신호장 주변에 형성되었고, 많은 가족이 열차의 도착과 출발을 중심으로 삶을 일구었습니다.
+
+따라서 보존은 적극적인 책임입니다. 객차, 기관차, 역의 전통은 사람들이 이를 수리하고 기록하며 기술을 전수할 때 비로소 지속됩니다.`,
+    hi: `इस यात्रा को एक नाटकीय क्षण के बजाय निर्णयों की एक श्रृंखला के रूप में सबसे अच्छी तरह समझा जाता है। इंजीनियरों, रेलवे कर्मचारियों, स्टेशन कर्मचारियों, रसोइयों, गाइडों और यात्रियों सभी ने मिलकर इस मार्ग को आकार दिया। एक समय सारणी कागज पर सरल लग सकती है, लेकिन हर प्रस्थान के पीछे निरीक्षण, रखरखाव, पानी की आपूर्ति और मरम्मत कार्यशालाएं थीं।
+
+परिदृश्य का भी अपना इतिहास था। हाईवेल्ड व्यापक घास के मैदानों और पुराने खनन क्षेत्र में खुला। किम्बरली ने हीरों की कहानी को मशीनों और लोगों की आवाजाही से जोड़ा। कारू क्षेत्र में दूर के क्षितिज, शुष्क हवा और बड़ी दूरी पर स्थित स्टेशनों के साथ धैर्य की आवश्यकता थी।
+
+स्थानीय समुदाय कभी केवल दृश्य नहीं थे। उन्होंने श्रम, भोजन, सेवाएं और कहानियां प्रदान कीं। रेलवे कस्बे पानी के बिंदुओं के आसपास विकसित हुए, और कई परिवारों ने ट्रेनों के आगमन और प्रस्थान के आसपास अपना जीवन बनाया।
+
+इसलिए संरक्षण एक सक्रिय जिम्मेदारी है। एक डिब्बा, इंजन या स्टेशन परंपरा तभी जीवित रहती है जब लोग उसकी मरम्मत करते हैं, उसका दस्तावेजीकरण करते हैं और कौशल सिखाते हैं।`,
+    ru: `Это путешествие лучше всего рассматривать как цепочку решений, а не как один драматический момент. Инженеры, железнодорожники, персонал станций, повара, гиды и пассажиры — каждый из них внес свой вклад в формирование этого маршрута. Расписание может казаться простым на бумаге, но за каждым отправлением стояли инспекции, водоснабжение и ремонтные мастерские.
+
+Пейзаж также хранил свою историю. Хайвельд открывался широкими степями и старыми шахтерскими землями. Кимберли связал историю алмазов с движением техники и людей. Пустыня Кару требовала терпения: далекие горизонты, сухой воздух и станции, разделенные большими расстояниями.
+
+Местные сообщества никогда не были просто декорацией. Они обеспечивали труд, еду, услуги и истории. Железнодорожные городки rosли вокруг разъездов и водокачек, и многие семьи строили свою жизнь вокруг прибытия и отправления поездов.
+
+Поэтому сохранение — это активная ответственность. Вагон, паровоз или станция живут до тех пор, пока люди ремонтируют их, документируют и передают мастерство.`,
+    ar: `من الأفضل فهم هذه الرحلة على أنها سلسلة من القرارات بدلاً من لحظة دراماتيكية واحدة. أسهم المهندسون وعمال السكك الحديدية وموظفو المحطات والطهاة والمرشدون والركاب في تشكيل هذا المسار. قد يبدو جدول المواعيد بسيطاً على الورق، ولكن وراء كل مغادرة كانت هناك عمليات تفتيش وصيانة وإمدادات مياه وورش إصلاح.
+
+حملت المناظر الطبيعية أيضاً تاريخها الخاص. انفتحت الهضبة العليا على المراعي الواسعة ومناطق التعدين القديمة. ربطت كيمبرلي قصة الألماس بحركة الآلات والناس. تطلبت صحراء كارو الصبر: آفاق بعيدة، وهواء جاف، ومحطات تفصل بينها مسافات كبيرة.
+
+لم تكن المجتمعات المحلية مجرد خلفية للمشهد. فقد قدمت العمالة والطعام والخدمات والقصص. نمت مدن السكك الحديدية حول تحويلات المسارات ونقاط المياه، وبنت العديد من العائلات حياتها حول وصول المغادرة والقطارات.
+
+لذلك، تعد الحفاظ على التراث مسؤولية نشطة. لا تنجو العربة أو القاطرة أو المحطة إلا عندما يقوم الناس بإصلاحها وتوثيقها ونقل مهاراتها.`
+  };
 
   function getFullStoryText(story) {
-    return `${story.content || ''}${STORY_EXPANDED_CONTEXT}`.trim();
+    const langCode = window.TrackTalesLanguageCode || localStorage.getItem('tracktales_lang') || 'en';
+    const expanded = (STORY_EXPANDED_CONTEXT_MAP && STORY_EXPANDED_CONTEXT_MAP[langCode]) ? STORY_EXPANDED_CONTEXT_MAP[langCode] : STORY_EXPANDED_CONTEXT_MAP['en'];
+    return `${story.content || ''}\n\n${expanded}`.trim();
   }
 
   function getStoryReadTime(story) {
     const fullText = `${story.summary || ''} ${getFullStoryText(story)}`.trim();
     const wordCount = fullText ? fullText.split(/\s+/).length : 0;
-    return `${Math.max(5, Math.ceil(wordCount / 150))} min read`;
+    const mins = Math.max(5, Math.ceil(wordCount / 150));
+    const langCode = window.TrackTalesLanguageCode || localStorage.getItem('tracktales_lang') || 'en';
+    const dict = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[langCode]) ? TRANSLATIONS[langCode] : null;
+    const suffix = (dict && dict.stories_min_read) ? dict.stories_min_read : 'min read';
+    return `${mins} ${suffix}`;
   }
 
   function formatStoryContent(text) {
@@ -802,26 +2486,40 @@ As the train moves, details gather into memory: a platform lamp in the evening, 
     const isBlue = trainId === 'blue-train';
     const trainName = isBlue ? 'The Blue Train' : 'Rovos Rail';
     const accentColor = isBlue ? '#D99B26' : '#2A9D8F';
+    const langCode = window.TrackTalesLanguageCode || localStorage.getItem('tracktales_lang') || 'en';
+    const dict = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[langCode]) ? TRANSLATIONS[langCode] : null;
 
     if (titleEl) {
-      titleEl.innerHTML = `Journey <span class="${isBlue ? 'text-[#B87C10]' : 'text-[#2A9D8F]'} italic font-serif">Stories</span>`;
+      if (dict && dict.stories_title) {
+        titleEl.innerHTML = dict.stories_title;
+      } else {
+        titleEl.innerHTML = `Journey <span class="${isBlue ? 'text-[#B87C10]' : 'text-[#2A9D8F]'} italic font-serif">Stories</span>`;
+      }
     }
 
     if (subtitleEl) {
-      subtitleEl.textContent = `Archival stories, engineering milestones, and folklore specifically for ${trainName}.`;
+      if (dict && dict.stories_sub) {
+        subtitleEl.textContent = dict.stories_sub;
+      } else {
+        subtitleEl.textContent = `Archival stories, engineering milestones, and folklore specifically for ${trainName}.`;
+      }
     }
 
     if (!container) return;
 
-    const allStories = appData.stories || FALLBACK_STORIES;
+    const rawStories = appData.stories || FALLBACK_STORIES;
+    const allStories = rawStories.map(s => getStoryInLanguage(s, langCode));
     const filteredStories = allStories.filter(s => s.train_id === 'all' || s.train_id === trainId);
+
+    const readBtnLabel = (dict && dict.stories_read_story_btn) ? dict.stories_read_story_btn : 'Read Full Story';
+    const byPrefix = (dict && dict.by_author) ? dict.by_author : 'By';
 
     container.innerHTML = filteredStories.map(story => `
       <div class="glass-card p-8 rounded-3xl border border-black/10 flex flex-col justify-between text-left hover:border-[${accentColor}]/60 transition-all shadow-sm group">
         <div>
           <div class="flex items-center justify-between gap-2 mb-4">
             <span class="px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase ${story.train_id === 'all' ? 'bg-[#4A52B0]/15 text-[#4A52B0] border border-[#4A52B0]/30' : (isBlue ? 'bg-[#D99B26]/15 text-[#B87C10] border border-[#D99B26]/30' : 'bg-[#2A9D8F]/15 text-[#2A9D8F] border border-[#2A9D8F]/30')}">
-              ${story.train_id === 'all' ? 'Corridor Heritage' : trainName}
+              ${story.train_id === 'all' ? ((dict && dict.stories_heritage_tag) ? dict.stories_heritage_tag : 'Corridor Heritage') : trainName}
             </span>
             <span class="text-xs font-mono text-[#78716C] font-semibold">${getStoryReadTime(story)}</span>
           </div>
@@ -830,12 +2528,12 @@ As the train moves, details gather into memory: a platform lamp in the evening, 
             ${story.title}
           </h3>
 
-          <p class="text-xs font-mono text-[#78716C] mb-4 font-semibold">By ${story.author}</p>
+          <p class="text-xs font-mono text-[#78716C] mb-4 font-semibold">${byPrefix} ${story.author}</p>
           <p class="text-sm text-[#111827] font-medium leading-relaxed font-sans mb-6">${story.summary}</p>
         </div>
 
         <button class="w-full py-3 rounded-xl bg-black/5 hover:bg-[${accentColor}] hover:text-white border border-black/10 font-mono text-xs font-bold uppercase tracking-wider text-[#0A0C10] transition-all flex items-center justify-center gap-2 btn-read-story" data-story-id="${story.id}">
-          <i data-lucide="book-open" class="w-4 h-4"></i> Read Full Story
+          <i data-lucide="book-open" class="w-4 h-4"></i> ${readBtnLabel}
         </button>
       </div>
     `).join('');
@@ -886,8 +2584,11 @@ As the train moves, details gather into memory: a platform lamp in the evening, 
     if (!modal) return;
 
     window.openStoryModal = function (storyId) {
-      const story = (appData.stories || FALLBACK_STORIES).find(s => s.id === storyId);
-      if (!story) return;
+      const rawStory = (appData.stories || FALLBACK_STORIES).find(s => s.id === storyId);
+      if (!rawStory) return;
+
+      const langCode = window.TrackTalesLanguageCode || localStorage.getItem('tracktales_lang') || 'en';
+      const story = getStoryInLanguage(rawStory, langCode);
 
       const titleEl = document.getElementById('modal-title');
       const authorEl = document.getElementById('modal-author');
@@ -895,18 +2596,31 @@ As the train moves, details gather into memory: a platform lamp in the evening, 
       const bodyEl = document.getElementById('modal-body');
       const audioBar = document.getElementById('modal-audio-narration-bar');
 
-      if (titleEl) titleEl.textContent = story.title;
-      if (authorEl) authorEl.textContent = `By ${story.author}`;
+      const dict = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[langCode]) ? TRANSLATIONS[langCode] : {};
+      const byPrefix = dict.by_author || 'By';
+
+      if (titleEl) {
+        titleEl.textContent = story.title;
+        titleEl.setAttribute('data-story-id', story.id);
+      }
+      if (authorEl) authorEl.textContent = `${byPrefix} ${story.author}`;
       if (readTimeEl) readTimeEl.textContent = getStoryReadTime(story);
       if (bodyEl) {
         bodyEl.innerHTML = `<p class="font-serif text-base leading-relaxed mb-4 text-[#78716C] italic font-semibold">${story.summary}</p><div class="space-y-4 text-sm leading-relaxed">${formatStoryContent(getFullStoryText(story))}</div>`;
-        bodyEl.lang = window.TrackTalesLanguageCode || localStorage.getItem('tracktales_lang') || 'en';
+        bodyEl.lang = langCode;
       }
 
       // Story narration follows the active subscription entitlement.
       if (audioBar) {
         const activeSub = localStorage.getItem('tracktales_subscription') || 'free';
         const hasAudio = activeSub === 'audio-exp' || activeSub === 'membership';
+
+        const audioUnlocked = dict.modal_audio_unlocked || 'Audio Companion Unlocked';
+        const audioListenDesc = dict.modal_audio_listen_desc || 'Listen to complete story narration';
+        const audioPlayLabelText = dict.modal_audio_play || 'Play Audio';
+        const audioStopLabelText = dict.modal_audio_stop || 'Stop Audio';
+        const audioLockedText = dict.modal_audio_locked || 'Audio narration locked for this story.';
+        const audioUnlockBtnText = dict.modal_audio_unlock_btn || 'Unlock Audio Pass (R49)';
 
         if (hasAudio) {
           audioBar.className = 'mb-5 p-4 rounded-2xl bg-[#2A9D8F]/10 border border-[#2A9D8F]/30 flex flex-col sm:flex-row items-center justify-between gap-3 text-left';
@@ -916,14 +2630,14 @@ As the train moves, details gather into memory: a platform lamp in the evening, 
                 <i data-lucide="headphones" class="w-5 h-5"></i>
               </div>
               <div>
-                <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-[#2A9D8F] block">Audio Companion Unlocked</span>
-                <span class="text-xs font-bold text-[#1C1917]">Listen to complete story narration</span>
+                <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-[#2A9D8F] block">${audioUnlocked}</span>
+                <span class="text-xs font-bold text-[#1C1917]">${audioListenDesc}</span>
               </div>
             </div>
             <div class="flex items-center gap-2 w-full sm:w-auto">
               <button type="button" id="modal-audio-play-btn" class="w-full sm:w-auto px-4 py-2 rounded-xl bg-[#2A9D8F] text-white font-mono text-xs font-bold uppercase hover:bg-[#238276] transition-all flex items-center justify-center gap-2 shadow-sm" data-reading="false">
                 <i data-lucide="play" class="w-3.5 h-3.5"></i>
-                <span id="modal-audio-play-label">Play Audio</span>
+                <span id="modal-audio-play-label">${audioPlayLabelText}</span>
               </button>
             </div>
           `;
@@ -934,24 +2648,24 @@ As the train moves, details gather into memory: a platform lamp in the evening, 
           if (playBtn) {
             playBtn.addEventListener('click', () => {
               if (window.TrackTalesSpeakText) {
-                const fullText = `${story.title}. By ${story.author}. ${story.summary}. ${getFullStoryText(story)}`;
+                const fullText = `${story.title}. ${byPrefix} ${story.author}. ${story.summary}. ${getFullStoryText(story)}`;
                 const isCurrentlyReading = playBtn.getAttribute('data-reading') === 'true';
 
                 if (isCurrentlyReading) {
                   window.TrackTalesStopSpeech();
                   playBtn.setAttribute('data-reading', 'false');
-                  if (playLabel) playLabel.textContent = 'Play Audio';
+                  if (playLabel) playLabel.textContent = audioPlayLabelText;
                   playBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
                   playBtn.classList.add('bg-[#2A9D8F]', 'hover:bg-[#238276]');
                 } else {
                   window.TrackTalesSpeakText(fullText, () => {
                     playBtn.setAttribute('data-reading', 'false');
-                    if (playLabel) playLabel.textContent = 'Play Audio';
+                    if (playLabel) playLabel.textContent = audioPlayLabelText;
                     playBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
                     playBtn.classList.add('bg-[#2A9D8F]', 'hover:bg-[#238276]');
                   });
                   playBtn.setAttribute('data-reading', 'true');
-                  if (playLabel) playLabel.textContent = 'Stop Audio';
+                  if (playLabel) playLabel.textContent = audioStopLabelText;
                   playBtn.classList.remove('bg-[#2A9D8F]', 'hover:bg-[#238276]');
                   playBtn.classList.add('bg-red-600', 'hover:bg-red-700');
                 }
@@ -964,11 +2678,11 @@ As the train moves, details gather into memory: a platform lamp in the evening, 
           audioBar.innerHTML = `
             <div class="flex items-center gap-2.5">
               <i data-lucide="lock" class="w-4 h-4 text-[#78716C]"></i>
-              <span class="text-xs text-[#78716C] font-mono">Audio narration locked for this story.</span>
+              <span class="text-xs text-[#78716C] font-mono">${audioLockedText}</span>
             </div>
             <button type="button" id="modal-audio-unlock-btn" class="w-full sm:w-auto px-3.5 py-1.5 rounded-xl bg-[#2A9D8F] text-white font-mono text-[10px] font-bold uppercase tracking-wider hover:bg-[#238276] transition-all flex items-center justify-center gap-1.5 shadow-sm">
               <i data-lucide="crown" class="w-3 h-3"></i>
-              <span>Unlock Audio Pass (R49)</span>
+              <span>${audioUnlockBtnText}</span>
             </button>
           `;
 
@@ -2565,7 +4279,13 @@ As the train moves, details gather into memory: a platform lamp in the evening, 
     const currentTrainId = trainId || localStorage.getItem('tracktales_selected_train') || 'blue-train';
     const plan = SUBSCRIPTION_PLANS[currentPlanId] || SUBSCRIPTION_PLANS['free'];
     const isBlue = currentTrainId === 'blue-train';
-    const trainName = isBlue ? 'The Blue Train' : 'Rovos Rail';
+
+    const langCode = window.TrackTalesLanguageCode || localStorage.getItem('tracktales_lang') || 'en';
+    const dict = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[langCode]) ? TRANSLATIONS[langCode] : {};
+
+    const rawTrain = (appData.trains || FALLBACK_TRAINS).find(t => t.id === currentTrainId) || FALLBACK_TRAINS[0];
+    const train = getTrainInLanguage(rawTrain, langCode);
+    const trainName = train.name;
 
     // 1. Render Status Bar on Stories Page
     const subStatusBar = document.getElementById('stories-sub-status-bar');
@@ -2593,7 +4313,8 @@ As the train moves, details gather into memory: a platform lamp in the evening, 
     // 2. Render Deeper Historical Content Vault Section (#premium-vault-section)
     const vaultSection = document.getElementById('premium-vault-section');
     if (vaultSection) {
-      const dossiers = PREMIUM_HISTORICAL_DOSSIERS[currentTrainId] || PREMIUM_HISTORICAL_DOSSIERS['blue-train'];
+      const rawDossiers = PREMIUM_HISTORICAL_DOSSIERS[currentTrainId] || PREMIUM_HISTORICAL_DOSSIERS['blue-train'];
+      const dossiers = rawDossiers.map(d => getDossierInLanguage(d));
 
       if (plan.hasVault) {
         // UNLOCKED VIEW: Full Archival Dossiers
@@ -2671,20 +4392,20 @@ As the train moves, details gather into memory: a platform lamp in the evening, 
                 </div>
                 <div>
                   <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-mono bg-[#D99B26]/15 text-[#B87C10] border border-[#D99B26]/30 uppercase font-extrabold tracking-wider mb-2">
-                    <span>LOCKED FEATURE · PREMIUM JOURNEY PACK & VIP MEMBERSHIP</span>
+                    <span>${dict.vault_locked_badge || 'LOCKED FEATURE · PREMIUM JOURNEY PACK & VIP MEMBERSHIP'}</span>
                   </div>
                   <h3 class="font-heading font-extrabold text-2xl text-[#0A0C10] mb-2">
-                    Deeper Historical Content & Archival Vault
+                    ${dict.vault_locked_title || 'Deeper Historical Content & Archival Vault'}
                   </h3>
                   <p class="text-xs text-[#78716C] font-sans max-w-xl leading-relaxed">
-                    Unlock declassified 1946 wartime gold bullion transport runs, 24K gold acoustic glazing engineering schematics, and historic telegrams for ${trainName}.
+                    ${dict.vault_locked_sub ? dict.vault_locked_sub.replace('{train}', trainName) : `Unlock declassified 1946 wartime gold bullion transport runs, 24K gold acoustic glazing engineering schematics, and historic telegrams for ${trainName}.`}
                   </p>
                 </div>
               </div>
 
               <button type="button" id="btn-unlock-vault-cta" class="w-full md:w-auto px-6 py-3.5 rounded-2xl bg-[#D99B26] text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#C98B1E] transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#D99B26]/20 shrink-0">
                 <i data-lucide="crown" class="w-4 h-4"></i>
-                <span>Unlock Historical Vault (R79)</span>
+                <span>${dict.vault_locked_btn || 'Unlock Historical Vault (R79)'}</span>
               </button>
             </div>
           </div>
@@ -2828,20 +4549,20 @@ As the train moves, details gather into memory: a platform lamp in the evening, 
                 </div>
                 <div>
                   <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-mono bg-[#2A9D8F]/15 text-[#2A9D8F] border border-[#2A9D8F]/30 uppercase font-extrabold tracking-wider mb-2">
-                    <span>LOCKED FEATURE · AUDIO EXPERIENCE & VIP MEMBERSHIP</span>
+                    <span>${dict.audio_locked_badge || 'LOCKED FEATURE · AUDIO EXPERIENCE & VIP MEMBERSHIP'}</span>
                   </div>
                   <h3 class="font-heading font-extrabold text-2xl text-[#0A0C10] mb-2">
-                    Narrated / Listenable Journey Audio Companion
+                    ${dict.audio_locked_title || 'Narrated / Listenable Journey Audio Companion'}
                   </h3>
                   <p class="text-xs text-[#78716C] font-sans max-w-xl leading-relaxed">
-                    Unlock natural speech synthesis narrations of South Africa rail stories, voice actor profiles, and ambient Karoo soundscapes for ${trainName}.
+                    ${dict.audio_locked_sub ? dict.audio_locked_sub.replace('{train}', trainName) : `Unlock natural speech synthesis narrations of South Africa rail stories, voice actor profiles, and ambient Karoo soundscapes for ${trainName}.`}
                   </p>
                 </div>
               </div>
 
               <button type="button" id="btn-unlock-audio-cta" class="w-full md:w-auto px-6 py-3.5 rounded-2xl bg-[#2A9D8F] text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#238276] transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#2A9D8F]/20 shrink-0">
                 <i data-lucide="headphones" class="w-4 h-4"></i>
-                <span>Unlock Audio Pass (R49)</span>
+                <span>${dict.audio_locked_btn || 'Unlock Audio Pass (R49)'}</span>
               </button>
             </div>
           </div>
@@ -3162,9 +4883,13 @@ As the train moves, details gather into memory: a platform lamp in the evening, 
             if (playMainLabel) playMainLabel.textContent = 'Play Story Audio';
           } else {
             const selectedStoryId = storySelector ? storySelector.value : null;
-            const story = (appData.stories || FALLBACK_STORIES).find(s => s.id === selectedStoryId) || (appData.stories || FALLBACK_STORIES)[0];
-            if (story) {
-              const narration = `${story.title}. By ${story.author}. ${story.summary}. ${story.content}`;
+            const rawStory = (appData.stories || FALLBACK_STORIES).find(s => s.id === selectedStoryId) || (appData.stories || FALLBACK_STORIES)[0];
+            if (rawStory) {
+              const langCode = window.TrackTalesLanguageCode || localStorage.getItem('tracktales_lang') || 'en';
+              const dict = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[langCode]) ? TRANSLATIONS[langCode] : {};
+              const byPrefix = dict.by_author || 'By';
+              const story = getStoryInLanguage(rawStory, langCode);
+              const narration = `${story.title}. ${byPrefix} ${story.author}. ${story.summary}. ${getFullStoryText(story)}`;
               window.TrackTalesSpeakText(narration, () => {
                 if (playMainLabel) playMainLabel.textContent = 'Play Story Audio';
               });
@@ -6286,7 +8011,75 @@ As the train moves, details gather into memory: a platform lamp in the evening, 
         hero_desc: 'A luxury rail ticket for this route can cost tens of thousands of Rand. TrackTales traces the same line a spectrum that runs from the Highveld to the Atlantic.',
         stops_tag: 'SOUTH AFRICAN RAIL HERITAGE · PRETORIA TO CAPE TOWN',
         stops_title: 'Corridor Stops',
-        stops_desc: 'An immersive living journey tracing historic stations, mountain passes, and Karoo desert junctions along Mzansi\'s iconic 1,600 km rail corridor.'
+        stops_desc: 'An immersive living journey tracing historic stations, mountain passes, and Karoo desert junctions along Mzansi\'s iconic 1,600 km rail corridor.',
+        stories_title: 'Journey <span class="text-[#D99B26] italic font-serif">Stories</span>',
+        stories_sub: 'Archival stories, engineering milestones, and folklore along South Africa\'s luxury corridor.',
+        auth_welcome: 'Welcome',
+        auth_welcome_sub: 'Sign in to access your South Africa rail companion pass.',
+        auth_create: 'Create Account',
+        auth_create_sub: 'Register for your TrackTales digital passport.',
+        auth_signin_btn: 'SIGN IN',
+        auth_signup_btn: 'CREATE ACCOUNT',
+        email_ph: 'Email *',
+        pass_ph: 'Password *',
+        name_ph: 'Full Name *',
+        confirm_pass_ph: 'Confirm Password *',
+        nav_trigger: 'Navigate',
+        nav_access: 'Access',
+        nav_sos: 'SOS',
+        nav_signin: 'Sign In',
+        nav_signout: 'Sign Out',
+        nav_hub_companion: 'CORRIDOR COMPANION',
+        nav_hub_title: 'Navigation Hub Panel',
+        nav_hub_subtitle: '1,600 km Pretoria to Cape Town',
+        nav_card_route_title: 'The Route',
+        nav_card_route_desc: 'Cinematic corridor overview & live interactive route.',
+        nav_card_stops_title: 'Corridor Stops',
+        nav_card_stops_desc: 'Living stations, mountain passes & Karoo desert junctions.',
+        nav_card_stories_title: 'Stories & Vault',
+        nav_card_stories_desc: 'Historic archives, secret dossiers & audio narrations.',
+        nav_card_trains_title: 'Flagship Modes',
+        nav_card_trains_desc: 'The Blue Train & Rovos Rail specifications & dining.',
+        nav_card_games_title: 'Corridor Games',
+        nav_card_games_desc: 'Stop quizzes, Mzansi Rail Bingo & build next stop puzzle.',
+        nav_card_voice_title: 'Voice Journal',
+        nav_card_voice_desc: 'Real-time speech-to-text dictation & passenger diary.',
+        nav_hub_tap_hint: 'Tap any destination card to navigate',
+        stories_badge: 'HERITAGE STORIES & ARCHIVES',
+        stories_active_pass_label: 'Active Pass:',
+        stories_change_pass_btn: 'Change Pass',
+        stories_all_passes_label: 'Included in All Passes',
+        stories_read_story_btn: 'Read Full Story',
+        stories_min_read: 'min read',
+        vault_locked_badge: 'LOCKED FEATURE · PREMIUM JOURNEY PACK & VIP MEMBERSHIP',
+        vault_locked_title: 'Deeper Historical Content & Archival Vault',
+        vault_locked_sub: 'Unlock declassified 1946 wartime gold bullion transport runs, 24K gold acoustic glazing engineering schematics, and historic telegrams for {train}.',
+        vault_locked_btn: 'Unlock Historical Vault (R79)',
+        audio_locked_badge: 'LOCKED FEATURE · AUDIO EXPERIENCE & VIP MEMBERSHIP',
+        audio_locked_title: 'Narrated / Listenable Journey Audio Companion',
+        audio_locked_sub: 'Unlock natural speech synthesis narrations of South Africa rail stories, voice actor profiles, and ambient Karoo soundscapes for {train}.',
+        audio_locked_btn: 'Unlock Audio Pass (R49)',
+        by_author: 'By',
+        modal_audio_unlocked: 'Audio Companion Unlocked',
+        modal_audio_listen_desc: 'Listen to complete story narration',
+        modal_audio_play: 'Play Audio',
+        modal_audio_stop: 'Stop Audio',
+        modal_audio_locked: 'Audio narration locked for this story.',
+        modal_audio_unlock_btn: 'Unlock Audio Pass (R49)',
+        footer_tagline: 'REAL ROUTES. EXTRAORDINARY STORIES.',
+        footer_desc: 'A digital storytelling companion for the Pretoria to Cape Town rail corridor celebrating the timeless heritage, scenery, and culture of South Africa\'s iconic railways.',
+        footer_nav_heading: 'Navigation',
+        footer_link_route: 'The Route',
+        footer_link_trains: 'Flagship Trains',
+        footer_link_sights: 'Sights & Landmarks',
+        footer_link_puzzles: 'Sight Solver Puzzles',
+        footer_link_voice: 'Voice Journal & Log',
+        footer_link_heritage: 'Heritage & About',
+        footer_corridor_heading: 'Corridor Journey',
+        footer_corridor_desc: 'Traversing 1,600 km across South Africa\'s heartland from the Jacaranda City to Table Mountain.',
+        footer_corridor_badge: 'Pretoria to Cape Town',
+        footer_copyright: '© 2026 TrackTales. All rights reserved.',
+        footer_corridor_tag: 'Pretoria to Cape Town Corridor'
       },
       zu: {
         hero_tag: 'UMZILA OSUSUKA E-PRETORIA UYA E-KAPA · ISITIMELA ESIBLUU',
@@ -6295,7 +8088,67 @@ As the train moves, details gather into memory: a platform lamp in the evening, 
         hero_desc: 'Ithikithi lesitimela esisezingeni eliphezulu lingabiza izinkulungwane zamaRandi. I-TrackTales ilandelela lowo mzila omuhle kusukela eHighveld kuya olwandle.',
         stops_tag: 'UMLANDO WEZITIMELA WASENINGIZIMU AFRIKA · PRETORIA KUYA EKAPA',
         stops_title: 'Izitobhi Zomzila',
-        stops_desc: 'Uhambo olubukhoma olulandelela iziteshi zomlando, izintaba, nezindawo zeKaroo ebangeni elingamakhilomitha angu-1,600.'
+        stops_desc: 'Uhambo olubukhoma olulandelela iziteshi zomlando, izintaba, nezindawo zeKaroo ebangeni elingamakhilomitha angu-1,600.',
+        stories_title: 'Izindaba <span class="text-[#D99B26] italic font-serif">Zohambo</span>',
+        stories_sub: 'Izindaba zomlando, impumelelo yezobunjiniyela namagugu omzila wesitimela waseNingizimu Afrika.',
+        auth_welcome: 'Siyakwamukela',
+        auth_welcome_sub: 'Ngena ukuze uthole iphasipoti yakho yezitimela yaseNingizimu Afrika.',
+        auth_create: 'Dala Inkwama/Akaunti',
+        auth_create_sub: 'Bhalisa ngebhuku lakho ledijithali le-TrackTales.',
+        auth_signin_btn: 'NGENA',
+        auth_signup_btn: 'DALA AKAUNTI',
+        email_ph: 'I-Imeyili *',
+        pass_ph: 'Iphasiwedi *',
+        name_ph: 'Igama Eliphelele *',
+        confirm_pass_ph: 'Gcina Iphasiwedi *',
+        nav_trigger: 'Zulalela',
+        nav_access: 'Finyelela',
+        nav_sos: 'SOS',
+        nav_signin: 'Ngena',
+        nav_signout: 'Phuma',
+        nav_hub_companion: 'UMUZI WESITIMELA',
+        nav_hub_title: 'I-Panel Yokuhamba',
+        nav_hub_subtitle: '1,600 km Pretoria kuya eKapa',
+        nav_card_route_title: 'Umzila',
+        nav_card_route_desc: 'Ukubuyekezwa komzila wokubuka nemodi ebukhoma.',
+        nav_card_stops_title: 'Izitobhi Zomzila',
+        nav_card_stops_desc: 'Iziteshi zomlando, izintaba namahlane laseKaroo.',
+        nav_card_stories_title: 'Izindaba Nemibhalo',
+        nav_card_stories_desc: 'Amalungelo amagugu nesitimela ngezwi.',
+        nav_card_trains_title: 'Izitimela Ezinkulu',
+        nav_card_trains_desc: 'The Blue Train le-Rovos Rail nezokudla.',
+        nav_card_games_title: 'Imidlalo Yezitimela',
+        nav_card_games_desc: 'Imibuzo yezitobhi, Rail Bingo nesithombe.',
+        nav_card_voice_title: 'Ijenali Yezwi',
+        nav_card_voice_desc: 'Izwi lesikhathi sangempela namaphepha agibeli.',
+        nav_hub_tap_hint: 'Thinta ikhadi ukuze uhambe',
+        stories_badge: 'AMAGUGU NEZINDABA',
+        stories_active_pass_label: 'Iphasipoti Elingena:',
+        stories_change_pass_btn: 'Shintsha Iphasipoti',
+        stories_all_passes_label: 'Kufakwe Kuwo Wonke Amaphasipoti',
+        stories_read_story_btn: 'Funda Indaba Ephelele',
+        stories_min_read: 'mimiz efunwayo',
+        by_author: 'Ngu',
+        modal_audio_unlocked: 'Umhlahlandlela Womhlaba Wonke Womsindo Uvuliwe',
+        modal_audio_listen_desc: 'Lalela ukuxoxwa kwendaba ephelele',
+        modal_audio_play: 'Dlala Umsindo',
+        modal_audio_stop: 'Misa Umsindo',
+        modal_audio_locked: 'Ukulalela kuka-audio kuvalelwe le ndaba.',
+        modal_audio_unlock_btn: 'Vula Iphasipoti Yomsindo (R49)',
+        footer_tagline: 'IMIZILA SIBILI. IZINDABA EZIMNANDI.',
+        footer_desc: 'Umhlahlandlela wedijithali womzila wesitimela osuka ePretoria uya eKapa ogubha amagugu, ubuhle nendlela yokuphila yezitimela waseNingizimu Afrika.',
+        footer_nav_heading: 'Ukuhamba',
+        footer_link_route: 'Umzila',
+        footer_link_trains: 'Izitimela Ezinkulu',
+        footer_link_sights: 'Izindawo Nezikhumbuzo',
+        footer_link_puzzles: 'Imidlalo Nezinselelo',
+        footer_link_voice: 'Ijenali Yezwi',
+        footer_link_heritage: 'Amagugu Nezokuxhumana',
+        footer_corridor_heading: 'Uhambo Lwomzila',
+        footer_corridor_desc: 'Kuhanjwa amakhilomitha angu-1,600 ukusuka ePretoria kuya kwiNtaba yeThebula.',
+        footer_corridor_badge: 'Pretoria kuya eKapa',
+        footer_copyright: '© 2026 TrackTales. Wonke amalungelo agodliwe.',
+        footer_corridor_tag: 'Umzila wasePretoria kuya eKapa'
       },
       xh: {
         hero_tag: 'INDLELA ESUSUKA ETPRETORIA ISINGA EKAPA · ITRENI EBLUU',
@@ -6304,7 +8157,67 @@ As the train moves, details gather into memory: a platform lamp in the evening, 
         hero_desc: 'Itikiti likaloliwe wokunethezeka linokubiza amawaka eerandi. I-TrackTales ilandela lo mzila mhle ukusuka eHighveld ukuya e-Atlantic.',
         stops_tag: 'ILIFA LIKALOLIWE WASENINGIZIMU AFRIKA · PRETORIA UKUYA EKAPA',
         stops_title: 'Izitishi Zomzila',
-        stops_desc: 'Uhambo olutyhila izitishi zembali, iindledlana zeentaba kunye namathafa aseKaroo kumgama ongamakhilomitha ayi-1,600.'
+        stops_desc: 'Uhambo olutyhila izitishi zembali, iindledlana zeentaba kunye namathafa aseKaroo kumgama ongamakhilomitha ayi-1,600.',
+        stories_title: 'Ibali <span class="text-[#D99B26] italic font-serif">Lohambo</span>',
+        stories_sub: 'Amabali embali, impumelelo kanjineli nelifa likaloliwe waseMzantsi Afrika.',
+        auth_welcome: 'Wamkelekile',
+        auth_welcome_sub: 'Ngena ukufumana iphasipoti yakho kaloliwe waseMzantsi Afrika.',
+        auth_create: 'Vula Akaunti',
+        auth_create_sub: 'Bhalisela iphasipoti yakho yawe-TrackTales.',
+        auth_signin_btn: 'NGENA',
+        auth_signup_btn: 'VULA AKAUNTI',
+        email_ph: 'I-Imeleyi *',
+        pass_ph: 'Igama lokugqitha *',
+        name_ph: 'Amagama Apheleleyo *',
+        confirm_pass_ph: 'Gqithisa Igama lokugqitha *',
+        nav_trigger: 'Zulazula',
+        nav_access: 'Fikelela',
+        nav_sos: 'SOS',
+        nav_signin: 'Ngena',
+        nav_signout: 'Phuma',
+        nav_hub_companion: 'IQABANE LIKALOLIWE',
+        nav_hub_title: 'Ipani Yelololiwe',
+        nav_hub_subtitle: '1,600 km Pretoria ukuya eKapa',
+        nav_card_route_title: 'Indlela',
+        nav_card_route_desc: 'Uhambo olubukekayo nebalazwe elibukhoma.',
+        nav_card_stops_title: 'Izitishi Zomzila',
+        nav_card_stops_desc: 'Izitishi zembali, iindledlana zeentaba neKaroo.',
+        nav_card_stories_title: 'Amabali Nembali',
+        nav_card_stories_desc: 'Ugcino lwembali namabali elirholayo.',
+        nav_card_trains_title: 'Izitimela Ze-Luxury',
+        nav_card_trains_desc: 'The Blue Train ne-Rovos Rail ezokutya.',
+        nav_card_games_title: 'Imidlalo Kaloliwe',
+        nav_card_games_desc: 'Imibuzo yezitishi ne-Rail Bingo.',
+        nav_card_voice_title: 'Ijenali Yelizwi',
+        nav_card_voice_desc: 'Izwi lesikolo neembali zabakhweli.',
+        nav_hub_tap_hint: 'Cofa ikhadi ukuze uyokhangela',
+        stories_badge: 'ILIFA LIKALOLIWE NAMABALI',
+        stories_active_pass_label: 'Iphasipoti Esebrenzayo:',
+        stories_change_pass_btn: 'Tshintsha Iphasipoti',
+        stories_all_passes_label: 'Kufakwe Kuko Konke Iphasipoti',
+        stories_read_story_btn: 'Funda Ibali Epheleleyo',
+        stories_min_read: 'imiz yofundo',
+        by_author: 'Ngu',
+        modal_audio_unlocked: 'Iqabane Le-Audio Livuliwe',
+        modal_audio_listen_desc: 'Mamela ukubaliswa kwebali epheleleyo',
+        modal_audio_play: 'Dlalisa I-Audio',
+        modal_audio_stop: 'Misa I-Audio',
+        modal_audio_locked: 'Ukubaliswa kwe-audio kuvaliwe kule bali.',
+        modal_audio_unlock_btn: 'Vula Iphasipoti Yomsindo (R49)',
+        footer_tagline: 'IINDLELA NYANI. AMABALI AMANGALISAYO.',
+        footer_desc: 'Iqabane ledijithali lomzila kaloliwe osuka ePretoria ukuya eKapa umbhiyozo welifa, imbonakalo nenkcubeko yakaloliwe waseMzantsi Afrika.',
+        footer_nav_heading: 'Ukuzulazula',
+        footer_link_route: 'Indlela',
+        footer_link_trains: 'Izitimela Ze-Luxury',
+        footer_link_sights: 'Izitishi Nezithombe',
+        footer_link_puzzles: 'Imidlalo Neepuzzle',
+        footer_link_voice: 'Ijenali Yelizwi',
+        footer_link_heritage: 'Ilifa Malunga Nathi',
+        footer_corridor_heading: 'Uhambo Lwomzila',
+        footer_corridor_desc: 'Ukuhamba umgama ongamakhilomitha ayi-1,600 kusuka ePretoria ukuya e-Table Mountain.',
+        footer_corridor_badge: 'Pretoria ukuya eKapa',
+        footer_copyright: '© 2026 TrackTales. Onke amalungelo agcinwe.',
+        footer_corridor_tag: 'Umzila wasePretoria ukuya eKapa'
       },
       af: {
         hero_tag: 'PRETORIA NA KAAPSTAD KORRIDOR · DIE BLOU TREIN',
@@ -6313,7 +8226,67 @@ As the train moves, details gather into memory: a platform lamp in the evening, 
         hero_desc: '\'n Luukse treinkaartjie vir hierdie roete kan tienduisende Rand kos. TrackTales volg dieselfde lyn van die Hoëveld tot by die Atlantiese Oseaan.',
         stops_tag: 'SUID-AFRIKAANSE SPOORWEGERFENIS · PRETORIA NA KAAPSTAD',
         stops_title: 'Korridor-haltes',
-        stops_desc: '\'n Meeslepende lewende reis wat historiese stasies, bergklowe en Karoo-aansluitings langs Mzansi se ikoniese 1,600 km spoorlyn volg.'
+        stops_desc: '\'n Meeslepende lewende reis wat historiese stasies, bergklowe en Karoo-aansluitings langs Mzansi se ikoniese 1,600 km spoorlyn volg.',
+        stories_title: 'Reis <span class="text-[#D99B26] italic font-serif">Verhale</span>',
+        stories_sub: 'Argiefverhale, ingenieursmylpale en spoorwegerfenis langs Suid-Afrika se luukse roete.',
+        auth_welcome: 'Welkom',
+        auth_welcome_sub: 'Teken in vir toegang tot jou Suid-Afrikaanse spoorwegpas.',
+        auth_create: 'Skep Rekening',
+        auth_create_sub: 'Registreer vir jou digitale TrackTales-paspoort.',
+        auth_signin_btn: 'TEKEN IN',
+        auth_signup_btn: 'SKEP REKENING',
+        email_ph: 'E-pos *',
+        pass_ph: 'Wagwoord *',
+        name_ph: 'Volle Naam *',
+        confirm_pass_ph: 'Bevestig Wagwoord *',
+        nav_trigger: 'Navigeer',
+        nav_access: 'Toegang',
+        nav_sos: 'SOS',
+        nav_signin: 'Teken In',
+        nav_signout: 'Teken Uit',
+        nav_hub_companion: 'KORRIDOR GIDS',
+        nav_hub_title: 'Navigasie Paneel',
+        nav_hub_subtitle: '1,600 km Pretoria na Kaapstad',
+        nav_card_route_title: 'Die Roete',
+        nav_card_route_desc: 'Kinematografiese oorsig & lewendige roete.',
+        nav_card_stops_title: 'Korridor-haltes',
+        nav_card_stops_desc: 'Historiese stasies, bergklowe & Karoo-woestyn.',
+        nav_card_stories_title: 'Verhale & Argief',
+        nav_card_stories_desc: 'Historiese argiewe, geheime dossiers & oudio.',
+        nav_card_trains_title: 'Vlagskip Treine',
+        nav_card_trains_desc: 'Die Blou Trein & Rovos Rail besonderhede.',
+        nav_card_games_title: 'Korridor Speletjies',
+        nav_card_games_desc: 'Vasvrae, Spoorweg Bingo & legkaarte.',
+        nav_card_voice_title: 'Stem Joernaal',
+        nav_card_voice_desc: 'Intydse stem-na-teks & passasiersdagboek.',
+        nav_hub_tap_hint: 'Tik enige roetekaart om te navigeer',
+        stories_badge: 'ERFENISVERHALE & ARGIEWE',
+        stories_active_pass_label: 'Actiewe Pas:',
+        stories_change_pass_btn: 'Verander Pas',
+        stories_all_passes_label: 'Ingesluit by Alle Passe',
+        stories_read_story_btn: 'Lees Volledige Verhaal',
+        stories_min_read: 'min lees',
+        by_author: 'Deur',
+        modal_audio_unlocked: 'Oudio-metgesel Ontsluit',
+        modal_audio_listen_desc: 'Luister na die volledige verhaalvertelling',
+        modal_audio_play: 'Speel Oudio',
+        modal_audio_stop: 'Stop Oudio',
+        modal_audio_locked: 'Oudio-vertelling is gesluit vir hierdie verhaal.',
+        modal_audio_unlock_btn: 'Ontsluit Oudiopas (R49)',
+        footer_tagline: 'EGTE ROETES. BUITENGEWONE VERHALEN.',
+        footer_desc: '\'n Digitale verhale-metgesel vir die spoorwegkorridor van Pretoria na Kaapstad wat die tydlose erfenis, landskap en kultuur van Suid-Afrika se ikoniese spoorweë vier.',
+        footer_nav_heading: 'Navigasie',
+        footer_link_route: 'Die Roete',
+        footer_link_trains: 'Vlagskip Treine',
+        footer_link_sights: 'Bezienswaardighede',
+        footer_link_puzzles: 'Legkaarte & Speletjies',
+        footer_link_voice: 'Stem Joernaal',
+        footer_link_heritage: 'Erfenis & Oor Ons',
+        footer_corridor_heading: 'Korridor Reis',
+        footer_corridor_desc: '1.600 km deur die hart van Suid-Afrika van Pretoria na die Tafelberg.',
+        footer_corridor_badge: 'Pretoria na Kaapstad',
+        footer_copyright: '© 2026 TrackTales. Alle regte vorbehou.',
+        footer_corridor_tag: 'Pretoria na Kaapstad Korridor'
       },
       st: {
         hero_tag: 'TSELA HO TSOHA PRETORIA HO YA CAPE TOWN · TERENE YA BLUE',
@@ -6322,7 +8295,67 @@ As the train moves, details gather into memory: a platform lamp in the evening, 
         hero_desc: 'Tekete ya terene ya mabothobotho e ka bitsa dikete tsa Diranta. TrackTales e latela tsela e ntle ho tloha Highveld ho ya Atlantic.',
         stops_tag: 'LEFA LA DITERENE LA AFRIKA BORWA · PRETORIA HO YA CAPE TOWN',
         stops_title: 'Diteishene tsa Tsela',
-        stops_desc: 'Leeto le hlakileng le salang morao diteishene tsa nalane, ditsela tsa dithaba, le mahoatata a Karoo tseleng ya 1,600 km.'
+        stops_desc: 'Leeto le hlakileng le salang morao diteishene tsa nalane, ditsela tsa dithaba, le mahoatata a Karoo tseleng ya 1,600 km.',
+        stories_title: 'Dineano tsa <span class="text-[#D99B26] italic font-serif">Leeto</span>',
+        stories_sub: 'Dineano tsa nalane le dikarolo tsa boenjinihere tsa diterene tsa Afrika Borwa.',
+        auth_welcome: 'Re a go Amogela',
+        auth_welcome_sub: 'Kena ho fumana pasepoto ea hau ea terene ea Afrika Borwa.',
+        auth_create: 'Etsa Akaunthe',
+        auth_create_sub: 'Ingolise bakeng sa pasepoto ea hau ea dijithali ea TrackTales.',
+        auth_signin_btn: 'KENA',
+        auth_signup_btn: 'ETSA AKAUNTHE',
+        email_ph: 'Imeile *',
+        pass_ph: 'Pasepoto *',
+        name_ph: 'Lebitso ka Botlalo *',
+        confirm_pass_ph: 'Netefatsa Pasepoto *',
+        nav_trigger: 'Tsamaea',
+        nav_access: 'Fumaneha',
+        nav_sos: 'SOS',
+        nav_signin: 'Kena',
+        nav_signout: 'Tsoa',
+        nav_hub_companion: 'MOPHELI EA TERENE',
+        nav_hub_title: 'Panele ea Leeto',
+        nav_hub_subtitle: '1,600 km Pretoria ho ya Cape Town',
+        nav_card_route_title: 'Tsela',
+        nav_card_route_desc: 'Kakaretso ea tsela le mebapa e phelang.',
+        nav_card_stops_title: 'Diteishene tsa Tsela',
+        nav_card_stops_desc: 'Diteishene tsa nalane, dithaba le Karoo.',
+        nav_card_stories_title: 'Dineano le Polokelo',
+        nav_card_stories_desc: 'Litlaleho tsa nalane le mantswe.',
+        nav_card_trains_title: 'Diterene tsa Mabothobotho',
+        nav_card_trains_desc: 'Terene ea Blue le Rovos Rail.',
+        nav_card_games_title: 'Lipapali tsa Terene',
+        nav_card_games_desc: 'Lipotso tsa diteishene le Bingo.',
+        nav_card_voice_title: 'Bukana ea Lentswe',
+        nav_card_voice_desc: 'Lentswe la nako ea sebele le buka.',
+        nav_hub_tap_hint: 'Kanya karete ho tsamaea',
+        stories_badge: 'LEFA LA DITERENE LE DINEANO',
+        stories_active_pass_label: 'Pasepoto e Sebeletsang:',
+        stories_change_pass_btn: 'Fetola Pasepoto',
+        stories_all_passes_label: 'E Kenyelelitsoe ho Likarete Tsohle',
+        stories_read_story_btn: 'Bala Neano e Cletseng',
+        stories_min_read: 'mets ea ho bala',
+        by_author: 'Ka',
+        modal_audio_unlocked: 'Sebuhedi ba Lentswe bo Vutsweng',
+        modal_audio_listen_desc: 'Mamela phetelo e tletseng ea neano',
+        modal_audio_play: 'Bapala Lentswe',
+        modal_audio_stop: 'Emisa Lentswe',
+        modal_audio_locked: 'Phetelo ea lentswe e koetsoe bakeng sa neano ena.',
+        modal_audio_unlock_btn: 'Bula Pasepoto ea Lentswe (R49)',
+        footer_tagline: 'DITSELA TSA SEBELE. DINEANO TSA METSOTSO.',
+        footer_desc: 'Mopheli ea dijithali oa tsela ea terene ho tloha Pretoria ho ya Cape Town e ketekoang lefa le setso sa Afrika Borwa.',
+        footer_nav_heading: 'Tsela',
+        footer_link_route: 'Tsela',
+        footer_link_trains: 'Diterene tsa Mabothobotho',
+        footer_link_sights: 'Liba le libo tsa Nalane',
+        footer_link_puzzles: 'Lipapali tsa Tsela',
+        footer_link_voice: 'Bukana ea Lentswe',
+        footer_link_heritage: 'Lefa le ka Rona',
+        footer_corridor_heading: 'Leeto la Tsela',
+        footer_corridor_desc: 'Sebaka sa 1,600 km ho tloha Pretoria ho ya Table Mountain.',
+        footer_corridor_badge: 'Pretoria ho ya Cape Town',
+        footer_copyright: '© 2026 TrackTales. Likarete tsohle di bolokilwe.',
+        footer_corridor_tag: 'Tsela ea Pretoria ho ya Cape Town'
       },
       tn: {
         hero_tag: 'MOKELO WA PRETORIA GO YA CAPE TOWN · TERENE YA BLUE',
@@ -6331,7 +8364,67 @@ As the train moves, details gather into memory: a platform lamp in the evening, 
         hero_desc: 'TrackTales e latela seporo sa Pretoria go ya Cape Town go ralala Highveld, Karoo le Atlantic.',
         stops_tag: 'BOSWA JWA SEPORO SA AFRIKA BORWA · PRETORIA GO YA CAPE TOWN',
         stops_title: 'Diteishene tsa Tsela',
-        stops_desc: 'Loeto lo lo tshelang lo latela diteishene tsa bogologolo, dithaba le naga ya Karoo mo seporong sa 1,600 km.'
+        stops_desc: 'Loeto lo lo tshelang lo latela diteishene tsa bogologolo, dithaba le naga ya Karoo mo seporong sa 1,600 km.',
+        stories_title: 'Dineano tsa <span class="text-[#D99B26] italic font-serif">Loeto</span>',
+        stories_sub: 'Dineano tsa bogologolo le boswa jwa seporo sa Afrika Borwa.',
+        auth_welcome: 'Re a go Amogela',
+        auth_welcome_sub: 'Tselana le go Tsena mo pasepotong ya gago ya terene.',
+        auth_create: 'Tlhoma Akaunti',
+        auth_create_sub: 'Ikwolise mo pasepotong ya dijithale ya TrackTales.',
+        auth_signin_btn: 'TSENA',
+        auth_signup_btn: 'TLHOMA AKAUNTI',
+        email_ph: 'Imeile *',
+        pass_ph: 'Lekwalo-phetsho *',
+        name_ph: 'Leina ka Botlalo *',
+        confirm_pass_ph: 'Tlhomamisa Lekwalo-phetsho *',
+        nav_trigger: 'Zulatsela',
+        nav_access: 'Tsena',
+        nav_sos: 'SOS',
+        nav_signin: 'Tsena',
+        nav_signout: 'Tswa',
+        nav_hub_companion: 'MOTSAMAISI WA SEPORO',
+        nav_hub_title: 'Phanele ya Tsamao',
+        nav_hub_subtitle: '1,600 km Pretoria go ya Cape Town',
+        nav_card_route_title: 'Tsela',
+        nav_card_route_desc: 'Tshekatsheko ya seporo le mmapa o o tshelang.',
+        nav_card_stops_title: 'Diteishene tsa Tsela',
+        nav_card_stops_desc: 'Diteishene tsa bogologolo le dikgala tsa Karoo.',
+        nav_card_stories_title: 'Dineano le Polokelo',
+        nav_card_stories_desc: 'Polokelo ya boswa jwa seporo le mantswe.',
+        nav_card_trains_title: 'Diterene tsa Mabothobotho',
+        nav_card_trains_desc: 'Terene ya Blue le Rovos Rail.',
+        nav_card_games_title: 'Metshameko ya Seporo',
+        nav_card_games_desc: 'Dipotso le Mzansi Rail Bingo.',
+        nav_card_voice_title: 'Bukana ya Lentswe',
+        nav_card_voice_desc: 'Lentswe la nako ya mmatota.',
+        nav_hub_tap_hint: 'Kanya karete go tsamaea',
+        stories_badge: 'BOSWA JWA SEPORO LE DINEANO',
+        stories_active_pass_label: 'Pasepote e e Diregang:',
+        stories_change_pass_btn: 'Fetola Pasepote',
+        stories_all_passes_label: 'E Akaretswe mo Dipasepoteng Tsotlhe',
+        stories_read_story_btn: 'Bala Neano ka Botlalo',
+        stories_min_read: 'mots wa go bala',
+        by_author: 'Ka',
+        modal_audio_unlocked: 'Motsamaisi wa Lentswe o Bulegile',
+        modal_audio_listen_desc: 'Reetsa kanelo e e tletseng ya neano',
+        modal_audio_play: 'Tshameka Lentswe',
+        modal_audio_stop: 'Emisa Lentswe',
+        modal_audio_locked: 'Kanelo ya lentswe e tswetswe mo neanong e.',
+        modal_audio_unlock_btn: 'Bula Pasepote ya Lentswe (R49)',
+        footer_tagline: 'DISEPORO TSA SEBELE. DINEANO TSA BOGOLOGOLO.',
+        footer_desc: 'Motsamaisi wa dijithale wa seporo sa Pretoria go ya Cape Town yo o ketekang boswa le setso sa seporo sa Afrika Borwa.',
+        footer_nav_heading: 'Tsamao',
+        footer_link_route: 'Tsela',
+        footer_link_trains: 'Diterene tsa Mabothobotho',
+        footer_link_sights: 'Dikgala le Diteishene',
+        footer_link_puzzles: 'Metshameko ya Seporo',
+        footer_link_voice: 'Bukana ya Lentswe',
+        footer_link_heritage: 'Boswa le ka Rona',
+        footer_corridor_heading: 'Loeto lo lo Tshelang',
+        footer_corridor_desc: 'Loeto lwa 1,600 km go tswa Pretoria go ya Table Mountain.',
+        footer_corridor_badge: 'Pretoria go ya Cape Town',
+        footer_copyright: '© 2026 TrackTales. Ditshwanelo tsotlhe di bolokilwe.',
+        footer_corridor_tag: 'Seporo sa Pretoria go ya Cape Town'
       },
       nso: {
         hero_tag: 'MOKGWA WA TERENE GO TLOGA PRETORIA GO YA CAPE TOWN · TERENE YA BLUE',
@@ -6340,7 +8433,67 @@ As the train moves, details gather into memory: a platform lamp in the evening, 
         hero_desc: 'TrackTales e latela tsela ya terene go tloga Highveld go ya lewatleng la Atlantic.',
         stops_tag: 'BOHWA BJA TERENE AFRIKA BORWA · PRETORIA GO YA CAPE TOWN',
         stops_title: 'Diteishene tša Tsela',
-        stops_desc: 'Leeto le latela diteishene tša histori, dithaba le naga ya Karoo tseleng ya 1,600 km.'
+        stops_desc: 'Leeto le latela diteishene tša histori, dithaba le naga ya Karoo tseleng ya 1,600 km.',
+        stories_title: 'Di-konope tša <span class="text-[#D99B26] italic font-serif">Leeto</span>',
+        stories_sub: 'Kanegelo tša histori le bohwa bja terene ya Afrika Borwa.',
+        auth_welcome: 'O amogetšwe',
+        auth_welcome_sub: 'Tsena go hwetša pasepoto ya gago ya terene.',
+        auth_create: 'Hlama Akaunthi',
+        auth_create_sub: 'Ingwadiše bakeng sa pasepoto ya gago ya dijithale.',
+        auth_signin_btn: 'TSENA',
+        auth_signup_btn: 'HLAMA AKAUNTHI',
+        email_ph: 'Imeile *',
+        pass_ph: 'Phentšhele *',
+        name_ph: 'Leina ka Botlalo *',
+        confirm_pass_ph: 'Tišetša Phentšhele *',
+        nav_trigger: 'Hlahla',
+        nav_access: 'Fihlelela',
+        nav_sos: 'SOS',
+        nav_signin: 'Tsena',
+        nav_signout: 'Tšwa',
+        nav_hub_companion: 'MOLEKANE WA TERENE',
+        nav_hub_title: 'Phanele ya Tshepedišo',
+        nav_hub_subtitle: '1,600 km Pretoria go ya Cape Town',
+        nav_card_route_title: 'Tsela',
+        nav_card_route_desc: 'Tekolo ya tsela ya terene le mmapa.',
+        nav_card_stops_title: 'Diteishene tša Tsela',
+        nav_card_stops_desc: 'Diteishene tša histori le lehamo la Karoo.',
+        nav_card_stories_title: 'Dikanegelo le Bobolokelo',
+        nav_card_stories_desc: 'Dikanegelo tša histori le mantšu.',
+        nav_card_trains_title: 'Diterene tša Mabothobotho',
+        nav_card_trains_desc: 'Terene ya Blue le Rovos Rail.',
+        nav_card_games_title: 'Dipapadi tša Terene',
+        nav_card_games_desc: 'Diphotšišo le Rail Bingo.',
+        nav_card_voice_title: 'Puku ya Lentšu',
+        nav_card_voice_desc: 'Lentšu la nako ya nnete le puku.',
+        nav_hub_tap_hint: 'Kanya karata go sepela',
+        stories_badge: 'BOHWA BJA TERENE LE DIKANEGELO',
+        stories_active_pass_label: 'Pasepoto ye e Šomago:',
+        stories_change_pass_btn: 'Fetola Pasepoto',
+        stories_all_passes_label: 'E Akareditšwe ka Dipasepotong ka Moka',
+        stories_read_story_btn: 'Bala Kanegelo ka Botlalo',
+        stories_min_read: 'mets ya go bala',
+        by_author: 'Ka',
+        modal_audio_unlocked: 'Molekane wa Mantšu o Adegile',
+        modal_audio_listen_desc: 'Theetša dikanegelo tša go tlala',
+        modal_audio_play: 'Bapala Lentšu',
+        modal_audio_stop: 'Emiša Lentšu',
+        modal_audio_locked: 'Kano ya lentšu e tswaletswe kanegelo ye.',
+        modal_audio_unlock_btn: 'Bula Pasepoto ya Lentšu (R49)',
+        footer_tagline: 'DITSELA TŠA NNETE. DIKANEGELO TŠA KGETHEGILEHO.',
+        footer_desc: 'Molekane wa dijithale wa tsela ya terene go tloga Pretoria go ya Cape Town yo a ketekago bohwa le setšo sa Afrika Borwa.',
+        footer_nav_heading: 'Tshepedišo',
+        footer_link_route: 'Tsela',
+        footer_link_trains: 'Diterene tša Mabothobotho',
+        footer_link_sights: 'Mafelo a Histori',
+        footer_link_puzzles: 'Dipapadi tša Tsela',
+        footer_link_voice: 'Puku ya Lentšu',
+        footer_link_heritage: 'Bohwa le ka Rona',
+        footer_corridor_heading: 'Leeto la Tsela',
+        footer_corridor_desc: 'Leeto la 1,600 km go tloga Pretoria go ya Table Mountain.',
+        footer_corridor_badge: 'Pretoria go ya Cape Town',
+        footer_copyright: '© 2026 TrackTales. Ditokelo ka moka di bolokilwe.',
+        footer_corridor_tag: 'Tsela ya Pretoria go ya Cape Town'
       },
       ts: {
         hero_tag: 'NDLELA YA PRETORIA KUYA CAPE TOWN · TERENE YA BLUE',
@@ -6349,7 +8502,67 @@ As the train moves, details gather into memory: a platform lamp in the evening, 
         hero_desc: 'TrackTales yi landzela ndlela ya xitimela ku suka Highveld ku ya lwandle ra Atlantic.',
         stops_tag: 'NDHAVUKO WA XITIMELA XA AFRIKA-DZONGA · PRETORIA KUYA CAPE TOWN',
         stops_title: 'Switichi swa Ndlela',
-        stops_desc: 'Riendzo leri hanyaka ri landzela switichi swa khale, tintshava ni ndhawu ya Karoo eka ndlela ya 1,600 km.'
+        stops_desc: 'Riendzo leri hanyaka ri landzela switichi swa khale, tintshava ni ndhawu ya Karoo eka ndlela ya 1,600 km.',
+        stories_title: 'Mavhungu ya <span class="text-[#D99B26] italic font-serif">Riendzo</span>',
+        stories_sub: 'Mavhungu ya ndhavuko wa xitimela xa Afrika-Dzonga.',
+        auth_welcome: 'U amukeriwile',
+        auth_welcome_sub: 'Nghena ku kuma pasepoto ya xitimela xa Afrika-Dzonga.',
+        auth_create: 'Tumbuluxa Akaunti',
+        auth_create_sub: 'Tsalisa eka pasepoto ya dijithali ya TrackTales.',
+        auth_signin_btn: 'NGHENA',
+        auth_signup_btn: 'TUMBULUXA AKAUNTI',
+        email_ph: 'Imeyili *',
+        pass_ph: 'Rito-ro-pala *',
+        name_ph: 'Vito Hi Xitalo *',
+        confirm_pass_ph: 'Tiyisisa Rito-ro-pala *',
+        nav_trigger: 'Komba',
+        nav_access: 'Fikelela',
+        nav_sos: 'SOS',
+        nav_signin: 'Nghena',
+        nav_signout: 'Huma',
+        nav_hub_companion: 'MUNGHANA WA XITIMELA',
+        nav_hub_title: 'Phanere ya Ku Famba',
+        nav_hub_subtitle: '1,600 km Pretoria ku ya Cape Town',
+        nav_card_route_title: 'Ndlela',
+        nav_card_route_desc: 'Nkatsakanyo wa ndlela ni mepe lowu hanyaka.',
+        nav_card_stops_title: 'Switichi swa Ndlela',
+        nav_card_stops_desc: 'Switichi swa khale ni mananga ya Karoo.',
+        nav_card_stories_title: 'Mavhungu ni Vuhlayiselo',
+        nav_card_stories_desc: 'Mavhungu ya ndhavuko ni rito.',
+        nav_card_trains_title: 'Switimela swa Vuhosi',
+        nav_card_trains_desc: 'Terene ya Blue ni Rovos Rail.',
+        nav_card_games_title: 'Mintlango ya Xitimela',
+        nav_card_games_desc: 'Swivutiso ni Rail Bingo.',
+        nav_card_voice_title: 'Puku ya Rito',
+        nav_card_voice_desc: 'Rito ra nkarhi wa ntiyiso ni puku.',
+        nav_hub_tap_hint: 'Phanya khadi ku famba',
+        stories_badge: 'NDHAVUKO WA XITIMELA NI MAVHUNGU',
+        stories_active_pass_label: 'Pasepoto Leyi Tirhaka:',
+        stories_change_pass_btn: 'Cinca Pasepoto',
+        stories_all_passes_label: 'Swi Kategoriwile eka Tiphasepoto Hinkwato',
+        stories_read_story_btn: 'Hlaya Mhungu Hi Xitalo',
+        stories_min_read: 'mimiz yo hlaya',
+        by_author: 'Hi',
+        modal_audio_unlocked: 'Munghana wa Rito u Pfulekile',
+        modal_audio_listen_desc: 'Yingisela ku hlayiwa ka mhungu hinkwawo',
+        modal_audio_play: 'Tlangisa Rito',
+        modal_audio_stop: 'Yimisa Rito',
+        modal_audio_locked: 'Ku hlayiwa ka rito ku pfariwile eka mhungu lowu.',
+        modal_audio_unlock_btn: 'Pfula Pasepoto ya Rito (R49)',
+        footer_tagline: 'TINDLELA TAHINE. MAVHUNGU YA NDHAVUKO.',
+        footer_desc: 'Munghana wa dijithali wa ndlela ya xitimela ku suka Pretoria ku ya Cape Town lowu tlangelaka ndhavuko ni swivono swa Afrika-Dzonga.',
+        footer_nav_heading: 'Ku Famba',
+        footer_link_route: 'Ndlela',
+        footer_link_trains: 'Switimela swa Vuhosi',
+        footer_link_sights: 'Swivono ni Switichi',
+        footer_link_puzzles: 'Mintlango ya Xitimela',
+        footer_link_voice: 'Puku ya Rito',
+        footer_link_heritage: 'Ndhavuko ni mo Hina',
+        footer_corridor_heading: 'Riendzo ra Ndlela',
+        footer_corridor_desc: 'Riendzo ra 1,600 km ku suka Pretoria ku ya Table Mountain.',
+        footer_corridor_badge: 'Pretoria ku ya Cape Town',
+        footer_copyright: '© 2026 TrackTales. Switokelo hinkwaswo swi hlayisiwile.',
+        footer_corridor_tag: 'Ndlela ya Pretoria ku ya Cape Town'
       },
       ss: {
         hero_tag: 'UMGCA WE-PRETORIA KUYA ECAPE TOWN · SITIMELA LESILUHLAZA',
@@ -6358,31 +8571,1346 @@ As the train moves, details gather into memory: a platform lamp in the evening, 
         hero_desc: 'I-TrackTales ilandzela indlela yesitimela isuka eHighveld iye e-Atlantic.',
         stops_tag: 'LIFA LEMAGUGU ESITIMELA ENINGIZIMU AFRIKA · PRETORIA KUYA ECAPE TOWN',
         stops_title: 'Titeshi Temgca',
-        stops_desc: 'Luhambo lolulandzela titeshi temlandvo, tindlela tetintsaba nendzawo yaseKaroo emgceni lo-1,600 km.'
+        stops_desc: 'Luhambo lolulandzela titeshi temlandvo, tindlela tetintsaba nendzawo yaseKaroo emgceni lo-1,600 km.',
+        stories_title: 'Tindzaba te <span class="text-[#D99B26] italic font-serif">Luhambo</span>',
+        stories_sub: 'Tindzaba temlandvo nemagugu esitimela eNingizimu Afrika.',
+        auth_welcome: 'Wamukelekile',
+        auth_welcome_sub: 'Ngena kufumana iphasepoti yakho yesitimela.',
+        auth_create: 'Yakha Akaunti',
+        auth_create_sub: 'Bhalisa pasepoti yakho ye-TrackTales.',
+        auth_signin_btn: 'NGENA',
+        auth_signup_btn: 'YAKHA AKAUNTI',
+        email_ph: 'I-Imeyili *',
+        pass_ph: 'Iphaswedi *',
+        name_ph: 'Ligama Leliphelele *',
+        confirm_pass_ph: 'Cinisekisa Iphaswedi *',
+        nav_trigger: 'Hamba',
+        nav_access: 'Fikelela',
+        nav_sos: 'SOS',
+        nav_signin: 'Ngena',
+        nav_signout: 'Phuma',
+        nav_hub_companion: 'UPHETHE WESITIMELA',
+        nav_hub_title: 'I-Paneli Yehambo',
+        nav_hub_subtitle: '1,600 km Pretoria kuya eCape Town',
+        nav_card_route_title: 'Indlela',
+        nav_card_route_desc: 'Buka ye-corridor nemodi yebukhoma.',
+        nav_card_stops_title: 'Titeshi Temgca',
+        nav_card_stops_desc: 'Titeshi temlandvo nelihlandze laseKaroo.',
+        nav_card_stories_title: 'Tindzaba neMibhalo',
+        nav_card_stories_desc: 'Tindzaba temlandvo nelivi.',
+        nav_card_trains_title: 'Titimbila teBukhosi',
+        nav_card_trains_desc: 'The Blue Train ne-Rovos Rail.',
+        nav_card_games_title: 'Timidlalo teSitimela',
+        nav_card_games_desc: 'Timbuzo te-titeshi ne-Bingo.',
+        nav_card_voice_title: 'Ijenali yeLivi',
+        nav_card_voice_desc: 'Livi lesikhatsi samambala nelibhuku.',
+        nav_hub_tap_hint: 'Thintsa khadi kuze uhambe',
+        stories_badge: 'EMAGUGU WESITIMELA NETINDZABA',
+        stories_active_pass_label: 'Iphasepoti Lesebentako:',
+        stories_change_pass_btn: 'Gucula Iphasepoti',
+        stories_all_passes_label: 'Kufakwe Kuto Tonke Tiphasepoti',
+        stories_read_story_btn: 'Funda Indzaba Lenkhulu',
+        stories_min_read: 'mimiz lekufundza',
+        by_author: 'Ngu',
+        modal_audio_unlocked: 'Livi Loluvuliwe',
+        modal_audio_listen_desc: 'Lalela kucocwa kwendzaba lenkhulu',
+        modal_audio_play: 'Dlala Livi',
+        modal_audio_stop: 'Misa Livi',
+        modal_audio_locked: 'Livi lokuphindza luvaliwe kule ndzaba.',
+        modal_audio_unlock_btn: 'Vula Iphasepoti yeLivi (R49)',
+        footer_tagline: 'INDLELA SIBILI. TINDZABA ETIMNANDI.',
+        footer_desc: 'Mphatsi wedijithali wemgca wesitimela osuka ePretoria uya eCape Town ogubha emagugu nemphilo yeNingizimu Afrika.',
+        footer_nav_heading: 'Hamba',
+        footer_link_route: 'Indlela',
+        footer_link_trains: 'Titimbila teBukhosi',
+        footer_link_sights: 'Titeshi neTimbone',
+        footer_link_puzzles: 'Timidlalo neTingcamu',
+        footer_link_voice: 'Ijenali yeLivi',
+        footer_link_heritage: 'Emagugu neKutsi Singobani',
+        footer_corridor_heading: 'Luhambo lweMgca',
+        footer_corridor_desc: 'Kuhanjwa amakhilomitha la-1,600 kusuka ePretoria kuya eTable Mountain.',
+        footer_corridor_badge: 'Pretoria kuya eCape Town',
+        footer_copyright: '© 2026 TrackTales. Emalungelo wonke agciniwe.',
+        footer_corridor_tag: 'Umgca wasePretoria kuya eCape Town'
       },
       ve: {
-        hero_tag: 'NDILA YA PRETORIA U YA CAPE TOWN · TSHITIMELA TSHITSHU',
-        hero_h1: 'Lavhelesa Lwendo',
-        hero_h1_sub: 'Lu A Vhea.',
-        hero_desc: 'TrackTales i tevhela ndila ya tshitimela u bva Highveld u ya Atlantic.',
-        stops_tag: 'VHUṰALI HA ZWITSHIMELA AFRIKA TSHIPEMBE · PRETORIA U YA CAPE TOWN',
-        stops_title: 'Zwiteshi zwa Ndila',
-        stops_desc: 'Lwendo lu tevhela zwiteshi zwa kale, thavha na fhethu ha Karoo kha ndila ya 1,600 km.'
+        hero_tag: 'GUDO LA PRETORIA U YA CAPE TOWN · NTIMBILA YA BLUE',
+        hero_h1: 'Wana Lwendo',
+        hero_h1_sub: 'Lu Swika.',
+        hero_desc: 'TrackTales i tevhela gudo la ntimbila u bva Highveld u swika lwanzheni lwa Atlantic.',
+        stops_tag: 'VHUFA HA ZWITIMELA ZWA AFRIKA TSHITIKO · PRETORIA U YA CAPE TOWN',
+        stops_title: 'Zwititshi zwa Gudo',
+        stops_desc: 'Lwendo lune lwa tshila luhavho lwa zwititshi zwa divhazwakale, thavha na shango la Karoo mo 1,600 km.',
+        stories_title: 'Zwifhiwa zwa <span class="text-[#D99B26] italic font-serif">Lwendo</span>',
+        stories_sub: 'Zwidivhadzo zwa divhazwakale na vhufa ha zwitimela zwa Afrika Tshitiko.',
+        auth_welcome: 'Vho ṱanganedzwa',
+        auth_welcome_sub: 'Dzhenani u wana phasipoto yanu ya ntimbila ya Afrika Tshitiko.',
+        auth_create: 'Sika Akhaunthi',
+        auth_create_sub: 'Nwalisani kha phasipoto yanu ya dijithali ya TrackTales.',
+        auth_signin_btn: 'DZHENANI',
+        auth_signup_btn: 'SIKA AKHAUNTHI',
+        email_ph: 'Imeili *',
+        pass_ph: 'Phaswide *',
+        name_ph: 'Dzina Nṱha *',
+        confirm_pass_ph: 'Khwaṱhisedzani Phaswide *',
+        nav_trigger: 'Genda',
+        nav_access: 'Swikelela',
+        nav_sos: 'SOS',
+        nav_signin: 'Dzhenani',
+        nav_signout: 'Bvani',
+        nav_hub_companion: 'MUGENDI WA NTIMBILA',
+        nav_hub_title: 'Phaneli ya Nyendelo',
+        nav_hub_subtitle: '1,600 km Pretoria u ya Cape Town',
+        nav_card_route_title: 'Gudo',
+        nav_card_route_desc: 'Mbonalo ya gudo na mepe wa zwino.',
+        nav_card_stops_title: 'Zwititshi zwa Gudo',
+        nav_card_stops_desc: 'Zwititshi zwa divhazwakale na Karoo.',
+        nav_card_stories_title: 'Dineano na Vhupululo',
+        nav_card_stories_desc: 'Vhupululo ha vhufa na lipfi.',
+        nav_card_trains_title: 'Zwitimela Zwhulwane',
+        nav_card_trains_desc: 'Ntimbila ya Blue na Rovos Rail.',
+        nav_card_games_title: 'Mitambo ya Ntimbila',
+        nav_card_games_desc: 'Mbudziso na Rail Bingo.',
+        nav_card_voice_title: 'Bugu ya Lipfi',
+        nav_card_voice_desc: 'Lipfi la zwino na bugu ya mufhiri.',
+        nav_hub_tap_hint: 'Kanya khathi u gendela',
+        stories_badge: 'VHUFA HA NTIMBILA NA DINEANO',
+        stories_active_pass_label: 'Phasipoto I Shumaho:',
+        stories_change_pass_btn: 'Shandukisa Phasipoto',
+        stories_all_passes_label: 'Zwo Katelwa kha Diphasipoto Dzoṱhe',
+        stories_read_story_btn: 'Vhala Neano Nga Vhudalo',
+        stories_min_read: 'mimiz ya u vhala',
+        by_author: 'Nga',
+        modal_audio_unlocked: 'Mugendi wa Lipfi Vho Vula',
+        modal_audio_listen_desc: 'Thetshelesani u neanea ha neano nga vhudalo',
+        modal_audio_play: 'Tshimbidzani Lipfi',
+        modal_audio_stop: 'Imisani Lipfi',
+        modal_audio_locked: 'U neanea ha lipfi zvo valwa kha neano eyi.',
+        modal_audio_unlock_btn: 'Vulani Phasipoto ya Lipfi (R49)',
+        footer_tagline: 'MAGUDO A CHICHI. DINEANO ZWAVHUDI.',
+        footer_desc: 'Mugendi wa dijithali wa gudo la ntimbila u bva Pretoria u ya Cape Town ane a takalela vhufa ha Afrika Tshitiko.',
+        footer_nav_heading: 'Nyendelo',
+        footer_link_route: 'Gudo',
+        footer_link_trains: 'Zwitimela Zwhulwane',
+        footer_link_sights: 'Zwititshi na Mbonalo',
+        footer_link_puzzles: 'Mitambo ya Ntimbila',
+        footer_link_voice: 'Bugu ya Lipfi',
+        footer_link_heritage: 'Vhufa na nga Rine',
+        footer_corridor_heading: 'Lwendo lwa Gudo',
+        footer_corridor_desc: 'Lwendo lwa 1,600 km u bva Pretoria u swika Table Mountain.',
+        footer_corridor_badge: 'Pretoria u ya Cape Town',
+        footer_copyright: '© 2026 TrackTales. Pfanelo dzoṱhe dzo vhukwa.',
+        footer_corridor_tag: 'Gudo la Pretoria u ya Cape Town'
       },
       nr: {
-        hero_tag: 'INDLELA YEPRETORIA EYA ECAPE TOWN · ISITIMELA ESILUHLAZA',
-        hero_h1: 'Bukela Uhambo',
-        hero_h1_sub: 'Luyavuleka.',
-        hero_desc: 'I-TrackTales ilandela indlela yesitimela ukusuka eHighveld ukuya e-Atlantic.',
-        stops_tag: 'ILIFA LEZIMOTO ZESITIMELA E-AFRIKA ESINGEZANSI · PRETORIA KUYA ECAPE TOWN',
+        hero_tag: 'INDLELA ISUSUKA E-PRETORIA IYA E-CAPE TOWN · ISITIMELA ESIBLUU',
+        hero_h1: 'Buka Ukukhamba',
+        hero_h1_sub: 'Kuvuleka.',
+        hero_desc: 'I-TrackTales ilandela indlela yesitimela isuka eHighveld iye elwandle lwe-Atlantic.',
+        stops_tag: 'ILIFA LEZITIMELA ZE-AFRIKA SEZINGUMU · PRETORIA IYA ECAPE TOWN',
         stops_title: 'Izitishi Zendlela',
-        stops_desc: 'Uhambo olulandela izitishi zomlando, izintaba nendawo yaseKaroo endleleni engamakhilomitha ayi-1,600.'
+        stops_desc: 'Ukukhamba kokuthoma okulandela izitishi zomlando, iintaba ne-Karoo emadendaneni we-1,600 km.',
+        stories_title: 'Iindaba zoku <span class="text-[#D99B26] italic font-serif">Khamba</span>',
+        stories_sub: 'Iindaba zomlando nelifa lezitimela ze-Afrika Sezingumu.',
+        auth_welcome: 'Umolekile',
+        auth_welcome_sub: 'Ngena ukufumana iphasipoti yakho yesitimela.',
+        auth_create: 'Vula Akhaunthi',
+        auth_create_sub: 'Bhalisela iphasipoti yakho ye-TrackTales.',
+        auth_signin_btn: 'NGENA',
+        auth_signup_btn: 'VULA AKAUNTHI',
+        email_ph: 'I-Imeyili *',
+        pass_ph: 'Iphaswedi *',
+        name_ph: 'Igama Eliphelele *',
+        confirm_pass_ph: 'Qinisekisa Iphaswedi *',
+        nav_trigger: 'Khamba',
+        nav_access: 'Fikelela',
+        nav_sos: 'SOS',
+        nav_signin: 'Ngena',
+        nav_signout: 'Phuma',
+        nav_hub_companion: 'UMTHOMBI WESITIMELA',
+        nav_hub_title: 'Ipaneli Yekhambo',
+        nav_hub_subtitle: '1,600 km Pretoria iya eCape Town',
+        nav_card_route_title: 'Indlela',
+        nav_card_route_desc: 'Ukubuyekezwa kwendlela nesithombe samanje.',
+        nav_card_stops_title: 'Izitishi Zendlela',
+        nav_card_stops_desc: 'Izitishi zomlando nebhanga laseKaroo.',
+        nav_card_stories_title: 'Iindaba Nezinto ezibulungekileko',
+        nav_card_stories_desc: 'Iindaba zomlando nelizwi.',
+        nav_card_trains_title: 'Izitimela Ezikhulu',
+        nav_card_trains_desc: 'The Blue Train ne-Rovos Rail.',
+        nav_card_games_title: 'Imidlalo Yesitimela',
+        nav_card_games_desc: 'Imibuzo yezitishi ne-Bingo.',
+        nav_card_voice_title: 'Ijenali Yelizwi',
+        nav_card_voice_desc: 'Ilizwi lesikhathi samanje nebhuku.',
+        nav_hub_tap_hint: 'Gandelela ikhadi ukukhamba',
+        stories_badge: 'ILIFA LEZITIMELA NEINDABA',
+        stories_active_pass_label: 'Iphasipoti Esebenzako:',
+        stories_change_pass_btn: 'Tjhugulula Iphasipoti',
+        stories_all_passes_label: 'Fakwe Kizo Zoke Iphasiwedi',
+        stories_read_story_btn: 'Funda Indaba Epheleleko',
+        stories_min_read: 'mimiz yokufunda',
+        by_author: 'Ngu',
+        modal_audio_unlocked: 'Ilizwi Elivuliweyo',
+        modal_audio_listen_desc: 'Lalela ukucocwa kwendaba epheleleko',
+        modal_audio_play: 'Dlala Ilizwi',
+        modal_audio_stop: 'Jamisa Ilizwi',
+        modal_audio_locked: 'Ukulalela kwelizwi kuvaliwe kule ndaba.',
+        modal_audio_unlock_btn: 'Vula Iphasipoti Yelizwi (R49)',
+        footer_tagline: 'IINDLELA ZAMAMBALA. IINDABA EZIROMAKAZAKO.',
+        footer_desc: 'Umthombi wedijithali wendlela yesitimela osuka ePretoria iya eCape Town obuyekeza ilifa le-Afrika Sezingumu.',
+        footer_nav_heading: 'Ukukhamba',
+        footer_link_route: 'Indlela',
+        footer_link_trains: 'Izitimela Ezikhulu',
+        footer_link_sights: 'Izitishi Neendawo',
+        footer_link_puzzles: 'Imidlalo Yesitimela',
+        footer_link_voice: 'Ijenali Yelizwi',
+        footer_link_heritage: 'Ilifa Ngingobani',
+        footer_corridor_heading: 'Ukukhamba Kwendlela',
+        footer_corridor_desc: 'Ukukhamba 1,600 km ukusuka ePretoria iya eTable Mountain.',
+        footer_corridor_badge: 'Pretoria iya eCape Town',
+        footer_copyright: '© 2026 TrackTales. Woke amalungelo abulungiwe.',
+        footer_corridor_tag: 'Indlela yePretoria iya eCape Town'
+      },
+      it: {
+        hero_tag: 'CORRIDOIO PRETORIA A CITTÀ DEL CAPO · IL TRENO BLU',
+        hero_h1: 'Guarda Il Viaggio',
+        hero_h1_sub: 'Rivelarsi.',
+        hero_desc: 'Un biglietto del treno di lusso per questo percorso può costare decine di migliaia di Rand. TrackTales ripercorre questa linea iconica di 1.600 km dal Highveld all\'Atlantico.',
+        stops_tag: 'PATRIMONIO FERROVIARIO DEL SUD AFRICA · PRETORIA A CITTÀ DEL CAPO',
+        stops_title: 'Fermate del Corridoio',
+        stops_desc: 'Un viaggio vivo e immersivo tra stazioni storiche, valichi montani e il deserto del Karoo.',
+        stories_title: 'Storie di <span class="text-[#D99B26] italic font-serif">Viaggio</span>',
+        stories_sub: 'Archivi storici, traguardi d\'ingegneria e folklore lungo il corridoio sudafricano.',
+        auth_welcome: 'Benvenuto',
+        auth_welcome_sub: 'Accedi per accedere al tuo pass ferroviario sudafricano.',
+        auth_create: 'Crea Account',
+        auth_create_sub: 'Registrati per il tuo passaporto digitale TrackTales.',
+        auth_signin_btn: 'ACCEDI',
+        auth_signup_btn: 'CREA ACCOUNT',
+        email_ph: 'E-mail *',
+        pass_ph: 'Password *',
+        name_ph: 'Nome completo *',
+        confirm_pass_ph: 'Conferma password *',
+        nav_trigger: 'Naviga',
+        nav_access: 'Accesso',
+        nav_sos: 'SOS',
+        nav_signin: 'Accedi',
+        nav_signout: 'Esci',
+        nav_hub_companion: 'COMPAGNO DI CORRIDOIO',
+        nav_hub_title: 'Pannello di Navigazione',
+        nav_hub_subtitle: '1.600 km Pretoria a Città del Capo',
+        nav_card_route_title: 'Il Percorso',
+        nav_card_route_desc: 'Panoramica cinematografica e mappa interattiva.',
+        nav_card_stops_title: 'Fermate del Corridoio',
+        nav_card_stops_desc: 'Stazioni storiche, passi montani e deserto del Karoo.',
+        nav_card_stories_title: 'Storie e Archivi',
+        nav_card_stories_desc: 'Archivi storici, dossier segreti e audio.',
+        nav_card_trains_title: 'Treni Ammiraglia',
+        nav_card_trains_desc: 'Il Treno Blu e Rovos Rail specifiche.',
+        nav_card_games_title: 'Giochi del Corridoio',
+        nav_card_games_desc: 'Quiz, Bingo ferroviario e puzzle.',
+        nav_card_voice_title: 'Diario Vocale',
+        nav_card_voice_desc: 'Dettatura vocale in tempo reale e diario di bordo.',
+        nav_hub_tap_hint: 'Tocca una scheda per navigare',
+        stories_badge: 'PATRIMONIO E ARCHIVI',
+        stories_active_pass_label: 'Pass Attivo:',
+        stories_change_pass_btn: 'Cambia Pass',
+        stories_all_passes_label: 'Incluso in tutti i pass',
+        stories_read_story_btn: 'Leggi Storia Completa',
+        stories_min_read: 'min di lettura',
+        by_author: 'Di',
+        modal_audio_unlocked: 'Accompagnamento Audio Sbloccato',
+        modal_audio_listen_desc: 'Ascolta la narrazione completa della storia',
+        modal_audio_play: 'Riproduci Audio',
+        modal_audio_stop: 'Interrompi Audio',
+        modal_audio_locked: 'Narrazione audio bloccata per questa storia.',
+        modal_audio_unlock_btn: 'Sblocca Pass Audio (R49)',
+        footer_tagline: 'PERCORSI REALI. STORIE STRAORDINARIE.',
+        footer_desc: 'Un compagno digitale per il corridoio ferroviario da Pretoria a Città del Capo che celebra il patrimonio del Sudafrica.',
+        footer_nav_heading: 'Navigazione',
+        footer_link_route: 'Il Percorso',
+        footer_link_trains: 'Treni Ammiraglia',
+        footer_link_sights: 'Luoghi di Interesse',
+        footer_link_puzzles: 'Puzzle e Giochi',
+        footer_link_voice: 'Diario Vocale',
+        footer_link_heritage: 'Patrimonio e Info',
+        footer_corridor_heading: 'Viaggio del Corridoio',
+        footer_corridor_desc: '1.600 km attraverso il Sudafrica da Pretoria alla Table Mountain.',
+        footer_corridor_badge: 'Pretoria a Città del Capo',
+        footer_copyright: '© 2026 TrackTales. Tutti i diritti riservati.',
+        footer_corridor_tag: 'Corridoio Pretoria a Città del Capo',
+        rail_runners_tag: 'TRACKTALES · I CORRIDORI DEL TRENO',
+        trains_selected_badge: 'TRENO SELEZIONATO:',
+        trains_scenery_badge: 'SPLENDORE DEL PAESAGGIO E PUNTI PANORAMICI',
+        trains_scenery_title: 'Paesaggi e Punti di Forza del Corridoio',
+        trains_culinary_badge: 'ENOGASTRONOMIA E SOCIALITÀ',
+        trains_dining_title: 'Ristorazione di Lusso e Salotti a Bordo',
+        trains_specs_badge: 'SPECIFICHE TECNICHE E STORIA',
+        trains_highlights_title: 'Esperienze Caratteristiche',
+        label_speed: 'Velocità',
+        label_duration: 'Durata',
+        label_corridor: 'Corridoio',
+        label_departure_hub: 'Stazione di Partenza',
+        label_terminus_station: 'Stazione Capolinea',
+        label_vantage_tip: 'Consiglio Panoramico'
+      },
+      pt: {
+        hero_tag: 'CORREDOR PRETORIA A CIDADE DO CABO · O COMBOIO AZUL',
+        hero_h1: 'Veja A Viagem',
+        hero_h1_sub: 'A Revelar-se.',
+        hero_desc: 'Um bilhete de comboio de luxo para esta rota pode custar dezenas de milhares de Rands. O TrackTales percorre esta linha icónica de 1.600 km do Highveld ao Atlântico.',
+        stops_tag: 'PATRIMÓNIO FERROVIÁRIO DA ÁFRICA DO SUL · PRETORIA A CIDADE DO CABO',
+        stops_title: 'Paragens do Corredor',
+        stops_desc: 'Uma viagem viva e imersiva por estações históricas, desfiladeiros de montanha e o deserto do Karoo.',
+        stories_title: 'Histórias de <span class="text-[#D99B26] italic font-serif">Viagem</span>',
+        stories_sub: 'Arquivos históricos, marcos de engenharia e folclore ao longo do corredor ferroviário.',
+        auth_welcome: 'Bem-vindo',
+        auth_welcome_sub: 'Inicie sessão para aceder ao seu passe ferroviário sul-africano.',
+        auth_create: 'Criar Conta',
+        auth_create_sub: 'Registe-se para o seu passaporte digital TrackTales.',
+        auth_signin_btn: 'INICIAR SESSÃO',
+        auth_signup_btn: 'CRIAR CONTA',
+        email_ph: 'E-mail *',
+        pass_ph: 'Palavra-passe *',
+        name_ph: 'Nome completo *',
+        confirm_pass_ph: 'Confirmar palavra-passe *',
+        nav_trigger: 'Navegar',
+        nav_access: 'Acesso',
+        nav_sos: 'SOS',
+        nav_signin: 'Iniciar Sessão',
+        nav_signout: 'Terminar Sessão',
+        nav_hub_companion: 'ACOMPANHANTE DO CORREDOR',
+        nav_hub_title: 'Painel de Navegação',
+        nav_hub_subtitle: '1.600 km Pretoria a Cidade do Cabo',
+        nav_card_route_title: 'A Rota',
+        nav_card_route_desc: 'Visão geral cinematográfica e mapa interativo ao vivo.',
+        nav_card_stops_title: 'Paragens do Corredor',
+        nav_card_stops_desc: 'Estações históricas, desfiladeiros e deserto do Karoo.',
+        nav_card_stories_title: 'Histórias e Arquivos',
+        nav_card_stories_desc: 'Arquivos históricos, dossiês secretos e áudio.',
+        nav_card_trains_title: 'Comboios Emblemáticos',
+        nav_card_trains_desc: 'O Comboio Azul e Rovos Rail especificações.',
+        nav_card_games_title: 'Jogos do Corredor',
+        nav_card_games_desc: 'Questionários, Bingo ferroviário e puzzles.',
+        nav_card_voice_title: 'Diário de Voz',
+        nav_card_voice_desc: 'Ditado de voz em tempo real e diário de bordo.',
+        nav_hub_tap_hint: 'Toque num cartão para navegar',
+        stories_badge: 'PATRIMÓNIO E ARQUIVOS',
+        stories_active_pass_label: 'Passe Ativo:',
+        stories_change_pass_btn: 'Alterar Passe',
+        stories_all_passes_label: 'Incluído em todos os passes',
+        stories_read_story_btn: 'Ler História Completa',
+        stories_min_read: 'min de leitura',
+        by_author: 'Por',
+        modal_audio_unlocked: 'Acompanhante de Áudio Desbloqueado',
+        modal_audio_listen_desc: 'Ouça a narração completa da história',
+        modal_audio_play: 'Reproduzir Áudio',
+        modal_audio_stop: 'Parar Áudio',
+        modal_audio_unlock_btn: 'Desbloquear Passe de Áudio (R49)',
+        footer_tagline: 'ROTAS REAIS. HISTÓRIAS EXTRAORDINÁRIAS.',
+        footer_desc: 'Um companheiro digital para o corredor ferroviário de Pretoria à Cidade do Cabo que celebra o património da África do Sul.',
+        footer_nav_heading: 'Navegação',
+        footer_link_route: 'A Rota',
+        footer_link_trains: 'Comboios Emblemáticos',
+        footer_link_sights: 'Locais de Interesse',
+        footer_link_puzzles: 'Puzzles e Jogos',
+        footer_link_voice: 'Diário de Voz',
+        footer_link_heritage: 'Património e Sobre',
+        footer_corridor_heading: 'Viagem do Corredor',
+        footer_corridor_desc: '1.600 km através da África do Sul desde Pretoria até à Montanha da Mesa.',
+        footer_corridor_badge: 'Pretoria a Cidade do Cabo',
+        footer_copyright: '© 2026 TrackTales. Todos os direitos reservados.',
+        footer_corridor_tag: 'Corredor Pretoria a Cidade do Cabo'
+      },
+      de: {
+        hero_tag: 'KORRIDOR PRETORIA NACH KAPSTADT · DER BLAUE ZUG',
+        hero_h1: 'Sehen Sie Die Reise',
+        hero_h1_sub: 'Sich Entfalten.',
+        hero_desc: 'Ein Luxuszugticket für diese Strecke kann Zehntausende Rand kosten. TrackTales verfolgt dieselbe ikonische 1.600 km lange Strecke vom Highveld bis zum Atlantik.',
+        stops_tag: 'SÜDAFRIKANISCHES EISENBAHNERBE · PRETORIA NACH KAPSTADT',
+        stops_title: 'Korridor Haltestellen',
+        stops_desc: 'Eine fesselnde lebendige Reise entlang historischer Bahnhöfe, Bergpässe und Karoo-Wüstenknotenpunkte.',
+        stories_title: 'Reise <span class="text-[#D99B26] italic font-serif">Geschichten</span>',
+        stories_sub: 'Archivgeschichten, technische Meilensteine und Geschichten entlang Südafrikas Luxuskorridor.',
+        auth_welcome: 'Willkommen',
+        auth_welcome_sub: 'Melden Sie sich an, um auf Ihren südafrikanischen Bahnpass zuzugreifen.',
+        auth_create: 'Konto Erstellen',
+        auth_create_sub: 'Registrieren Sie sich für Ihren digitalen TrackTales-Pass.',
+        auth_signin_btn: 'ANMELDEN',
+        auth_signup_btn: 'KONTO ERSTELLEN',
+        email_ph: 'E-Mail *',
+        pass_ph: 'Passwort *',
+        name_ph: 'Vollständiger Name *',
+        confirm_pass_ph: 'Passwort Bestätigen *',
+        nav_trigger: 'Navigieren',
+        nav_access: 'Zugang',
+        nav_sos: 'SOS',
+        nav_signin: 'Anmelden',
+        nav_signout: 'Abmelden',
+        nav_hub_companion: 'KORRIDOR BEGLEITER',
+        nav_hub_title: 'Navigationszentrale',
+        nav_hub_subtitle: '1.600 km Pretoria nach Kapstadt',
+        nav_card_route_title: 'Die Route',
+        nav_card_route_desc: 'Kinematografische Übersicht & interaktive Live-Route.',
+        nav_card_stops_title: 'Korridor Haltestellen',
+        nav_card_stops_desc: 'Historische Bahnhöfe, Bergpässe & Karoo-Wüste.',
+        nav_card_stories_title: 'Geschichten & Archiv',
+        nav_card_stories_desc: 'Historische Archive, geheime Dossiers & Audio.',
+        nav_card_trains_title: 'Flaggschiff-Züge',
+        nav_card_trains_desc: 'Der Blaue Zug & Rovos Rail Spezifikationen.',
+        nav_card_games_title: 'Korridor-Spiele',
+        nav_card_games_desc: 'Quizfragen, Eisenbahn-Bingo & Puzzles.',
+        nav_card_voice_title: 'Sprachjournal',
+        nav_card_voice_desc: 'Echtzeit-Sprache-zu-Text & Passagiertagebuch.',
+        nav_hub_tap_hint: 'Tippen Sie auf eine Karte, um zu navigieren',
+        stories_badge: 'ERBE-GESCHICHTEN & ARCHIVE',
+        stories_active_pass_label: 'Aktiver Pass:',
+        stories_change_pass_btn: 'Pass Ändern',
+        stories_all_passes_label: 'In allen Pässen enthalten',
+        stories_read_story_btn: 'Vollständige Geschichte Lesen',
+        stories_min_read: 'Min. Lesezeit',
+        by_author: 'Von',
+        modal_audio_unlocked: 'Audio-Begleiter Freigeschaltet',
+        modal_audio_listen_desc: 'Vollständige Story-Erzählung anhören',
+        modal_audio_play: 'Audio Abspielen',
+        modal_audio_stop: 'Audio Stoppen',
+        modal_audio_locked: 'Audionarration für diese Geschichte gesperrt.',
+        modal_audio_unlock_btn: 'Audio-Pass Freischalten (R49)',
+        footer_tagline: 'ECHTE ROUTEN. AUSSERGEWÖHNLICHE GESCHICHTEN.',
+        footer_desc: 'Ein digitaler Begleiter für den Eisenbahnkorridor von Pretoria nach Kapstadt, der das Erbe Südafrikas feiert.',
+        footer_nav_heading: 'Navigation',
+        footer_link_route: 'Die Route',
+        footer_link_trains: 'Flaggschiff-Züge',
+        footer_link_sights: 'Sehenswürdigkeiten',
+        footer_link_puzzles: 'Rätsel & Spiele',
+        footer_link_voice: 'Sprachjournal',
+        footer_link_heritage: 'Erbe & Über Uns',
+        footer_corridor_heading: 'Korridor Reise',
+        footer_corridor_desc: '1.600 km quer durch Südafrika von Pretoria bis zum Tafelberg.',
+        footer_corridor_badge: 'Pretoria nach Kapstadt',
+        footer_copyright: '© 2026 TrackTales. Alle Rechte vorbehalten.',
+        footer_corridor_tag: 'Pretoria nach Kapstadt Korridor',
+        rail_runners_tag: 'TRACKTALES · DIE EISENBAHNLÄUFER',
+        trains_selected_badge: 'AUSGEWÄHLTER ZUG:',
+        trains_scenery_badge: 'LANDSCHAFTSPRACHT & AUSSICHTSPUNKTE',
+        trains_scenery_title: 'Landschafts-Highlights des Korridors',
+        trains_culinary_badge: 'KULINARIK & GESELLSCHAFT',
+        trains_dining_title: 'Feine Küche & Lounges an Bord',
+        trains_specs_badge: 'TECHNISCHE DATEN & GESCHICHTE',
+        trains_highlights_title: 'Besondere Reise-Highlights',
+        label_speed: 'Geschwindigkeit',
+        label_duration: 'Dauer',
+        label_corridor: 'Korridor',
+        label_departure_hub: 'Abfahrtsbahnhof',
+        label_terminus_station: 'Zielbahnhof',
+        label_vantage_tip: 'Aussichtspunkt-Tipp'
+      },
+      fr: {
+        hero_tag: 'CORRIDOR PRETORIA À LE CAP · LE TRAIN BLEU',
+        hero_h1: 'Regardez Le Voyage',
+        hero_h1_sub: 'S\'Épanouir.',
+        hero_desc: 'Un billet de train de luxe pour cet itinéraire peut coûter des dizaines de milliers de Rands. TrackTales retrace cette ligne emblématique de 1 600 km du Highveld à l\'Atlantique.',
+        stops_tag: 'PATRIMOINE FERROVIAIRE SUD-AFRICAIN · PRETORIA À LE CAP',
+        stops_title: 'Arrêts du Corridor',
+        stops_desc: 'Un voyage vivant et immersif retraçant les gares historiques, les cols montagneux et le désert du Karoo.',
+        stories_title: 'Récits de <span class="text-[#D99B26] italic font-serif">Voyage</span>',
+        stories_sub: 'Archives historiques, prouesses d\'ingénierie et folklore le long du corridor ferroviaire sud-africain.',
+        auth_welcome: 'Bienvenue',
+        auth_welcome_sub: 'Connectez-vous pour accéder à votre pass ferroviaire sud-africain.',
+        auth_create: 'Créer un Compte',
+        auth_create_sub: 'Inscrivez-vous pour votre passeport numérique TrackTales.',
+        auth_signin_btn: 'SE CONNECTER',
+        auth_signup_btn: 'CRÉER UN COMPTE',
+        email_ph: 'E-mail *',
+        pass_ph: 'Mot de passe *',
+        name_ph: 'Nom complet *',
+        confirm_pass_ph: 'Confirmer le mot de passe *',
+        nav_trigger: 'Naviguer',
+        nav_access: 'Accès',
+        nav_sos: 'SOS',
+        nav_signin: 'Se connecter',
+        nav_signout: 'Se déconnecter',
+        nav_hub_companion: 'COMPAGNON DU CORRIDOR',
+        nav_hub_title: 'Panneau de Navigation',
+        nav_hub_subtitle: '1 600 km Pretoria à Le Cap',
+        nav_card_route_title: 'L\'Itinéraire',
+        nav_card_route_desc: 'Aperçu cinématique & carte interactive en direct.',
+        nav_card_stops_title: 'Arrêts du Corridor',
+        nav_card_stops_desc: 'Gares historiques, cols de montagne & désert du Karoo.',
+        nav_card_stories_title: 'Histoires & Archives',
+        nav_card_stories_desc: 'Archives historiques, dossiers secrets & audio.',
+        nav_card_trains_title: 'Trains Emblématiques',
+        nav_card_trains_desc: 'Le Train Bleu & Rovos Rail spécifications.',
+        nav_card_games_title: 'Jeux du Corridor',
+        nav_card_games_desc: 'Quiz, Bingo ferroviaire & puzzles.',
+        nav_card_voice_title: 'Journal Vocal',
+        nav_card_voice_desc: 'Dictée vocale en temps réel & journal de bord.',
+        nav_hub_tap_hint: 'Appuyez sur une carte pour naviguer',
+        stories_badge: 'PATRIMOINE & ARCHIVES',
+        stories_active_pass_label: 'Pass Actif:',
+        stories_change_pass_btn: 'Changer de Pass',
+        stories_all_passes_label: 'Inclus dans tous les pass',
+        stories_read_story_btn: 'Lire l\'Histoire Complète',
+        stories_min_read: 'min de lecture',
+        by_author: 'Par',
+        modal_audio_unlocked: 'Compagnon Audio Débloqué',
+        modal_audio_listen_desc: 'Écouter la narration complète de l\'histoire',
+        modal_audio_play: 'Lancer l\'Audio',
+        modal_audio_stop: 'Arrêter l\'Audio',
+        modal_audio_locked: 'Narration audio verrouillée pour cette histoire.',
+        modal_audio_unlock_btn: 'Débloquer le Pass Audio (R49)',
+        footer_tagline: 'VRAIS ITINÉRAIRES. HISTOIRES EXTRAORDINAIRES.',
+        footer_desc: 'Un compagnon numérique pour le corridor ferroviaire de Pretoria à Le Cap célébrant le patrimoine d\'Afrique du Sud.',
+        footer_nav_heading: 'Navigation',
+        footer_link_route: 'L\'Itinéraire',
+        footer_link_trains: 'Trains Emblématiques',
+        footer_link_sights: 'Sites & Monuments',
+        footer_link_puzzles: 'Puzzles & Jeux',
+        footer_link_voice: 'Journal Vocal',
+        footer_link_heritage: 'Patrimoine & À Propos',
+        footer_corridor_heading: 'Voyage du Corridor',
+        footer_corridor_desc: '1 600 km à travers l\'Afrique du Sud de Pretoria jusqu\'à la montagne de la Table.',
+        footer_corridor_badge: 'Pretoria à Le Cap',
+        footer_copyright: '© 2026 TrackTales. Tous droits réservés.',
+        footer_corridor_tag: 'Corridor Pretoria à Le Cap',
+        rail_runners_tag: 'TRACKTALES · LES COUREURS DU RAIL',
+        trains_selected_badge: 'TRAIN SÉLECTIONNÉ:',
+        trains_scenery_badge: 'SPLENDEUR DU PAYSAGE & POINTS DE VUE',
+        trains_scenery_title: 'Paysages & Points Forts du Corridor',
+        trains_culinary_badge: 'GASTRONOMIE & CONVIVIALITÉ',
+        trains_dining_title: 'Gastronomie & Salons à Bord',
+        trains_specs_badge: 'SPÉCIFICATIONS TECHNIQUES & HISTOIRE',
+        trains_highlights_title: 'Points Forts de l\'Expérience',
+        label_speed: 'Vitesse',
+        label_duration: 'Durée',
+        label_corridor: 'Corridor',
+        label_departure_hub: 'Gare de Départ',
+        label_terminus_station: 'Gare Terminus',
+        label_vantage_tip: 'Conseil de Point de Vue'
+      },
+      nl: {
+        hero_tag: 'CORRIDOR PRETORIA NAAR KAAPSTAD · DE BLAUWE TREIN',
+        hero_h1: 'Zie De Reis',
+        hero_h1_sub: 'Ontvouwen.',
+        hero_desc: 'Een luxe treinticket voor deze route kan tienduizenden Rand kosten. TrackTales volgt dezelfde iconische route van 1.600 km van het Hoogveld naar de Atlantische Oceaan.',
+        stops_tag: 'ZUID-AFRIKAANS SPOORWEGERFGOED · PRETORIA NAAR KAAPSTAD',
+        stops_title: 'Corridor Haltes',
+        stops_desc: 'Een meeslepende reis langs historische stations, bergpassen en Karoo-woestijnknooppunten.',
+        stories_title: 'Reis <span class="text-[#D99B26] italic font-serif">Verhalen</span>',
+        stories_sub: 'Archiefverhalen, technische mijlpalen en spoorwegerfgoed langs de luxe corridor.',
+        auth_welcome: 'Welkom',
+        auth_welcome_sub: 'Meld u aan om toegang te krijgen tot uw Zuid-Afrikaanse spoorwegpas.',
+        auth_create: 'Account Aanmaken',
+        auth_create_sub: 'Registreer voor uw digitale TrackTales-paspoort.',
+        auth_signin_btn: 'INLOGGEN',
+        auth_signup_btn: 'ACCOUNT AANMAKEN',
+        email_ph: 'E-mail *',
+        pass_ph: 'Wachtwoord *',
+        name_ph: 'Volledige Naam *',
+        confirm_pass_ph: 'Bevestig Wachtwoord *',
+        nav_trigger: 'Navigeren',
+        nav_access: 'Toegang',
+        nav_sos: 'SOS',
+        nav_signin: 'Inloggen',
+        nav_signout: 'Uitloggen',
+        nav_hub_companion: 'CORRIDOR GIDS',
+        nav_hub_title: 'Navigatiepaneel',
+        nav_hub_subtitle: '1.600 km Pretoria naar Kaapstad',
+        nav_card_route_title: 'De Route',
+        nav_card_route_desc: 'Cinematografisch overzicht & live interactieve route.',
+        nav_card_stops_title: 'Corridor Haltes',
+        nav_card_stops_desc: 'Historische stations, bergpassen & Karoo-woestijn.',
+        nav_card_stories_title: 'Verhalen & Archief',
+        nav_card_stories_desc: 'Historische archieven, geheime dossiers & audio.',
+        nav_card_trains_title: 'Vlaggenschip Treinen',
+        nav_card_trains_desc: 'De Blauwe Trein & Rovos Rail specificaties.',
+        nav_card_games_title: 'Corridor Spellen',
+        nav_card_games_desc: 'Spoorwegquizzen, Bingo & puzzels.',
+        nav_card_voice_title: 'Spraakdagboek',
+        nav_card_voice_desc: 'Realtime spraak-naar-tekst & passagiersdagboek.',
+        nav_hub_tap_hint: 'Tik op een kaart om te navigeren',
+        stories_badge: 'ERFGOED & ARCHIEVEN',
+        stories_active_pass_label: 'Actieve Pas:',
+        stories_change_pass_btn: 'Pas Wijzigen',
+        stories_all_passes_label: 'Inbegrepen bij alle passen',
+        stories_read_story_btn: 'Lees Volledige Verhaal',
+        stories_min_read: 'min leestijd',
+        by_author: 'Door',
+        modal_audio_unlocked: 'Audio-Gids Ontgrendeld',
+        modal_audio_listen_desc: 'Luister naar het volledige verhaal',
+        modal_audio_play: 'Audio Afspelen',
+        modal_audio_stop: 'Audio Stoppen',
+        modal_audio_locked: 'Audionarratie vergrendeld voor dit verhaal.',
+        modal_audio_unlock_btn: 'Audio-Pas Ontgrendelen (R49)',
+        footer_tagline: 'ECHTE ROUTES. BUITENGEWONE VERHALEN.',
+        footer_desc: 'Een digitale reisgids voor de spoorlijn van Pretoria naar Kaapstad die het erfgoed van Zuid-Afrika viert.',
+        footer_nav_heading: 'Navigatie',
+        footer_link_route: 'De Route',
+        footer_link_trains: 'Vlaggenschip Treinen',
+        footer_link_sights: 'Bezienswaardigheden',
+        footer_link_puzzles: 'Puzzels & Spellen',
+        footer_link_voice: 'Spraakdagboek',
+        footer_link_heritage: 'Erfgoed & Over Ons',
+        footer_corridor_heading: 'Corridor Reis',
+        footer_corridor_desc: '1.600 km door het hart van Zuid-Afrika van Pretoria naar de Tafelberg.',
+        footer_corridor_badge: 'Pretoria naar Kaapstad',
+        footer_copyright: '© 2026 TrackTales. Alle rechten voorbehouden.',
+        footer_corridor_tag: 'Pretoria naar Kaapstad Corridor',
+        rail_runners_tag: 'TRACKTALES · DE SPOORLOPERS',
+        trains_selected_badge: 'GESELECTEERDE TREIN:',
+        trains_scenery_badge: 'LANDSCHAPSSCHOON & UITZICHTPUNTEN',
+        trains_scenery_title: 'Landschap & Hoogtepunten van de Corridor',
+        trains_culinary_badge: 'CULINAIR & SOCIAAL',
+        trains_dining_title: 'Gastronomie & Lounges aan Boord',
+        trains_specs_badge: 'TECHNISCHE SPECIFICATIES & GESCHIEDENIS',
+        trains_highlights_title: 'Kenmerkende Reiservaringen',
+        label_speed: 'Snelheid',
+        label_duration: 'Duur',
+        label_corridor: 'Corridor',
+        label_departure_hub: 'Vertrekstation',
+        label_terminus_station: 'Eindstation',
+        label_vantage_tip: 'Uitzichtpunt Tip'
+      },
+      es: {
+        hero_tag: 'CORREDOR PRETORIA A CIUDAD DEL CABO · EL TREN AZUL',
+        hero_h1: 'Mire El Viaje',
+        hero_h1_sub: 'Desplegarse.',
+        hero_desc: 'Un billete de tren de lujo para esta ruta puede costar decenas de miles de Rands. TrackTales recorre la misma línea icónica de 1,600 km desde el Highveld hasta el Atlántico.',
+        stops_tag: 'PATRIMONIO FERROVIARIO DE SUDÁFRICA · PRETORIA A CIUDAD DEL CABO',
+        stops_title: 'Paradas del Corredor',
+        stops_desc: 'Un viaje vivo e inmersivo por estaciones históricas, pasos de montaña y el desierto del Karoo.',
+        stories_title: 'Historias de <span class="text-[#D99B26] italic font-serif">Viaje</span>',
+        stories_sub: 'Archivos históricos, hitos de ingeniería y folclore a lo largo del corredor ferroviario.',
+        auth_welcome: 'Bienvenido',
+        auth_welcome_sub: 'Inicie sesión para acceder a su pase ferroviario sudafricano.',
+        auth_create: 'Crear Cuenta',
+        auth_create_sub: 'Regístrese para su pasaporte digital TrackTales.',
+        auth_signin_btn: 'INICIAR SESIÓN',
+        auth_signup_btn: 'CREAR CUENTA',
+        email_ph: 'Correo electrónico *',
+        pass_ph: 'Contraseña *',
+        name_ph: 'Nombre completo *',
+        confirm_pass_ph: 'Confirmar contraseña *',
+        nav_trigger: 'Navegar',
+        nav_access: 'Acceso',
+        nav_sos: 'SOS',
+        nav_signin: 'Iniciar Sesión',
+        nav_signout: 'Cerrar Sesión',
+        nav_hub_companion: 'ACOMPAÑANTE DEL CORREDOR',
+        nav_hub_title: 'Panel de Navegación',
+        nav_hub_subtitle: '1,600 km Pretoria a Ciudad del Cabo',
+        nav_card_route_title: 'La Ruta',
+        nav_card_route_desc: 'Resumen cinematográfico y mapa interactivo en vivo.',
+        nav_card_stops_title: 'Paradas del Corredor',
+        nav_card_stops_desc: 'Estaciones históricas, pasos de montaña y Karoo.',
+        nav_card_stories_title: 'Historias y Archivos',
+        nav_card_stories_desc: 'Archivos históricos, expedientes secretos y audio.',
+        nav_card_trains_title: 'Trenes Emblemáticos',
+        nav_card_trains_desc: 'El Tren Azul y Rovos Rail especificaciones.',
+        nav_card_games_title: 'Juegos del Corredor',
+        nav_card_games_desc: 'Cuestionarios, Bingo ferroviario y puzzles.',
+        nav_card_voice_title: 'Diario de Voz',
+        nav_card_voice_desc: 'Dictado de voz en tiempo real y diario de a bordo.',
+        nav_hub_tap_hint: 'Toque una tarjeta para navegar',
+        stories_badge: 'PATRIMONIO Y ARCHIVOS',
+        stories_active_pass_label: 'Pase Activo:',
+        stories_change_pass_btn: 'Cambiar Pase',
+        stories_all_passes_label: 'Incluido en todos los pases',
+        stories_read_story_btn: 'Leer Historia Completa',
+        stories_min_read: 'min de lectura',
+        footer_tagline: 'RUTAS REALES. HISTORIAS EXTRAORDINARIAS.',
+        footer_desc: 'Un compañero digital para el corredor ferroviario de Pretoria a Ciudad del Cabo que celebra el patrimonio de Sudáfrica.',
+        footer_nav_heading: 'Navegación',
+        footer_link_route: 'La Ruta',
+        footer_link_trains: 'Trenes Emblemáticos',
+        footer_link_sights: 'Lugares de Interés',
+        footer_link_puzzles: 'Puzzles y Juegos',
+        footer_link_voice: 'Diario de Voz',
+        footer_link_heritage: 'Patrimonio y Acerca de',
+        footer_corridor_heading: 'Viaje del Corredor',
+        footer_corridor_desc: '1,600 km a través de Sudáfrica desde Pretoria hasta la Montaña de la Mesa.',
+        footer_corridor_badge: 'Pretoria a Ciudad del Cabo',
+        footer_copyright: '© 2026 TrackTales. Todos los derechos reservados.',
+        footer_corridor_tag: 'Corredor Pretoria a Ciudad del Cabo',
+        rail_runners_tag: 'TRACKTALES · LOS CORREDORES DEL TREN',
+        trains_selected_badge: 'TREN SELECCIONADO:',
+        trains_scenery_badge: 'ESPLENDOR DEL PAISAJE Y PUNTOS DE VISTA',
+        trains_scenery_title: 'Paisajes y Puntos Destacados del Corredor',
+        trains_culinary_badge: 'GASTRONOMÍA Y SOCIEDAD',
+        trains_dining_title: 'Alta Cocina y Salones a Bordo',
+        trains_specs_badge: 'ESPECIFICACIONES TÉCNICAS E HISTORIA',
+        trains_highlights_title: 'Experiencias Destacadas',
+        label_speed: 'Velocidad',
+        label_duration: 'Duración',
+        label_corridor: 'Corredor',
+        label_departure_hub: 'Estación de Salida',
+        label_terminus_station: 'Estación Término',
+        label_vantage_tip: 'Consejo de Mirador'
+      },
+      it: {
+        hero_tag: 'CORRIDOIO PRETORIA A CITTÀ DEL CAPO · IL TRENO BLU',
+        hero_h1: 'Guarda Il Viaggio',
+        hero_h1_sub: 'Rivelarsi.',
+        hero_desc: 'Un biglietto del treno di lusso per questo percorso può costare decine di migliaia di Rand. TrackTales ripercorre questa linea iconica di 1.600 km dal Highveld all\'Atlantico.',
+        stops_tag: 'PATRIMONIO FERROVIARIO DEL SUD AFRICA · PRETORIA A CITTÀ DEL CAPO',
+        stops_title: 'Fermate del Corridoio',
+        stops_desc: 'Un viaggio vivo e immersivo tra stazioni storiche, valichi montani e il deserto del Karoo.',
+        stories_title: 'Storie di <span class="text-[#D99B26] italic font-serif">Viaggio</span>',
+        stories_sub: 'Archivi storici, traguardi d\'ingegneria e folklore lungo il corridoio sudafricano.',
+        auth_welcome: 'Benvenuto',
+        auth_welcome_sub: 'Accedi per accedere al tuo pass ferroviario sudafricano.',
+        auth_create: 'Crea Account',
+        auth_create_sub: 'Registrati per il tuo passaporto digitale TrackTales.',
+        auth_signin_btn: 'ACCEDI',
+        auth_signup_btn: 'CREA ACCOUNT',
+        email_ph: 'E-mail *',
+        pass_ph: 'Password *',
+        name_ph: 'Nome completo *',
+        confirm_pass_ph: 'Conferma password *',
+        nav_trigger: 'Naviga',
+        nav_access: 'Accesso',
+        nav_sos: 'SOS',
+        nav_signin: 'Accedi',
+        nav_signout: 'Esci',
+        nav_hub_companion: 'COMPAGNO DI CORRIDOIO',
+        nav_hub_title: 'Pannello di Navigazione',
+        nav_hub_subtitle: '1.600 km Pretoria a Città del Capo',
+        nav_card_route_title: 'Il Percorso',
+        nav_card_route_desc: 'Panoramica cinematografica e mappa interattiva.',
+        nav_card_stops_title: 'Fermate del Corridoio',
+        nav_card_stops_desc: 'Stazioni storiche, passi montani e deserto del Karoo.',
+        nav_card_stories_title: 'Storie e Archivi',
+        nav_card_stories_desc: 'Archivi storici, dossier segreti e audio.',
+        nav_card_trains_title: 'Treni Ammiraglia',
+        nav_card_trains_desc: 'Il Treno Blu e Rovos Rail specifiche.',
+        nav_card_games_title: 'Giochi del Corridoio',
+        nav_card_games_desc: 'Quiz, Bingo ferroviario e puzzle.',
+        nav_card_voice_title: 'Diario Vocale',
+        nav_card_voice_desc: 'Dettatura vocale in tempo reale e diario di bordo.',
+        nav_hub_tap_hint: 'Tocca una scheda per navigare',
+        stories_badge: 'PATRIMONIO E ARCHIVI',
+        stories_active_pass_label: 'Pass Attivo:',
+        stories_change_pass_btn: 'Cambia Pass',
+        stories_all_passes_label: 'Incluso in tutti i pass',
+        stories_read_story_btn: 'Leggi Storia Completa',
+        stories_min_read: 'min di lettura',
+        footer_tagline: 'PERCORSI REALI. STORIE STRAORDINARIE.',
+        footer_desc: 'Un compagno digitale per il corridoio ferroviario da Pretoria a Città del Capo che celebra il patrimonio del Sudafrica.',
+        footer_nav_heading: 'Navigazione',
+        footer_link_route: 'Il Percorso',
+        footer_link_trains: 'Treni Ammiraglia',
+        footer_link_sights: 'Luoghi di Interesse',
+        footer_link_puzzles: 'Puzzle e Giochi',
+        footer_link_voice: 'Diario Vocale',
+        footer_link_heritage: 'Patrimonio e Info',
+        footer_corridor_heading: 'Viaggio del Corridoio',
+        footer_corridor_desc: '1.600 km attraverso il Sudafrica da Pretoria alla Table Mountain.',
+        footer_corridor_badge: 'Pretoria a Città del Capo',
+        footer_copyright: '© 2026 TrackTales. Tutti i diritti riservati.',
+        footer_corridor_tag: 'Corridoio Pretoria a Città del Capo',
+        rail_runners_tag: 'TRACKTALES · I CORRIDORI DEL TRENO',
+        trains_selected_badge: 'TRENO SELEZIONATO:',
+        trains_scenery_badge: 'SPLENDORE DEL PAESAGGIO E PUNTI PANORAMICI',
+        trains_scenery_title: 'Paesaggi e Punti di Forza del Corridoio',
+        trains_culinary_badge: 'ENOGASTRONOMIA E SOCIALITÀ',
+        trains_dining_title: 'Ristorazione di Lusso e Salotti a Bordo',
+        trains_specs_badge: 'SPECIFICHE TECNICHE E STORIA',
+        trains_highlights_title: 'Esperienze Caratteristiche',
+        label_speed: 'Velocità',
+        label_duration: 'Durata',
+        label_corridor: 'Corridoio',
+        label_departure_hub: 'Stazione di Partenza',
+        label_terminus_station: 'Stazione Capolinea',
+        label_vantage_tip: 'Consiglio Panoramico'
+      },
+      pt: {
+        hero_tag: 'CORREDOR PRETORIA A CIDADE DO CABO · O COMBOIO AZUL',
+        hero_h1: 'Veja A Viagem',
+        hero_h1_sub: 'A Revelar-se.',
+        hero_desc: 'Um bilhete de comboio de luxo para esta rota pode custar dezenas de milhares de Rands. O TrackTales percorre esta linha icónica de 1.600 km do Highveld ao Atlântico.',
+        stops_tag: 'PATRIMÓNIO FERROVIÁRIO DA ÁFRICA DO SUL · PRETORIA A CIDADE DO CABO',
+        stops_title: 'Paragens do Corredor',
+        stops_desc: 'Uma viagem viva e imersiva por estações históricas, desfiladeiros de montanha e o deserto do Karoo.',
+        stories_title: 'Histórias de <span class="text-[#D99B26] italic font-serif">Viagem</span>',
+        stories_sub: 'Arquivos históricos, marcos de engenharia e folclore ao longo do corredor ferroviário.',
+        auth_welcome: 'Bem-vindo',
+        auth_welcome_sub: 'Inicie sessão para aceder ao seu passe ferroviário sul-africano.',
+        auth_create: 'Criar Conta',
+        auth_create_sub: 'Registe-se para o seu passaporte digital TrackTales.',
+        auth_signin_btn: 'INICIAR SESSÃO',
+        auth_signup_btn: 'CRIAR CONTA',
+        email_ph: 'E-mail *',
+        pass_ph: 'Palavra-passe *',
+        name_ph: 'Nome completo *',
+        confirm_pass_ph: 'Confirmar palavra-passe *',
+        nav_trigger: 'Navegar',
+        nav_access: 'Acesso',
+        nav_sos: 'SOS',
+        nav_signin: 'Iniciar Sessão',
+        nav_signout: 'Terminar Sessão',
+        nav_hub_companion: 'ACOMPANHANTE DO CORREDOR',
+        nav_hub_title: 'Painel de Navegação',
+        nav_hub_subtitle: '1.600 km Pretoria a Cidade do Cabo',
+        nav_card_route_title: 'A Rota',
+        nav_card_route_desc: 'Visão geral cinematográfica e mapa interativo ao vivo.',
+        nav_card_stops_title: 'Paragens do Corredor',
+        nav_card_stops_desc: 'Estações históricas, desfiladeiros e deserto do Karoo.',
+        nav_card_stories_title: 'Histórias e Arquivos',
+        nav_card_stories_desc: 'Arquivos históricos, dossiês secretos e áudio.',
+        nav_card_trains_title: 'Comboios Emblemáticos',
+        nav_card_trains_desc: 'O Comboio Azul e Rovos Rail especificações.',
+        nav_card_games_title: 'Jogos do Corredor',
+        nav_card_games_desc: 'Questionários, Bingo ferroviário e puzzles.',
+        nav_card_voice_title: 'Diário de Voz',
+        nav_card_voice_desc: 'Ditado de voz em tempo real e diário de bordo.',
+        nav_hub_tap_hint: 'Toque num cartão para navegar',
+        stories_badge: 'PATRIMÓNIO E ARQUIVOS',
+        stories_active_pass_label: 'Passe Ativo:',
+        stories_change_pass_btn: 'Alterar Passe',
+        stories_all_passes_label: 'Incluído em todos os passes',
+        stories_read_story_btn: 'Ler História Completa',
+        stories_min_read: 'min de leitura',
+        by_author: 'Por',
+        modal_audio_unlocked: 'Acompanhante de Áudio Desbloqueado',
+        modal_audio_listen_desc: 'Ouça a narração completa da história',
+        modal_audio_play: 'Reproduzir Áudio',
+        modal_audio_stop: 'Parar Áudio',
+        modal_audio_locked: 'Narração de áudio bloqueada para esta história.',
+        modal_audio_unlock_btn: 'Desbloquear Passe de Áudio (R49)',
+        footer_tagline: 'ROTAS REAIS. HISTÓRIAS EXTRAORDINÁRIAS.',
+        footer_desc: 'Um companheiro digital para o corredor ferroviário de Pretoria à Cidade do Cabo que celebra o património da África do Sul.',
+        footer_nav_heading: 'Navegação',
+        footer_link_route: 'A Rota',
+        footer_link_trains: 'Comboios Emblemáticos',
+        footer_link_sights: 'Locais de Interesse',
+        footer_link_puzzles: 'Puzzles e Jogos',
+        footer_link_voice: 'Diário de Voz',
+        footer_link_heritage: 'Património e Sobre',
+        footer_corridor_heading: 'Viagem do Corredor',
+        footer_corridor_desc: '1.600 km através da África do Sul desde Pretoria até à Montanha da Mesa.',
+        footer_corridor_badge: 'Pretoria a Cidade do Cabo',
+        footer_copyright: '© 2026 TrackTales. Todos os direitos reservados.',
+        footer_corridor_tag: 'Corredor Pretoria a Cidade do Cabo',
+        rail_runners_tag: 'TRACKTALES · OS CORREDORES DO COMBOIO',
+        trains_selected_badge: 'COMBOIO SELECIONADO:',
+        trains_scenery_badge: 'ESPLENDOR DA PAISAGEM E PONTOS DE VISTA',
+        trains_scenery_title: 'Paisagens e Destaques do Corredor',
+        trains_culinary_badge: 'GASTRONOMIA E CONVÍVIO',
+        trains_dining_title: 'Alta Cozinha e Salões a Bordo',
+        trains_specs_badge: 'ESPECIFICAÇÕES TÉCNICAS E HISTÓRIA',
+        trains_highlights_title: 'Experiências em Destaque',
+        label_speed: 'Velocidade',
+        label_duration: 'Duração',
+        label_corridor: 'Corredor',
+        label_departure_hub: 'Estação de Partida',
+        label_terminus_station: 'Estação Terminal',
+        label_vantage_tip: 'Dica do Ponto de Vista'
+      },
+      zh: {
+        hero_tag: '比勒陀利亚至开普敦铁路走廊 · 蓝色列车',
+        hero_h1: '见证传奇旅程',
+        hero_h1_sub: '徐徐展开。',
+        hero_desc: '这条线路的豪华火车票可能价值数万兰特。TrackTales为您追踪这条横跨高地至大西洋的1,600公里经典铁路线。',
+        stops_tag: '南非铁路遗产 · 比勒陀利亚至开普敦',
+        stops_title: '走廊站点',
+        stops_desc: '沿着南非1,600公里的标志性铁路走廊，沉浸式体验历史车站、山口和卡鲁沙漠枢纽。',
+        stories_title: '旅程 <span class="text-[#D99B26] italic font-serif">故事</span>',
+        stories_sub: '南非豪华铁路走廊沿线的档案故事、工程里程碑与民间传说。',
+        auth_welcome: '欢迎',
+        auth_welcome_sub: '登录以访问您的南非铁路导览通行证。',
+        auth_create: '创建账号',
+        auth_create_sub: '注册您的TrackTales数字铁路护照。',
+        auth_signin_btn: '登录',
+        auth_signup_btn: '创建账号',
+        email_ph: '电子邮箱 *',
+        pass_ph: '密码 *',
+        name_ph: '全名 *',
+        confirm_pass_ph: '确认密码 *',
+        nav_trigger: '导航',
+        nav_access: '无障碍',
+        nav_sos: '求助',
+        nav_signin: '登录',
+        nav_signout: '退出',
+        nav_hub_companion: '铁路走廊导览',
+        nav_hub_title: '导航面板',
+        nav_hub_subtitle: '1,600 公里 比勒陀利亚至开普敦',
+        nav_card_route_title: '路线概览',
+        nav_card_route_desc: '电影级走廊全景与实时互动路线。',
+        nav_card_stops_title: '走廊站点',
+        nav_card_stops_desc: '历史车站、山口与卡鲁沙漠枢纽。',
+        nav_card_stories_title: '故事与档案',
+        nav_card_stories_desc: '历史档案、解密文件与语音讲解。',
+        nav_card_trains_title: '旗舰列车',
+        nav_card_trains_desc: '蓝色列车与非洲傲慢列车规格及餐饮。',
+        nav_card_games_title: '走廊游戏',
+        nav_card_games_desc: '站点问答、南非铁路宾果与拼图。',
+        nav_card_voice_title: '语音日志',
+        nav_card_voice_desc: '实时语音转文字与乘客随笔。',
+        nav_hub_tap_hint: '点击任意卡片即可导航',
+        stories_badge: '文化遗产与档案故事',
+        stories_active_pass_label: '当前通行证：',
+        stories_change_pass_btn: '更换通行证',
+        stories_all_passes_label: '包含于所有通行证',
+        stories_read_story_btn: '阅读完整故事',
+        stories_min_read: '分钟阅读',
+        by_author: '作者：',
+        modal_audio_unlocked: '语音伴侣已解锁',
+        modal_audio_listen_desc: '收听完整故事讲解',
+        modal_audio_play: '播放音频',
+        modal_audio_stop: '停止播放',
+        modal_audio_locked: '此故事的语音讲解未解锁。',
+        modal_audio_unlock_btn: '解锁语音通行证 (R49)',
+        footer_tagline: '真实路线。非凡故事。',
+        footer_desc: '比勒陀利亚至开普敦铁路走廊的数字故事导览，庆祝南非标志性铁路的历史与文化。',
+        footer_nav_heading: '导航',
+        footer_link_route: '路线概览',
+        footer_link_trains: '旗舰列车',
+        footer_link_sights: '景点与地标',
+        footer_link_puzzles: '趣味解谜',
+        footer_link_voice: '语音日志',
+        footer_link_heritage: '遗产与关于',
+        footer_corridor_heading: '走廊之旅',
+        footer_corridor_desc: '横跨南非心脏地带1,600公里，从紫楹花之城直达桌山。',
+        footer_corridor_badge: '比勒陀利亚至开普敦',
+        footer_copyright: '© 2026 TrackTales. 保留所有权利。',
+        footer_corridor_tag: '比勒陀利亚至开普敦铁路走廊',
+        rail_runners_tag: 'TRACKTALES · 铁路行者',
+        trains_selected_badge: '已选列车：',
+        trains_scenery_badge: '壮丽风光与观景亮点',
+        trains_scenery_title: '走廊风光与观景精选',
+        trains_culinary_badge: '美酒美食与社交',
+        trains_dining_title: '车厢高级餐饮与休闲酒廊',
+        trains_specs_badge: '技术参数与历史',
+        trains_highlights_title: '特色体验亮点',
+        label_speed: '运行速度',
+        label_duration: '行程时长',
+        label_corridor: '全程距离',
+        label_departure_hub: '始发车站',
+        label_terminus_station: '终点车站',
+        label_vantage_tip: '最佳观景建议'
+      },
+      ja: {
+        hero_tag: 'プレトリア〜ケープタウン鉄道回廊 · ブルー・トレイン',
+        hero_h1: '壮大な旅の物語が',
+        hero_h1_sub: '今、開かれる。',
+        hero_desc: 'このルートの豪華列車のチケットは数万ランドに達することもあります。TrackTalesはハイフェルドから大西洋へと続く1,600kmの伝説の線路を辿ります。',
+        stops_tag: '南アフリカ鉄道遺産 · プレトリア〜ケープタウン',
+        stops_title: '回廊の停車駅',
+        stops_desc: '歴史的な駅、山道の峠、カルー砂漠の分岐点を巡る1,600kmの臨場感あふれる旅。',
+        stories_title: '旅の <span class="text-[#D99B26] italic font-serif">物語</span>',
+        stories_sub: '南アフリカの豪華鉄道回廊に沿った歴史文書、技術の偉業、伝承。',
+        auth_welcome: 'ようこそ',
+        auth_welcome_sub: 'サインインして南アフリカ鉄道ガイドパスにアクセスしてください。',
+        auth_create: 'アカウント作成',
+        auth_create_sub: 'TrackTalesデジタルパスポートにご登録ください。',
+        auth_signin_btn: 'サインイン',
+        auth_signup_btn: 'アカウント作成',
+        email_ph: 'メールアドレス *',
+        pass_ph: 'パスワード *',
+        name_ph: 'お名前 *',
+        confirm_pass_ph: 'パスワード確認 *',
+        nav_trigger: 'ナビゲート',
+        nav_access: 'アクセシビリティ',
+        nav_sos: 'SOS求助',
+        nav_signin: 'サインイン',
+        nav_signout: 'サインアウト',
+        nav_hub_companion: '鉄道回廊コンパニオン',
+        nav_hub_title: 'ナビゲーションパネル',
+        nav_hub_subtitle: '1,600 km プレトリア〜ケープタウン',
+        nav_card_route_title: 'ルート概要',
+        nav_card_route_desc: 'シネマティックな全景とリアルタイムの対話型マップ。',
+        nav_card_stops_title: '回廊の停車駅',
+        nav_card_stops_desc: '歴史的駅、山道の峠、カルー砂漠の分岐点。',
+        nav_card_stories_title: '物語とアーカイブ',
+        nav_card_stories_desc: '歴史文書、秘密ファイル、音声解説。',
+        nav_card_trains_title: 'フラッグシップ列車',
+        nav_card_trains_desc: 'ブルー・トレインとロボス・レイルの仕様と食事。',
+        nav_card_games_title: '回廊ゲーム',
+        nav_card_games_desc: 'クイズ、鉄道ビンゴ、ジグソーパズル。',
+        nav_card_voice_title: '音声ジャーナル',
+        nav_card_voice_desc: 'リアルタイム音声入力と乗客日記。',
+        nav_hub_tap_hint: 'カードをタップして移動',
+        stories_badge: '鉄道遺産とアーカイブ物語',
+        stories_active_pass_label: '有効なパス：',
+        stories_change_pass_btn: 'パスを変更',
+        stories_all_passes_label: '全パスに含まれています',
+        stories_read_story_btn: '物語を全文読む',
+        stories_min_read: '分で読める',
+        by_author: '著者：',
+        modal_audio_unlocked: '音声ガイドが解放されました',
+        modal_audio_listen_desc: '物語のフル音声解説を聴く',
+        modal_audio_play: '声を再生',
+        modal_audio_stop: '声を停止',
+        modal_audio_locked: 'この物語の音声解説はロックされています。',
+        modal_audio_unlock_btn: '音声パスを解放 (R49)',
+        footer_tagline: '本物のルート。非凡な物語。',
+        footer_desc: 'プレトリアからケープタウンへの鉄道回廊のデジタル物語ガイド。南アフリカの伝統を称えます。',
+        footer_nav_heading: 'ナビゲーション',
+        footer_link_route: 'ルート概要',
+        footer_link_trains: 'フラッグシップ列車',
+        footer_link_sights: '名所とランドマーク',
+        footer_link_puzzles: 'パズルとゲーム',
+        footer_link_voice: '音声ジャーナル',
+        footer_link_heritage: '遺産と概要',
+        footer_corridor_heading: '回廊の旅',
+        footer_corridor_desc: 'プレトリアからテーブルマウンテンまで、南アフリカの心臓部1,600kmを縦断。',
+        footer_corridor_badge: 'プレトリア〜ケープタウン',
+        footer_copyright: '© 2026 TrackTales. All rights reserved.',
+        footer_corridor_tag: 'プレトリア〜ケープタウン鉄道回廊',
+        rail_runners_tag: 'TRACKTALES · レールランナーズ',
+        trains_selected_badge: '選択された列車：',
+        trains_scenery_badge: '絶景と展望スポット',
+        trains_scenery_title: '回廊の車窓風景と見どころ',
+        trains_culinary_badge: '美食と社交',
+        trains_dining_title: '車内ファインダイニング＆ラウンジ',
+        trains_specs_badge: '技術仕様と歴史',
+        trains_highlights_title: 'ハイライト体験',
+        label_speed: '最高速度',
+        label_duration: '所要時間',
+        label_corridor: '走行距離',
+        label_departure_hub: '出発駅',
+        label_terminus_station: '終着駅',
+        label_vantage_tip: '展望のアドバイス'
+      },
+      ko: {
+        hero_tag: '프리토리아 - 케이프타운 철도 회랑 · 블루 트레인',
+        hero_h1: '경이로운 여정이',
+        hero_h1_sub: '펼쳐집니다.',
+        hero_desc: '이 노선의 럭셔리 기차표는 수만 랜드에 달할 수 있습니다. TrackTales는 하이펠드에서 대서양까지 이어지는 1,600km의 전설적인 철도를 추적합니다.',
+        stops_tag: '남아프리카 공화국 철도 유산 · 프리토리아 - 케이프타운',
+        stops_title: '회랑 정차역',
+        stops_desc: '역사적인 기차역, 산악 고개, 카루 사막 분기점을 지나가는 1,600km의 생생한 여정.',
+        stories_title: '여정의 <span class="text-[#D99B26] italic font-serif">이야기</span>',
+        stories_sub: '남아프리카 공화국 럭셔리 철도 회랑의 기록 역사, 공학적 성과 및 민담.',
+        auth_welcome: '환영합니다',
+        auth_welcome_sub: '남아프리카 공화국 철도 패스에 접근하려면 로그인하세요.',
+        auth_create: '계정 생성',
+        auth_create_sub: 'TrackTales 디지털 여권에 등록하세요.',
+        auth_signin_btn: '로그인',
+        auth_signup_btn: '계정 생성',
+        email_ph: '이메일 *',
+        pass_ph: '비밀번호 *',
+        name_ph: '성함 *',
+        confirm_pass_ph: '비밀번호 확인 *',
+        nav_trigger: '탐색',
+        nav_access: '접근성',
+        nav_sos: '긴급 SOS',
+        nav_signin: '로그인',
+        nav_signout: '로그아웃',
+        nav_hub_companion: '철도 회랑 가이드',
+        nav_hub_title: '탐색 패널',
+        nav_hub_subtitle: '1,600 km 프리토리아 - 케이프타운',
+        nav_card_route_title: '노선 개요',
+        nav_card_route_desc: '시네마틱 파노라마 및 실시간 대화형 지도.',
+        nav_card_stops_title: '회랑 정차역',
+        nav_card_stops_desc: '역사적 기차역, 산악 고개 및 카루 사막.',
+        nav_card_stories_title: '이야기 및 아카이브',
+        nav_card_stories_desc: '역사 기록, 기밀 서류 및 음성 해설.',
+        nav_card_trains_title: '플래그십 열차',
+        nav_card_trains_desc: '블루 트레인 및 로보스 레일 제원과 식사.',
+        nav_card_games_title: '회랑 게임',
+        nav_card_games_desc: '퀴즈, 철도 빙고 및 퍼즐 게임.',
+        nav_card_voice_title: '음성 일기',
+        nav_card_voice_desc: '실시간 음성 인식 및 승객 일기장.',
+        nav_hub_tap_hint: '카드를 탭하여 이동하세요',
+        stories_badge: '철도 유산 및 아카이브 이야기',
+        stories_active_pass_label: '활성 패스:',
+        stories_change_pass_btn: '패스 변경',
+        stories_all_passes_label: '모든 패스에 포함됨',
+        stories_read_story_btn: '전체 이야기 읽기',
+        stories_min_read: '분 소요',
+        by_author: '저자:',
+        modal_audio_unlocked: '음성 가이드 잠금 해제됨',
+        modal_audio_listen_desc: '전체 이야기 음성 해설 듣기',
+        modal_audio_play: '음성 재생',
+        modal_audio_stop: '음성 정지',
+        modal_audio_locked: '이 이야기의 음성 해설이 잠겨 있습니다.',
+        modal_audio_unlock_btn: '음성 패스 잠금 해제 (R49)',
+        footer_tagline: '진짜 노선. 비범한 이야기.',
+        footer_desc: '프리토리아에서 케이프타운까지 이어지는 남아프리카 공화국 철도 회랑의 디지털 가이드.',
+        footer_nav_heading: '탐색',
+        footer_link_route: '노선 개요',
+        footer_link_trains: '플래그십 열차',
+        footer_link_sights: '명소 및 랜드마크',
+        footer_link_puzzles: '퍼즐 게임',
+        footer_link_voice: '음성 일기',
+        footer_link_heritage: '유산 및 소개',
+        footer_corridor_heading: '회랑 여정',
+        footer_corridor_desc: '프리토리아에서 테이블 마운틴까지 남아프리카 남아공 1,600km 횡단.',
+        footer_corridor_badge: '프리토리아 - 케이프타운',
+        footer_copyright: '© 2026 TrackTales. All rights reserved.',
+        footer_corridor_tag: '프리토리아 - 케이프타운 철도 회랑',
+        rail_runners_tag: 'TRACKTALES · 레일 러너스',
+        trains_selected_badge: '선택된 열차:',
+        trains_scenery_badge: '장엄한 풍경 및 전망 포인트',
+        trains_scenery_title: '회랑 풍경 및 주요 관람 포인트',
+        trains_culinary_badge: '파인 다이닝 및 소셜',
+        trains_dining_title: '선상 파인 다이닝 및 라운지',
+        trains_specs_badge: '기술 제원 및 역사',
+        trains_highlights_title: '시그니처 체험 하이라이트',
+        label_speed: '운행 속도',
+        label_duration: '소요 시간',
+        label_corridor: '운행 거리',
+        label_departure_hub: '출발역',
+        label_terminus_station: '종착역',
+        label_vantage_tip: '전망 팁'
+      },
+      hi: {
+        hero_tag: 'प्रिटोरिया से केप टाउन रेल कॉरिडोर · द ब्लू ट्रेन',
+        hero_h1: 'देखें यात्रा का जादू',
+        hero_h1_sub: 'उभरते हुए।',
+        hero_desc: 'इस मार्ग के लिए एक लक्जरी ट्रेन टिकट की कीमत हजारों रैंड हो सकती है। ट्रैकटेल्स हाईवेल्ड से अटलांटिक तक 1,600 किमी की उसी प्रसिद्ध लाइन को ट्रैक करता है।',
+        stops_tag: 'दक्षिण अफ्रीकी रेल विरासत · प्रिटोरिया से केप टाउन',
+        stops_title: 'कॉरिडोर के स्टेशन',
+        stops_desc: 'ऐतिहासिक स्टेशनों, पहाड़ी दर्रों और कारू मरुस्थल जंक्शनों का 1,600 किमी का सजीव अनुभव।',
+        stories_title: 'यात्रा की <span class="text-[#D99B26] italic font-serif">कहानी</span>',
+        stories_sub: 'दक्षिण अफ्रीका के लक्जरी रेल कॉरिडोर की ऐतिहासिक कहानियां, इंजीनियरिंग मील के पत्थर और लोककथाएं।',
+        auth_welcome: 'स्वागत है',
+        auth_welcome_sub: 'अपने दक्षिण अफ्रीका रेल पास तक पहुँचने के लिए साइन इन करें।',
+        auth_create: 'खाता बनाएं',
+        auth_create_sub: 'अपने डिजिटल ट्रैकटेल्स पासपोर्ट के लिए पंजीकरण करें।',
+        auth_signin_btn: 'साइन इन करें',
+        auth_signup_btn: 'खाता बनाएं',
+        email_ph: 'ईमेल *',
+        pass_ph: 'पासवर्ड *',
+        name_ph: 'पूरा नाम *',
+        confirm_pass_ph: 'पासवर्ड की पुष्टि करें *',
+        nav_trigger: 'नेविगेट करें',
+        nav_access: 'पहुंच',
+        nav_sos: 'आपातकालीन SOS',
+        nav_signin: 'साइन इन करें',
+        nav_signout: 'साइन आउट',
+        nav_hub_companion: 'रेल कॉरिडोर साथी',
+        nav_hub_title: 'नेविगेशन पैनल',
+        nav_hub_subtitle: '1,600 किमी प्रिटोरिया से केप टाउन',
+        nav_card_route_title: 'मार्ग का विवरण',
+        nav_card_route_desc: 'सिनेमैटिक ओवरव्यू और लाइव मैप।',
+        nav_card_stops_title: 'कॉरिडोर के स्टेशन',
+        nav_card_stops_desc: 'ऐतिहासिक स्टेशन, दर्रे और कारू रेगिस्तान।',
+        nav_card_stories_title: 'कहानियां और संग्रह',
+        nav_card_stories_desc: 'ऐतिहासिक दस्तावेज, गुप्त फाइलें और ऑडियो।',
+        nav_card_trains_title: 'प्रमुख ट्रेनें',
+        nav_card_trains_desc: 'द ब्लू ट्रेन और रोवोस रेल विनिर्देश।',
+        nav_card_games_title: 'कॉरिडोर खेल',
+        nav_card_games_desc: 'क्विज, रेल बिंगो और पहेलियां।',
+        nav_card_voice_title: 'वॉइस डायरी',
+        nav_card_voice_desc: 'रियल-टाइम स्पीच-टू-टेक्स्ट और यात्री डायरी।',
+        nav_hub_tap_hint: 'नेविगेट करने के लिए किसी भी कार्ड पर टैप करें',
+        stories_badge: 'रेल विरासत और कहानियां',
+        stories_active_pass_label: 'सक्रिय पास:',
+        stories_change_pass_btn: 'पास बदलें',
+        stories_all_passes_label: 'सभी पास में शामिल',
+        stories_read_story_btn: 'पूरी कहानी पढ़ें',
+        stories_min_read: 'मिनट पढ़ने का समय',
+        by_author: 'लेखक:',
+        modal_audio_unlocked: 'ऑडियो साथी अनलॉक किया गया',
+        modal_audio_listen_desc: 'पूरी कहानी का विवरण सुनें',
+        modal_audio_play: 'ऑडियो चलाएं',
+        modal_audio_stop: 'ऑडियो रोकें',
+        modal_audio_locked: 'इस कहानी के लिए ऑडियो विवरण लॉक है।',
+        modal_audio_unlock_btn: 'ऑडियो पास अनलॉक करें (R49)',
+        footer_tagline: 'वास्तविक मार्ग। असाधारण कहानियां।',
+        footer_desc: 'प्रिटोरिया से केप टाउन रेल कॉरिडोर के लिए एक डिजिटल साथी जो दक्षिण अफ्रीका की विरासत का जश्न मनाता है।',
+        footer_nav_heading: 'नेविगेशन',
+        footer_link_route: 'मार्ग विवरण',
+        footer_link_trains: 'प्रमुख ट्रेनें',
+        footer_link_sights: 'दर्शनीय स्थल',
+        footer_link_puzzles: 'पहेलियां और खेल',
+        footer_link_voice: 'वॉइस डायरी',
+        footer_link_heritage: 'विरासत और हमारे बारे में',
+        footer_corridor_heading: 'कॉरिडोर यात्रा',
+        footer_corridor_desc: 'प्रिटोरिया से टेबल माउंटेन तक दक्षिण अफ्रीका में 1,600 किमी की यात्रा।',
+        footer_corridor_badge: 'प्रिटोरिया से केप टाउन',
+        footer_copyright: '© 2026 TrackTales. सर्वाधिकार सुरक्षित।',
+        footer_corridor_tag: 'प्रिटोरिया से केप टाउन कॉरिडोर',
+        rail_runners_tag: 'TRACKTALES · द रेल रनर्स',
+        trains_selected_badge: 'चयनित ट्रेन:',
+        trains_scenery_badge: 'प्राकृतिक दृश्य और दृश्य बिंदु',
+        trains_scenery_title: 'कॉरिडोर के सुंदर दृश्य और मुख्य आकर्षण',
+        trains_culinary_badge: 'व्यंजन और सामाजिक जीवन',
+        trains_dining_title: 'ऑनबोर्ड फाइन डाइनिंग और लाउंज',
+        trains_specs_badge: 'तकनीकी विवरण और इतिहास',
+        trains_highlights_title: 'प्रमुख अनुभव',
+        label_speed: 'गति',
+        label_duration: 'अवधि',
+        label_corridor: 'दूरी',
+        label_departure_hub: 'प्रस्थान स्टेशन',
+        label_terminus_station: 'अंतिम स्टेशन',
+        label_vantage_tip: 'दृश्य बिंदु टिप'
+      },
+      ru: {
+        hero_tag: 'ЖЕЛЕЗНОДОРОЖНЫЙ КОРИДОР ПРЕТОРИЯ — КЕЙПТАУН · ГОЛУБОЙ ПОЕЗД',
+        hero_h1: 'Смотрите Как Путешествие',
+        hero_h1_sub: 'Раскрывается.',
+        hero_desc: 'Билет на роскошный поезд по этому маршруту может стоить десятки тысяч рандов. TrackTales отслеживает ту самую легендарную 1600-км линию от Хайвельда до Атлантики.',
+        stops_tag: 'ЖЕЛЕЗНОДОРОЖНОЕ НАСЛЕДИЕ ЮЖНОЙ АФРИКИ · ПРЕТОРИЯ — КЕЙПТАУН',
+        stops_title: 'Остановки Коридора',
+        stops_desc: 'Увлекательное живое путешествие по историческим станциям, горным перевалам и пустыне Кару.',
+        stories_title: 'Истории <span class="text-[#D99B26] italic font-serif">Путешествия</span>',
+        stories_sub: 'Архивные истории, инженерные достижения и фольклор вдоль роскошного коридора.',
+        auth_welcome: 'Добро пожаловать',
+        auth_welcome_sub: 'Войдите, чтобы получить доступ к вашему проездному билету.',
+        auth_create: 'Создать Аккаунт',
+        auth_create_sub: 'Зарегистрируйтесь для получения цифрового паспорта TrackTales.',
+        auth_signin_btn: 'ВОЙТИ',
+        auth_signup_btn: 'СОЗДАТЬ АККАУНТ',
+        email_ph: 'Эл. почта *',
+        pass_ph: 'Пароль *',
+        name_ph: 'Полное имя *',
+        confirm_pass_ph: 'Подтвердите пароль *',
+        nav_trigger: 'Навигация',
+        nav_access: 'Доступ',
+        nav_sos: 'SOS',
+        nav_signin: 'Войти',
+        nav_signout: 'Выйти',
+        nav_hub_companion: 'СПУТНИК ПО КОРИДОРУ',
+        nav_hub_title: 'Панель Навигации',
+        nav_hub_subtitle: '1600 км Претория — Кейптаун',
+        nav_card_route_title: 'Маршрут',
+        nav_card_route_desc: 'Кинематографический обзор и интерактивная карта.',
+        nav_card_stops_title: 'Остановки Коридора',
+        nav_card_stops_desc: 'Исторические станции, перевалы и пустыня Кару.',
+        nav_card_stories_title: 'Истории и Архивы',
+        nav_card_stories_desc: 'Исторические архивы, секретные досье и аудио.',
+        nav_card_trains_title: 'Флагманские Поезда',
+        nav_card_trains_desc: 'Голубой поезд и Rovos Rail характеристики.',
+        nav_card_games_title: 'Игры Коридора',
+        nav_card_games_desc: 'Викторины, Бинго и пазлы.',
+        nav_card_voice_title: 'Голосовой Дневник',
+        nav_card_voice_desc: 'Преобразование речи в текст и дневник пассажира.',
+        nav_hub_tap_hint: 'Нажмите на карточку для перехода',
+        stories_badge: 'НАСЛЕДИЕ И АРХИВЫ',
+        stories_active_pass_label: 'Активный проездной:',
+        stories_change_pass_btn: 'Сменить проездной',
+        stories_all_passes_label: 'Включено во все проездные',
+        stories_read_story_btn: 'Читать Историю Полностью',
+        stories_min_read: 'мин чтения',
+        by_author: 'Автор:',
+        modal_audio_unlocked: 'Аудиогид Разблокирован',
+        modal_audio_listen_desc: 'Слушайте полное озвучивание истории',
+        modal_audio_play: 'Воспроизвести',
+        modal_audio_stop: 'Остановить',
+        modal_audio_locked: 'Аудиосопровождение заблокировано для этой истории.',
+        modal_audio_unlock_btn: 'Разблокировать Аудиопасс (R49)',
+        footer_tagline: 'РЕАЛЬНЫЕ МАРШРУТЫ. НЕВЕРОЯТНЫЕ ИСТОРИИ.',
+        footer_desc: 'Цифровой путеводитель по железной дороге Претория — Кейптаун, прославляющий наследие ЮАР.',
+        footer_nav_heading: 'Навигация',
+        footer_link_route: 'Маршрут',
+        footer_link_trains: 'Флагманские Поезда',
+        footer_link_sights: 'Достопримечательности',
+        footer_link_puzzles: 'Пазлы и Игры',
+        footer_link_voice: 'Голосовой Дневник',
+        footer_link_heritage: 'Наследие и О нас',
+        footer_corridor_heading: 'Путешествие по Коридору',
+        footer_corridor_desc: '1600 км через Южную Африку от Претории до Столовой горы.',
+        footer_corridor_badge: 'Претория — Кейптаун',
+        footer_copyright: '© 2026 TrackTales. Все права защищены.',
+        footer_corridor_tag: 'Коридор Претория — Кейптаун',
+        rail_runners_tag: 'TRACKTALES · ЖЕЛЕЗНОДОРОЖНЫЕ БЕГУНЫ',
+        trains_selected_badge: 'ВЫБРАННЫЙ ПОЕЗД:',
+        trains_scenery_badge: 'ВЕЛИКОЛЕПИЕ ПЕЙЗАЖЕЙ И СМОТРОВЫЕ ПЛОЩАДКИ',
+        trains_scenery_title: 'Пейзажи Коридора и Главные Виды',
+        trains_culinary_badge: 'КУЛИНАРИЯ И ОБЩЕНИЕ',
+        trains_dining_title: 'Изысканная Кухня и Салоны на Борту',
+        trains_specs_badge: 'ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ И ИСТОРИЯ',
+        trains_highlights_title: 'Главные Впечатления',
+        label_speed: 'Скорость',
+        label_duration: 'Длительность',
+        label_corridor: 'Коридор',
+        label_departure_hub: 'Станция отбытия',
+        label_terminus_station: 'Конечная станция',
+        label_vantage_tip: 'Совет по смотровой площадке'
+      },
+      ar: {
+        hero_tag: 'ممر بريتوريا إلى كيب تاون · القطار الأزرق',
+        hero_h1: 'شاهد الرحلة',
+        hero_h1_sub: 'تتكشف.',
+        hero_desc: 'تذكرة قطار فاخرة لهذا المسار قد تكلف عشرات الآلاف من الراند. يتتبع TrackTales الخط الشهير بطول 1600 كم من الهايبيفيلد إلى المحيط الأطلسي.',
+        stops_tag: 'تراث السكك الحديدية في جنوب إفريقيا · بريتوريا إلى كيب تاون',
+        stops_title: 'محطات الممر',
+        stops_desc: 'رحلة غامرة حية تتتبع المحطات التاريخية والممرات الجبلية وصحراءكارو.',
+        stories_title: 'قصص <span class="text-[#D99B26] italic font-serif">الرحلة</span>',
+        stories_sub: 'الأرشيف التاريخي والإنجازات الهندسية والفلكلور عبر ممر جنوب إفريقيا الفاخر.',
+        auth_welcome: 'مرحباً بك',
+        auth_welcome_sub: 'سجل الدخول للوصول إلى تصريح السكك الحديدية الخاص بك.',
+        auth_create: 'إنشاء حساب',
+        auth_create_sub: 'سجل للحصول على جواز سفر TrackTales الرقمي.',
+        auth_signin_btn: 'تسجيل الدخول',
+        auth_signup_btn: 'إنشاء حساب',
+        email_ph: 'البريد الإلكتروني *',
+        pass_ph: 'كلمة المرور *',
+        name_ph: 'الاسم الكامل *',
+        confirm_pass_ph: 'تأكيد كلمة المرور *',
+        nav_trigger: 'تنقل',
+        nav_access: 'إمكانية الوصول',
+        nav_sos: 'طوارئ SOS',
+        nav_signin: 'تسجيل الدخول',
+        nav_signout: 'تسجيل الخروج',
+        nav_hub_companion: 'دليل ممر السكك الحديدية',
+        nav_hub_title: 'لوحة التنقل',
+        nav_hub_subtitle: '1600 كم من بريتوريا إلى كيب تاون',
+        nav_card_route_title: 'المسار',
+        nav_card_route_desc: 'نظرة عامة سينمائية وخريطة تفاعلية مباشرة.',
+        nav_card_stops_title: 'محطات الممر',
+        nav_card_stops_desc: 'محطات تاريخية، ممرات جبلية وصحراءكارو.',
+        nav_card_stories_title: 'القصص والأرشيف',
+        nav_card_stories_desc: 'أرشيف تاريخي وملفات سرية وتسجيلات صوتية.',
+        nav_card_trains_title: 'القطارات الرائدة',
+        nav_card_trains_desc: 'مواصفات القطار الأزرق وقطار روفوس رايل.',
+        nav_card_games_title: 'ألعاب الممر',
+        nav_card_games_desc: 'مسابقات وبينجو ألغاز السكك الحديدية.',
+        nav_card_voice_title: 'المذكرة الصوتية',
+        nav_card_voice_desc: 'تحويل الكلام إلى نص ومذكرات الركاب.',
+        nav_hub_tap_hint: 'اضغط على أي بطاقة للتنقل',
+        stories_badge: 'التراث الأرشيفي والقصص',
+        stories_active_pass_label: 'التصريح النشط:',
+        stories_change_pass_btn: 'تغيير التصريح',
+        stories_all_passes_label: 'مشمول في جميع التصاريح',
+        stories_read_story_btn: 'قراءة القصة كاملة',
+        stories_min_read: 'دقائق للقراءة',
+        by_author: 'بقلم:',
+        modal_audio_unlocked: 'تم فتح الدليل الصوتي',
+        modal_audio_listen_desc: 'استمع إلى السرد الصوتي الكامل للقصة',
+        modal_audio_play: 'تشغيل الصوت',
+        modal_audio_stop: 'إيقاف الصوت',
+        modal_audio_locked: 'السرد الصوتي مغلق لهذه القصة.',
+        modal_audio_unlock_btn: 'فتح تصريح الصوت (R49)',
+        footer_tagline: 'مسارات حقيقية. قصص استثنائية.',
+        footer_desc: 'دليل رقمي لممر السكك الحديدية من بريتوريا إلى كيب تاون يفيض بتراث وثقافة جنوب إفريقيا.',
+        footer_nav_heading: 'التنقل',
+        footer_link_route: 'المسار',
+        footer_link_trains: 'القطارات الرائدة',
+        footer_link_sights: 'المعالم والمشاهد',
+        footer_link_puzzles: 'الألغاز والألعاب',
+        footer_link_voice: 'المذكرة الصوتية',
+        footer_link_heritage: 'التراث ومن نحن',
+        footer_corridor_heading: 'رحلة الممر',
+        footer_corridor_desc: '1600 كم عبر قلب جنوب إفريقيا من بريتوريا إلى جبل الطاولة.',
+        footer_corridor_badge: 'بريتوريا إلى كيب تاون',
+        footer_copyright: '© 2026 TrackTales. جميع الحقوق محفوظة.',
+        footer_corridor_tag: 'ممر بريتوريا إلى كيب تاون',
+        rail_runners_tag: 'TRACKTALES · عداءو السكك الحديدية',
+        trains_selected_badge: 'القطار المحدد:',
+        trains_scenery_badge: 'روعة المناظر الطبيعية ونقاط الإطلالة',
+        trains_scenery_title: 'مناظر الممر وأبرز المعالم',
+        trains_culinary_badge: 'المأكولات الفاخرة والتواصل',
+        trains_dining_title: 'مطاعم فاخرة صالونات على متن القطار',
+        trains_specs_badge: 'المواصفات الفنية والتاريخ',
+        trains_highlights_title: 'أبرز تجارب الرحلة',
+        label_speed: 'السرعة',
+        label_duration: 'المدة',
+        label_corridor: 'المسافة',
+        label_departure_hub: 'محطة المغادرة',
+        label_terminus_station: 'محطة الوصول',
+        label_vantage_tip: 'نصيحة نقطة الإطلالة'
       }
     };
 
     const SPEECH_LANGUAGES = {
       en: 'en-ZA', zu: 'zu-ZA', xh: 'xh-ZA', af: 'af-ZA', st: 'st-ZA',
-      tn: 'tn-ZA', nso: 'nso-ZA', ts: 'ts-ZA', ss: 'ss-ZA', ve: 've-ZA', nr: 'nr-ZA'
+      tn: 'tn-ZA', nso: 'nso-ZA', ts: 'ts-ZA', ss: 'ss-ZA', ve: 've-ZA', nr: 'nr-ZA',
+      de: 'de-DE', fr: 'fr-FR', nl: 'nl-NL', es: 'es-ES', it: 'it-IT', pt: 'pt-PT',
+      zh: 'zh-CN', ja: 'ja-JP', ko: 'ko-KR', hi: 'hi-IN', ru: 'ru-RU', ar: 'ar-SA'
     };
 
     window.TrackTalesGetSpeechLanguage = () => SPEECH_LANGUAGES[window.TrackTalesLanguageCode || 'en'] || 'en-ZA';
@@ -6399,12 +9927,273 @@ As the train moves, details gather into memory: a platform lamp in the evening, 
       if (heroTag) heroTag.textContent = dict.hero_tag;
       if (heroDesc) heroDesc.textContent = dict.hero_desc;
       if (stopsTag) stopsTag.textContent = dict.stops_tag;
-      if (stopsTitle) stopsTitle.innerHTML = dict.stops_title.split(' ')[0] + ' <span class="text-[#D99B26] italic font-serif">' + (dict.stops_title.split(' ')[1] || '') + '</span>';
+      if (stopsTitle) stopsTitle.innerHTML = dict.stops_title.split(' ')[0] + ' <span class="text-[#D99B26] italic font-serif">' + (dict.stops_title.split(' ').slice(1).join(' ') || '') + '</span>';
       if (stopsDesc) stopsDesc.textContent = dict.stops_desc;
+
+      // 1. Top Navbar elements
+      const navTrigger = document.querySelector('#btn-open-nav-panel span.sm\\:inline');
+      const navAccess = document.querySelector('#btn-open-accessibility span.font-bold');
+      const navSos = document.querySelector('#btn-open-sos span.hidden');
+      const desktopLoginLabel = document.getElementById('desktop-login-label');
+
+      if (navTrigger && dict.nav_trigger) navTrigger.textContent = dict.nav_trigger;
+      if (navAccess && dict.nav_access) navAccess.textContent = dict.nav_access;
+      if (navSos && dict.nav_sos) navSos.textContent = dict.nav_sos;
+      
+      const loggedUser = localStorage.getItem('tracktales_logged_user');
+      if (desktopLoginLabel) {
+        desktopLoginLabel.textContent = loggedUser ? (dict.nav_signout || 'Sign Out') : (dict.nav_signin || 'Sign In');
+      }
+
+      // 2. Navigation Hub Panel Modal elements
+      const navHubCompanion = document.querySelector('#navigationHubPanel span.text-\\[10px\\]');
+      const navHubTitle = document.querySelector('#navigationHubPanel h3');
+      const navHubSubtitle = document.querySelector('#navigationHubPanel .flex.items-center.gap-2 span.text-xs');
+      const navHubTapHint = document.querySelector('#navigationHubPanel .text-\\[11px\\].font-semibold');
+
+      if (navHubCompanion && dict.nav_hub_companion) navHubCompanion.textContent = dict.nav_hub_companion;
+      if (navHubTitle && dict.nav_hub_title) navHubTitle.textContent = dict.nav_hub_title;
+      if (navHubSubtitle && dict.nav_hub_subtitle) navHubSubtitle.textContent = dict.nav_hub_subtitle;
+      if (navHubTapHint && dict.nav_hub_tap_hint) navHubTapHint.textContent = dict.nav_hub_tap_hint;
+
+      // Nav Hub Cards Text
+      const navCardRoute = document.querySelector('.nav-hub-card[data-page="home"]');
+      const navCardStops = document.querySelector('.nav-hub-card[data-page="stops"]');
+      const navCardStories = document.querySelector('.nav-hub-card[data-page="about"]');
+      const navCardTrains = document.querySelector('.nav-hub-card[data-page="trains"]');
+      const navCardGames = document.querySelector('.nav-hub-card[data-page="games"]');
+      const navCardVoice = document.querySelector('.nav-hub-card[data-page="voice"]');
+
+      if (navCardRoute) {
+        const h4 = navCardRoute.querySelector('h4');
+        const p = navCardRoute.querySelector('p');
+        if (h4 && dict.nav_card_route_title) h4.textContent = dict.nav_card_route_title;
+        if (p && dict.nav_card_route_desc) p.textContent = dict.nav_card_route_desc;
+      }
+      if (navCardStops) {
+        const h4 = navCardStops.querySelector('h4');
+        const p = navCardStops.querySelector('p');
+        if (h4 && dict.nav_card_stops_title) h4.textContent = dict.nav_card_stops_title;
+        if (p && dict.nav_card_stops_desc) p.textContent = dict.nav_card_stops_desc;
+      }
+      if (navCardStories) {
+        const h4 = navCardStories.querySelector('h4');
+        const p = navCardStories.querySelector('p');
+        if (h4 && dict.nav_card_stories_title) h4.textContent = dict.nav_card_stories_title;
+        if (p && dict.nav_card_stories_desc) p.textContent = dict.nav_card_stories_desc;
+      }
+      if (navCardTrains) {
+        const h4 = navCardTrains.querySelector('h4');
+        const p = navCardTrains.querySelector('p');
+        if (h4 && dict.nav_card_trains_title) h4.textContent = dict.nav_card_trains_title;
+        if (p && dict.nav_card_trains_desc) p.textContent = dict.nav_card_trains_desc;
+      }
+      if (navCardGames) {
+        const h4 = navCardGames.querySelector('h4');
+        const p = navCardGames.querySelector('p');
+        if (h4 && dict.nav_card_games_title) h4.textContent = dict.nav_card_games_title;
+        if (p && dict.nav_card_games_desc) p.textContent = dict.nav_card_games_desc;
+      }
+      if (navCardVoice) {
+        const h4 = navCardVoice.querySelector('h4');
+        const p = navCardVoice.querySelector('p');
+        if (h4 && dict.nav_card_voice_title) h4.textContent = dict.nav_card_voice_title;
+        if (p && dict.nav_card_voice_desc) p.textContent = dict.nav_card_voice_desc;
+      }
+
+      // Stories Section Badges & Buttons
+      const storiesBadge = document.getElementById('stories-section-badge');
+      const storiesActivePassLabel = document.querySelector('#stories-sub-status-bar .text-\\[\\#78716C\\]');
+      const storiesChangePassBtn = document.querySelector('#btn-upgrade-from-stories span');
+      const storiesAllPassesLabel = document.querySelector('#page-about .flex.items-center.justify-between span.text-xs.font-mono.text-\\[\\#78716C\\]');
+
+      if (storiesBadge && dict.stories_badge) storiesBadge.textContent = dict.stories_badge;
+      if (storiesActivePassLabel && dict.stories_active_pass_label) storiesActivePassLabel.textContent = dict.stories_active_pass_label;
+      if (storiesChangePassBtn && dict.stories_change_pass_btn) storiesChangePassBtn.textContent = dict.stories_change_pass_btn;
+      if (storiesAllPassesLabel && dict.stories_all_passes_label) storiesAllPassesLabel.textContent = dict.stories_all_passes_label;
+
+      // Stories Section Elements
+      const storiesTitle = document.getElementById('stories-section-title');
+      const storiesSub = document.getElementById('stories-section-subtitle');
+      if (storiesTitle && dict.stories_title) storiesTitle.innerHTML = dict.stories_title;
+      if (storiesSub && dict.stories_sub) storiesSub.textContent = dict.stories_sub;
+
+      // Auth Splash Elements
+      const signinHeading = document.querySelector('#splash-signin-content h2');
+      const signinSub = document.querySelector('#splash-signin-content p');
+      const signupHeading = document.querySelector('#splash-signup-content h2');
+      const signupSub = document.querySelector('#splash-signup-content p');
+      const signinBtnLabel = document.getElementById('splash-signin-btn-label');
+      const signupBtnLabel = document.getElementById('splash-signup-btn-label');
+      const signinEmail = document.getElementById('splash-signin-email');
+      const signinPass = document.getElementById('splash-signin-password');
+      const signupName = document.getElementById('splash-signup-name');
+      const signupEmail = document.getElementById('splash-signup-email');
+      const signupPass = document.getElementById('splash-signup-password');
+      const signupConfirmPass = document.getElementById('splash-signup-confirm-password');
+
+      if (signinHeading && dict.auth_welcome) signinHeading.textContent = dict.auth_welcome;
+      if (signinSub && dict.auth_welcome_sub) signinSub.textContent = dict.auth_welcome_sub;
+      if (signupHeading && dict.auth_create) signupHeading.textContent = dict.auth_create;
+      if (signupSub && dict.auth_create_sub) signupSub.textContent = dict.auth_create_sub;
+      if (signinBtnLabel && dict.auth_signin_btn) signinBtnLabel.textContent = dict.auth_signin_btn;
+      if (signupBtnLabel && dict.auth_signup_btn) signupBtnLabel.textContent = dict.auth_signup_btn;
+
+      if (signinEmail && dict.email_ph) signinEmail.placeholder = dict.email_ph;
+      if (signinPass && dict.pass_ph) signinPass.placeholder = dict.pass_ph;
+      if (signupName && dict.name_ph) signupName.placeholder = dict.name_ph;
+      if (signupEmail && dict.email_ph) signupEmail.placeholder = dict.email_ph;
+      if (signupPass && dict.pass_ph) signupPass.placeholder = dict.pass_ph;
+      if (signupConfirmPass && dict.confirm_pass_ph) signupConfirmPass.placeholder = dict.confirm_pass_ph;
+
+      // Hero Title Headline & Ticker Tag
+      const heroTitleMain = document.getElementById('hero-title-main');
+      const heroTitleSub = document.getElementById('hero-title-sub');
+      const heroRailRunnersTag = document.getElementById('hero-rail-runners-tag');
+      if (heroTitleMain && dict.hero_h1) heroTitleMain.textContent = dict.hero_h1;
+      if (heroTitleSub && dict.hero_h1_sub) heroTitleSub.textContent = dict.hero_h1_sub;
+      if (heroRailRunnersTag && dict.rail_runners_tag) heroRailRunnersTag.textContent = dict.rail_runners_tag;
+
+      // Footer Elements Translation
+      const footerTagline = document.getElementById('footer-tagline');
+      const footerDesc = document.getElementById('footer-desc');
+      const footerNavTitle = document.getElementById('footer-nav-title');
+      const footerLinkRoute = document.getElementById('footer-link-route');
+      const footerLinkTrains = document.getElementById('footer-link-trains');
+      const footerLinkSights = document.getElementById('footer-link-sights');
+      const footerLinkPuzzles = document.getElementById('footer-link-puzzles');
+      const footerLinkVoice = document.getElementById('footer-link-voice');
+      const footerLinkHeritage = document.getElementById('footer-link-heritage');
+      const footerCorridorTitle = document.getElementById('footer-corridor-title');
+      const footerCorridorDesc = document.getElementById('footer-corridor-desc');
+      const footerCorridorBadge = document.getElementById('footer-corridor-badge');
+      const footerCopyright = document.getElementById('footer-copyright');
+      const footerCorridorTag = document.getElementById('footer-corridor-tag');
+
+      if (footerTagline && dict.footer_tagline) footerTagline.textContent = dict.footer_tagline;
+      if (footerDesc && dict.footer_desc) footerDesc.textContent = dict.footer_desc;
+      if (footerNavTitle && dict.footer_nav_heading) footerNavTitle.textContent = dict.footer_nav_heading;
+      if (footerLinkRoute && dict.footer_link_route) footerLinkRoute.textContent = dict.footer_link_route;
+      if (footerLinkTrains && dict.footer_link_trains) footerLinkTrains.textContent = dict.footer_link_trains;
+      if (footerLinkSights && dict.footer_link_sights) footerLinkSights.textContent = dict.footer_link_sights;
+      if (footerLinkPuzzles && dict.footer_link_puzzles) footerLinkPuzzles.textContent = dict.footer_link_puzzles;
+      if (footerLinkVoice && dict.footer_link_voice) footerLinkVoice.textContent = dict.footer_link_voice;
+      if (footerLinkHeritage && dict.footer_link_heritage) footerLinkHeritage.textContent = dict.footer_link_heritage;
+      if (footerCorridorTitle && dict.footer_corridor_heading) footerCorridorTitle.textContent = dict.footer_corridor_heading;
+      if (footerCorridorDesc && dict.footer_corridor_desc) footerCorridorDesc.textContent = dict.footer_corridor_desc;
+      if (footerCorridorBadge && dict.footer_corridor_badge) footerCorridorBadge.textContent = dict.footer_corridor_badge;
+      if (footerCopyright && dict.footer_copyright) footerCopyright.innerHTML = dict.footer_copyright;
+      if (footerCorridorTag && dict.footer_corridor_tag) footerCorridorTag.textContent = dict.footer_corridor_tag;
+
+      // Page Stops Filters
+      const stopsFilterAll = document.getElementById('stops-filter-all');
+      const stopsFilterScheduled = document.getElementById('stops-filter-scheduled');
+      const stopsFilterPassthrough = document.getElementById('stops-filter-passthrough');
+      if (stopsFilterAll && dict.stops_filter_all) stopsFilterAll.textContent = dict.stops_filter_all;
+      if (stopsFilterScheduled && dict.stops_filter_scheduled) stopsFilterScheduled.textContent = dict.stops_filter_scheduled;
+      if (stopsFilterPassthrough && dict.stops_filter_passthrough) stopsFilterPassthrough.textContent = dict.stops_filter_passthrough;
+
+      // Page Games Elements & Score Ribbon
+      const gamesBadge = document.getElementById('games-badge');
+      const gamesTitle = document.getElementById('games-title');
+      const gamesSub = document.getElementById('games-subtitle');
+      const gameTabQuiz = document.getElementById('game-tab-quiz-label');
+      const gameTabBingo = document.getElementById('game-tab-bingo-label');
+      const gameTabPuzzle = document.getElementById('game-tab-puzzle-label');
+
+      if (gamesBadge && dict.games_badge) gamesBadge.textContent = dict.games_badge;
+      if (gamesTitle && dict.games_title) gamesTitle.innerHTML = dict.games_title;
+      if (gamesSub && dict.games_subtitle) gamesSub.textContent = dict.games_subtitle;
+      if (gameTabQuiz && dict.game_tab_quiz) gameTabQuiz.textContent = dict.game_tab_quiz;
+      if (gameTabBingo && dict.game_tab_bingo) gameTabBingo.textContent = dict.game_tab_bingo;
+      if (gameTabPuzzle && dict.game_tab_puzzle) gameTabPuzzle.textContent = dict.game_tab_puzzle;
+
+      const scoreLabelScore = document.getElementById('score-label-score');
+      const scoreUnitPts = document.getElementById('score-unit-pts');
+      const scoreLabelWon = document.getElementById('score-label-won');
+      const scoreUnitCompleted = document.getElementById('score-unit-completed');
+      const scoreLabelStreak = document.getElementById('score-label-streak');
+      const scoreUnitStreak = document.getElementById('score-unit-streak');
+      const btnResetGamesLabel = document.getElementById('btn-reset-games-label');
+
+      if (scoreLabelScore && dict.score_label_score) scoreLabelScore.textContent = dict.score_label_score;
+      if (scoreUnitPts && dict.score_unit_pts) scoreUnitPts.textContent = dict.score_unit_pts;
+      if (scoreLabelWon && dict.score_label_won) scoreLabelWon.textContent = dict.score_label_won;
+      if (scoreUnitCompleted && dict.score_unit_completed) scoreUnitCompleted.textContent = dict.score_unit_completed;
+      if (scoreLabelStreak && dict.score_label_streak) scoreLabelStreak.textContent = dict.score_label_streak;
+      if (scoreUnitStreak && dict.score_unit_in_a_row) scoreUnitStreak.textContent = dict.score_unit_in_a_row;
+      if (btnResetGamesLabel && dict.btn_reset_games) btnResetGamesLabel.textContent = dict.btn_reset_games;
+
+      const quizHint = document.getElementById('quiz-question-hint');
+      if (quizHint && dict.quiz_subtext) quizHint.textContent = dict.quiz_subtext;
+
+      // Route Assembler / Puzzle Mode
+      const puzzleTrackTitle = document.getElementById('puzzle-track-title');
+      const puzzleAvailableTitle = document.getElementById('puzzle-available-title');
+      const btnResetPuzzleLabel = document.getElementById('btn-reset-puzzle-label');
+      const btnVerifyPuzzleLabel = document.getElementById('btn-verify-puzzle-label');
+
+      if (puzzleTrackTitle && dict.puzzle_track_title) puzzleTrackTitle.textContent = dict.puzzle_track_title;
+      if (puzzleAvailableTitle && dict.puzzle_available_title) puzzleAvailableTitle.textContent = dict.puzzle_available_title;
+      if (btnResetPuzzleLabel && dict.puzzle_btn_clear) btnResetPuzzleLabel.textContent = dict.puzzle_btn_clear;
+      if (btnVerifyPuzzleLabel && dict.puzzle_btn_verify) btnVerifyPuzzleLabel.textContent = dict.puzzle_btn_verify;
+
+      // Page Voice Elements
+      const voiceBadge = document.getElementById('voice-badge');
+      const voiceTitle = document.getElementById('voice-title');
+      const voiceSub = document.getElementById('voice-subtitle');
+      const voiceLandmarkLabel = document.getElementById('voice-landmark-label');
+
+      if (voiceBadge && dict.voice_badge) voiceBadge.textContent = dict.voice_badge;
+      if (voiceTitle && dict.voice_title) voiceTitle.innerHTML = dict.voice_title;
+      if (voiceSub && dict.voice_subtitle) voiceSub.textContent = dict.voice_subtitle;
+      if (voiceLandmarkLabel && dict.voice_landmark_label) voiceLandmarkLabel.textContent = dict.voice_landmark_label;
+
+      // Heritage Pillars
+      const p1Title = document.getElementById('pillar-1-title');
+      const p1Desc = document.getElementById('pillar-1-desc');
+      const p2Title = document.getElementById('pillar-2-title');
+      const p2Desc = document.getElementById('pillar-2-desc');
+      const p3Title = document.getElementById('pillar-3-title');
+      const p3Desc = document.getElementById('pillar-3-desc');
+
+      if (p1Title && dict.pillar_1_title) p1Title.textContent = dict.pillar_1_title;
+      if (p1Desc && dict.pillar_1_desc) p1Desc.textContent = dict.pillar_1_desc;
+      if (p2Title && dict.pillar_2_title) p2Title.textContent = dict.pillar_2_title;
+      if (p2Desc && dict.pillar_2_desc) p2Desc.textContent = dict.pillar_2_desc;
+      if (p3Title && dict.pillar_3_title) p3Title.textContent = dict.pillar_3_title;
+      if (p3Desc && dict.pillar_3_desc) p3Desc.textContent = dict.pillar_3_desc;
 
       window.TrackTalesLanguageCode = code;
       document.documentElement.lang = code;
       localStorage.setItem('tracktales_lang', code);
+
+      // Re-render stories, trains & subscription features in current language
+      const currentTrainId = localStorage.getItem('tracktales_selected_train') || 'blue-train';
+      if (typeof renderStories === 'function') {
+        renderStories(currentTrainId);
+      }
+      if (typeof renderTrains === 'function') {
+        renderTrains(currentTrainId);
+      }
+      if (window.TrackTalesRenderSubscriptionFeatures) {
+        window.TrackTalesRenderSubscriptionFeatures();
+      }
+
+      // Re-render open story modal if visible
+      const storyModal = document.getElementById('story-modal');
+      if (storyModal && !storyModal.classList.contains('hidden')) {
+        const titleEl = document.getElementById('modal-title');
+        if (titleEl && titleEl.getAttribute('data-story-id')) {
+          const sId = titleEl.getAttribute('data-story-id');
+          if (window.openStoryModal) window.openStoryModal(sId);
+        }
+      }
+
+      // Stop any ongoing speech narration so next audio uses the selected language BCP-47 code
+      if (window.TrackTalesStopSpeech) window.TrackTalesStopSpeech();
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+
       if (window.TrackTalesAnnounce) {
         window.TrackTalesAnnounce(`Language switched to ${langSelect.options[langSelect.selectedIndex].text}`);
       }

@@ -308,11 +308,17 @@
             </div>
 
             <div class="relative">
-              <input type="password" id="splash-signup-password" class="w-full bg-transparent border-b border-[#D6CFC7] text-[#1C1917] placeholder-[#A8A29E] py-1.5 px-1 text-sm focus:outline-none focus:border-[#D99B26] transition-colors" placeholder="Password *" required>
+              <input type="password" id="splash-signup-password" class="w-full bg-transparent border-b border-[#D6CFC7] text-[#1C1917] placeholder-[#A8A29E] py-1.5 pl-1 pr-8 text-sm focus:outline-none focus:border-[#D99B26] transition-colors" placeholder="Password *" required>
+              <button type="button" class="btn-toggle-password absolute right-1 top-1/2 -translate-y-1/2 text-[#A8A29E] hover:text-[#1C1917] p-1" title="Toggle password visibility">
+                <i data-lucide="eye" class="w-4 h-4 eye-icon"></i>
+              </button>
             </div>
 
             <div class="relative">
-              <input type="password" id="splash-signup-confirm-password" class="w-full bg-transparent border-b border-[#D6CFC7] text-[#1C1917] placeholder-[#A8A29E] py-1.5 px-1 text-sm focus:outline-none focus:border-[#D99B26] transition-colors" placeholder="Confirm Password *" required>
+              <input type="password" id="splash-signup-confirm-password" class="w-full bg-transparent border-b border-[#D6CFC7] text-[#1C1917] placeholder-[#A8A29E] py-1.5 pl-1 pr-8 text-sm focus:outline-none focus:border-[#D99B26] transition-colors" placeholder="Confirm Password *" required>
+              <button type="button" class="btn-toggle-password absolute right-1 top-1/2 -translate-y-1/2 text-[#A8A29E] hover:text-[#1C1917] p-1" title="Toggle password visibility">
+                <i data-lucide="eye" class="w-4 h-4 eye-icon"></i>
+              </button>
             </div>
 
             <!-- Train Selection Widget (2 Trains) in Sign Up -->
@@ -497,20 +503,25 @@
           <span id="nav-gps-label" class="font-bold hidden xl:inline text-[11px]">GPS: Off</span>
         </button>
 
-        <!-- Multi-Language Switcher (SA Official Languages) -->
+        <!-- Multi-Language Switcher (Global & SA Official Languages) -->
         <div class="relative inline-flex items-center">
-          <select id="lang-select" class="glass-button px-2 sm:px-2.5 py-1.5 sm:py-2 rounded-full text-[11px] font-mono font-bold text-[#0A0C10] bg-white/90 border border-black/15 focus:outline-none focus:border-[#D99B26] cursor-pointer appearance-none pr-6" title="Switch South African Language">
-            <option value="en">EN</option>
+          <select id="lang-select" class="glass-button px-2 sm:px-2.5 py-1.5 sm:py-2 rounded-full text-[11px] font-mono font-bold text-[#0A0C10] bg-white/90 border border-black/15 focus:outline-none focus:border-[#D99B26] cursor-pointer appearance-none pr-6" title="Switch Language">
+            <option value="en">EN · English</option>
+            <option value="af">AF · Afrikaans</option>
             <option value="zu">ZU · isiZulu</option>
             <option value="xh">XH · isiXhosa</option>
-            <option value="af">AF · Afrikaans</option>
-            <option value="st">ST · Sesotho</option>
-            <option value="tn">TN · Setswana</option>
-            <option value="nso">NSO · Sepedi</option>
-            <option value="ts">TS · Xitsonga</option>
-            <option value="ss">SS · siSwati</option>
-            <option value="ve">VE · Tshivenda</option>
-            <option value="nr">NR · isiNdebele</option>
+            <option value="de">DE · Deutsch</option>
+            <option value="fr">FR · Français</option>
+            <option value="nl">NL · Nederlands</option>
+            <option value="es">ES · Español</option>
+            <option value="it">IT · Italiano</option>
+            <option value="pt">PT · Português</option>
+            <option value="zh">ZH · 简体中文</option>
+            <option value="ja">JA · 日本語</option>
+            <option value="ko">KO · 한국어</option>
+            <option value="hi">HI · हिन्दी</option>
+            <option value="ru">RU · Русский</option>
+            <option value="ar">AR · العربية</option>
           </select>
           <i data-lucide="chevron-down" class="w-3 h-3 text-[#78716C] absolute right-2 pointer-events-none"></i>
         </div>
@@ -762,10 +773,10 @@
             </div>
 
             <!-- Display Headline: Watch The Journey Unfold -->
-            <h1 class="font-sans font-black text-4xl sm:text-6xl xl:text-[68px] leading-[1.05] tracking-tight text-[#0A0C10] hero-title-shadow">
+            <h1 id="hero-title-main" class="font-sans font-black text-4xl sm:text-6xl xl:text-[68px] leading-[1.05] tracking-tight text-[#0A0C10] hero-title-shadow">
               Watch The Journey
             </h1>
-            <span class="font-serif italic text-[#B87C10] text-glow text-5xl sm:text-7xl xl:text-[76px] block leading-tight mt-1 mb-6 font-extrabold">
+            <span id="hero-title-sub" class="font-serif italic text-[#B87C10] text-glow text-5xl sm:text-7xl xl:text-[76px] block leading-tight mt-1 mb-6 font-extrabold">
               Unfold.
             </span>
 
@@ -804,7 +815,7 @@
         <!-- Right: System Tag -->
         <div class="flex items-center gap-2 uppercase tracking-widest text-[10px] text-[#111827] font-semibold">
           <span class="w-2 h-2 rounded-full bg-[#2E7D46] animate-pulse"></span>
-          <span>TRACKTALES · THE RAIL RUNNERS</span>
+          <span id="hero-rail-runners-tag">TRACKTALES · THE RAIL RUNNERS</span>
         </div>
 
       </footer>
@@ -848,9 +859,9 @@
         <!-- Filter Tabs Component -->
         <div class="relative max-w-md mx-auto mb-16">
           <div class="corridor-filter-bar flex items-center justify-between p-1.5 rounded-full bg-white/90 border border-black/15 backdrop-blur-xl shadow-md" id="corridor-filter-group">
-            <button class="corridor-filter-pill active" data-filter="all">All Stops</button>
-            <button class="corridor-filter-pill" data-filter="scheduled">Scheduled Stop</button>
-            <button class="corridor-filter-pill" data-filter="passthrough">Pass-through</button>
+            <button id="stops-filter-all" class="corridor-filter-pill active" data-filter="all">All Stops</button>
+            <button id="stops-filter-scheduled" class="corridor-filter-pill" data-filter="scheduled">Scheduled Stop</button>
+            <button id="stops-filter-passthrough" class="corridor-filter-pill" data-filter="passthrough">Pass-through</button>
           </div>
           <!-- Animated Railway Signal Laser Beam Line -->
           <div id="corridor-signal-line" class="corridor-signal-line"></div>
@@ -961,12 +972,12 @@
       <div class="text-center max-w-3xl mx-auto mb-10">
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#C85028]/10 border border-[#C85028]/30 text-[#C85028] font-mono text-xs font-bold tracking-widest uppercase mb-4 shadow-sm">
           <i data-lucide="gamepad-2" class="w-3.5 h-3.5 text-[#C85028]"></i>
-          <span>CORRIDOR GAMES &amp; SIGHT CHALLENGES</span>
+          <span id="games-badge">CORRIDOR GAMES &amp; SIGHT CHALLENGES</span>
         </div>
-        <h2 class="font-heading font-extrabold text-3xl sm:text-5xl text-[#0A0C10] mb-4">
+        <h2 id="games-title" class="font-heading font-extrabold text-3xl sm:text-5xl text-[#0A0C10] mb-4">
           Games Based on <span class="text-[#C85028] italic font-serif">Stops</span>
         </h2>
-        <p class="text-[#111827] font-medium leading-relaxed font-sans max-w-2xl mx-auto">
+        <p id="games-subtitle" class="text-[#111827] font-medium leading-relaxed font-sans max-w-2xl mx-auto">
           Interactive games celebrating South Africa's 1,600 km rail corridor. Play stop-by-stop trivia quizzes, stamp Mzansi Rail Bingo cards, and assemble the next stop with route puzzles.
         </p>
       </div>
@@ -976,15 +987,15 @@
         <div class="flex items-center justify-center p-1.5 rounded-2xl bg-white/90 border border-black/15 shadow-md gap-2" id="games-mode-tabs">
           <button type="button" data-game-tab="quiz" class="game-tab-btn flex-1 py-3 px-4 rounded-xl font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all active bg-[#C85028] text-white shadow-sm cursor-pointer">
             <i data-lucide="help-circle" class="w-4 h-4"></i>
-            <span>Stop Quizzes</span>
+            <span id="game-tab-quiz-label">Stop Quizzes</span>
           </button>
           <button type="button" data-game-tab="bingo" class="game-tab-btn flex-1 py-3 px-4 rounded-xl font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all bg-transparent text-[#111827] hover:bg-black/5 cursor-pointer">
             <i data-lucide="grid" class="w-4 h-4"></i>
-            <span>Mzansi Rail Bingo</span>
+            <span id="game-tab-bingo-label">Mzansi Rail Bingo</span>
           </button>
           <button type="button" data-game-tab="puzzle" class="game-tab-btn flex-1 py-3 px-4 rounded-xl font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all bg-transparent text-[#111827] hover:bg-black/5 cursor-pointer">
             <i data-lucide="puzzle" class="w-4 h-4"></i>
-            <span>Build Next Stop</span>
+            <span id="game-tab-puzzle-label">Build Next Stop</span>
           </button>
         </div>
       </div>
@@ -996,8 +1007,8 @@
             <i data-lucide="award" class="w-5 h-5"></i>
           </div>
           <div>
-            <span class="text-[#78716C] font-semibold text-[10px] block uppercase">Corridor Score</span>
-            <span class="text-[#0A0C10] font-bold text-base"><strong id="game-total-score" class="text-[#D99B26]">0</strong> pts</span>
+            <span id="score-label-score" class="text-[#78716C] font-semibold text-[10px] block uppercase">Corridor Score</span>
+            <span class="text-[#0A0C10] font-bold text-base"><strong id="game-total-score" class="text-[#D99B26]">0</strong> <span id="score-unit-pts">pts</span></span>
           </div>
         </div>
 
@@ -1006,8 +1017,8 @@
             <i data-lucide="check-circle-2" class="w-5 h-5"></i>
           </div>
           <div>
-            <span class="text-[#78716C] font-semibold text-[10px] block uppercase">Challenges Won</span>
-            <span class="text-[#0A0C10] font-bold text-base"><strong id="game-completed-count" class="text-[#2E7D46]">0</strong> completed</span>
+            <span id="score-label-won" class="text-[#78716C] font-semibold text-[10px] block uppercase">Challenges Won</span>
+            <span class="text-[#0A0C10] font-bold text-base"><strong id="game-completed-count" class="text-[#2E7D46]">0</strong> <span id="score-unit-completed">completed</span></span>
           </div>
         </div>
 
@@ -1016,13 +1027,13 @@
             <i data-lucide="flame" class="w-5 h-5"></i>
           </div>
           <div>
-            <span class="text-[#78716C] font-semibold text-[10px] block uppercase">Corridor Streak</span>
-            <span class="text-[#0A0C10] font-bold text-base"><strong id="game-streak-count" class="text-[#4A52B0]">0</strong> in a row</span>
+            <span id="score-label-streak" class="text-[#78716C] font-semibold text-[10px] block uppercase">Corridor Streak</span>
+            <span class="text-[#0A0C10] font-bold text-base"><strong id="game-streak-count" class="text-[#4A52B0]">0</strong> <span id="score-unit-streak">in a row</span></span>
           </div>
         </div>
 
         <button id="btn-master-reset-games" class="glass-button px-3.5 py-2 rounded-xl text-[#78716C] hover:text-[#0A0C10] flex items-center gap-1.5 text-xs font-semibold cursor-pointer">
-          <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset All Games
+          <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> <span id="btn-reset-games-label">Reset All Games</span>
         </button>
       </div>
 
@@ -1244,7 +1255,7 @@
           <!-- Target Placement Assembly Track (Slots) -->
           <div class="mb-6">
             <label class="block font-mono text-xs font-bold uppercase tracking-wider text-[#78716C] mb-3 flex items-center gap-2">
-              <i data-lucide="git-commit" class="w-3.5 h-3.5 text-[#4A52B0]"></i> Assembled Corridor Track (North to South)
+              <i data-lucide="git-commit" class="w-3.5 h-3.5 text-[#4A52B0]"></i> <span id="puzzle-track-title">Assembled Corridor Track (North to South)</span>
             </label>
             <div id="puzzle-target-slots" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5">
               <!-- Target slots injected via JS -->
@@ -1254,7 +1265,7 @@
           <!-- Available Shuffled Station Tiles (Piece Pool) -->
           <div class="mb-6">
             <label class="block font-mono text-xs font-bold uppercase tracking-wider text-[#78716C] mb-3 flex items-center gap-2">
-              <i data-lucide="layers" class="w-3.5 h-3.5 text-[#D99B26]"></i> Available Stop Pieces (Tap to place in next open slot)
+              <i data-lucide="layers" class="w-3.5 h-3.5 text-[#D99B26]"></i> <span id="puzzle-available-title">Available Stop Pieces (Tap to place in next open slot)</span>
             </label>
             <div id="puzzle-pieces-pool" class="flex flex-wrap gap-2.5">
               <!-- Available piece buttons injected via JS -->
@@ -1267,12 +1278,12 @@
           <!-- Puzzle Action Bar -->
           <div class="flex items-center justify-between pt-4 border-t border-black/10 font-mono text-xs">
             <button id="btn-reset-puzzle" class="glass-button px-4 py-2 rounded-xl text-[#78716C] hover:text-[#0A0C10] flex items-center gap-1.5 font-semibold cursor-pointer">
-              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Clear Slots
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> <span id="btn-reset-puzzle-label">Clear Slots</span>
             </button>
 
             <button id="btn-verify-puzzle" class="px-6 py-2.5 rounded-xl bg-[#4A52B0] text-white font-bold uppercase tracking-wider hover:bg-[#3B429F] transition-all flex items-center gap-2 shadow-md cursor-pointer">
               <i data-lucide="check" class="w-4 h-4"></i>
-              <span>Verify Sequence</span>
+              <span id="btn-verify-puzzle-label">Verify Sequence</span>
             </button>
           </div>
 
@@ -1289,12 +1300,12 @@
       <div class="text-center max-w-3xl mx-auto mb-14">
         <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#D99B26]/10 border border-[#D99B26]/30 text-[#B87C10] font-mono text-xs font-bold tracking-widest uppercase mb-4 shadow-[0_0_20px_rgba(217,155,38,0.12)]">
           <i data-lucide="mic" class="w-3.5 h-3.5 text-[#D99B26]"></i>
-          <span>PASSENGER SPEECH-TO-TEXT LOG</span>
+          <span id="voice-badge">PASSENGER SPEECH-TO-TEXT LOG</span>
         </div>
-        <h2 class="font-heading font-extrabold text-3xl sm:text-5xl text-[#0A0C10] mb-4">
+        <h2 id="voice-title" class="font-heading font-extrabold text-3xl sm:text-5xl text-[#0A0C10] mb-4">
           Passenger Voice <span class="text-[#D99B26] italic font-serif">Journal</span>
         </h2>
-        <p class="text-[#111827] font-medium leading-relaxed font-sans max-w-2xl mx-auto">
+        <p id="voice-subtitle" class="text-[#111827] font-medium leading-relaxed font-sans max-w-2xl mx-auto">
           Record your spoken travel observations, landmark thoughts, and corridor reflections in real time. Our speech engine transcribes your voice directly into your personal rail journey log.
         </p>
       </div>
@@ -1322,7 +1333,7 @@
           <!-- Corridor Milestone & Category Selectors -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-left">
             <div>
-              <label class="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#78716C] mb-1.5">
+              <label id="voice-landmark-label" class="block font-mono text-[10px] font-bold uppercase tracking-wider text-[#78716C] mb-1.5">
                 Corridor Landmark / Stop
               </label>
               <select id="voiceStopSelect" class="w-full px-3.5 py-2.5 rounded-xl border border-black/15 bg-white text-xs font-mono font-semibold text-[#0A0C10] focus:outline-none focus:border-[#D99B26]">
@@ -1537,8 +1548,8 @@
           <div class="w-12 h-12 rounded-xl bg-[#D99B26]/15 border border-[#D99B26]/30 flex items-center justify-center text-[#D99B26] mb-6">
             <i data-lucide="compass" class="w-6 h-6"></i>
           </div>
-          <h3 class="font-heading font-bold text-xl text-[#0A0C10] mb-3">What is TrackTales?</h3>
-          <p class="text-[#111827] font-medium text-sm leading-relaxed">
+          <h3 id="pillar-1-title" class="font-heading font-bold text-xl text-[#0A0C10] mb-3">What is TrackTales?</h3>
+          <p id="pillar-1-desc" class="text-[#111827] font-medium text-sm leading-relaxed">
             TrackTales is a digital companion for the Pretoria to Cape Town corridor, making luxury rail heritage accessible to everyone through stories, audio soundscapes, and sight solvers.
           </p>
         </div>
@@ -1547,8 +1558,8 @@
           <div class="w-12 h-12 rounded-xl bg-[#188880]/15 border border-[#188880]/30 flex items-center justify-center text-[#188880] mb-6">
             <i data-lucide="sun" class="w-6 h-6"></i>
           </div>
-          <h3 class="font-heading font-bold text-xl text-[#0A0C10] mb-3">South Africa Tourism</h3>
-          <p class="text-[#111827] font-medium text-sm leading-relaxed">
+          <h3 id="pillar-2-title" class="font-heading font-bold text-xl text-[#0A0C10] mb-3">South Africa Tourism</h3>
+          <p id="pillar-2-desc" class="text-[#111827] font-medium text-sm leading-relaxed">
             From Jacaranda streets in Pretoria and Kimberley diamond vaults to the starry Karoo night sky and Table Mountain's coastal peak, rail travel showcases Mzansi at its finest.
           </p>
         </div>
@@ -1557,8 +1568,8 @@
           <div class="w-12 h-12 rounded-xl bg-[#C85028]/15 border border-[#C85028]/30 flex items-center justify-center text-[#C85028] mb-6">
             <i data-lucide="landmark" class="w-6 h-6"></i>
           </div>
-          <h3 class="font-heading font-bold text-xl text-[#0A0C10] mb-3">Rail Legacy</h3>
-          <p class="text-[#111827] font-medium text-sm leading-relaxed">
+          <h3 id="pillar-3-title" class="font-heading font-bold text-xl text-[#0A0C10] mb-3">Rail Legacy</h3>
+          <p id="pillar-3-desc" class="text-[#111827] font-medium text-sm leading-relaxed">
             Laid during the 1870s diamond rush, the Pretoria to Cape Town line connected inland hubs directly to coastal ports, creating legendary trains like The Blue Train and Rovos Rail.
           </p>
         </div>
@@ -1578,36 +1589,36 @@
             <img src="./images/tracktales-logo.jpg" alt="TrackTales Logo" class="w-11 h-11 rounded-full object-cover shadow-md border-2 border-[#D99B26]">
             <div class="flex flex-col text-left">
               <span class="font-heading font-extrabold tracking-wider text-2xl text-[#0A0C10] leading-none">TRACK<span class="text-[#D99B26]">TALES</span></span>
-              <span class="text-[9px] font-bold tracking-[0.2em] text-[#78716C] uppercase mt-1">REAL ROUTES. EXTRAORDINARY STORIES.</span>
+              <span id="footer-tagline" class="text-[9px] font-bold tracking-[0.2em] text-[#78716C] uppercase mt-1">REAL ROUTES. EXTRAORDINARY STORIES.</span>
             </div>
           </a>
-          <p class="text-sm text-[#111827] font-medium leading-relaxed max-w-sm">
+          <p id="footer-desc" class="text-sm text-[#111827] font-medium leading-relaxed max-w-sm">
             A digital storytelling companion for the Pretoria to Cape Town rail corridor celebrating the timeless heritage, scenery, and culture of South Africa's iconic railways.
           </p>
         </div>
 
         <!-- Col 2: Navigation Links -->
         <div class="flex flex-col items-start text-left font-mono text-xs">
-          <h4 class="font-heading font-bold text-sm text-[#0A0C10] uppercase tracking-wider mb-4">Navigation</h4>
+          <h4 id="footer-nav-title" class="font-heading font-bold text-sm text-[#0A0C10] uppercase tracking-wider mb-4">Navigation</h4>
           <ul class="space-y-2.5 font-semibold">
-            <li><a href="#home" class="hover:text-[#D99B26] transition-colors">The Route</a></li>
-            <li><a href="#trains" class="hover:text-[#D99B26] transition-colors">Flagship Trains</a></li>
-            <li><a href="#attractions" class="hover:text-[#D99B26] transition-colors">Sights &amp; Landmarks</a></li>
-            <li><a href="#games" class="hover:text-[#D99B26] transition-colors">Sight Solver Puzzles</a></li>
-            <li><a href="#voice" class="hover:text-[#D99B26] transition-colors">Voice Journal &amp; Log</a></li>
-            <li><a href="#about" class="hover:text-[#D99B26] transition-colors">Heritage &amp; About</a></li>
+            <li><a href="#home" id="footer-link-route" class="hover:text-[#D99B26] transition-colors">The Route</a></li>
+            <li><a href="#trains" id="footer-link-trains" class="hover:text-[#D99B26] transition-colors">Flagship Trains</a></li>
+            <li><a href="#attractions" id="footer-link-sights" class="hover:text-[#D99B26] transition-colors">Sights &amp; Landmarks</a></li>
+            <li><a href="#games" id="footer-link-puzzles" class="hover:text-[#D99B26] transition-colors">Sight Solver Puzzles</a></li>
+            <li><a href="#voice" id="footer-link-voice" class="hover:text-[#D99B26] transition-colors">Voice Journal &amp; Log</a></li>
+            <li><a href="#about" id="footer-link-heritage" class="hover:text-[#D99B26] transition-colors">Heritage &amp; About</a></li>
           </ul>
         </div>
 
         <!-- Col 3: Corridor Experience -->
         <div class="flex flex-col items-start text-left font-mono text-xs">
-          <h4 class="font-heading font-bold text-sm text-[#0A0C10] uppercase tracking-wider mb-4">Corridor Journey</h4>
-          <p class="text-[#111827] font-medium leading-relaxed mb-4">
+          <h4 id="footer-corridor-title" class="font-heading font-bold text-sm text-[#0A0C10] uppercase tracking-wider mb-4">Corridor Journey</h4>
+          <p id="footer-corridor-desc" class="text-[#111827] font-medium leading-relaxed mb-4">
             Traversing 1,600 km across South Africa's heartland from the Jacaranda City to Table Mountain.
           </p>
           <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/5 border border-black/15 text-[11px] text-[#B87C10] font-bold">
             <i data-lucide="compass" class="w-3.5 h-3.5"></i>
-            <span>Pretoria to Cape Town</span>
+            <span id="footer-corridor-badge">Pretoria to Cape Town</span>
           </div>
         </div>
 
@@ -1615,9 +1626,9 @@
 
       <!-- Bottom Bar -->
       <div class="pt-8 border-t border-black/15 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-[#111827] font-semibold">
-        <div>&copy; 2026 TrackTales. All rights reserved.</div>
+        <div id="footer-copyright">&copy; 2026 TrackTales. All rights reserved.</div>
         <div class="flex items-center gap-6">
-          <span>Pretoria to Cape Town Corridor</span>
+          <span id="footer-corridor-tag">Pretoria to Cape Town Corridor</span>
         </div>
       </div>
     </div>
