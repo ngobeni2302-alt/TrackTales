@@ -4702,6 +4702,29 @@ p {
   line-height: 1.05;
 }
 
+/* RTL Layout Enhancements for Arabic */
+[dir="rtl"], .rtl-layout {
+  text-align: right;
+  direction: rtl;
+}
+
+[dir="rtl"] .text-left,
+.rtl-layout .text-left {
+  text-align: right !important;
+}
+
+[dir="rtl"] .space-x-2 > :not([hidden]) ~ :not([hidden]),
+.rtl-layout .space-x-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
+
+[dir="rtl"] select,
+.rtl-layout select {
+  padding-left: 1.5rem !important;
+  padding-right: 0.75rem !important;
+  background-position: left 0.5rem center !important;
+}
+
 
 
 
