@@ -4324,17 +4324,17 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
               <div>
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-mono bg-[#D99B26]/20 text-[#B87C10] border border-[#D99B26]/40 uppercase font-extrabold tracking-wider mb-2">
                   <i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#D99B26]"></i>
-                  <span>PREMIUM ARCHIVAL VAULT UNLOCKED · ${trainName.toUpperCase()}</span>
+                  <span>${dict.vault_unlocked_badge || 'PREMIUM ARCHIVAL VAULT UNLOCKED'} · ${trainName.toUpperCase()}</span>
                 </div>
                 <h3 class="font-heading font-extrabold text-2xl sm:text-3xl text-[#0A0C10]">
-                  Deeper Historical <span class="text-[#B87C10] italic font-serif">Archival Dossiers</span>
+                  ${dict.vault_unlocked_title || 'Deeper Historical <span class="text-[#B87C10] italic font-serif">Archival Dossiers</span>'}
                 </h3>
                 <p class="text-xs text-[#78716C] font-sans mt-1">
-                  Access declassified rail ledgers, wartime secret runs, and blueprint schematics for ${trainName}.
+                  ${dict.vault_unlocked_sub ? dict.vault_unlocked_sub.replace('{train}', trainName) : `Access declassified rail ledgers, wartime secret runs, and blueprint schematics for ${trainName}.`}
                 </p>
               </div>
               <span class="text-xs font-mono font-bold text-[#B87C10] px-3.5 py-1.5 rounded-xl bg-[#D99B26]/15 border border-[#D99B26]/30 shrink-0">
-                ${dossiers.length} Declassified Files
+                ${dossiers.length} ${dict.vault_declassified_files || 'Declassified Files'}
               </span>
             </div>
 
@@ -4365,7 +4365,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
                   <button class="w-full py-2.5 rounded-xl bg-[#D99B26]/15 hover:bg-[#D99B26] text-[#B87C10] hover:text-white border border-[#D99B26]/30 font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 btn-inspect-dossier" data-dossier-id="${dossier.id}">
                     <i data-lucide="file-text" class="w-4 h-4"></i>
-                    <span>Inspect Dossier</span>
+                    <span>${dict.btn_inspect_dossier || 'Inspect Dossier'}</span>
                   </button>
                 </div>
               `).join('')}
@@ -4431,13 +4431,13 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
               <div>
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-mono bg-[#2A9D8F]/20 text-[#2A9D8F] border border-[#2A9D8F]/40 uppercase font-extrabold tracking-wider mb-2">
                   <i data-lucide="headphones" class="w-3.5 h-3.5 text-[#2A9D8F]"></i>
-                  <span>AUDIO EXPERIENCE PASS ACTIVE · ${trainName.toUpperCase()}</span>
+                  <span>${dict.audio_active_badge || 'AUDIO EXPERIENCE PASS ACTIVE'} · ${trainName.toUpperCase()}</span>
                 </div>
                 <h3 class="font-heading font-extrabold text-2xl sm:text-3xl text-[#0A0C10]">
-                  Narrated Journey <span class="text-[#2A9D8F] italic font-serif">Audio Companion</span>
+                  ${dict.audio_active_title || 'Narrated Journey <span class="text-[#2A9D8F] italic font-serif">Audio Companion</span>'}
                 </h3>
                 <p class="text-xs text-[#78716C] font-sans mt-1">
-                  Listen to live speech-synthesized narration of heritage stories, commentary, and ambient rail soundscapes.
+                  ${dict.audio_active_sub || 'Listen to live speech-synthesized narration of heritage stories, commentary, and ambient rail soundscapes.'}
                 </p>
               </div>
 
@@ -4448,7 +4448,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
                 <span class="w-1.5 h-3 bg-[#2A9D8F] rounded-full animate-pulse"></span>
                 <span class="w-1.5 h-6 bg-[#2A9D8F] rounded-full animate-bounce"></span>
                 <span class="w-1.5 h-5 bg-[#2A9D8F] rounded-full animate-pulse"></span>
-                <span class="text-[10px] font-mono text-[#2A9D8F] font-bold ml-1.5" id="audio-eq-status">READY</span>
+                <span class="text-[10px] font-mono text-[#2A9D8F] font-bold ml-1.5" id="audio-eq-status">${dict.audio_status_ready || 'READY'}</span>
               </div>
             </div>
 
@@ -4460,27 +4460,28 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
                 
                 <!-- Story Select Dropdown -->
                 <div>
-                  <label class="block text-[10px] font-mono font-bold uppercase tracking-wider text-[#78716C] mb-1.5">Select Journey Story to Listen:</label>
+                  <label class="block text-[10px] font-mono font-bold uppercase tracking-wider text-[#78716C] mb-1.5">${dict.audio_select_story_label || 'Select Journey Story to Listen:'}</label>
                   <select id="audio-story-selector" class="w-full p-3 rounded-xl bg-white border border-[#D6CFC7] font-sans text-xs font-semibold text-[#1C1917] focus:outline-none focus:border-[#2A9D8F]">
-                    ${(appData.stories || FALLBACK_STORIES).filter(s => s.train_id === 'all' || s.train_id === currentTrainId).map(s => `
-                      <option value="${s.id}">${s.title} (${s.read_time})</option>
-                    `).join('')}
+                    ${(appData.stories || FALLBACK_STORIES).filter(s => s.train_id === 'all' || s.train_id === currentTrainId).map(rawS => {
+                      const s = getStoryInLanguage(rawS, langCode);
+                      return `<option value="${s.id}">${s.title} (${s.read_time})</option>`;
+                    }).join('')}
                   </select>
                 </div>
 
                 <!-- Voice Actor Profile Select -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                   <button type="button" data-voice-profile="james" class="audio-voice-btn p-2.5 rounded-xl border-2 border-[#2A9D8F] bg-[#2A9D8F]/10 text-left transition-all active">
-                    <span class="text-[10px] font-mono font-bold uppercase block text-[#2A9D8F]">Narrator James</span>
-                    <span class="text-[9px] text-[#78716C] font-sans">Heritage Historian</span>
+                    <span class="text-[10px] font-mono font-bold uppercase block text-[#2A9D8F]">${dict.narrator_james_name || 'Narrator James'}</span>
+                    <span class="text-[9px] text-[#78716C] font-sans">${dict.narrator_james_role || 'Heritage Historian'}</span>
                   </button>
                   <button type="button" data-voice-profile="thandi" class="audio-voice-btn p-2.5 rounded-xl border-2 border-[#E7E2D8] bg-white text-left transition-all hover:border-[#2A9D8F]">
-                    <span class="text-[10px] font-mono font-bold uppercase block text-[#1C1917]">Narrator Thandi</span>
-                    <span class="text-[9px] text-[#78716C] font-sans">Karoo Explorer</span>
+                    <span class="text-[10px] font-mono font-bold uppercase block text-[#1C1917]">${dict.narrator_thandi_name || 'Narrator Thandi'}</span>
+                    <span class="text-[9px] text-[#78716C] font-sans">${dict.narrator_thandi_role || 'Karoo Explorer'}</span>
                   </button>
                   <button type="button" data-voice-profile="willem" class="audio-voice-btn p-2.5 rounded-xl border-2 border-[#E7E2D8] bg-white text-left transition-all hover:border-[#2A9D8F]">
-                    <span class="text-[10px] font-mono font-bold uppercase block text-[#1C1917]">Narrator Willem</span>
-                    <span class="text-[9px] text-[#78716C] font-sans">Steam Master</span>
+                    <span class="text-[10px] font-mono font-bold uppercase block text-[#1C1917]">${dict.narrator_willem_name || 'Narrator Willem'}</span>
+                    <span class="text-[9px] text-[#78716C] font-sans">${dict.narrator_willem_role || 'Steam Master'}</span>
                   </button>
                 </div>
 
@@ -4488,16 +4489,16 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
                 <div class="flex flex-wrap items-center gap-3 pt-2">
                   <button type="button" id="btn-audio-play-main" class="px-6 py-3.5 rounded-2xl bg-[#2A9D8F] text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#238276] transition-all flex items-center gap-2 shadow-md">
                     <i data-lucide="play" class="w-4 h-4"></i>
-                    <span id="audio-play-main-label">Play Story Audio</span>
+                    <span id="audio-play-main-label">${dict.audio_btn_play || 'Play Story Audio'}</span>
                   </button>
                   <button type="button" id="btn-audio-stop-main" class="px-4 py-3.5 rounded-2xl border border-[#D6CFC7] text-[#44403C] font-mono text-xs font-bold uppercase hover:bg-black/5 transition-all flex items-center gap-1.5">
                     <i data-lucide="square" class="w-3.5 h-3.5"></i>
-                    <span>Stop</span>
+                    <span>${dict.audio_btn_stop || 'Stop'}</span>
                   </button>
 
                   <!-- Speed Controls -->
                   <div class="flex items-center gap-1 ml-auto font-mono text-[10px] font-bold">
-                    <span class="text-[#78716C] mr-1">Speed:</span>
+                    <span class="text-[#78716C] mr-1">${dict.audio_speed_label || 'Speed:'}</span>
                     <button type="button" data-speed="1.0" class="audio-speed-btn px-2.5 py-1.5 rounded-lg border-2 border-[#2A9D8F] bg-[#2A9D8F]/10 text-[#2A9D8F] active">1.0x</button>
                     <button type="button" data-speed="1.25" class="audio-speed-btn px-2.5 py-1.5 rounded-lg border border-[#D6CFC7] bg-white text-[#78716C] hover:border-[#2A9D8F]">1.25x</button>
                     <button type="button" data-speed="1.5" class="audio-speed-btn px-2.5 py-1.5 rounded-lg border border-[#D6CFC7] bg-white text-[#78716C] hover:border-[#2A9D8F]">1.5x</button>
@@ -4509,21 +4510,21 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
               <!-- Right: Ambient Rail Soundscape Generator -->
               <div class="lg:col-span-5 p-6 rounded-2xl bg-white border border-[#EBE5D9] shadow-sm text-left space-y-4">
                 <div class="flex items-center justify-between">
-                  <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-[#2A9D8F]">Ambient Soundscape Mixer</span>
-                  <span class="text-[9px] font-mono text-[#78716C] font-semibold">Web Audio Synthesizer</span>
+                  <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-[#2A9D8F]">${dict.soundscape_mixer_title || 'Ambient Soundscape Mixer'}</span>
+                  <span class="text-[9px] font-mono text-[#78716C] font-semibold">${dict.soundscape_synth_label || 'Web Audio Synthesizer'}</span>
                 </div>
 
                 <div class="space-y-2.5">
                   <button type="button" data-soundscape="chug" class="soundscape-btn w-full p-3 rounded-xl border text-xs font-sans font-semibold transition-all flex items-center justify-between border-[#EBE5D9] hover:border-[#2A9D8F] text-[#1C1917]">
-                    <span class="flex items-center gap-2"><i data-lucide="train" class="w-4 h-4 text-[#2A9D8F]"></i> Karoo Track Chug & Steam</span>
+                    <span class="flex items-center gap-2"><i data-lucide="train" class="w-4 h-4 text-[#2A9D8F]"></i> ${dict.soundscape_chug || 'Karoo Track Chug & Steam'}</span>
                     <i data-lucide="volume-2" class="w-4 h-4 text-[#78716C]"></i>
                   </button>
                   <button type="button" data-soundscape="wind" class="soundscape-btn w-full p-3 rounded-xl border text-xs font-sans font-semibold transition-all flex items-center justify-between border-[#EBE5D9] hover:border-[#2A9D8F] text-[#1C1917]">
-                    <span class="flex items-center gap-2"><i data-lucide="wind" class="w-4 h-4 text-[#2A9D8F]"></i> Great Karoo Desert Wind</span>
+                    <span class="flex items-center gap-2"><i data-lucide="wind" class="w-4 h-4 text-[#2A9D8F]"></i> ${dict.soundscape_wind || 'Great Karoo Desert Wind'}</span>
                     <i data-lucide="volume-2" class="w-4 h-4 text-[#78716C]"></i>
                   </button>
                   <button type="button" data-soundscape="lounge" class="soundscape-btn w-full p-3 rounded-xl border text-xs font-sans font-semibold transition-all flex items-center justify-between border-[#EBE5D9] hover:border-[#2A9D8F] text-[#1C1917]">
-                    <span class="flex items-center gap-2"><i data-lucide="music" class="w-4 h-4 text-[#2A9D8F]"></i> Luxury Salon Cello & Piano</span>
+                    <span class="flex items-center gap-2"><i data-lucide="music" class="w-4 h-4 text-[#2A9D8F]"></i> ${dict.soundscape_lounge || 'Luxury Salon Cello & Piano'}</span>
                     <i data-lucide="volume-2" class="w-4 h-4 text-[#78716C]"></i>
                   </button>
                 </div>
