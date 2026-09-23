@@ -10356,6 +10356,10 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       if (voiceFilterRovosLabel && dict.voice_filter_rovos) voiceFilterRovosLabel.textContent = dict.voice_filter_rovos;
       if (voiceExportCopyHint && dict.voice_export_hint) voiceExportCopyHint.textContent = dict.voice_export_hint;
       if (btnExportJournalLabel && dict.btn_export_journal) btnExportJournalLabel.textContent = dict.btn_export_journal;
+      const voicePrivacyNotice = document.getElementById('voice-privacy-notice');
+      const voicePrivacyTag = document.getElementById('voice-privacy-tag');
+      if (voicePrivacyNotice && dict.voice_privacy_notice) voicePrivacyNotice.textContent = dict.voice_privacy_notice;
+      if (voicePrivacyTag && dict.voice_privacy_tag) voicePrivacyTag.textContent = dict.voice_privacy_tag;
 
       // Heritage Pillars
       const p1Title = document.getElementById('pillar-1-title');
