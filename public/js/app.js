@@ -9917,6 +9917,10 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
     window.TrackTalesGetSpeechLanguage = () => SPEECH_LANGUAGES[window.TrackTalesLanguageCode || 'en'] || 'en-ZA';
 
     function applyLanguage(code) {
+      window.TrackTalesLanguageCode = code;
+      document.documentElement.lang = code;
+      localStorage.setItem('tracktales_lang', code);
+
       const dict = TRANSLATIONS[code] || TRANSLATIONS.en;
       
       const heroTag = document.getElementById('hero-category-tag');
@@ -10137,16 +10141,49 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         window.TrackTalesRenderQuiz();
       }
 
+      // Bingo Mode Elements
+      const bingoBadge = document.getElementById('bingo-badge');
+      const bingoTitle = document.getElementById('bingo-title');
+      const bingoSubtitle = document.getElementById('bingo-subtitle');
+      const btnResetBingoLabel = document.getElementById('btn-reset-bingo-label');
+      const btnNewBingoLabel = document.getElementById('btn-new-bingo-label');
+      const bingoWinTitle = document.getElementById('bingo-win-title');
+      const bingoWinDesc = document.getElementById('bingo-win-desc');
+      const bingoStampedPrefix = document.getElementById('bingo-stamped-prefix');
+      const bingoStampedSuffix = document.getElementById('bingo-stamped-suffix');
+      const bingoStatusLabel = document.getElementById('bingo-status-label');
+
+      if (bingoBadge && dict.bingo_badge) bingoBadge.textContent = dict.bingo_badge;
+      if (bingoTitle && dict.bingo_title) bingoTitle.textContent = dict.bingo_title;
+      if (bingoSubtitle && dict.bingo_subtitle) bingoSubtitle.textContent = dict.bingo_subtitle;
+      if (btnResetBingoLabel && dict.btn_reset_bingo) btnResetBingoLabel.textContent = dict.btn_reset_bingo;
+      if (btnNewBingoLabel && dict.btn_new_bingo) btnNewBingoLabel.textContent = dict.btn_new_bingo;
+      if (bingoWinTitle && dict.bingo_win_title) bingoWinTitle.textContent = dict.bingo_win_title;
+      if (bingoWinDesc && dict.bingo_win_desc) bingoWinDesc.textContent = dict.bingo_win_desc;
+      if (bingoStampedPrefix && dict.bingo_stamped_prefix) bingoStampedPrefix.textContent = dict.bingo_stamped_prefix;
+      if (bingoStampedSuffix && dict.bingo_stamped_suffix) bingoStampedSuffix.textContent = dict.bingo_stamped_suffix;
+      if (bingoStatusLabel && dict.bingo_status_label) bingoStatusLabel.textContent = dict.bingo_status_label;
+
       // Route Assembler / Puzzle Mode
+      const puzzleBadge = document.getElementById('puzzle-badge');
+      const puzzleTitle = document.getElementById('puzzle-title');
+      const puzzleSubtitle = document.getElementById('puzzle-subtitle');
       const puzzleTrackTitle = document.getElementById('puzzle-track-title');
       const puzzleAvailableTitle = document.getElementById('puzzle-available-title');
       const btnResetPuzzleLabel = document.getElementById('btn-reset-puzzle-label');
       const btnVerifyPuzzleLabel = document.getElementById('btn-verify-puzzle-label');
 
+      if (puzzleBadge && dict.puzzle_badge) puzzleBadge.textContent = dict.puzzle_badge;
+      if (puzzleTitle && dict.puzzle_title) puzzleTitle.textContent = dict.puzzle_title;
+      if (puzzleSubtitle && dict.puzzle_subtitle) puzzleSubtitle.textContent = dict.puzzle_subtitle;
       if (puzzleTrackTitle && dict.puzzle_track_title) puzzleTrackTitle.textContent = dict.puzzle_track_title;
       if (puzzleAvailableTitle && dict.puzzle_available_title) puzzleAvailableTitle.textContent = dict.puzzle_available_title;
       if (btnResetPuzzleLabel && dict.puzzle_btn_clear) btnResetPuzzleLabel.textContent = dict.puzzle_btn_clear;
       if (btnVerifyPuzzleLabel && dict.puzzle_btn_verify) btnVerifyPuzzleLabel.textContent = dict.puzzle_btn_verify;
+
+      if (window.TrackTalesRenderQuiz) window.TrackTalesRenderQuiz();
+      if (window.TrackTalesRenderBingo) window.TrackTalesRenderBingo();
+      if (window.TrackTalesRenderPuzzle) window.TrackTalesRenderPuzzle();
 
       // Page Voice Elements
       const voiceBadge = document.getElementById('voice-badge');
@@ -10204,12 +10241,12 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       const p3Title = document.getElementById('pillar-3-title');
       const p3Desc = document.getElementById('pillar-3-desc');
 
-      if (p1Title && dict.pillar_1_title) p1Title.textContent = dict.pillar_1_title;
-      if (p1Desc && dict.pillar_1_desc) p1Desc.textContent = dict.pillar_1_desc;
-      if (p2Title && dict.pillar_2_title) p2Title.textContent = dict.pillar_2_title;
-      if (p2Desc && dict.pillar_2_desc) p2Desc.textContent = dict.pillar_2_desc;
-      if (p3Title && dict.pillar_3_title) p3Title.textContent = dict.pillar_3_title;
-      if (p3Desc && dict.pillar_3_desc) p3Desc.textContent = dict.pillar_3_desc;
+      if (p1Title) p1Title.textContent = dict.pillar_1_title || 'What is TrackTales?';
+      if (p1Desc) p1Desc.textContent = dict.pillar_1_desc || 'TrackTales is a digital companion for the Pretoria to Cape Town corridor...';
+      if (p2Title) p2Title.textContent = dict.pillar_2_title || 'South Africa Tourism';
+      if (p2Desc) p2Desc.textContent = dict.pillar_2_desc || 'From Jacaranda streets in Pretoria...';
+      if (p3Title) p3Title.textContent = dict.pillar_3_title || 'Rail Legacy';
+      if (p3Desc) p3Desc.textContent = dict.pillar_3_desc || 'Laid during the 1870s diamond rush...';
 
       window.TrackTalesLanguageCode = code;
       document.documentElement.lang = code;
@@ -11601,20 +11638,728 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
     const btnResetBingo = document.getElementById('btn-reset-bingo');
     const btnShuffleBingo = document.getElementById('btn-shuffle-bingo');
 
+    const BINGO_TRANSLATIONS = {
+      en: {
+        tap_to_stamp: 'Tap to Stamp',
+        free_stamp: 'FREE STAMP',
+        stamped: 'STAMPED!',
+        status_stamped: 'Sights Stamped',
+        status_default: 'Tap cells to stamp',
+        status_win: 'BINGO COMPLETED! +250 PTS',
+        items: {
+          b0: { label: 'Pretoria Jacarandas', desc: 'Purple blooms along Capital Park' },
+          b1: { label: 'Kimberley Diamond Pit', desc: 'Historic big hole crater sight' },
+          b2: { label: 'Karoo Windmill', desc: 'Solitary Karoo desert farm pump' },
+          b3: { label: 'Great Karoo Desert Sky', desc: 'Stargazing desert expanse' },
+          b4: { label: 'Blue Locomotive', desc: 'Iconic luxury express engine' },
+          b5: { label: 'Lord Milner Hotel', desc: 'Victorian Matjiesfontein hotel' },
+          b6: { label: 'Hex River Vineyards', desc: 'Valley grapevines & peaks' },
+          b7: { label: 'Springbok Wildlife Herd', desc: 'Mzansi national animal in plain' },
+          b8: { label: 'Table Mountain Peak', desc: 'Flat-top coastal landmark view' }
+        }
+      },
+      af: {
+        tap_to_stamp: 'Tik om te Stempel',
+        free_stamp: 'GRATIS STEMPEL',
+        stamped: 'GESTEMPEL!',
+        status_stamped: 'Besienswaardighede Gestempel',
+        status_default: 'Tik selle om te stempel',
+        status_win: 'BINGO VOLTOOI! +250 PTN',
+        items: {
+          b0: { label: 'Pretoria Jakarandas', desc: 'Pers bloeisels langs Capital Park' },
+          b1: { label: 'Kimberley Diamantgat', desc: 'Historiese groot gat krater' },
+          b2: { label: 'Karoo Windpomp', desc: 'Eensame Karoo plaaspomp' },
+          b3: { label: 'Groot Karoo Woestynlug', desc: 'Sterrehemel oor die woestyn' },
+          b4: { label: 'Blou Lokomotief', desc: 'Ikoniese luukse sneltrein-enjin' },
+          b5: { label: 'Lord Milner Hotel', desc: 'Viktoriaanse Matjiesfontein hotel' },
+          b6: { label: 'Hexrivier Wingerde', desc: 'Vallei wingerde & bergpieke' },
+          b7: { label: 'Springbok Wildtrop', desc: 'Nasionale dier op die vlakte' },
+          b8: { label: 'Tafelberg Piek', desc: 'Platkoptafel baken in Kaapstad' }
+        }
+      },
+      zu: {
+        tap_to_stamp: 'Thinta Ukugqamisa',
+        free_stamp: 'ISTAMPU MAHHALA',
+        stamped: 'KUGQAMISIWE!',
+        status_stamped: 'Izindawo Ezifakiwe',
+        status_default: 'Thinta ukuze ugqamise',
+        status_win: 'I-BINGO IPHELELE! +250 PTS',
+        items: {
+          b0: { label: 'Pretoria Jacarandas', desc: 'Izimbali ezibhangqile eCapital Park' },
+          b1: { label: 'Kimberley Diamond Pit', desc: 'Umgodi omkhulu wedayimane' },
+          b2: { label: 'Karoo Windmill', desc: 'Impompo yomoya waseKaroo' },
+          b3: { label: 'Great Karoo Desert Sky', desc: 'Isibhakabhaka senkangala' },
+          b4: { label: 'Blue Locomotive', desc: 'Injin esitimela sobunewunewu' },
+          b5: { label: 'Lord Milner Hotel', desc: 'Ihhotela lase-Victorian eMatjiesfontein' },
+          b6: { label: 'Hex River Vineyards', desc: 'Izivande zamagilebhisi ze-Hex River' },
+          b7: { label: 'Springbok Wildlife Herd', desc: 'Ibutho le-Springbok edlelweni' },
+          b8: { label: 'Table Mountain Peak', desc: 'INtaba yeThebula eKapa' }
+        }
+      },
+      xh: {
+        tap_to_stamp: 'Cofa Ukugqumisa',
+        free_stamp: 'ISITEMBU SIMAHLA',
+        stamped: 'KUGQUMISIWEYO!',
+        status_stamped: 'Izinto Ezifakiweyo',
+        status_default: 'Cofa ukuze ugqumise',
+        status_win: 'I-BINGO IGQITYWE! +250 PTS',
+        items: {
+          b0: { label: 'Pretoria Jacarandas', desc: 'Izintyatyambo ezibambeneyo' },
+          b1: { label: 'Kimberley Diamond Pit', desc: 'Umgodi omkhulu wediamant' },
+          b2: { label: 'Karoo Windmill', desc: 'Impompo yomoya eKaroo' },
+          b3: { label: 'Great Karoo Desert Sky', desc: 'Isibhakabhaka saseKaroo' },
+          b4: { label: 'Blue Locomotive', desc: 'Injin yesitimela sobunewunewu' },
+          b5: { label: 'Lord Milner Hotel', desc: 'Ihotele yaseMatjiesfontein' },
+          b6: { label: 'Hex River Vineyards', desc: 'Izidiliya zaseHex River' },
+          b7: { label: 'Springbok Wildlife Herd', desc: 'Ihlathi le-Springbok ezintabeni' },
+          b8: { label: 'Table Mountain Peak', desc: 'INtaba yeThebula eKapa' }
+        }
+      },
+      de: {
+        tap_to_stamp: 'Tippen zum Stempeln',
+        free_stamp: 'GRATIS STEMPEL',
+        stamped: 'GESTEMPELT!',
+        status_stamped: 'Sehenswürdigkeiten Gestempelt',
+        status_default: 'Tippen zum Stempeln',
+        status_win: 'BINGO ABGESCHLOSSEN! +250 PKT',
+        items: {
+          b0: { label: 'Pretoria Jakarandas', desc: 'Violette Blüten im Capital Park' },
+          b1: { label: 'Kimberley Diamantenloch', desc: 'Historischer Big Hole Krater' },
+          b2: { label: 'Karoo Windmühle', desc: 'Einsame Karoo-Farmpumpe' },
+          b3: { label: 'Großer Karoo Himmel', desc: 'Sternenhimmel über der Wüste' },
+          b4: { label: 'Blaue Lokomotive', desc: 'Ikonische Luxuszug-Lokomotive' },
+          b5: { label: 'Lord Milner Hotel', desc: 'Viktorianisches Hotel in Matjiesfontein' },
+          b6: { label: 'Hex River Weinberg', desc: 'Tal-Weinberge und Berggipfel' },
+          b7: { label: 'Springbock-Herde', desc: 'Nationaltier in der Karoo-Ebene' },
+          b8: { label: 'Tafelberg-Gipfel', desc: 'Wahrzeichen in Kapstadt' }
+        }
+      },
+      fr: {
+        tap_to_stamp: 'Appuyez pour Tamponner',
+        free_stamp: 'TAMPON GRATUIT',
+        stamped: 'TAMPONNÉ !',
+        status_stamped: 'Sites Tamponnés',
+        status_default: 'Appuyez sur les cases',
+        status_win: 'BINGO TERMINÉ ! +250 PTS',
+        items: {
+          b0: { label: 'Jacarandas de Pretoria', desc: 'Fleurs violettes près de Capital Park' },
+          b1: { label: 'Mine de Diamant de Kimberley', desc: 'Cratère historique du Big Hole' },
+          b2: { label: 'Éolienne du Karoo', desc: 'Pompe à eau isolée du Karoo' },
+          b3: { label: 'Ciel du Grand Karoo', desc: 'Nuit étoilée dans le désert' },
+          b4: { label: 'Locomotive Bleue', desc: 'Moteur emblématique du train de luxe' },
+          b5: { label: 'Hôtel Lord Milner', desc: 'Hôtel victorien de Matjiesfontein' },
+          b6: { label: 'Vignobles de Hex River', desc: 'Vignes et sommets de la vallée' },
+          b7: { label: 'Troupeau de Springboks', desc: 'Animal national dans la plaine' },
+          b8: { label: 'Sommet de la Montagne de la Table', desc: 'Panorama côtier du Cap' }
+        }
+      },
+      nl: {
+        tap_to_stamp: 'Tik om te Stempelen',
+        free_stamp: 'GRATIS STEMPEL',
+        stamped: 'GESTEMPELD!',
+        status_stamped: 'Bezienswaardigheden Gestempeld',
+        status_default: 'Tik vakjes om te stempelen',
+        status_win: 'BINGO VOLTOOID! +250 PTN',
+        items: {
+          b0: { label: 'Pretoria Jacaranda’s', desc: 'Paarse bloesems bij Capital Park' },
+          b1: { label: 'Kimberley Diamantmijn', desc: 'Historische krater van Big Hole' },
+          b2: { label: 'Karoo Windmolen', desc: 'Eenzame Karoo boerderijpomp' },
+          b3: { label: 'Grote Karoo Woestijnlucht', desc: 'Sterrenhemel boven de woestijn' },
+          b4: { label: 'Blauwe Lokomotief', desc: 'Iconische luxe sneltreinmotor' },
+          b5: { label: 'Lord Milner Hotel', desc: 'Victoriaans hotel in Matjiesfontein' },
+          b6: { label: 'Hex River Wijngaarden', desc: 'Vallei wijngaarden & bergen' },
+          b7: { label: 'Springbokken Kudde', desc: 'Nationaal dier in de Karoo-vlakte' },
+          b8: { label: 'Tafelberg Top', desc: 'Kusticoon in Kaapstad' }
+        }
+      },
+      es: {
+        tap_to_stamp: 'Toca para Sellar',
+        free_stamp: 'SELLO GRATIS',
+        stamped: '¡SELLADO!',
+        status_stamped: 'Lugares Sellados',
+        status_default: 'Toca las casillas para sellar',
+        status_win: '¡BINGO COMPLETADO! +250 PTS',
+        items: {
+          b0: { label: 'Jacarandás de Pretoria', desc: 'Flores púrpuras en Capital Park' },
+          b1: { label: 'Mina de Diamante Kimberley', desc: 'Cráter histórico del Big Hole' },
+          b2: { label: 'Molino del Karoo', desc: 'Bomba de agua en el desierto' },
+          b3: { label: 'Cielo del Gran Karoo', desc: 'Cielo estrellado en el desierto' },
+          b4: { label: 'Locomotora Azul', desc: 'Motor icónico del tren de lujo' },
+          b5: { label: 'Hotel Lord Milner', desc: 'Hotel victoriano en Matjiesfontein' },
+          b6: { label: 'Viñedos de Hex River', desc: 'Viñedos y picos del valle' },
+          b7: { label: 'Manada de Springboks', desc: 'Animal nacional en la llanura' },
+          b8: { label: 'Cima de Table Mountain', desc: 'Icono costero en Ciudad del Cabo' }
+        }
+      },
+      it: {
+        tap_to_stamp: 'Tocca per Timbrare',
+        free_stamp: 'TIMBRO GRATUITO',
+        stamped: 'TIMBRATO!',
+        status_stamped: 'Luoghi Timbrati',
+        status_default: 'Tocca le caselle per timbrare',
+        status_win: 'BINGO COMPLETATO! +250 PT',
+        items: {
+          b0: { label: 'Jacarande di Pretoria', desc: 'Fiori viola lungo Capital Park' },
+          b1: { label: 'Miniera di Diamanti Kimberley', desc: 'Cratere storico del Big Hole' },
+          b2: { label: 'Mulino del Karoo', desc: 'Pompa d\'acqua isolata nel deserto' },
+          b3: { label: 'Cielo del Grande Karoo', desc: 'Cielo stellato nel deserto' },
+          b4: { label: 'Locomotiva Blu', desc: 'Motore iconico del treno di lusso' },
+          b5: { label: 'Lord Milner Hotel', desc: 'Hotel vittoriano a Matjiesfontein' },
+          b6: { label: 'Vigneti di Hex River', desc: 'Vigneti e vette della valle' },
+          b7: { label: 'Brancata di Springbok', desc: 'Animale nazionale nella pianura' },
+          b8: { label: 'Vetta della Table Mountain', desc: 'Simbolo costiero di Città del Capo' }
+        }
+      },
+      pt: {
+        tap_to_stamp: 'Toque para Carimbar',
+        free_stamp: 'CARIMBO GRÁTIS',
+        stamped: 'CARIMBADO!',
+        status_stamped: 'Locais Carimbados',
+        status_default: 'Toque para carimbar',
+        status_win: 'BINGO CONCLUÍDO! +250 PTS',
+        items: {
+          b0: { label: 'Jacarandás de Pretória', desc: 'Flores roxas ao longo de Capital Park' },
+          b1: { label: 'Mina de Diamante Kimberley', desc: 'Cratera histórica do Big Hole' },
+          b2: { label: 'Moinho do Karoo', desc: 'Bomba de água no deserto' },
+          b3: { label: 'Céu do Grande Karoo', desc: 'Céu estrelado no deserto' },
+          b4: { label: 'Locomotiva Azul', desc: 'Motor icónico do comboio de luxo' },
+          b5: { label: 'Lord Milner Hotel', desc: 'Hotel vitoriano em Matjiesfontein' },
+          b6: { label: 'Vinhedos de Hex River', desc: 'Vinhas e picos do vale' },
+          b7: { label: 'Manada de Springboks', desc: 'Animal nacional na planície' },
+          b8: { label: 'Pico da Montanha da Mesa', desc: 'Ícone costeiro da Cidade do Cabo' }
+        }
+      },
+      zh: {
+        tap_to_stamp: '点击盖章',
+        free_stamp: '免费印章',
+        stamped: '已盖章！',
+        status_stamped: '已收集景点',
+        status_default: '点击方格盖章',
+        status_win: '宾果完成！+250 分',
+        items: {
+          b0: { label: '比勒陀利亚紫楹花', desc: '首都公园沿途绽放的紫色花海' },
+          b1: { label: '金伯利钻石坑', desc: '历史悠久的大洞矿坑奇观' },
+          b2: { label: '卡鲁风车', desc: '卡鲁沙漠农场孤立的风车' },
+          b3: { label: '大卡鲁沙漠夜空', desc: '观星胜地卡鲁辽阔夜空' },
+          b4: { label: '蓝色机车', desc: '标志性奢华快车火车头' },
+          b5: { label: '米尔纳勋爵酒店', desc: '马杰斯方丹维多利亚风情酒店' },
+          b6: { label: '赫克斯河葡萄园', desc: '山谷葡萄园与雄伟山峰' },
+          b7: { label: '跳羚野生动物群', desc: '平原上奔跑的南非国兽跳羚' },
+          b8: { label: '桌山山峰', desc: '开普敦海岸标志性平顶山峰' }
+        }
+      },
+      ja: {
+        tap_to_stamp: 'タップしてスタンプ',
+        free_stamp: 'フリースタンプ',
+        stamped: 'スタンプ完了！',
+        status_stamped: 'スタンプ獲得スポット',
+        status_default: 'マスをタップしてスタンプ',
+        status_win: 'ビンゴ達成！ +250 PT',
+        items: {
+          b0: { label: 'プレトリアのジャカランダ', desc: 'キャピタルパーク沿いの紫の花' },
+          b1: { label: 'キンバリー・ダイヤモンド坑', desc: '歴史的なビッグホールクレーター' },
+          b2: { label: 'カルーの風車', desc: 'カルー砂漠の風車' },
+          b3: { label: 'グレート・カルーの夜空', desc: '満天の星空が広がる砂漠' },
+          b4: { label: 'ブルー機関車', desc: '豪華列車の象徴的機関車' },
+          b5: { label: 'ロード・ミルナー・ホテル', desc: 'マチェスフォンテインの伝統ホテル' },
+          b6: { label: 'ヘックス・リバー葡萄园', desc: '山谷のブドウ畑と山々の絶景' },
+          b7: { label: 'スプリングボックの群れ', desc: '平原を駆ける南アフリカの国兽' },
+          b8: { label: 'テーブルマウンテン山頂', desc: 'ケープタウンのシンボル' }
+        }
+      },
+      ko: {
+        tap_to_stamp: '탭하여 도장 찍기',
+        free_stamp: '무료 도장',
+        stamped: '도장 완료!',
+        status_stamped: '스탬프 완료 명소',
+        status_default: '칸을 탭하여 스탬프',
+        status_win: '빙고 완성! +250 점',
+        items: {
+          b0: { label: '프리토리아 자카란다', desc: '캐피털 파크를 따라 핀 보라색 꽃' },
+          b1: { label: '킴벌리 다이아몬드 구덩이', desc: '역사적인 빅 홀 분화구' },
+          b2: { label: '카루 풍차', desc: '카루 사막의 외딴 풍차' },
+          b3: { label: '대한 카루 사막 하늘', desc: '별이 빛나는 사막 밤하늘' },
+          b4: { label: '블루 기관차', desc: '상징적인 럭셔리 열차 기관차' },
+          b5: { label: '로드 밀너 호텔', desc: '마키스폰테인의 빅토리아 양식 호텔' },
+          b6: { label: '헥스 리버 포도밭', desc: '계곡 포도밭과 봉우리 전망' },
+          b7: { label: '스프링복 야생동물 무리', desc: '평원을 달리는 남아공 국수' },
+          b8: { label: '테이블 마운틴 정상', desc: '케이프타운의 해안 랜드마크' }
+        }
+      },
+      hi: {
+        tap_to_stamp: 'स्टैम्प करने के लिए टैप करें',
+        free_stamp: 'मुफ्त स्टैम्प',
+        stamped: 'स्टैम्प्ड!',
+        status_stamped: 'स्टैम्प किए गए दृश्य',
+        status_default: 'स्टैम्प के लिए बॉक्स टैप करें',
+        status_win: 'बिंगो पूरा हुआ! +250 अंक',
+        items: {
+          b0: { label: 'प्रिटोरिया जकारंडा', desc: 'कैपिटल पार्क में बैंगनी फूल' },
+          b1: { label: 'किम्बरली डायमंड गड्डा', desc: 'ऐतिहासिक बिग होल क्रेटर' },
+          b2: { label: 'करू पवनचक्की', desc: 'करू रेगिस्तान का वाटर पंप' },
+          b3: { label: 'द ग्रेट करू रेगिस्तानी आसमान', desc: 'तारों भरा रेगिस्तानी आसमान' },
+          b4: { label: 'ब्लू लोकोमोटिव', desc: 'आइकॉनिक लक्जरी ट्रेन इंजन' },
+          b5: { label: 'लॉर्ड मिलनर होटल', desc: 'मैटजीसफॉन्टेन का विक्टोरियन होटल' },
+          b6: { label: 'हेक्स रिवर अंगूर के बाग', desc: 'घाटी के अंगूर के बाग और चोटियाँ' },
+          b7: { label: 'स्प्रिंगबॉक वन्यजीव झुंड', desc: 'मैदान में राष्ट्रीय पशु' },
+          b8: { label: 'टेबल माउंटेन चोटी', desc: 'केप टाउन का लैंडमार्क' }
+        }
+      },
+      ru: {
+        tap_to_stamp: 'Нажмите, чтобы Отметить',
+        free_stamp: 'БЕСПЛАТНЫЙ ШТАМП',
+        stamped: 'ОТМЕЧЕНО!',
+        status_stamped: 'Отмечено Достопримечательностей',
+        status_default: 'Нажмите на ячейку',
+        status_win: 'БИНГО ЗАВЕРШЕНО! +250 ОЧК',
+        items: {
+          b0: { label: 'Джакаранды Претории', desc: 'Сиреневые цветы вдоль Капитал Парка' },
+          b1: { label: 'Алмазный Карьер Кимберли', desc: 'Исторический кратер Большая Дыра' },
+          b2: { label: 'Ветряк в Кару', desc: 'Одинокий насос в пустыне Кару' },
+          b3: { label: 'Небо Пустыни Большое Кару', desc: 'Звездное небо над пустыней' },
+          b4: { label: 'Голубой Локомотив', desc: 'Легендарный двигатель поезда' },
+          b5: { label: 'Отель Лорд Милнер', desc: 'Викторианский отель в Матжисфонтейне' },
+          b6: { label: 'Виноградники Хекс Ривер', desc: 'Виноградники и горные вершины' },
+          b7: { label: 'Стадо Спрингбоков', desc: 'Национальное животное на равнине' },
+          b8: { label: 'Вершина Столовой Горы', desc: 'Знаменитый символ Кейптауна' }
+        }
+      },
+      ar: {
+        tap_to_stamp: 'اضغط للختم',
+        free_stamp: 'ختم مجاني',
+        stamped: 'تم الختم!',
+        status_stamped: 'معالم مختومة',
+        status_default: 'اضغط على الخلايا للختم',
+        status_win: 'اكتمل البينجو! +250 نقطة',
+        items: {
+          b0: { label: 'جاكاراندا بريتوريا', desc: 'زهار بنفسجية على طول كابيتال بارك' },
+          b1: { label: 'منجم ألماس كيمبرلي', desc: 'فوهة الحفرة الكبيرة التاريخية' },
+          b2: { label: 'طاحونة هوائية في كارو', desc: 'مضخة مياه صحراوية معزولة' },
+          b3: { label: 'سماء صحراء كارو الكبرى', desc: 'سماء الصحراء المرصعة بالنجوم' },
+          b4: { label: 'المحرك الأزرق', desc: 'قاطرة القطار الفاخر الأسطورية' },
+          b5: { label: 'فندق اللورد ميلنر', desc: 'فندق فيكتوري في ماتجيسفونتين' },
+          b6: { label: 'كروم هكس ريفر', desc: 'حقول العنب والقمم الجبلية' },
+          b7: { label: 'قطيع غزلان السبرينغبوك', desc: 'الحيوان الوطني في السهول' },
+          b8: { label: 'قمة جبل الطاولة', desc: 'معلم كيب تاون الساحلي الشهير' }
+        }
+      }
+    };
+
+    const PUZZLE_TRANSLATIONS = {
+      en: {
+        slot_label: "Slot",
+        drop_here: "Drop Here",
+        switch_mode_coach: "Switch: Coach Sequence",
+        switch_mode_station: "Switch: Station Sequence",
+        mode_station_title: "Pretoria to Cape Town Route Assembler",
+        mode_station_desc: "Place the 6 corridor stops in geographic order from Departure Hub (Pretoria) to Atlantic Terminus (Cape Town).",
+        mode_coach_title: "Flagship Locomotive Coach Sequence",
+        mode_coach_desc: "Arrange the luxury train carriages from front engine to rear observation balcony.",
+        clear_slots: "Clear Slots",
+        verify_sequence: "Verify Sequence",
+        perfect_assembly: "Perfect Assembly! +150 Points Awarded.",
+        incomplete_assembly: "Incomplete Assembly",
+        fill_all_slots: "Please fill all sequence slots before verifying.",
+        not_quite_right: "Sequence Not Quite Right",
+        pieces: {
+          Pretoria: "Pretoria",
+          Kimberley: "Kimberley",
+          "De Aar": "De Aar",
+          "Beaufort West": "Beaufort West",
+          Matjiesfontein: "Matjiesfontein",
+          "Cape Town": "Cape Town",
+          "Locomotive Engine": "Locomotive Engine",
+          "Luxury Sleeper Suite": "Luxury Sleeper Suite",
+          "Dining Saloon": "Dining Saloon",
+          "Lounge Car": "Lounge Car",
+          "Observation Carriage": "Observation Carriage"
+        }
+      },
+      af: {
+        slot_label: "Sleuf",
+        drop_here: "Plaas Hier",
+        switch_mode_coach: "Skakel: Wa-volgorde",
+        switch_mode_station: "Skakel: Stasie-volgorde",
+        clear_slots: "Maak Sleuwe Skoon",
+        verify_sequence: "Kontroleer Volgorde",
+        perfect_assembly: "Perfekte Samestelling! +150 Punte Toegeken.",
+        incomplete_assembly: "Onvolledige Samestelling",
+        fill_all_slots: "Vul asseblief alle sleuwe voordat u kontroleer.",
+        not_quite_right: "Volgorde Nie Heeltemal Reg Nie",
+        pieces: {
+          Pretoria: "Pretoria",
+          Kimberley: "Kimberley",
+          "De Aar": "De Aar",
+          "Beaufort West": "Beaufort-Wes",
+          Matjiesfontein: "Matjiesfontein",
+          "Cape Town": "Kaapstad",
+          "Locomotive Engine": "Lokomotief-enjin",
+          "Luxury Sleeper Suite": "Luukse Slaapswa",
+          "Dining Saloon": "Eetsalonwa",
+          "Lounge Car": "Sitkamerwa",
+          "Observation Carriage": "Observasiewao"
+        }
+      },
+      zu: {
+        slot_label: "Isikhala",
+        drop_here: "Faka Lapha",
+        switch_mode_coach: "Shintsha: Izimoto Zesitimela",
+        switch_mode_station: "Shintsha: Iziteshi Zesitimela",
+        clear_slots: "Khipha Konke",
+        verify_sequence: "Hlola Ukulandelana",
+        perfect_assembly: "Ukuhlangana Okuphelele! +150 Amaphuzu Anikeziwe.",
+        incomplete_assembly: "Ukuhlanganisa Okungaphelele",
+        fill_all_slots: "Sicela ugcwalise zonke izikhala ngaphambi kwokuhlola.",
+        not_quite_right: "Ukulandelana Akulungile Impela",
+        pieces: {
+          Pretoria: "Pretoria",
+          Kimberley: "Kimberley",
+          "De Aar": "De Aar",
+          "Beaufort West": "Beaufort West",
+          Matjiesfontein: "Matjiesfontein",
+          "Cape Town": "EKapa",
+          "Locomotive Engine": "Injin Yesitimela",
+          "Luxury Sleeper Suite": "Igumbi Lokulala",
+          "Dining Saloon": "Igumbi Lokudlela",
+          "Lounge Car": "Igumbi Lokuphumula",
+          "Observation Carriage": "Inqola Yokubuka"
+        }
+      },
+      de: {
+        slot_label: "Platz",
+        drop_here: "Hier Ablegen",
+        switch_mode_coach: "Wechseln: Waggon-Reihenfolge",
+        switch_mode_station: "Wechseln: Bahnhofs-Reihenfolge",
+        clear_slots: "Plätze Leeren",
+        verify_sequence: "Reihenfolge Prüfen",
+        perfect_assembly: "Perfekte Anordnung! +150 Punkte Vergeben.",
+        incomplete_assembly: "Unvollständige Anordnung",
+        fill_all_slots: "Bitte füllen Sie alle Plätze aus, bevor Sie prüfen.",
+        not_quite_right: "Reihenfolge Nicht Ganz Richtig",
+        pieces: {
+          Pretoria: "Pretoria",
+          Kimberley: "Kimberley",
+          "De Aar": "De Aar",
+          "Beaufort West": "Beaufort West",
+          Matjiesfontein: "Matjiesfontein",
+          "Cape Town": "Kapstadt",
+          "Locomotive Engine": "Lokomotive",
+          "Luxury Sleeper Suite": "Luxus-Schlafwagen",
+          "Dining Saloon": "Speisewagen",
+          "Lounge Car": "Lounge-Wagen",
+          "Observation Carriage": "Aussichtswagen"
+        }
+      },
+      fr: {
+        slot_label: "Emplacement",
+        drop_here: "Déposer Ici",
+        switch_mode_coach: "Changer: Ordre des Wagons",
+        switch_mode_station: "Changer: Ordre des Gares",
+        clear_slots: "Vider les Emplacements",
+        verify_sequence: "Vérifier la Séquence",
+        perfect_assembly: "Assemblage Parfait ! +150 Points Attribués.",
+        incomplete_assembly: "Assemblage Incomplet",
+        fill_all_slots: "Veuillez remplir tous les emplacements avant de vérifier.",
+        not_quite_right: "Séquence Pas Tout à Fait Correcte",
+        pieces: {
+          Pretoria: "Pretoria",
+          Kimberley: "Kimberley",
+          "De Aar": "De Aar",
+          "Beaufort West": "Beaufort West",
+          Matjiesfontein: "Matjiesfontein",
+          "Cape Town": "Le Cap",
+          "Locomotive Engine": "Motrice Locomotive",
+          "Luxury Sleeper Suite": "Voiture-Lits de Luxe",
+          "Dining Saloon": "Wagon-Restaurant",
+          "Lounge Car": "Wagon-Salon",
+          "Observation Carriage": "Voiture-Panoramique"
+        }
+      },
+      nl: {
+        slot_label: "Vak",
+        drop_here: "Plaats Hier",
+        switch_mode_coach: "Wissel: Wagon Volgorde",
+        switch_mode_station: "Wissel: Station Volgorde",
+        clear_slots: "Vakken Leegmaken",
+        verify_sequence: "Controleer Volgorde",
+        perfect_assembly: "Perfecte Samestelling! +150 Punten Toegekend.",
+        incomplete_assembly: "Onvolledige Samestelling",
+        fill_all_slots: "Vul alle vakken in voordat u controleert.",
+        not_quite_right: "Volgorde Niet Heeltemal Juist",
+        pieces: {
+          Pretoria: "Pretoria",
+          Kimberley: "Kimberley",
+          "De Aar": "De Aar",
+          "Beaufort West": "Beaufort-West",
+          Matjiesfontein: "Matjiesfontein",
+          "Cape Town": "Kaapstad",
+          "Locomotive Engine": "Lokomotief",
+          "Luxury Sleeper Suite": "Luxe Slaapwagon",
+          "Dining Saloon": "Restauratiewagon",
+          "Lounge Car": "Loungewagon",
+          "Observation Carriage": "Panoramawagon"
+        }
+      },
+      es: {
+        slot_label: "Casilla",
+        drop_here: "Soltar Aquí",
+        switch_mode_coach: "Cambiar: Secuencia de Vagones",
+        switch_mode_station: "Cambiar: Secuencia de Estaciones",
+        clear_slots: "Vaciar Casillas",
+        verify_sequence: "Verificar Secuencia",
+        perfect_assembly: "¡Ensamblaje Perfecto! +150 Puntos Otorgados.",
+        incomplete_assembly: "Ensamblaje Incompleto",
+        fill_all_slots: "Por favor llene todas las casillas antes de verificar.",
+        not_quite_right: "Secuencia No Del Todo Correcta",
+        pieces: {
+          Pretoria: "Pretoria",
+          Kimberley: "Kimberley",
+          "De Aar": "De Aar",
+          "Beaufort West": "Beaufort West",
+          Matjiesfontein: "Matjiesfontein",
+          "Cape Town": "Ciudad del Cabo",
+          "Locomotive Engine": "Locomotora",
+          "Luxury Sleeper Suite": "Vagón Cama de Lujo",
+          "Dining Saloon": "Vagón Restaurante",
+          "Lounge Car": "Vagón Salón",
+          "Observation Carriage": "Vagón Observatorio"
+        }
+      },
+      it: {
+        slot_label: "Slot",
+        drop_here: "Metti Qui",
+        switch_mode_coach: "Cambia: Sequenza Vagoni",
+        switch_mode_station: "Cambia: Sequenza Stazioni",
+        clear_slots: "Svuota Slot",
+        verify_sequence: "Verifica Sequenza",
+        perfect_assembly: "Assemblaggio Perfetto! +150 Punti Assegnati.",
+        incomplete_assembly: "Assemblaggio Incompleto",
+        fill_all_slots: "Compila tutti gli slot prima di verificare.",
+        not_quite_right: "Sequenza Non Proprio Corretta",
+        pieces: {
+          Pretoria: "Pretoria",
+          Kimberley: "Kimberley",
+          "De Aar": "De Aar",
+          "Beaufort West": "Beaufort West",
+          Matjiesfontein: "Matjiesfontein",
+          "Cape Town": "Città del Capo",
+          "Locomotive Engine": "Locomotiva",
+          "Luxury Sleeper Suite": "Vagone Letto di Lusso",
+          "Dining Saloon": "Vagone Ristorante",
+          "Lounge Car": "Vagone Salotto",
+          "Observation Carriage": "Vagone Panoramico"
+        }
+      },
+      pt: {
+        slot_label: "Espaço",
+        drop_here: "Coloque Aqui",
+        switch_mode_coach: "Mudar: Sequência de Carruagens",
+        switch_mode_station: "Mudar: Sequência de Estações",
+        clear_slots: "Limpar Espaços",
+        verify_sequence: "Verificar Sequência",
+        perfect_assembly: "Montagem Perfeita! +150 Pontos Atribuídos.",
+        incomplete_assembly: "Montagem Incompleta",
+        fill_all_slots: "Por favor preencha todos os espaços antes de verificar.",
+        not_quite_right: "Sequência Não Está Correta",
+        pieces: {
+          Pretoria: "Pretória",
+          Kimberley: "Kimberley",
+          "De Aar": "De Aar",
+          "Beaufort West": "Beaufort West",
+          Matjiesfontein: "Matjiesfontein",
+          "Cape Town": "Cidade do Cabo",
+          "Locomotive Engine": "Locomotiva",
+          "Luxury Sleeper Suite": "Carruagem Cama de Luxo",
+          "Dining Saloon": "Carruagem Restaurante",
+          "Lounge Car": "Carruagem Lounge",
+          "Observation Carriage": "Carruagem Panorâmica"
+        }
+      },
+      zh: {
+        slot_label: "位置",
+        drop_here: "放于此处",
+        switch_mode_coach: "切换：车厢排序模式",
+        switch_mode_station: "切换：车站排序模式",
+        clear_slots: "清空槽位",
+        verify_sequence: "验证排序",
+        perfect_assembly: "完美排序！获得 +150 积分。",
+        incomplete_assembly: "排序未完成",
+        fill_all_slots: "请在验证前填满所有位置。",
+        not_quite_right: "排序不够准确",
+        pieces: {
+          Pretoria: "比勒陀利亚",
+          Kimberley: "金伯利",
+          "De Aar": "德阿尔",
+          "Beaufort West": "博福特西",
+          Matjiesfontein: "马杰斯方丹",
+          "Cape Town": "开普敦",
+          "Locomotive Engine": "蒸汽/电力火车头",
+          "Luxury Sleeper Suite": "奢华卧铺车厢",
+          "Dining Saloon": "豪华餐车",
+          "Lounge Car": "休闲沙龙车厢",
+          "Observation Carriage": "全景观景车厢"
+        }
+      },
+      ja: {
+        slot_label: "スロット",
+        drop_here: "ここへ配置",
+        switch_mode_coach: "切替: 車両順序モード",
+        switch_mode_station: "切替: 駅順序モード",
+        clear_slots: "スロットをクリア",
+        verify_sequence: "順序を検証",
+        perfect_assembly: "パーフェクト！ +150 ポイント獲得。",
+        incomplete_assembly: "未完了の配置",
+        fill_all_slots: "検証前にすべてのスロットを埋めてください。",
+        not_quite_right: "順序が正しくありません",
+        pieces: {
+          Pretoria: "プレトリア",
+          Kimberley: "キンバリー",
+          "De Aar": "デ・アール",
+          "Beaufort West": "ボーフォート・ウエスト",
+          Matjiesfontein: "マチェスフォンテイン",
+          "Cape Town": "ケープタウン",
+          "Locomotive Engine": "機関車エンジン",
+          "Luxury Sleeper Suite": "豪華寝台スイート",
+          "Dining Saloon": "食堂車",
+          "Lounge Car": "ラウンジ車",
+          "Observation Carriage": "展望車両"
+        }
+      },
+      ko: {
+        slot_label: "슬롯",
+        drop_here: "여기에 배치",
+        switch_mode_coach: "전환: 객차 순서 모드",
+        switch_mode_station: "전환: 역 순서 모드",
+        clear_slots: "슬롯 초기화",
+        verify_sequence: "순서 검증",
+        perfect_assembly: "완벽한 조립! +150 점 획득.",
+        incomplete_assembly: "미완성 조립",
+        fill_all_slots: "검증하기 전에 모든 슬롯을 채워주세요.",
+        not_quite_right: "순서가 정확하지 않습니다",
+        pieces: {
+          Pretoria: "프리토리아",
+          Kimberley: "킴벌리",
+          "De Aar": "디 아르",
+          "Beaufort West": "보포트 웨스트",
+          Matjiesfontein: "마키스폰테인",
+          "Cape Town": "케이프타운",
+          "Locomotive Engine": "기관차 엔진",
+          "Luxury Sleeper Suite": "럭셔리 침대 스위트",
+          "Dining Saloon": "식당차",
+          "Lounge Car": "라운지 차",
+          "Observation Carriage": "전망 객차"
+        }
+      },
+      hi: {
+        slot_label: "स्लॉट",
+        drop_here: "यहाँ रखें",
+        switch_mode_coach: "बदलें: कोच क्रम",
+        switch_mode_station: "बदलें: स्टेशन क्रम",
+        clear_slots: "स्लॉट साफ़ करें",
+        verify_sequence: "क्रम सत्यापित करें",
+        perfect_assembly: "परफेक्ट असेंबली! +150 अंक प्राप्त।",
+        incomplete_assembly: "अधूरी असेंबली",
+        fill_all_slots: "सत्यापित करने से पहले सभी स्लॉट भरें।",
+        not_quite_right: "क्रम सही नहीं है",
+        pieces: {
+          Pretoria: "प्रिटोरिया",
+          Kimberley: "किम्बरली",
+          "De Aar": "डी आर",
+          "Beaufort West": "बोफोर्ट वेस्ट",
+          Matjiesfontein: "मैटजीसफॉन्टेन",
+          "Cape Town": "केप टाउन",
+          "Locomotive Engine": "लोकोमोटिव इंजन",
+          "Luxury Sleeper Suite": "लक्जरी स्लीपर सुइट",
+          "Dining Saloon": "डाइनिंग कार",
+          "Lounge Car": "लाउंज कार",
+          "Observation Carriage": "ऑब्जर्वेशन कार"
+        }
+      },
+      ru: {
+        slot_label: "Слот",
+        drop_here: "Поместить Сюда",
+        switch_mode_coach: "Переключить: Вагоны",
+        switch_mode_station: "Переключить: Станции",
+        clear_slots: "Очистить Слоты",
+        verify_sequence: "Проверить Порядок",
+        perfect_assembly: "Идеальная Сборка! +150 Очков Начислено.",
+        incomplete_assembly: "Незавершенная Сборка",
+        fill_all_slots: "Пожалуйста, заполните все слоты перед проверкой.",
+        not_quite_right: "Порядок Не Совсем Верный",
+        pieces: {
+          Pretoria: "Претория",
+          Kimberley: "Кимберли",
+          "De Aar": "Де-Аар",
+          "Beaufort West": "Бофорт-Уэст",
+          Matjiesfontein: "Матжисфонтейн",
+          "Cape Town": "Кейптаун",
+          "Locomotive Engine": "Локомотив Engine",
+          "Luxury Sleeper Suite": "Роскошный Спальный Вагон",
+          "Dining Saloon": "Вагон-Ресторан",
+          "Lounge Car": "Вагон-Салон",
+          "Observation Carriage": "Обзорный Вагон"
+        }
+      },
+      ar: {
+        slot_label: "خانة",
+        drop_here: "ضع هنا",
+        switch_mode_coach: "تبديل: ترتيب العربات",
+        switch_mode_station: "تبديل: ترتيب المحطات",
+        clear_slots: "إفرغ الخانات",
+        verify_sequence: "التحقق من الترتيب",
+        perfect_assembly: "تجميع مثالي! تم منح +150 نقطة.",
+        incomplete_assembly: "تجميع غير مكتمل",
+        fill_all_slots: "يرجى ملء جميع الخانات قبل التحقق.",
+        not_quite_right: "الترتيب غير صحيح تمامًا",
+        pieces: {
+          Pretoria: "بريتوريا",
+          Kimberley: "كيمبرلي",
+          "De Aar": "دي آر",
+          "Beaufort West": "بوفورت ويست",
+          Matjiesfontein: "ماتجيسفونتين",
+          "Cape Town": "كيب تاون",
+          "Locomotive Engine": "محرك القاطرة",
+          "Luxury Sleeper Suite": "مقصورة النوم الفاخرة",
+          "Dining Saloon": "عربة المطعم",
+          "Lounge Car": "عربة الاستراحة",
+          "Observation Carriage": "عربة المشاهدة البانورامية"
+        }
+      }
+    };
+
+    function getBingoPack() {
+      const lang = window.TrackTalesLanguageCode || 'en';
+      return BINGO_TRANSLATIONS[lang] || BINGO_TRANSLATIONS.en;
+    }
+
+    function getPuzzlePack() {
+      const lang = window.TrackTalesLanguageCode || 'en';
+      return PUZZLE_TRANSLATIONS[lang] || PUZZLE_TRANSLATIONS.en;
+    }
+
+    function getPuzzlePieceName(pieceName) {
+      const pack = getPuzzlePack();
+      return (pack.pieces && pack.pieces[pieceName]) ? pack.pieces[pieceName] : pieceName;
+    }
+
     function initBingoGrid() {
       if (!bingoGridContainer) return;
       bingoWon = false;
       if (bingoWinBanner) bingoWinBanner.classList.add('hidden');
+      const pack = getBingoPack();
 
       bingoGridContainer.innerHTML = BINGO_ITEMS.map((item, idx) => {
         const isMarked = bingoState[idx];
+        const itemTr = (pack.items && pack.items[item.id]) ? pack.items[item.id] : item;
+        const labelText = itemTr.label || item.label;
+        const stampText = idx === 4 ? pack.free_stamp : (isMarked ? pack.stamped : pack.tap_to_stamp);
         return `
           <button type="button" data-bingo-idx="${idx}" class="bingo-cell p-3 sm:p-4 rounded-2xl border-2 ${isMarked ? 'marked' : 'border-[#E7E2D8] bg-white hover:border-[#D99B26]/60'} flex flex-col items-center justify-center text-center transition-all cursor-pointer aspect-square shadow-sm">
             <div class="w-8 h-8 rounded-full ${isMarked ? 'bg-white/20 text-white' : 'bg-[#D99B26]/10 text-[#D99B26]'} flex items-center justify-center mb-1.5">
               <i data-lucide="${item.icon}" class="w-4 h-4"></i>
             </div>
-            <strong class="text-[11px] sm:text-xs font-heading font-bold leading-tight ${isMarked ? 'text-white' : 'text-[#0A0C10]'}">${item.label}</strong>
-            <span class="text-[9px] font-mono ${isMarked ? 'text-white/90' : 'text-[#78716C]'} mt-0.5">${idx === 4 ? 'FREE STAMP' : 'Tap to Stamp'}</span>
+            <strong class="text-[11px] sm:text-xs font-heading font-bold leading-tight ${isMarked ? 'text-white' : 'text-[#0A0C10]'}">${labelText}</strong>
+            <span class="text-[9px] font-mono ${isMarked ? 'text-white/90' : 'text-[#78716C]'} mt-0.5">${stampText}</span>
           </button>
         `;
       }).join('');
@@ -11631,82 +12376,37 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       updateBingoStatus();
     }
 
-    function toggleBingoCell(idx) {
-      bingoState[idx] = !bingoState[idx];
-      initBingoGrid();
-      checkBingoWin();
-    }
-
-    function checkBingoWin() {
-      // 8 Winning Lines: 3 Rows, 3 Cols, 2 Diagonals
-      const WIN_LINES = [
-        [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-        [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-        [0, 4, 8], [2, 4, 6]             // Diagonals
-      ];
-
-      const hasWon = WIN_LINES.some(line => line.every(idx => bingoState[idx]));
-
-      if (hasWon && !bingoWon) {
-        bingoWon = true;
-        totalScore += 250;
-        completedChallenges += 1;
-        streakCount += 1;
-        updateScoreboard();
-
-        if (bingoWinBanner) bingoWinBanner.classList.remove('hidden');
-        if (bingoStatusTextEl) bingoStatusTextEl.textContent = 'BINGO COMPLETED! +250 PTS';
-
-        if (window.TrackTalesAnnounce) {
-          window.TrackTalesAnnounce('Bingo! You completed 3 in a row across the rail corridor. 250 points awarded!');
-        }
-      }
-    }
-
     function updateBingoStatus() {
       const count = bingoState.filter(Boolean).length;
+      const pack = getBingoPack();
       if (bingoMarkedCountEl) bingoMarkedCountEl.textContent = count;
       if (bingoStatusTextEl && !bingoWon) {
-        bingoStatusTextEl.textContent = count > 0 ? `${count} Sights Stamped` : 'Tap cells to stamp';
+        bingoStatusTextEl.textContent = count > 0 ? `${count} ${pack.status_stamped}` : pack.status_default;
       }
     }
 
-    if (btnResetBingo) {
-      btnResetBingo.addEventListener('click', () => {
-        bingoState = [false, false, false, false, true, false, false, false, false];
-        initBingoGrid();
-      });
-    }
+    window.TrackTalesRenderBingo = () => initBingoGrid();
 
-    if (btnShuffleBingo) {
-      btnShuffleBingo.addEventListener('click', () => {
-        BINGO_ITEMS.sort(() => Math.random() - 0.5);
-        bingoState = [false, false, false, false, true, false, false, false, false];
-        initBingoGrid();
-      });
-    }
-
-    initBingoGrid();
-
-    // ------------------------------------------------------------------------
-    // MODE 3: BUILD NEXT STOP VIA PUZZLE (Interactive Route Sequencer)
-    // ------------------------------------------------------------------------
     const PUZZLE_MODES = [
       {
-        id: 'route',
-        title: 'Pretoria to Cape Town Route Assembler',
-        desc: 'Place the 6 corridor stops in geographic order from Departure Hub (Pretoria) to Atlantic Terminus (Cape Town).',
-        correctSequence: ['Pretoria', 'Kimberley', 'De Aar', 'Beaufort West', 'Matjiesfontein', 'Cape Town'],
+        id: 'station',
+        titleKey: 'mode_station_title',
+        descKey: 'mode_station_desc',
+        defaultTitle: 'Pretoria to Cape Town Route Assembler',
+        defaultDesc: 'Place the 6 corridor stops in geographic order from Departure Hub (Pretoria) to Atlantic Terminus (Cape Town).',
         pool: ['Matjiesfontein', 'Kimberley', 'Cape Town', 'Pretoria', 'Beaufort West', 'De Aar'],
-        triviaUnlock: 'Engineering Fact: The 1,600 km railway route crosses from high-altitude Highveld (1,300m above sea level) down through the Hex River Valley to sea level at Table Bay.'
+        correctSequence: ['Pretoria', 'Kimberley', 'De Aar', 'Beaufort West', 'Matjiesfontein', 'Cape Town'],
+        triviaUnlock: 'Unlocked: The Pretoria to Cape Town rail corridor was completed in 1890, connecting the Highveld goldfields directly to Table Bay.'
       },
       {
-        id: 'train_cars',
-        title: 'Flagship Luxury Express Coach Assembler',
-        desc: 'Assemble the 5 luxury train carriages in correct order from Engine to End Observation Deck.',
+        id: 'route',
+        titleKey: 'mode_coach_title',
+        descKey: 'mode_coach_desc',
+        defaultTitle: 'Flagship Locomotive Coach Sequence',
+        defaultDesc: 'Arrange the luxury train carriages from front engine to rear observation balcony.',
+        pool: ['Observation Carriage', 'Dining Saloon', 'Locomotive Engine', 'Lounge Car', 'Luxury Sleeper Suite'],
         correctSequence: ['Locomotive Engine', 'Luxury Sleeper Suite', 'Dining Saloon', 'Lounge Car', 'Observation Carriage'],
-        pool: ['Observation Carriage', 'Locomotive Engine', 'Lounge Car', 'Luxury Sleeper Suite', 'Dining Saloon'],
-        triviaUnlock: 'Engineering Fact: The Blue Train Observation Car features floor-to-ceiling glass panoramic windows and rear-facing lounge seating for viewing the Karoo desert sunset.'
+        triviaUnlock: 'Unlocked: The rear observation carriage features panoramic windows and an open-air balcony designed for Karoo sunsets!'
       }
     ];
 
@@ -11714,23 +12414,15 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
     let puzzleUserSlots = [];
     let puzzleAvailablePieces = [];
 
-    const puzzleModeLabel = document.getElementById('puzzle-mode-label');
-    const puzzleModeSwitchBtn = document.getElementById('btn-puzzle-mode-switch');
-    const puzzleObjTitle = document.getElementById('puzzle-objective-title');
-    const puzzleObjDesc = document.getElementById('puzzle-objective-desc');
-    const puzzleTargetSlots = document.getElementById('puzzle-target-slots');
-    const puzzlePiecesPool = document.getElementById('puzzle-pieces-pool');
-    const puzzleFeedbackBanner = document.getElementById('puzzle-feedback-banner');
-    const btnResetPuzzle = document.getElementById('btn-reset-puzzle');
-    const btnVerifyPuzzle = document.getElementById('btn-verify-puzzle');
-
     function initPuzzleSequence() {
+      if (!PUZZLE_MODES || PUZZLE_MODES.length === 0) return;
       const mode = PUZZLE_MODES[currentPuzzleModeIdx];
       if (!mode) return;
+      const pack = getPuzzlePack();
 
-      if (puzzleModeLabel) puzzleModeLabel.textContent = `Switch: ${mode.id === 'route' ? 'Coach Sequence' : 'Route Sequence'}`;
-      if (puzzleObjTitle) puzzleObjTitle.textContent = mode.title;
-      if (puzzleObjDesc) puzzleObjDesc.textContent = mode.desc;
+      if (puzzleModeLabel) puzzleModeLabel.textContent = mode.id === 'route' ? pack.switch_mode_coach : pack.switch_mode_station;
+      if (puzzleObjTitle) puzzleObjTitle.textContent = pack[mode.titleKey] || mode.defaultTitle;
+      if (puzzleObjDesc) puzzleObjDesc.textContent = pack[mode.descKey] || mode.defaultDesc;
       if (puzzleFeedbackBanner) {
         puzzleFeedbackBanner.classList.add('hidden');
         puzzleFeedbackBanner.innerHTML = '';
@@ -11744,14 +12436,15 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
     function renderPuzzleUI() {
       const mode = PUZZLE_MODES[currentPuzzleModeIdx];
+      const pack = getPuzzlePack();
 
       // Render Target Slots
       if (puzzleTargetSlots) {
         puzzleTargetSlots.innerHTML = puzzleUserSlots.map((item, idx) => `
           <button type="button" data-slot-idx="${idx}" class="puzzle-slot p-3 rounded-2xl border-2 ${item ? 'border-[#4A52B0] bg-[#4A52B0]/10' : 'border-dashed border-black/20 bg-black/[0.02]'} flex flex-col items-center justify-center text-center transition-all cursor-pointer min-h-[75px]">
-            <span class="text-[9px] font-mono uppercase font-bold text-[#78716C] mb-1">Slot ${idx + 1}</span>
+            <span class="text-[9px] font-mono uppercase font-bold text-[#78716C] mb-1">${pack.slot_label} ${idx + 1}</span>
             <strong class="text-xs font-heading font-bold ${item ? 'text-[#4A52B0]' : 'text-[#A8A29E]'}">
-              ${item || 'Drop Here'}
+              ${item ? getPuzzlePieceName(item) : pack.drop_here}
             </strong>
           </button>
         `).join('');
@@ -11761,7 +12454,6 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
             const idx = parseInt(btn.getAttribute('data-slot-idx'), 10);
             const val = puzzleUserSlots[idx];
             if (val) {
-              // Return to pool
               puzzleUserSlots[idx] = null;
               puzzleAvailablePieces.push(val);
               renderPuzzleUI();
@@ -11775,7 +12467,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         puzzlePiecesPool.innerHTML = puzzleAvailablePieces.map((piece, idx) => `
           <button type="button" data-piece-idx="${idx}" class="puzzle-item px-4 py-2.5 rounded-xl border-2 border-[#D99B26] bg-white hover:bg-[#FFF9EE] text-[#0A0C10] font-mono text-xs font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer">
             <i data-lucide="plus" class="w-3.5 h-3.5 text-[#D99B26]"></i>
-            <span>${piece}</span>
+            <span>${getPuzzlePieceName(piece)}</span>
           </button>
         `).join('');
 
@@ -11785,7 +12477,6 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
           btn.addEventListener('click', () => {
             const pieceIdx = parseInt(btn.getAttribute('data-piece-idx'), 10);
             const piece = puzzleAvailablePieces[pieceIdx];
-            // Find first empty slot
             const firstEmpty = puzzleUserSlots.indexOf(null);
             if (firstEmpty !== -1) {
               puzzleUserSlots[firstEmpty] = piece;
@@ -11796,6 +12487,8 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         });
       }
     }
+
+    window.TrackTalesRenderPuzzle = () => initPuzzleSequence();
 
     if (btnVerifyPuzzle) {
       btnVerifyPuzzle.addEventListener('click', () => {

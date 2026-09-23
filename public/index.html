@@ -1165,18 +1165,18 @@
             <div>
               <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D99B26]/15 border border-[#D99B26]/30 text-[#B87C10] font-mono text-xs font-bold uppercase mb-1">
                 <i data-lucide="grid" class="w-3.5 h-3.5"></i>
-                <span>3x3 Rail Sight Grid</span>
+                <span id="bingo-badge">3x3 Rail Sight Grid</span>
               </div>
-              <h3 class="font-heading font-extrabold text-2xl text-[#0A0C10]">Mzansi Rail Corridor Bingo</h3>
-              <p class="text-xs font-sans text-[#78716C]">Tap any landmark cell when spotted along your rail journey to stamp it. Complete any 3-in-a-row (horizontal, vertical, or diagonal) for a Bingo Win!</p>
+              <h3 id="bingo-title" class="font-heading font-extrabold text-2xl text-[#0A0C10]">Mzansi Rail Corridor Bingo</h3>
+              <p id="bingo-subtitle" class="text-xs font-sans text-[#78716C]">Tap any landmark cell when spotted along your rail journey to stamp it. Complete any 3-in-a-row (horizontal, vertical, or diagonal) for a Bingo Win!</p>
             </div>
 
             <div class="flex items-center gap-2">
               <button id="btn-reset-bingo" class="glass-button px-3.5 py-2 rounded-xl text-xs font-mono text-[#78716C] hover:text-[#0A0C10] flex items-center gap-1.5 font-semibold cursor-pointer" title="Clear stamped cells">
-                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset Stamps
+                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> <span id="btn-reset-bingo-label">Reset Stamps</span>
               </button>
               <button id="btn-shuffle-bingo" class="glass-button px-3.5 py-2 rounded-xl text-xs font-mono text-[#D99B26] hover:bg-[#D99B26]/10 flex items-center gap-1.5 font-bold cursor-pointer" title="Shuffle new sights">
-                <i data-lucide="shuffle" class="w-3.5 h-3.5"></i> New Card
+                <i data-lucide="shuffle" class="w-3.5 h-3.5"></i> <span id="btn-new-bingo-label">New Card</span>
               </button>
             </div>
           </div>
@@ -1188,8 +1188,8 @@
                 <i data-lucide="award" class="w-6 h-6 text-white"></i>
               </div>
               <div>
-                <h4 class="font-heading font-extrabold text-lg text-white">BINGO! Corridor Sight Master</h4>
-                <p class="text-xs font-mono text-white/90">You completed 3-in-a-row! +250 Bonus Corridor Points awarded.</p>
+                <h4 id="bingo-win-title" class="font-heading font-extrabold text-lg text-white">BINGO! Corridor Sight Master</h4>
+                <p id="bingo-win-desc" class="text-xs font-mono text-white/90">You completed 3-in-a-row! +250 Bonus Corridor Points awarded.</p>
               </div>
             </div>
             <span class="px-3.5 py-1.5 rounded-full bg-white text-[#D99B26] font-mono font-black text-xs uppercase tracking-wider shadow-sm">
@@ -1206,9 +1206,9 @@
           <div class="flex items-center justify-between pt-4 border-t border-black/10 font-mono text-xs text-[#78716C]">
             <div class="flex items-center gap-2">
               <span class="w-2.5 h-2.5 rounded-full bg-[#D99B26]"></span>
-              <span>Stamped: <strong id="bingo-marked-count" class="text-[#0A0C10]">0</strong> / 9 Sights</span>
+              <span><span id="bingo-stamped-prefix">Stamped:</span> <strong id="bingo-marked-count" class="text-[#0A0C10]">0</strong> <span id="bingo-stamped-suffix">/ 9 Sights</span></span>
             </div>
-            <span>Status: <strong id="bingo-status-text" class="text-[#D99B26]">Tap cells to stamp</strong></span>
+            <span><span id="bingo-status-label">Status:</span> <strong id="bingo-status-text" class="text-[#D99B26]">Tap cells to stamp</strong></span>
           </div>
 
         </div>
@@ -1223,10 +1223,10 @@
             <div>
               <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#4A52B0]/15 border border-[#4A52B0]/30 text-[#4A52B0] font-mono text-xs font-bold uppercase mb-1">
                 <i data-lucide="puzzle" class="w-3.5 h-3.5"></i>
-                <span>Interactive Route Assembler</span>
+                <span id="puzzle-badge">Interactive Route Assembler</span>
               </div>
-              <h3 class="font-heading font-extrabold text-2xl text-[#0A0C10]">Build Next Stop via Puzzle</h3>
-              <p class="text-xs font-sans text-[#78716C]">Sequence the rail corridor stations and flagship locomotive components from North to South in the correct geographic order.</p>
+              <h3 id="puzzle-title" class="font-heading font-extrabold text-2xl text-[#0A0C10]">Build Next Stop via Puzzle</h3>
+              <p id="puzzle-subtitle" class="text-xs font-sans text-[#78716C]">Sequence the rail corridor stations and flagship locomotive components from North to South in the correct geographic order.</p>
             </div>
 
             <div class="flex items-center gap-2">
