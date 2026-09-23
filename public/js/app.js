@@ -10144,11 +10144,48 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       const voiceTitle = document.getElementById('voice-title');
       const voiceSub = document.getElementById('voice-subtitle');
       const voiceLandmarkLabel = document.getElementById('voice-landmark-label');
+      const voiceCategoryLabel = document.getElementById('voice-category-label');
+      const voiceRecordStatusLabel = document.getElementById('voiceRecordStatus');
+      const voiceRecordHint = document.getElementById('voiceRecordHint');
+      const voiceEngineTag = document.getElementById('voiceEngineTag');
+      const voiceTranscriptLabel = document.getElementById('voiceTranscriptLabel');
+      const voiceTranscriptInput = document.getElementById('voiceTranscriptInput');
+      const btnVoiceClearLabel = document.getElementById('btnVoiceClearLabel');
+      const btnVoiceCopyLabel = document.getElementById('btnVoiceCopyLabel');
+      const btnVoiceReadAloudLabel = document.getElementById('btnVoiceReadAloudLabel');
+      const btnVoiceSimulateLabel = document.getElementById('btnVoiceSimulateLabel');
+      const btnSaveVoiceEntryLabel = document.getElementById('btnSaveVoiceEntryLabel');
+      const savedVoiceNotesTitle = document.getElementById('savedVoiceNotesTitle');
+      const savedVoiceNotesSub = document.getElementById('savedVoiceNotesSub');
+      const voiceSearchInput = document.getElementById('voiceSearchInput');
+      const voiceFilterAllLabel = document.getElementById('voice-filter-all-label');
+      const voiceFilterBlueLabel = document.getElementById('voice-filter-blue-label');
+      const voiceFilterRovosLabel = document.getElementById('voice-filter-rovos-label');
+      const voiceExportCopyHint = document.getElementById('voiceExportCopyHint');
+      const btnExportJournalLabel = document.getElementById('btnExportJournalLabel');
 
       if (voiceBadge && dict.voice_badge) voiceBadge.textContent = dict.voice_badge;
       if (voiceTitle && dict.voice_title) voiceTitle.innerHTML = dict.voice_title;
       if (voiceSub && dict.voice_subtitle) voiceSub.textContent = dict.voice_subtitle;
       if (voiceLandmarkLabel && dict.voice_landmark_label) voiceLandmarkLabel.textContent = dict.voice_landmark_label;
+      if (voiceCategoryLabel && dict.voice_category_label) voiceCategoryLabel.textContent = dict.voice_category_label;
+      if (voiceRecordHint && dict.voice_record_hint) voiceRecordHint.textContent = dict.voice_record_hint;
+      if (voiceEngineTag && dict.voice_engine_tag) voiceEngineTag.textContent = dict.voice_engine_tag;
+      if (voiceTranscriptLabel && dict.voice_transcript_label) voiceTranscriptLabel.innerHTML = `<i data-lucide="file-text" class="w-3.5 h-3.5 text-[#D99B26]"></i> ${dict.voice_transcript_label}`;
+      if (voiceTranscriptInput && dict.voice_transcript_ph) voiceTranscriptInput.placeholder = dict.voice_transcript_ph;
+      if (btnVoiceClearLabel && dict.btn_voice_clear) btnVoiceClearLabel.textContent = dict.btn_voice_clear;
+      if (btnVoiceCopyLabel && dict.btn_voice_copy) btnVoiceCopyLabel.textContent = dict.btn_voice_copy;
+      if (btnVoiceReadAloudLabel && dict.btn_voice_read_back) btnVoiceReadAloudLabel.textContent = dict.btn_voice_read_back;
+      if (btnVoiceSimulateLabel && dict.btn_voice_simulate) btnVoiceSimulateLabel.textContent = dict.btn_voice_simulate;
+      if (btnSaveVoiceEntryLabel && dict.btn_voice_save) btnSaveVoiceEntryLabel.textContent = dict.btn_voice_save;
+      if (savedVoiceNotesTitle && dict.voice_saved_title) savedVoiceNotesTitle.textContent = dict.voice_saved_title;
+      if (savedVoiceNotesSub && dict.voice_saved_sub) savedVoiceNotesSub.textContent = dict.voice_saved_sub;
+      if (voiceSearchInput && dict.voice_search_ph) voiceSearchInput.placeholder = dict.voice_search_ph;
+      if (voiceFilterAllLabel && dict.voice_filter_all) voiceFilterAllLabel.textContent = dict.voice_filter_all;
+      if (voiceFilterBlueLabel && dict.voice_filter_blue) voiceFilterBlueLabel.textContent = dict.voice_filter_blue;
+      if (voiceFilterRovosLabel && dict.voice_filter_rovos) voiceFilterRovosLabel.textContent = dict.voice_filter_rovos;
+      if (voiceExportCopyHint && dict.voice_export_hint) voiceExportCopyHint.textContent = dict.voice_export_hint;
+      if (btnExportJournalLabel && dict.btn_export_journal) btnExportJournalLabel.textContent = dict.btn_export_journal;
 
       // Heritage Pillars
       const p1Title = document.getElementById('pillar-1-title');
