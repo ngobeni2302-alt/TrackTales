@@ -328,7 +328,74 @@ def create_ticket(ticket_req: TicketRequest):
         "status": "CONFIRMED & READY FOR BOARDING"
     }
     
-    return {"status": "success", "message": "Souvenir Boarding Pass Generated", "ticket": ticket_pass}
+class TranslateRequest(BaseModel):
+    texts: List[str]
+    target_lang: str
+
+@app.get("/api/translations", summary="Get cached master translation dictionary")
+def get_translations():
+    cache_path = os.path.join(os.path.dirname(__file__), "scratch", "translations_cache.json")
+    if os.path.exists(cache_path):
+        import json
+        with open(cache_path, "r", encoding="utf-8") as f:
+            return JSONResponse(json.load(f))
+    return JSONResponse({})
+
+@app.post("/api/translate", summary="Translate dynamic strings on the fly with persistent caching")
+def translate_texts(req: TranslateRequest):
+    import json, urllib.request, urllib.parse
+    cache_path = os.path.join(os.path.dirname(__file__), "scratch", "translations_cache.json")
+    cache = {}
+    if os.path.exists(cache_path):
+        try:
+            with open(cache_path, "r", encoding="utf-8") as f:
+                cache = json.load(f)
+        except Exception:
+            cache = {}
+
+    target = req.target_lang
+    if target not in cache:
+        cache[target] = {}
+
+    results = {}
+    needed = []
+    for t in req.texts:
+        clean = t.strip()
+        if not clean:
+            continue
+        if clean in cache[target]:
+            results[clean] = cache[target][clean]
+        else:
+            needed.append(clean)
+
+    if needed:
+        chunk_size = 20
+        api_lang = "zh-CN" if target == "zh" else target
+        for i in range(0, len(needed), chunk_size):
+            chunk = needed[i:i+chunk_size]
+            combined = "\n###\n".join(chunk)
+            url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=" + api_lang + "&dt=t&q=" + urllib.parse.quote(combined)
+            try:
+                rq = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+                with urllib.request.urlopen(rq, timeout=6) as resp:
+                    data = json.loads(resp.read().decode("utf-8"))
+                    full_res = "".join(part[0] for part in data[0] if part[0])
+                    parts = [p.strip() for p in full_res.split("###")]
+                    for orig, trans in zip(chunk, parts):
+                        cache[target][orig] = trans
+                        results[orig] = trans
+            except Exception:
+                for orig in chunk:
+                    results[orig] = orig
+
+        try:
+            os.makedirs(os.path.dirname(cache_path), exist_ok=True)
+            with open(cache_path, "w", encoding="utf-8") as f:
+                json.dump(cache, f, ensure_ascii=False, indent=2)
+        except Exception:
+            pass
+
+    return {"status": "success", "target_lang": target, "translations": results}
 
 # --- Mount Static Frontend Files ---
 static_dir = os.path.join(os.path.dirname(__file__), "public")

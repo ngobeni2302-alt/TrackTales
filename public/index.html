@@ -4,6 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
+  <!-- Early Multilingual Persistence Bootstrap: prevents untranslated flash -->
+  <script>
+    (function() {
+      try {
+        var lang = localStorage.getItem('tracktales_lang');
+        if (!lang) {
+          var m = document.cookie.match(/(?:^|;\s*)tracktales_lang=([^;]+)/);
+          if (m) lang = m[1];
+        }
+        if (lang) {
+          document.documentElement.lang = lang;
+          if (lang === 'ar') document.documentElement.setAttribute('dir', 'rtl');
+        }
+      } catch(e) {}
+    })();
+  </script>
+
   <!-- SEO Best Practices & Favicon -->
   <title>TrackTales | Pretoria to Cape Town Cinematic Digital Rail Companion</title>
   <link rel="icon" type="image/jpeg" href="./images/tracktales-logo.jpg">
@@ -199,12 +216,36 @@
       <!-- LEFT PANEL: Auth Forms (Warm Cream White) -->
       <div class="w-full md:w-1/2 p-8 sm:p-11 flex flex-col justify-between bg-[#FAF8F5] relative overflow-y-auto">
         
-        <!-- Logo Header with Official TrackTales Logo -->
-        <div class="flex items-center gap-3.5 mb-4">
-          <img src="./images/tracktales-logo.jpg" alt="TrackTales Logo" class="w-12 h-12 rounded-full object-cover shadow-md border-2 border-[#D99B26]">
-          <div class="flex flex-col text-left">
-            <span class="font-heading font-extrabold tracking-wider text-xl text-[#1C1917] leading-none">TRACK<span class="text-[#D99B26]">TALES</span></span>
-            <span class="text-[9px] font-mono text-[#78716C] font-bold tracking-widest uppercase mt-1">REAL ROUTES. EXTRAORDINARY STORIES.</span>
+        <!-- Logo & Multilingual Language Selector Header -->
+        <div class="flex items-center justify-between gap-2.5 mb-4">
+          <div class="flex items-center gap-3">
+            <img src="./images/tracktales-logo.jpg" alt="TrackTales Logo" class="w-11 h-11 rounded-full object-cover shadow-md border-2 border-[#D99B26]">
+            <div class="flex flex-col text-left">
+              <span class="font-heading font-extrabold tracking-wider text-xl text-[#1C1917] leading-none">TRACK<span class="text-[#D99B26]">TALES</span></span>
+              <span class="text-[9px] font-mono text-[#78716C] font-bold tracking-widest uppercase mt-1">REAL ROUTES. EXTRAORDINARY STORIES.</span>
+            </div>
+          </div>
+          <!-- Synchronized Splash Language Switcher -->
+          <div class="relative inline-flex items-center shrink-0">
+            <select id="splash-lang-select" class="tracktales-lang-select px-2.5 py-1.5 rounded-full text-[11px] font-mono font-bold text-[#1C1917] bg-white border border-[#D6CFC7] focus:outline-none focus:border-[#D99B26] cursor-pointer appearance-none pr-6 shadow-sm" title="Switch Language">
+              <option value="en">EN · English</option>
+              <option value="af">AF · Afrikaans</option>
+              <option value="zu">ZU · isiZulu</option>
+              <option value="xh">XH · isiXhosa</option>
+              <option value="de">DE · Deutsch</option>
+              <option value="fr">FR · Français</option>
+              <option value="nl">NL · Nederlands</option>
+              <option value="es">ES · Español</option>
+              <option value="it">IT · Italiano</option>
+              <option value="pt">PT · Português</option>
+              <option value="zh">ZH · 简体中文</option>
+              <option value="ja">JA · 日本語</option>
+              <option value="ko">KO · 한국어</option>
+              <option value="hi">HI · हिन्दी</option>
+              <option value="ru">RU · Русский</option>
+              <option value="ar">AR · العربية</option>
+            </select>
+            <i data-lucide="chevron-down" class="w-3 h-3 text-[#78716C] absolute right-2 pointer-events-none"></i>
           </div>
         </div>
 
@@ -2451,6 +2492,10 @@
     </div>
   </div>
 
+
+  <!-- TrackTales Universal Multilingual Engine & Dictionary Data -->
+  <script src="./js/translations-data.js?v=2.0"></script>
+  <script src="./js/translation-engine.js?v=2.0"></script>
 
   <!-- Main JavaScript App Logic -->
   <script src="./js/app.js?v=3.0"></script>

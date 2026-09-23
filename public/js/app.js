@@ -3615,6 +3615,11 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       localStorage.removeItem('last_user');
       localStorage.removeItem('last_password');
 
+      // Explicitly preserve passenger selected language across logout
+      const currentSavedLang = localStorage.getItem('tracktales_lang') || 'en';
+      localStorage.setItem('tracktales_lang', currentSavedLang);
+      document.cookie = `tracktales_lang=${currentSavedLang}; path=/; max-age=31536000; SameSite=Lax`;
+
       // 2. Clear all input fields across both splash and modal forms
       const inputIds = [
         'splash-signin-email', 'splash-signin-password',
@@ -3652,19 +3657,21 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         loginModal.style.display = 'none';
       }
 
-      // 6. Reset UI navbar sign-in buttons
+      // 6. Reset UI navbar sign-in buttons using active language
       const openBtn = document.getElementById('btn-open-login');
       const desktopLabel = document.getElementById('desktop-login-label');
       const mobileOpenBtn = document.getElementById('mobile-drawer-login-btn');
-      if (desktopLabel) desktopLabel.textContent = "Sign In";
-      if (openBtn) openBtn.innerHTML = `<i data-lucide="user-check" class="w-4 h-4 text-[#D99B26]"></i> <span id="desktop-login-label">Sign In</span>`;
-      if (mobileOpenBtn) mobileOpenBtn.innerHTML = `<i data-lucide="user-check" class="w-4 h-4"></i> <span>Sign In / Account</span>`;
+      const signInText = window.TrackTalesTranslateText ? window.TrackTalesTranslateText("Sign In") : "Sign In";
+      const signInAccountText = window.TrackTalesTranslateText ? window.TrackTalesTranslateText("Sign In / Account") : "Sign In / Account";
+      if (desktopLabel) desktopLabel.textContent = signInText;
+      if (openBtn) openBtn.innerHTML = `<i data-lucide="user-check" class="w-4 h-4 text-[#D99B26]"></i> <span id="desktop-login-label">${signInText}</span>`;
+      if (mobileOpenBtn) mobileOpenBtn.innerHTML = `<i data-lucide="user-check" class="w-4 h-4"></i> <span>${signInAccountText}</span>`;
       if (window.lucide) lucide.createIcons();
 
       // 7. Reset selected train to default
       setSelectedTrain('blue-train');
 
-      // 8. Always automatically reload cleanly directly to the login splash page with zero information
+      // 8. Always automatically reload cleanly directly to the login splash page with language intact
       window.location.href = '/';
     };
     window.TrackTalesSignOutAndReload = handleSignOutAndReload;
@@ -3965,14 +3972,21 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
           setSelectedTrain(rememberedTrain);
 
           const displayName = userRecord.name || email.split('@')[0].replace('.', ' ').toUpperCase();
+          const rememberedLang = userRecord.preferred_language || localStorage.getItem('tracktales_lang') || 'en';
           const userObj = {
             name: displayName,
             email: email,
-            preferred_train: rememberedTrain
+            preferred_train: rememberedTrain,
+            preferred_language: rememberedLang
           };
 
           localStorage.setItem('tracktales_logged_user', JSON.stringify(userObj));
           localStorage.setItem('tracktales_selected_train', rememberedTrain);
+
+          // Restore passenger preferred language seamlessly
+          if (window.TrackTalesTranslationEngine) {
+            window.TrackTalesTranslationEngine.setLanguage(rememberedLang, true);
+          }
 
           if (!rememberMe || rememberMe.checked) {
             localStorage.setItem('last_user', email);
@@ -3984,8 +3998,9 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
           const openBtn = document.getElementById('btn-open-login');
           const desktopLabel = document.getElementById('desktop-login-label');
-          if (desktopLabel) desktopLabel.textContent = "Sign Out";
-          if (openBtn) openBtn.innerHTML = `<i data-lucide="log-out" class="w-4 h-4 text-[#D99B26]"></i> <span id="desktop-login-label">Sign Out</span>`;
+          const signOutText = window.TrackTalesTranslateText ? window.TrackTalesTranslateText("Sign Out") : "Sign Out";
+          if (desktopLabel) desktopLabel.textContent = signOutText;
+          if (openBtn) openBtn.innerHTML = `<i data-lucide="log-out" class="w-4 h-4 text-[#D99B26]"></i> <span id="desktop-login-label">${signOutText}</span>`;
           if (window.lucide) lucide.createIcons();
 
           const chosenTrainName = rememberedTrain === 'blue-train' ? 'The Blue Train' : 'Rovos Rail Safari';
@@ -4039,12 +4054,14 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         if (btnLabel) btnLabel.textContent = "Registering Passport...";
 
         setTimeout(() => {
-          // Save full user profile with their selected train preference
+          // Save full user profile with their selected train and language preferences
+          const savedLang = localStorage.getItem('tracktales_lang') || 'en';
           const savedUser = saveRegisteredUserRecord({
             name: name || email.split('@')[0],
             email: email,
             password: password,
             preferred_train: selectedTrain,
+            preferred_language: savedLang,
             created_at: new Date().toISOString()
           });
           
@@ -4052,7 +4069,8 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
           const userObj = {
             name: displayName,
             email: email,
-            preferred_train: selectedTrain
+            preferred_train: selectedTrain,
+            preferred_language: savedLang
           };
 
           localStorage.setItem('tracktales_logged_user', JSON.stringify(userObj));
@@ -4062,8 +4080,9 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
           const openBtn = document.getElementById('btn-open-login');
           const desktopLabel = document.getElementById('desktop-login-label');
-          if (desktopLabel) desktopLabel.textContent = "Sign Out";
-          if (openBtn) openBtn.innerHTML = `<i data-lucide="log-out" class="w-4 h-4 text-[#D99B26]"></i> <span id="desktop-login-label">Sign Out</span>`;
+          const signOutText = window.TrackTalesTranslateText ? window.TrackTalesTranslateText("Sign Out") : "Sign Out";
+          if (desktopLabel) desktopLabel.textContent = signOutText;
+          if (openBtn) openBtn.innerHTML = `<i data-lucide="log-out" class="w-4 h-4 text-[#D99B26]"></i> <span id="desktop-login-label">${signOutText}</span>`;
           if (window.lucide) lucide.createIcons();
 
           const chosenTrainName = selectedTrain === 'blue-train' ? 'The Blue Train' : 'Rovos Rail Safari';
@@ -10168,6 +10187,12 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       window.TrackTalesLanguageCode = code;
       document.documentElement.lang = code;
       localStorage.setItem('tracktales_lang', code);
+      document.cookie = `tracktales_lang=${code}; path=/; max-age=31536000; SameSite=Lax`;
+
+      // Trigger full DOM Universal Translation Engine
+      if (window.TrackTalesTranslationEngine) {
+        window.TrackTalesTranslationEngine.setLanguage(code, false);
+      }
 
       // Re-render stories, trains & subscription features in current language
       const currentTrainId = localStorage.getItem('tracktales_selected_train') || 'blue-train';
@@ -10200,12 +10225,22 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       }
     }
 
+    // Expose TRANSLATIONS to window for fallback
+    window.TrackTalesLegacyTranslations = TRANSLATIONS;
+
     langSelect.addEventListener('change', (e) => {
       applyLanguage(e.target.value);
     });
 
+    window.addEventListener('tracktales:language-change', (e) => {
+      const code = e.detail && e.detail.lang;
+      if (code && code !== window.TrackTalesLanguageCode) {
+        applyLanguage(code);
+      }
+    });
+
     const savedLang = localStorage.getItem('tracktales_lang');
-    if (savedLang && TRANSLATIONS[savedLang]) {
+    if (savedLang) {
       langSelect.value = savedLang;
       applyLanguage(savedLang);
     }
