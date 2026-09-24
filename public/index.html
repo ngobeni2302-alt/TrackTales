@@ -518,6 +518,78 @@
     </section>
 
 
+    <section class="sr-accessibility-panel" aria-label="Inclusive passenger travel accessibility controls">
+      <div class="sr-panel-shell">
+        <div class="sr-panel-header">
+          <div class="sr-header-tag">
+            <span class="sr-header-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M10.8 6.2a2.7 2.7 0 0 1 5.4 0v1.6m-3.8 2.8a2.7 2.7 0 0 1-5.4 0V7.8m5.4 6.8v6M6.8 15.5l-2.2 1.7m13.4-1.7 2.2 1.7M10.8 6.2h4.4M9.5 9.6h6.7v4.2a3.2 3.2 0 0 1-6.4 0V9.6Z"/></svg>
+            </span>
+            <span>INCLUSIVE PASSENGER TRAVEL</span>
+          </div>
+          <button type="button" class="sr-close-btn" aria-label="Close accessibility panel">×</button>
+        </div>
+
+        <div class="sr-panel-title-row">
+          <div class="sr-panel-icon" aria-hidden="true">◉</div>
+          <h2>Blind &amp; <span>Low-Vision Suite</span></h2>
+        </div>
+
+        <p class="sr-panel-subtitle">Audio screen narration, contrast controls, and text scaling</p>
+
+        <div class="sr-option-list">
+          <div class="sr-option-row">
+            <div class="sr-option-copy">
+              <h3>Screen Reader Audio Narrator</h3>
+              <p>Automatically speaks out loud buttons, corridor stops, stories, and quiz choices when focused or clicked.</p>
+            </div>
+            <button type="button" class="sr-toggle is-on" aria-pressed="true" aria-label="Toggle screen reader audio narrator on">
+              <span class="sr-toggle-knob"></span>
+            </button>
+          </div>
+
+          <div class="sr-option-row">
+            <div class="sr-option-copy">
+              <h3>High Contrast Dark Canvas</h3>
+              <p>Applies an ultra-high contrast dark canvas with crisp white typography for low-vision clarity.</p>
+            </div>
+            <button type="button" class="sr-toggle" aria-pressed="false" aria-label="Toggle high contrast dark canvas">
+              <span class="sr-toggle-knob"></span>
+            </button>
+          </div>
+
+          <div class="sr-option-row">
+            <div class="sr-option-copy">
+              <h3>Large Font Scaling (+25%)</h3>
+              <p>Increases base text size, button labels, and descriptions for improved readability.</p>
+            </div>
+            <button type="button" class="sr-toggle" aria-pressed="false" aria-label="Toggle large font scaling">
+              <span class="sr-toggle-knob"></span>
+            </button>
+          </div>
+
+          <div class="sr-speed-row">
+            <div class="sr-speed-head">
+              <h3>Speech Speed Rate</h3>
+              <span class="sr-speed-value">0.7x <small>(Slower)</small></span>
+            </div>
+            <input id="speech-rate-control" type="range" min="0.5" max="1.5" step="0.1" value="0.7" aria-label="Speech speed rate">
+          </div>
+        </div>
+
+        <div class="sr-actions">
+          <button type="button" id="read-page-aloud-btn" class="sr-primary-btn">
+            <span class="sr-action-icon" aria-hidden="true">▶</span>
+            <span>READ PAGE ALOUD</span>
+          </button>
+          <button type="button" id="stop-speech-btn" class="sr-secondary-btn">
+            <span class="sr-action-icon" aria-hidden="true">◼</span>
+            <span>Stop Speech</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
     <!-- PAGE: CORRIDOR STOPS (CINEMATIC LIVING JOURNEY) -->
     <section id="page-stops" class="page-view pt-28 sm:pt-32 pb-24 px-4 sm:px-8 lg:px-12 max-w-[1440px] mx-auto w-full min-h-screen relative overflow-hidden">
       <!-- Atmospheric Background Layers -->

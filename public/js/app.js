@@ -154,6 +154,7 @@
     safeExec(setupRoutePreviewModal, 'setupRoutePreviewModal');
     safeExec(setupMobileMenu, 'setupMobileMenu');
     safeExec(setupAnimatedTabs, 'setupAnimatedTabs');
+    safeExec(setupAccessibilityPanel, 'setupAccessibilityPanel');
     safeExec(setupMotionEntranceAnimations, 'setupMotionEntranceAnimations');
     safeExec(setup3DCanvasGlobe, 'setup3DCanvasGlobe');
     safeExec(setupCorridorStops, 'setupCorridorStops');
@@ -938,6 +939,91 @@
     
     // Initial UI render on app boot
     renderPassportUI();
+  }
+
+  function setupAccessibilityPanel() {
+    const panel = document.querySelector('.sr-accessibility-panel');
+    if (!panel) return;
+
+    const toggles = panel.querySelectorAll('.sr-toggle');
+    const rateControl = document.getElementById('speech-rate-control');
+    const readBtn = document.getElementById('read-page-aloud-btn');
+    const stopBtn = document.getElementById('stop-speech-btn');
+    const speedValue = panel.querySelector('.sr-speed-value');
+
+    const updateRateText = () => {
+      if (!rateControl || !speedValue) return;
+      const value = Number(rateControl.value);
+      const label = value < 0.9 ? 'Slower' : value > 1.1 ? 'Faster' : 'Balanced';
+      speedValue.innerHTML = `${value.toFixed(1)}x <small>(${label})</small>`;
+    };
+
+    if (rateControl) {
+      rateControl.addEventListener('input', () => {
+        updateRateText();
+        if (window.speechSynthesis && window.speechSynthesis.speaking) {
+          const utterance = new SpeechSynthesisUtterance('');
+          utterance.rate = Number(rateControl.value);
+        }
+      });
+    }
+
+    toggles.forEach((toggle) => {
+      toggle.addEventListener('click', () => {
+        const isOn = toggle.classList.toggle('is-on');
+        toggle.setAttribute('aria-pressed', String(isOn));
+        if (toggle.getAttribute('aria-label')?.includes('large font')) {
+          document.body.classList.toggle('sr-large-font', isOn);
+        }
+        if (toggle.getAttribute('aria-label')?.includes('high contrast')) {
+          document.body.classList.toggle('sr-high-contrast', isOn);
+        }
+        if (toggle.getAttribute('aria-label')?.includes('screen reader')) {
+          if (!isOn && window.speechSynthesis) {
+            window.speechSynthesis.cancel();
+          }
+        }
+      });
+    });
+
+    const stopSpeech = () => {
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+    };
+
+    if (stopBtn) {
+      stopBtn.addEventListener('click', stopSpeech);
+    }
+
+    if (readBtn) {
+      readBtn.addEventListener('click', () => {
+        if (!('speechSynthesis' in window)) {
+          window.alert('Your browser does not support speech synthesis.');
+          return;
+        }
+
+        stopSpeech();
+        const text = document.body.innerText
+          .replace(/\s+/g, ' ')
+          .trim();
+
+        const utterance = new SpeechSynthesisUtterance(text || 'This page has no readable text yet.');
+        if (rateControl) {
+          utterance.rate = Number(rateControl.value);
+        }
+        window.speechSynthesis.speak(utterance);
+      });
+    }
+
+    const closeBtn = panel.querySelector('.sr-close-btn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        panel.style.display = 'none';
+      });
+    }
+
+    updateRateText();
   }
 
   // --- 1. Video Loading Splash Screen & Passenger Auth Card Controller ---
