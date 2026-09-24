@@ -4725,6 +4725,130 @@ p {
   background-position: left 0.5rem center !important;
 }
 
+.react-bits-spotlight-card {
+  position: relative;
+  overflow: hidden;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.15s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.react-bits-spotlight-card .spotlight-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(450px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--spotlight-color, rgba(217, 155, 38, 0.25)), transparent 75%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.react-bits-spotlight-card:hover .spotlight-glow {
+  opacity: 1;
+}
+
+.react-bits-spotlight-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: radial-gradient(350px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--spotlight-border-color, rgba(217, 155, 38, 0.6)), transparent 70%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.react-bits-spotlight-card:hover::after {
+  opacity: 1;
+}
+
+.react-bits-spotlight-card > * {
+  position: relative;
+  z-index: 10;
+}
+
+/* Story Modal Animated Entrance */
+@keyframes storyModalPopIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.92) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-story-modal-open {
+  animation: storyModalPopIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Staggered Story Paragraph Reveal Automation */
+@keyframes storyParagraphSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.story-paragraph-reveal {
+  opacity: 0;
+  animation: storyParagraphSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* React Bits Shiny Text Shimmer */
+@keyframes shinyTextSweep {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.react-bits-shiny-badge {
+  background: linear-gradient(90deg, rgba(74, 82, 176, 0.08) 0%, rgba(217, 155, 38, 0.35) 50%, rgba(74, 82, 176, 0.08) 100%);
+  background-size: 200% 100%;
+  animation: shinyTextSweep 4s linear infinite;
+}
+
+/* React Bits Magnet Button */
+.react-bits-magnet-btn {
+  will-change: transform;
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.2s ease;
+}
+
+.react-bits-magnet-btn:hover {
+  box-shadow: 0 6px 20px rgba(217, 155, 38, 0.4);
+}
+
+/* Voice Synchronized Narration Active Highlight */
+.narration-active-paragraph {
+  background: rgba(217, 155, 38, 0.12) !important;
+  border-left: 4px solid #D99B26 !important;
+  padding-left: 0.85rem !important;
+  border-radius: 0 0.75rem 0.75rem 0 !important;
+  box-shadow: 0 4px 15px rgba(217, 155, 38, 0.15) !important;
+  transition: all 0.3s cubic-bezier(0.2, 0, 0.2, 1) !important;
+}
+
+
+
+
+
+
+
 
 
 

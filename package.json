@@ -19,5 +19,10 @@
     "vercel"
   ],
   "author": "TrackTales Team",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "framer-motion": "^13.4.2",
+    "lucide-react": "^1.48.0",
+    "react-bits": "^1.0.5"
+  }
 }

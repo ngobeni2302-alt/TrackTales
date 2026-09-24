@@ -1,0 +1,302 @@
+/* 1. Spotlight Card Component */
+.react-bits-spotlight {
+  position: relative;
+  overflow: hidden;
+  --spotlight-x: 50%;
+  --spotlight-y: 50%;
+  --spotlight-color: rgba(56, 189, 248, 0.18);
+  --spotlight-size: 350px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.react-bits-spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(var(--spotlight-size) circle at var(--spotlight-x) var(--spotlight-y),
+      var(--spotlight-color),
+      transparent 80%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+.react-bits-spotlight:hover::before {
+  opacity: 1;
+}
+
+.react-bits-spotlight-gold {
+  --spotlight-color: rgba(217, 155, 38, 0.22);
+}
+
+.react-bits-spotlight-emerald {
+  --spotlight-color: rgba(46, 125, 70, 0.22);
+}
+
+/* 2. Shiny Text Component */
+.react-bits-shiny-text {
+  color: transparent;
+  background: linear-gradient(120deg,
+      #0F172A 0%,
+      #0F172A 35%,
+      #38BDF8 50%,
+      #0F172A 65%,
+      #0F172A 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: react-bits-shiny-sweep 4s linear infinite;
+  display: inline-block;
+}
+
+.dark .react-bits-shiny-text {
+  background: linear-gradient(120deg,
+      #F8FAF0 0%,
+      #F8FAF0 35%,
+      #7DD3FC 50%,
+      #F8FAF0 65%,
+      #F8FAF0 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.react-bits-shiny-gold {
+  background: linear-gradient(120deg,
+      #0A0C10 0%,
+      #0A0C10 30%,
+      #D99B26 50%,
+      #F59E0B 60%,
+      #0A0C10 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@keyframes react-bits-shiny-sweep {
+  0% {
+    background-position: 100% 0;
+  }
+
+  100% {
+    background-position: -100% 0;
+  }
+}
+
+/* 3. Magnet Button & Element */
+.react-bits-magnet {
+  display: inline-block;
+  will-change: transform;
+  transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* 4. 3D Tilt Card */
+.react-bits-tilt-card {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.4, 1);
+}
+
+.react-bits-tilt-content {
+  transform: translateZ(20px);
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.4, 1);
+}
+
+/* 5. Split Text Character Animation */
+.react-bits-split-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(18px) scale(0.9);
+  animation: react-bits-char-appear 0.5s forwards cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes react-bits-char-appear {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 6. Particle Railway Canvas Container */
+#react-bits-particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.65;
+  transition: opacity 0.5s ease;
+}
+
+.dark #react-bits-particle-canvas {
+  opacity: 0.85;
+}
+
+/* 7. Pixel Border Glow Effect */
+.react-bits-pixel-glow {
+  position: relative;
+}
+
+.react-bits-pixel-glow::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(90deg, #38BDF8, #D99B26, #2E7D46, #38BDF8);
+  background-size: 300% 300%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: react-bits-gradient-rotate 6s ease infinite;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+@keyframes react-bits-gradient-rotate {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* 8. React Bits Dynamic Badge */
+.react-bits-badge {
+  display: inline-flex;
+  items-center: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: rgba(56, 189, 248, 0.1);
+  color: #0284c7;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
+}
+
+.dark .react-bits-badge {
+  background: rgba(56, 189, 248, 0.15);
+  color: #7dd3fc;
+  border-color: rgba(125, 211, 252, 0.4);
+}
+
+/* ==========================================================================
+   9. Selected Journey Stories Animations
+   ========================================================================== */
+
+/* Entrance Stagger Keyframe Animation */
+@keyframes storyCardEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(32px) scale(0.96);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.story-card-animate {
+  animation: storyCardEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+/* Story Card Deluxe Hover Effects */
+.story-card-wrapper {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.story-card-wrapper:hover {
+  transform: translateY(-8px) scale(1.015);
+  box-shadow: 0 22px 45px -10px rgba(74, 82, 176, 0.18), 0 10px 20px -5px rgba(217, 155, 38, 0.1);
+  border-color: rgba(74, 82, 176, 0.4) !important;
+}
+
+/* Animated Top Rail Accent Line */
+.story-card-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #4A52B0, #D99B26, #2E7D46, #4A52B0);
+  background-size: 200% 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 5;
+}
+
+.story-card-wrapper:hover::before {
+  transform: scaleX(1);
+  animation: storyGradientSweep 3s linear infinite;
+}
+
+@keyframes storyGradientSweep {
+  0% {
+    background-position: 0% 0%;
+  }
+
+  100% {
+    background-position: 200% 0%;
+  }
+}
+
+/* Story Title Hover Glow */
+.story-card-wrapper .story-title {
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.story-card-wrapper:hover .story-title {
+  color: #4A52B0;
+  transform: translateX(2px);
+}
+
+/* Read Full Story Button Animation */
+.story-card-wrapper .btn-read-story {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.story-card-wrapper:hover .btn-read-story {
+  background-color: #0A0C10 !important;
+  color: #FFFFFF !important;
+  border-color: #0A0C10 !important;
+  box-shadow: 0 8px 20px rgba(10, 12, 16, 0.25);
+  transform: translateY(-2px);
+}
+
+.story-card-wrapper .btn-read-story i {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.story-card-wrapper:hover .btn-read-story i {
+  transform: scale(1.25) rotate(-6deg);
+  color: #D99B26;
+}
+
+/* Badge Pulse on Hover */
+.story-card-wrapper:hover .story-badge {
+  box-shadow: 0 0 12px rgba(74, 82, 176, 0.25);
+  transform: scale(1.05);
+}

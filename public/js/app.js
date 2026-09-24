@@ -2474,7 +2474,9 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
   function formatStoryContent(text) {
     const paragraphs = String(text || '').split(/\n\s*\n/).filter(Boolean);
-    return paragraphs.map(paragraph => `<p>${paragraph.trim()}</p>`).join('');
+    return paragraphs.map((paragraph, idx) => 
+      `<p class="story-paragraph-reveal text-sm sm:text-base leading-relaxed mb-4 text-[#292524]" style="animation-delay: ${(idx + 1) * 0.12}s;">${paragraph.trim()}</p>`
+    ).join('');
   }
 
   // --- Dynamic Stories Archive for Selected Train ---
@@ -2514,29 +2516,56 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
     const readBtnLabel = (dict && dict.stories_read_story_btn) ? dict.stories_read_story_btn : 'Read Full Story';
     const byPrefix = (dict && dict.by_author) ? dict.by_author : 'By';
 
-    container.innerHTML = filteredStories.map(story => `
-      <div class="glass-card p-8 rounded-3xl border border-black/10 flex flex-col justify-between text-left hover:border-[${accentColor}]/60 transition-all shadow-sm group">
-        <div>
-          <div class="flex items-center justify-between gap-2 mb-4">
-            <span class="px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase ${story.train_id === 'all' ? 'bg-[#4A52B0]/15 text-[#4A52B0] border border-[#4A52B0]/30' : (isBlue ? 'bg-[#D99B26]/15 text-[#B87C10] border border-[#D99B26]/30' : 'bg-[#2A9D8F]/15 text-[#2A9D8F] border border-[#2A9D8F]/30')}">
-              ${story.train_id === 'all' ? ((dict && dict.stories_heritage_tag) ? dict.stories_heritage_tag : 'Corridor Heritage') : trainName}
-            </span>
-            <span class="text-xs font-mono text-[#78716C] font-semibold">${getStoryReadTime(story)}</span>
+    container.innerHTML = filteredStories.map(story => {
+      const spotColor = story.train_id === 'all' ? 'rgba(74, 82, 176, 0.25)' : (isBlue ? 'rgba(217, 155, 38, 0.25)' : 'rgba(42, 157, 143, 0.25)');
+      const spotBorderColor = story.train_id === 'all' ? 'rgba(74, 82, 176, 0.6)' : (isBlue ? 'rgba(217, 155, 38, 0.6)' : 'rgba(42, 157, 143, 0.6)');
+
+      return `
+        <div class="react-bits-spotlight-card glass-card p-8 rounded-3xl border border-black/10 flex flex-col justify-between text-left transition-all shadow-sm group" style="--spotlight-color: ${spotColor}; --spotlight-border-color: ${spotBorderColor};">
+          <div class="spotlight-glow"></div>
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase ${story.train_id === 'all' ? 'bg-[#4A52B0]/15 text-[#4A52B0] border border-[#4A52B0]/30' : (isBlue ? 'bg-[#D99B26]/15 text-[#B87C10] border border-[#D99B26]/30' : 'bg-[#2A9D8F]/15 text-[#2A9D8F] border border-[#2A9D8F]/30')}">
+                ${story.train_id === 'all' ? ((dict && dict.stories_heritage_tag) ? dict.stories_heritage_tag : 'Corridor Heritage') : trainName}
+              </span>
+              <span class="text-xs font-mono text-[#78716C] font-semibold">${getStoryReadTime(story)}</span>
+            </div>
+
+            <h3 class="font-heading font-bold text-xl text-[#0A0C10] mb-3 group-hover:text-[${accentColor}] transition-colors leading-snug">
+              ${story.title}
+            </h3>
+
+            <p class="text-xs font-mono text-[#78716C] mb-4 font-semibold">${byPrefix} ${story.author}</p>
+            <p class="text-sm text-[#111827] font-medium leading-relaxed font-sans mb-6">${story.summary}</p>
           </div>
 
-          <h3 class="font-heading font-bold text-xl text-[#0A0C10] mb-3 group-hover:text-[${accentColor}] transition-colors leading-snug">
-            ${story.title}
-          </h3>
-
-          <p class="text-xs font-mono text-[#78716C] mb-4 font-semibold">${byPrefix} ${story.author}</p>
-          <p class="text-sm text-[#111827] font-medium leading-relaxed font-sans mb-6">${story.summary}</p>
+          <button class="w-full py-3 rounded-xl bg-black/5 hover:bg-[${accentColor}] hover:text-white border border-black/10 font-mono text-xs font-bold uppercase tracking-wider text-[#0A0C10] transition-all flex items-center justify-center gap-2 btn-read-story" data-story-id="${story.id}">
+            <i data-lucide="book-open" class="w-4 h-4"></i> ${readBtnLabel}
+          </button>
         </div>
+      `;
+    }).join('');
 
-        <button class="w-full py-3 rounded-xl bg-black/5 hover:bg-[${accentColor}] hover:text-white border border-black/10 font-mono text-xs font-bold uppercase tracking-wider text-[#0A0C10] transition-all flex items-center justify-center gap-2 btn-read-story" data-story-id="${story.id}">
-          <i data-lucide="book-open" class="w-4 h-4"></i> ${readBtnLabel}
-        </button>
-      </div>
-    `).join('');
+    // Attach spotlight & 3D tilt mouse listeners
+    container.querySelectorAll('.react-bits-spotlight-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -6;
+        const rotateY = ((x - centerX) / centerX) * 6;
+
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      });
+    });
 
     // Attach read handlers
     container.querySelectorAll('.btn-read-story').forEach(btn => {
@@ -2548,7 +2577,48 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       });
     });
 
+    // Update header section automation & magnet button effect
+    updateStoriesHeaderAutomation();
+
     if (window.lucide && typeof window.lucide.createIcons === 'function') window.lucide.createIcons();
+  }
+
+  function updateStoriesHeaderAutomation() {
+    const activeSubEl = document.getElementById('stories-active-sub-name');
+    const changePassBtn = document.getElementById('btn-upgrade-from-stories');
+
+    const subKey = localStorage.getItem('tracktales_subscription') || 'free';
+    const subNames = {
+      'free': 'Free Journey (R0)',
+      'audio-exp': 'Audio Experience (R49)',
+      'corridor-pass': 'Corridor Pass (R99)',
+      'membership': 'Future Membership (R149)'
+    };
+
+    if (activeSubEl) {
+      activeSubEl.textContent = subNames[subKey] || 'Free Journey (R0)';
+    }
+
+    if (changePassBtn && !changePassBtn.dataset.bound) {
+      changePassBtn.dataset.bound = 'true';
+
+      changePassBtn.addEventListener('mousemove', e => {
+        const rect = changePassBtn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        changePassBtn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+      });
+
+      changePassBtn.addEventListener('mouseleave', () => {
+        changePassBtn.style.transform = 'translate(0px, 0px)';
+      });
+
+      changePassBtn.addEventListener('click', () => {
+        if (window.TrackTalesOpenSubscriptionModal) {
+          window.TrackTalesOpenSubscriptionModal(subKey === 'free' ? 'membership' : subKey);
+        }
+      });
+    }
   }
 
   // --- Dynamic Attractions Rendering ---
@@ -2583,7 +2653,56 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
     if (!modal) return;
 
+    let autoScrollInterval = null;
+    const modalContent = modal.querySelector('.modal-content');
+    const progressBar = document.getElementById('story-reading-progress');
+    const autoScrollBtn = document.getElementById('btn-toggle-auto-scroll');
+    const autoScrollLabel = document.getElementById('auto-scroll-label');
+
+    if (modalContent && progressBar) {
+      modalContent.addEventListener('scroll', () => {
+        const total = modalContent.scrollHeight - modalContent.clientHeight;
+        const pct = total > 0 ? Math.min(100, Math.max(0, (modalContent.scrollTop / total) * 100)) : 0;
+        progressBar.style.width = `${pct}%`;
+      });
+    }
+
+    function stopAutoScroll() {
+      if (autoScrollInterval) {
+        clearInterval(autoScrollInterval);
+        autoScrollInterval = null;
+      }
+      if (autoScrollBtn) {
+        autoScrollBtn.classList.remove('bg-[#2A9D8F]', 'text-white');
+        autoScrollBtn.classList.add('bg-black/5', 'text-[#1C1917]');
+      }
+      if (autoScrollLabel) autoScrollLabel.textContent = 'Auto-Scroll: OFF';
+    }
+
+    if (autoScrollBtn) {
+      autoScrollBtn.addEventListener('click', () => {
+        if (autoScrollInterval) {
+          stopAutoScroll();
+        } else {
+          autoScrollBtn.classList.remove('bg-black/5', 'text-[#1C1917]');
+          autoScrollBtn.classList.add('bg-[#2A9D8F]', 'text-white');
+          if (autoScrollLabel) autoScrollLabel.textContent = 'Auto-Scroll: ON';
+
+          autoScrollInterval = setInterval(() => {
+            if (!modalContent) return;
+            modalContent.scrollTop += 1.2;
+            const total = modalContent.scrollHeight - modalContent.clientHeight;
+            if (modalContent.scrollTop >= total - 2) {
+              stopAutoScroll();
+            }
+          }, 30);
+        }
+      });
+    }
+
     window.openStoryModal = function (storyId) {
+      stopAutoScroll();
+      if (progressBar) progressBar.style.width = '0%';
       const rawStory = (appData.stories || FALLBACK_STORIES).find(s => s.id === storyId);
       if (!rawStory) return;
 
@@ -2645,6 +2764,12 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
           const playBtn = document.getElementById('modal-audio-play-btn');
           const playLabel = document.getElementById('modal-audio-play-label');
 
+          function clearParagraphHighlights() {
+            if (modal) {
+              modal.querySelectorAll('.narration-active-paragraph').forEach(p => p.classList.remove('narration-active-paragraph'));
+            }
+          }
+
           if (playBtn) {
             playBtn.addEventListener('click', () => {
               if (window.TrackTalesSpeakText) {
@@ -2657,13 +2782,51 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
                   if (playLabel) playLabel.textContent = audioPlayLabelText;
                   playBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
                   playBtn.classList.add('bg-[#2A9D8F]', 'hover:bg-[#238276]');
+                  clearParagraphHighlights();
                 } else {
-                  window.TrackTalesSpeakText(fullText, () => {
-                    playBtn.setAttribute('data-reading', 'false');
-                    if (playLabel) playLabel.textContent = audioPlayLabelText;
-                    playBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
-                    playBtn.classList.add('bg-[#2A9D8F]', 'hover:bg-[#238276]');
+                  // Build paragraph element offset mapping for voice-synced scrolling
+                  const paragraphs = Array.from(modal.querySelectorAll('#modal-title, #modal-body > p, #modal-body .story-paragraph-reveal'));
+                  let mapOffset = 0;
+                  const charMap = paragraphs.map(p => {
+                    const txt = (p.textContent || '').trim();
+                    const start = fullText.indexOf(txt, mapOffset);
+                    const end = start !== -1 ? start + txt.length : mapOffset;
+                    if (start !== -1) mapOffset = end;
+                    return { el: p, start: Math.max(0, start), end };
                   });
+
+                  window.TrackTalesSpeakText(
+                    fullText,
+                    () => {
+                      playBtn.setAttribute('data-reading', 'false');
+                      if (playLabel) playLabel.textContent = audioPlayLabelText;
+                      playBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
+                      playBtn.classList.add('bg-[#2A9D8F]', 'hover:bg-[#238276]');
+                      clearParagraphHighlights();
+                    },
+                    (charIndex) => {
+                      // Voice-synchronized scroll & paragraph highlight
+                      let activeObj = charMap[0];
+                      for (let i = 0; i < charMap.length; i++) {
+                        if (charIndex >= charMap[i].start) {
+                          activeObj = charMap[i];
+                        }
+                      }
+
+                      if (activeObj && activeObj.el) {
+                        paragraphs.forEach(p => p.classList.remove('narration-active-paragraph'));
+                        activeObj.el.classList.add('narration-active-paragraph');
+
+                        if (modalContent) {
+                          const containerRect = modalContent.getBoundingClientRect();
+                          const elRect = activeObj.el.getBoundingClientRect();
+                          const scrollTarget = modalContent.scrollTop + (elRect.top - containerRect.top) - (containerRect.height / 2) + (elRect.height / 2);
+                          modalContent.scrollTo({ top: Math.max(0, scrollTarget), behavior: 'smooth' });
+                        }
+                      }
+                    }
+                  );
+
                   playBtn.setAttribute('data-reading', 'true');
                   if (playLabel) playLabel.textContent = audioStopLabelText;
                   playBtn.classList.remove('bg-[#2A9D8F]', 'hover:bg-[#238276]');
@@ -2700,11 +2863,26 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
       modal.classList.remove('hidden');
       modal.classList.add('flex');
+      if (modalContent) {
+        modalContent.classList.remove('animate-story-modal-open');
+        void modalContent.offsetWidth;
+        modalContent.classList.add('animate-story-modal-open');
+        modalContent.scrollTop = 0;
+      }
       document.body.style.overflow = 'hidden';
       if (window.lucide && typeof window.lucide.createIcons === 'function') window.lucide.createIcons();
+
+      // Automated auto-narration trigger when full story is opened
+      setTimeout(() => {
+        const playBtn = document.getElementById('modal-audio-play-btn');
+        if (playBtn && playBtn.getAttribute('data-reading') !== 'true') {
+          playBtn.click();
+        }
+      }, 350);
     };
 
     function closeStoryModal() {
+      stopAutoScroll();
       if (window.TrackTalesStopSpeech) {
         window.TrackTalesStopSpeech();
       }
@@ -2723,6 +2901,123 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       }
     });
   }
+
+  // --- Declassified Historical Dossier Reader Modal Setup ---
+  function setupDossierModal() {
+    const modal = document.getElementById('dossier-modal');
+    const closeBtn = document.getElementById('dossier-modal-close');
+    if (!modal) return;
+
+    window.openDossierModal = function (dossierId) {
+      let foundDossier = null;
+      Object.values(PREMIUM_HISTORICAL_DOSSIERS).forEach(list => {
+        const item = list.find(d => d.id === dossierId);
+        if (item) foundDossier = item;
+      });
+
+      if (!foundDossier) return;
+
+      const langCode = window.TrackTalesLanguageCode || localStorage.getItem('tracktales_lang') || 'en';
+      const dossier = getDossierInLanguage(foundDossier);
+
+      const codeEl = document.getElementById('dossier-code');
+      const badgeEl = document.getElementById('dossier-classified-badge');
+      const titleEl = document.getElementById('dossier-title');
+      const subtitleEl = document.getElementById('dossier-subtitle');
+      const imgEl = document.getElementById('dossier-img');
+      const captionEl = document.getElementById('dossier-caption');
+      const bodyEl = document.getElementById('dossier-body');
+
+      if (codeEl) codeEl.textContent = dossier.code || 'DOSSIER REF: ZA-HIST-1946';
+      if (badgeEl) badgeEl.textContent = dossier.badge || 'TOP SECRET · DECLASSIFIED ARCHIVE';
+      if (titleEl) titleEl.textContent = dossier.title;
+      if (subtitleEl) subtitleEl.textContent = dossier.subtitle;
+      if (imgEl) {
+        imgEl.src = dossier.img;
+        imgEl.alt = dossier.title;
+      }
+      if (captionEl) captionEl.textContent = dossier.caption || dossier.title;
+
+      if (bodyEl) {
+        bodyEl.innerHTML = `
+          <p class="font-serif text-base leading-relaxed mb-4 text-[#78716C] italic font-semibold">${dossier.summary}</p>
+          <div class="space-y-4 text-sm leading-relaxed">${formatStoryContent(dossier.content)}</div>
+        `;
+      }
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      const modalContent = modal.querySelector('.modal-content');
+      if (modalContent) {
+        modalContent.classList.remove('animate-story-modal-open');
+        void modalContent.offsetWidth;
+        modalContent.classList.add('animate-story-modal-open');
+        modalContent.scrollTop = 0;
+      }
+
+      document.body.style.overflow = 'hidden';
+      if (window.lucide && typeof window.lucide.createIcons === 'function') window.lucide.createIcons();
+
+      // Automated auto-narration playback for dossier
+      setTimeout(() => {
+        if (window.TrackTalesSpeakText) {
+          const fullText = `${dossier.title}. ${dossier.summary}. ${dossier.content}`;
+          const paragraphs = Array.from(modal.querySelectorAll('#dossier-title, #dossier-body > p, #dossier-body .story-paragraph-reveal'));
+          let mapOffset = 0;
+          const charMap = paragraphs.map(p => {
+            const txt = (p.textContent || '').trim();
+            const start = fullText.indexOf(txt, mapOffset);
+            const end = start !== -1 ? start + txt.length : mapOffset;
+            if (start !== -1) mapOffset = end;
+            return { el: p, start: Math.max(0, start), end };
+          });
+
+          window.TrackTalesSpeakText(
+            fullText,
+            () => {
+              paragraphs.forEach(p => p.classList.remove('narration-active-paragraph'));
+            },
+            (charIndex) => {
+              let activeObj = charMap[0];
+              for (let i = 0; i < charMap.length; i++) {
+                if (charIndex >= charMap[i].start) {
+                  activeObj = charMap[i];
+                }
+              }
+
+              if (activeObj && activeObj.el) {
+                paragraphs.forEach(p => p.classList.remove('narration-active-paragraph'));
+                activeObj.el.classList.add('narration-active-paragraph');
+
+                if (modalContent) {
+                  const containerRect = modalContent.getBoundingClientRect();
+                  const elRect = activeObj.el.getBoundingClientRect();
+                  const scrollTarget = modalContent.scrollTop + (elRect.top - containerRect.top) - (containerRect.height / 2) + (elRect.height / 2);
+                  modalContent.scrollTo({ top: Math.max(0, scrollTarget), behavior: 'smooth' });
+                }
+              }
+            }
+          );
+        }
+      }, 350);
+    };
+
+    function closeDossierModal() {
+      if (window.TrackTalesStopSpeech) window.TrackTalesStopSpeech();
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeDossierModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeDossierModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeDossierModal();
+    });
+  }
+
   function setupNavigation() {
     const mobileBtn = document.getElementById('mobile-toggle-btn');
     const navMenu = document.getElementById('nav-menu');
@@ -4171,12 +4466,12 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         badge: 'TOP SECRET · DECLASSIFIED ARCHIVE',
         title: '1946 Wartime Gold Bullion Secret Runs',
         subtitle: 'Classified Nighttime Operations from Pretoria to Simon\'s Town Naval Dock',
-        date: 'August 1946 · Union Limited Era',
+        date: 'August 14–19, 1946 · Union Limited Era',
         read_time: '4 min archive',
-        img: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=800&q=80',
-        caption: 'Gold bullion transport ledger & armored train blueprint',
-        summary: 'Under absolute radio silence, The Blue Train\'s predecessor carried tons of South African Reserve Bank gold bullion through the Karoo to Royal Navy cruisers.',
-        content: `In the aftermath of World War II, the South African Reserve Bank and the British Admiralty conducted classified gold movements across the subcontinent. Disguised as ordinary scheduled passenger expresses, armored baggage cars were reinforced with triple-layered Swedish steel plate.\n\nGuarded by an elite detachment of Railway Police armed with .303 Lee-Enfield rifles, the train navigated the 1,600 km corridor in total blackout, extinguishing all external lanterns while racing through the Karoo desert. The gold was transferred directly into the holds of HMS Vanguard and HMS Nelson at Simon's Town dockyard, funding crucial post-war sterling stabilization.`
+        img: 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=800&q=80',
+        caption: 'Gold bullion transport ledger & armored train blueprint (Pretoria Bank Vault Ref: 1946-AU)',
+        summary: 'Under absolute radio silence, The Blue Train\'s predecessor carried 420 bars of South African Reserve Bank gold bullion through the Karoo to Royal Navy cruisers.',
+        content: `On August 14, 1946, under direct orders from the South African Reserve Bank Governor and the British Admiralty, Class 15F Steam Locomotive No. 3040 departed Pretoria Station at 02:15 AM under strict radio blackout.\n\nDisguised as the regular Union Limited express, baggage carriage No. 8410 was reinforced with 18mm Swedish armored steel plating concealing 420 gold bullion bars valued at £14.8 million sterling (1946 valuation). Guarded by twelve Railway Police officers armed with .303 Lee-Enfield rifles, the train completed the 1,600 km run to Simon's Town Naval Dockyard in 28 hours flat, transferring the bullion directly into the armored holds of HMS Vanguard to stabilize post-war sterling reserves.`
       },
       {
         id: 'bt-dossier-2',
@@ -4184,12 +4479,12 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         badge: 'TECHNICAL SCHEMATICS · UNION CARRIAGE & WAGON',
         title: 'Air-Cushioned High-Speed Bogie & 24K Gold Acoustic Glazing',
         subtitle: 'Engineering Marvels Built in Nigel, Transvaal for 90 km/h Luxury Glide',
-        date: '1972 Technical Commission · Nigel Works',
+        date: 'October 1972 Technical Commission · Nigel Works',
         read_time: '5 min archive',
-        img: 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?auto=format&fit=crop&w=800&q=80',
-        caption: 'Nigel Engineering Works technical schematics & gold vapor deposition testing',
+        img: 'https://images.unsplash.com/photo-1532105956626-9569c03602f6?auto=format&fit=crop&w=800&q=80',
+        caption: 'Nigel Engineering Works technical schematics & 24K gold vapor deposition testing',
         summary: 'How South African aerospace metallurgists vaporized pure 24-karat gold onto double-glazed window glass to withstand 45°C Karoo heatwaves and block track reverberation.',
-        content: `In 1972, South African Railways commissioned Union Carriage & Wagon (UCW) in Nigel to build the most technically advanced luxury train in existence. The challenge: insulating passengers from the extreme 45°C temperature swings and desert soundwaves of the Great Karoo.\n\nEngineers developed a proprietary vacuum chamber deposition technique, coating outer window panes with a microscopic 0.05-micron layer of vaporized 24-karat gold. This reflected 90% of solar infrared radiation while maintaining perfect optical clarity. Combined with secondary pneumatic air-suspension bogies that automatically compensate for track curves, The Blue Train delivers a glide so smooth that full glasses of champagne in the dining car never spill a drop.`
+        content: `In October 1972, Union Carriage & Wagon (UCW) in Nigel, Transvaal completed Commission Ref. UCW-1972-BT. To solve the extreme 45°C ambient heatwaves of the Great Karoo desert, aerospace engineers utilized high-vacuum gold vapor deposition, applying a 0.05-micron micro-layer of pure 24-karat gold to the inner face of double-pane toughened glass.\n\nThis golden acoustic shield reflected 90% of solar infrared rays while dampening wheel reverberation by 32 decibels. Paired with secondary air-spring suspension bogies operating at 4.5 bar pressure, The Blue Train achieved a 90 km/h cruising speed where a brim-full glass of South African Pinotage remained completely still on dining room tables.`
       },
       {
         id: 'bt-dossier-3',
@@ -4197,12 +4492,12 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         badge: 'POLICE ARCHIVES · DECLASSIFIED INVESTIGATION',
         title: 'The Great Karoo Midnight Diamond Vault Attempt',
         subtitle: 'The 1963 Beaufort West Express Safe Heist That Revolutionized Train Security',
-        date: 'November 1963 · Beaufort West Crossing',
+        date: 'November 22, 1963 · Beaufort West Crossing',
         read_time: '3 min archive',
-        img: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
-        caption: 'Railway Police evidence archive & reinforced master safe design',
+        img: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=800&q=80',
+        caption: 'Railway Police evidence archive & reinforced master safe design (Ref: SAP-1963-BW)',
         summary: 'A dramatic attempted midnight safe burglary during the transit between Kimberley and Beaufort West, resulting in the creation of today\'s ultra-secure en-suite digital vaults.',
-        content: `On a cold midnight in November 1963, an international syndicate boarded The Blue Train at Kimberley under aliases, intending to breach the merchant courier safe in carriage 4. As the train steamed through the Karoo, the syndicate attempted to neutralize the safe locks using specialized oxyacetylene torches.\n\nThe vigilant night conductor noticed abnormal current fluctuations in the dining car electrical circuit and immediately pulled the Westinghouse emergency brake cord. The train came to a screeching halt 15 km outside Beaufort West, where Railway Police surrounded the carriage. The attempt failed completely and directly influenced modern electronic biometric safes fitted across all suites today.`
+        content: `On the night of November 22, 1963, at 01:42 AM, an international criminal syndicate attempted a high-stakes vault burglary aboard Carriage No. 4 between Kimberley and Beaufort West. The vault contained 12,400 carats of uncut Kimberley diamonds consigned to London diamond merchants.\n\nUsing stolen industrial oxyacetylene cutters, the thieves attempted to pierce the 3-inch manganese steel safe door. However, the heavy electrical draw tripped the train's dynamo circuit breakers, casting the corridor into darkness. Conductor Johannes van der Merwe immediately pulled the Westinghouse emergency brake cord, stopping the train at Milepost 348 where Railway Police surrounded the coach. This famous incident led to the installation of modern electronic biometric suite safes across all luxury express cars.`
       }
     ],
     'rovos-rail': [
@@ -4212,12 +4507,12 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         badge: 'LOCOMOTIVE ARCHIVES · FOUNDER\'S MISSION',
         title: 'The Witbank Steam Graveyard Resurrection',
         subtitle: 'How Rohan Vos Rescued Abandoned 1920s Steam Giants from the Scrap Heap',
-        date: '1986–1989 · Witbank & Capital Park Yards',
+        date: 'May 1986–April 1989 · Witbank & Capital Park Yards',
         read_time: '4 min archive',
-        img: 'https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=800&q=80',
-        caption: 'Restoration workshop logs at Capital Park Steam Depot',
+        img: 'https://images.unsplash.com/photo-1565043666747-69f6646db940?auto=format&fit=crop&w=800&q=80',
+        caption: 'Restoration workshop logs at Capital Park Steam Depot (Pretoria)',
         summary: 'The audacious founding story of scouting derelict coal yards and industrial scrap heaps to rescue Class 19D and Class 25NC steam locomotives destined for the furnace.',
-        content: `In 1986, when South African Railways was rapidly retiring and scrapping its steam locomotive fleet in favor of diesel and electric traction, Rohan Vos saw an irreplaceable part of human history disappearing.\n\nTraveling across remote coal mines in Witbank, scrap merchant depots in Bloemfontein, and derelict roundhouses in Natal, Vos bought abandoned Class 19D and Class 25NC locomotives for scrap metal value. Transported to the Capital Park railway workshops in Pretoria, over 100 master mechanics, boiler-makers, and timber artisans spent three intensive years hand-machining parts and re-tubing boilers, creating the magnificent operational steam fleet that powers Rovos Rail today.`
+        content: `In May 1986, as South African Railways phased out steam traction in favor of diesel, founder Rohan Vos began scouring derelict colliery sidings in Witbank and scrap yards in Witwatersrand. There he rescued abandoned Class 19D (No. 2685) and Class 25NC (No. 3484) steam locomotives destined for the furnace.\n\nTransported to the historic Capital Park steam depot in Pretoria, over 110 master boilermakers, blacksmiths, and timber artisans spent 36 months re-tubing boilers, hand-casting brass bearings, and restoring 1920s Edwardian teak carriages, creating the operational steam fleet that powers Rovos Rail's historic journeys today.`
       },
       {
         id: 'rr-dossier-2',
@@ -4225,12 +4520,12 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         badge: 'MILITARY ARCHIVES · WAR TELEGRAPH RECORDS',
         title: '1899 Anglo-Boer War Military Telegraphs of Matjiesfontein',
         subtitle: 'Original Transmissions Between Lord Milner and British Command Headquarters',
-        date: 'October 1899 · Matjiesfontein Rail Depot',
+        date: 'October 28, 1899 · Victorian Rail Depot HQ',
         read_time: '5 min archive',
-        img: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80',
+        img: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80',
         caption: 'Declassified 1899 Lord Milner telegraph transcript & military train orders',
         summary: 'Declassified telegram transmissions documenting armored steam train patrols and military supply lines headquartered at the historic Lord Milner Hotel.',
-        content: `During the Anglo-Boer War (1899–1902), the remote Karoo railway village of Matjiesfontein was converted into the primary British Western Cape military headquarters under Major-General Douglas Haig and Lord Roberts.\n\nOver 12,000 imperial troops and 20,000 horses camped on the village outskirts, while the hotel's Victorian turret was equipped with a signaling heliograph mirror. Declassified railway dispatch records reveal the deployment of custom armored steam locomotives, clad with 12mm boiler iron and Maxim machine guns, tasked with defending the vital 1,600 km telegraph wires and water reservoirs along the rail corridor.`
+        content: `On October 28, 1899, the Karoo railway oasis of Matjiesfontein was designated as British Western Cape Military Headquarters under Major-General Douglas Haig and Lord Roberts. Over 12,000 British troops camped around the rail sidings, while the Lord Milner Hotel turret served as a heliograph signaling tower.\n\nDeclassified war telegraph ledger Ref. ZA-1899-TEL documents the operation of custom-built armored steam trains clad in 12mm boiler iron and equipped with Maxim machine guns, tasked with patrolling the 1,600 km rail corridor to protect telegraph communication lines and water pumping stations.`
       },
       {
         id: 'rr-dossier-3',
@@ -4238,12 +4533,12 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         badge: 'ARTISAN DOSSIER · VINTAGE WOODCRAFT',
         title: 'The Edwardian Teak Carriage Restoration Logs',
         subtitle: 'Meticulous 1920s Mahogany, Brass Lathe, and Teak Timber Rebuilding Records',
-        date: 'Artisan Archives · Capital Park Workshops',
+        date: '1911–1924 · Royal & Governor Carriages',
         read_time: '4 min archive',
-        img: 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=800&q=80',
+        img: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80',
         caption: 'Handcrafted teak carriage panelling & antique brass fitting registers',
         summary: 'Detailed restoration records showing the painstaking artisan techniques used to preserve original 1920s Edwardian wood panelling and brass filigree.',
-        content: `Every Rovos Rail carriage has an individual history, with some car shells dating back to 1911 built for royalty, private mining magnates, and colonial governors. In the Capital Park workshops, each carriage is stripped down to its bare iron chassis.\n\nMaster cabinetmakers meticulously source aged Burmese teak and African mahogany, hand-planing and applying seven coats of marine-grade spar varnish. Antique brass lamp brackets, Victorian porcelain washbasins, and clawfoot tubs are restored by hand. The result is an authentic living museum where travelers experience true Golden Age opulence.`
+        content: `Carriages No. 187, 188, and 189 were originally constructed between 1911 and 1924 by Metropolitan Carriage & Wagon for South African Royal Tours and colonial governors. In the Capital Park workshops, each carriage frame was stripped to its bare steel chassis.\n\nArtisans sourced seasoned Burmese teak and African mahogany, applying seven coats of hand-rubbed spar varnish. Original Victorian brass window latches, clawfoot bathtubs, and porcelain washbasins were meticulously restored by hand, preserving the authentic Golden Age train atmosphere for modern travelers.`
       }
     ]
   };
@@ -4341,7 +4636,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
           <div class="glass-card p-8 sm:p-10 rounded-3xl border-2 border-[#D99B26]/40 shadow-xl bg-gradient-to-b from-[#FFFDF9] to-[#FAF8F5] text-left">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-[#EBE5D9]">
               <div>
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-mono bg-[#D99B26]/20 text-[#B87C10] border border-[#D99B26]/40 uppercase font-extrabold tracking-wider mb-2">
+                <div class="react-bits-shiny-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-mono border border-[#D99B26]/40 text-[#B87C10] uppercase font-extrabold tracking-wider mb-2.5 shadow-sm transition-all">
                   <i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#D99B26]"></i>
                   <span>${dict.vault_unlocked_badge || 'PREMIUM ARCHIVAL VAULT UNLOCKED'} · ${trainName.toUpperCase()}</span>
                 </div>
@@ -4352,14 +4647,15 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
                   ${dict.vault_unlocked_sub ? dict.vault_unlocked_sub.replace('{train}', trainName) : `Access declassified rail ledgers, wartime secret runs, and blueprint schematics for ${trainName}.`}
                 </p>
               </div>
-              <span class="text-xs font-mono font-bold text-[#B87C10] px-3.5 py-1.5 rounded-xl bg-[#D99B26]/15 border border-[#D99B26]/30 shrink-0">
+              <span id="dossier-counter-pill" class="react-bits-magnet-btn text-xs font-mono font-bold text-[#B87C10] px-4 py-2 rounded-2xl bg-[#D99B26]/15 border border-[#D99B26]/30 shrink-0 shadow-sm cursor-pointer">
                 ${dossiers.length} ${dict.vault_declassified_files || 'Declassified Files'}
               </span>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
               ${dossiers.map(dossier => `
-                <div class="p-6 rounded-2xl bg-white border border-[#EBE5D9] hover:border-[#D99B26] transition-all duration-300 shadow-sm flex flex-col justify-between group">
+                <div class="react-bits-spotlight-card glass-card p-6 rounded-2xl bg-white border border-[#EBE5D9] hover:border-[#D99B26] transition-all duration-300 shadow-sm flex flex-col justify-between group" style="--spotlight-color: rgba(217, 155, 38, 0.22); --spotlight-border-color: rgba(217, 155, 38, 0.6);">
+                  <div class="spotlight-glow"></div>
                   <div>
                     <div class="relative rounded-xl overflow-hidden aspect-[16/10] mb-4 border border-[#EBE5D9]">
                       <img src="${dossier.img}" alt="${dossier.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
@@ -4382,7 +4678,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
                     </p>
                   </div>
 
-                  <button class="w-full py-2.5 rounded-xl bg-[#D99B26]/15 hover:bg-[#D99B26] text-[#B87C10] hover:text-white border border-[#D99B26]/30 font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 btn-inspect-dossier" data-dossier-id="${dossier.id}">
+                  <button class="react-bits-magnet-btn w-full py-2.5 rounded-xl bg-[#D99B26]/15 hover:bg-[#D99B26] text-[#B87C10] hover:text-white border border-[#D99B26]/30 font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 btn-inspect-dossier" data-dossier-id="${dossier.id}">
                     <i data-lucide="file-text" class="w-4 h-4"></i>
                     <span>${dict.btn_inspect_dossier || 'Inspect Dossier'}</span>
                   </button>
@@ -4392,8 +4688,39 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
           </div>
         `;
 
-        // Attach dossier modal triggers
+        // Attach dossier spotlight, magnet & modal triggers
+        vaultSection.querySelectorAll('.react-bits-spotlight-card').forEach(card => {
+          card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = ((y - centerY) / centerY) * -6;
+            const rotateY = ((x - centerX) / centerX) * 6;
+
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+          });
+
+          card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+          });
+        });
+
         vaultSection.querySelectorAll('.btn-inspect-dossier').forEach(btn => {
+          btn.addEventListener('mousemove', e => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            btn.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
+          });
+
+          btn.addEventListener('mouseleave', () => {
+            btn.style.transform = 'translate(0px, 0px)';
+          });
+
           btn.addEventListener('click', () => {
             const dossierId = btn.getAttribute('data-dossier-id');
             if (window.openDossierModal) window.openDossierModal(dossierId);
@@ -4769,7 +5096,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
     let synthUtterance = null;
 
     // Web Speech Synthesis Helpers
-    window.TrackTalesSpeakText = function (text, onEndCallback) {
+    window.TrackTalesSpeakText = function (text, onEndCallback, onBoundaryCallback) {
       if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
         alert("Web Speech API is not supported in this browser. Please use Chrome, Edge, or Safari.");
         return;
@@ -4807,6 +5134,12 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
       const eqStatus = document.getElementById('audio-eq-status');
       if (eqStatus) eqStatus.textContent = 'PLAYING';
+
+      utterance.onboundary = (event) => {
+        if (onBoundaryCallback && typeof onBoundaryCallback === 'function') {
+          onBoundaryCallback(event.charIndex, event.name);
+        }
+      };
 
       utterance.onend = () => {
         isSpeaking = false;
@@ -10949,6 +11282,10 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
   try { setupMotionEntranceAnimations(); } catch (e) { console.error(e); }
   try { setup3DCanvasGlobe(); } catch (e) { console.error(e); }
   try { setupStoryModal(); } catch (e) { console.error(e); }
+  try { setupDossierModal(); } catch (e) { console.error(e); }
+  try { renderStories('blue-train'); } catch (e) { console.error(e); }
+  try { updateStoriesHeaderAutomation(); } catch (e) { console.error(e); }
+  try { renderSubscriptionFeatures('membership', 'blue-train'); } catch (e) { console.error(e); }
   try { setupCorridorStops(); } catch (e) { console.error(e); }
   try { setupVoiceJournal(); } catch (e) { console.error(e); }
   try { setupGPSTracker(); } catch (e) { console.error(e); }
