@@ -2,16 +2,44 @@ import os
 import uuid
 from datetime import datetime
 from typing import Optional, List
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Header, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel
+
+import database
+from database import (
+    init_db, create_user, get_user_by_email, get_user_by_username,
+    get_user_by_id, verify_password, hash_password, update_last_login,
+    save_user_ticket, get_user_tickets, is_account_locked, record_login_attempt
+)
+import auth
+from auth import create_access_token, get_current_user_optional, require_current_user
+
+# Initialize database on module load
+init_db()
 
 app = FastAPI(
     title="TrackTales API - South African Railway Stories & Journeys",
     description="Explore South Africa's 2 flagship luxury rail lines: The Blue Train and Rovos Rail from Pretoria to Cape Town.",
     version="1.0.0"
 )
+
+# --- Security HTTP Headers Middleware ---
+@app.middleware("http")
+async def add_security_headers(request, call_next):
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    return response
+
+def validate_password_strength(password: str):
+    if len(password) < 8:
+        raise HTTPException(status_code=400, detail="Password must be at least 8 characters long.")
+    if not any(c.isalpha() for c in password) or not any(c.isdigit() for c in password):
+        raise HTTPException(status_code=400, detail="Password must contain both letters and numbers for security.")
 
 # --- Data Models ---
 class TicketRequest(BaseModel):
@@ -21,6 +49,17 @@ class TicketRequest(BaseModel):
     travel_date: str
     passengers_count: int = 1
     special_requests: Optional[str] = "gh"
+
+class RegisterRequest(BaseModel):
+    email: str
+    username: str
+    password: str
+    full_name: str
+
+class LoginRequest(BaseModel):
+    login: str
+    password: str
+
 
 # --- In-Memory Railway Data ---
 
@@ -301,7 +340,7 @@ def get_stories():
     return {"status": "success", "count": len(STORIES_DATA), "data": STORIES_DATA}
 
 @app.post("/api/ticket", summary="Generate a custom souvenir train ticket & boarding pass")
-def create_ticket(ticket_req: TicketRequest):
+def create_ticket(ticket_req: TicketRequest, authorization: Optional[str] = Header(None)):
     train = next((t for t in TRAINS_DATA if t["id"] == ticket_req.train_id), None)
     if not train:
         raise HTTPException(status_code=400, detail="Invalid train ID selected")
@@ -327,6 +366,112 @@ def create_ticket(ticket_req: TicketRequest):
         "issued_at": datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC"),
         "status": "CONFIRMED & READY FOR BOARDING"
     }
+
+    current_user = get_current_user_optional(authorization)
+    user_id = current_user["sub"] if current_user else "GUEST"
+    save_user_ticket(ticket_pass, user_id=user_id)
+
+    return {"status": "success", "ticket": ticket_pass}
+
+# --- Central Database Authentication Endpoints ---
+
+@app.post("/api/auth/register", summary="Register a new central user account")
+def register(req: RegisterRequest):
+    email = req.email.strip().lower()
+    username = req.username.strip()
+    
+    if not email or "@" not in email:
+        raise HTTPException(status_code=400, detail="Please enter a valid email address.")
+    if not username or len(username) < 3:
+        raise HTTPException(status_code=400, detail="Username must be at least 3 characters.")
+    if not req.full_name.strip():
+        raise HTTPException(status_code=400, detail="Please enter your full name.")
+        
+    validate_password_strength(req.password)
+        
+    if get_user_by_email(email):
+        raise HTTPException(status_code=400, detail="An account with this email address already exists.")
+    if get_user_by_username(username):
+        raise HTTPException(status_code=400, detail="This username is already taken.")
+        
+    user_id = f"usr_{uuid.uuid4().hex[:12]}"
+    pwd_hash = hash_password(req.password)
+    user_data = create_user(user_id, email, username, pwd_hash, req.full_name)
+    
+    token = create_access_token(user_id, email, username)
+    response = JSONResponse(content={
+        "status": "success",
+        "message": "Account created successfully with AES-256 encrypted profile security!",
+        "access_token": token,
+        "token_type": "bearer",
+        "user": user_data
+    })
+    response.set_cookie(
+        key="access_token",
+        value=f"Bearer {token}",
+        httponly=True,
+        samesite="strict",
+        max_age=86400 * 30
+    )
+    return response
+
+@app.post("/api/auth/login", summary="Log in to existing central user account")
+def login(req: LoginRequest):
+    login_str = req.login.strip()
+    if not login_str or not req.password:
+        raise HTTPException(status_code=400, detail="Please enter your email/username and password.")
+        
+    # Anti-Brute-Force Lockout Check
+    locked, remaining = is_account_locked(login_str)
+    if locked:
+        raise HTTPException(
+            status_code=429,
+            detail=f"Account temporarily locked due to multiple failed login attempts. Please try again in {remaining // 60 + 1} minute(s)."
+        )
+
+    user = get_user_by_email(login_str) or get_user_by_username(login_str)
+    if not user or not verify_password(req.password, user["password_hash"]):
+        record_login_attempt(login_str, False)
+        raise HTTPException(status_code=401, detail="Invalid email/username or password.")
+        
+    record_login_attempt(login_str, True)
+    update_last_login(user["id"])
+    token = create_access_token(user["id"], user["email"], user["username"])
+    
+    response = JSONResponse(content={
+        "status": "success",
+        "message": "Logged in successfully!",
+        "access_token": token,
+        "token_type": "bearer",
+        "user": {
+            "id": user["id"],
+            "email": user["email"],
+            "username": user["username"],
+            "full_name": user["full_name"],
+            "created_at": user["created_at"]
+        }
+    })
+    response.set_cookie(
+        key="access_token",
+        value=f"Bearer {token}",
+        httponly=True,
+        samesite="strict",
+        max_age=86400 * 30
+    )
+    return response
+
+@app.get("/api/auth/me", summary="Get logged-in user profile from central database")
+def get_me(current_user: dict = Depends(require_current_user)):
+    user = get_user_by_id(current_user["sub"])
+    if not user:
+        raise HTTPException(status_code=404, detail="User account not found.")
+    return {"status": "success", "user": user}
+
+@app.get("/api/auth/my-tickets", summary="Get tickets saved in central database for logged-in user")
+def get_my_tickets(current_user: dict = Depends(require_current_user)):
+    tickets = get_user_tickets(current_user["sub"])
+    return {"status": "success", "count": len(tickets), "data": tickets}
+
     
 class TranslateRequest(BaseModel):
     texts: List[str]

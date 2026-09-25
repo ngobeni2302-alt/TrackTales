@@ -3270,9 +3270,14 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       };
 
       try {
+        const headers = { 'Content-Type': 'application/json' };
+        const token = localStorage.getItem('tracktales_jwt_token');
+        if (token) {
+          headers['Authorization'] = `Bearer ${token}`;
+        }
         const res = await fetch('/api/ticket', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: headers,
           body: JSON.stringify(payload)
         });
 
@@ -3875,8 +3880,42 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
     };
     seedDefaultPassengers();
 
-    // Check Active Session on Splash Load
-    const updateSplashSessionUI = () => {
+    // Check Active Session on Splash Load with Central Database Verification
+    const updateSplashSessionUI = async () => {
+      const token = localStorage.getItem('tracktales_jwt_token');
+      if (token) {
+        try {
+          const resp = await fetch('/api/auth/me', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          if (resp.ok) {
+            const data = await resp.json();
+            const user = data.user;
+            const userObj = {
+              id: user.id,
+              name: user.full_name || user.username,
+              username: user.username,
+              email: user.email
+            };
+            localStorage.setItem('tracktales_logged_user', JSON.stringify(userObj));
+            
+            if (signinContent) signinContent.classList.add('hidden');
+            if (signupContent) signupContent.classList.add('hidden');
+            if (loggedInContent) loggedInContent.classList.remove('hidden');
+
+            const userNameEl = document.getElementById('splash-user-name');
+            const userEmailEl = document.getElementById('splash-user-email');
+            if (userNameEl) userNameEl.textContent = `Welcome Back, ${user.full_name || user.username}!`;
+            if (userEmailEl) userEmailEl.textContent = user.email || '';
+            return;
+          } else {
+            localStorage.removeItem('tracktales_jwt_token');
+          }
+        } catch (e) {
+          console.warn("Central session check offline fallback:", e);
+        }
+      }
+
       const loggedUser = JSON.parse(localStorage.getItem('tracktales_logged_user') || 'null');
       if (loggedUser && (loggedUser.name || loggedUser.email)) {
         if (signinContent) signinContent.classList.add('hidden');
@@ -3905,7 +3944,8 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
     // --- Complete Clean Sign Out and Automatic Reload Logic ---
     const handleSignOutAndReload = (reloadPage = true) => {
-      // 1. Remove active session and saved credentials so no prefill occurs
+      // 1. Remove active session, JWT token and saved credentials
+      localStorage.removeItem('tracktales_jwt_token');
       localStorage.removeItem('tracktales_logged_user');
       localStorage.removeItem('last_user');
       localStorage.removeItem('last_password');
@@ -4241,10 +4281,10 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
     // Initialize with stored or default train
     setSelectedTrain(selectedTrain);
 
-    // --- Sign In Form Submission ---
+    // --- Sign In Form Submission (Central Database Auth) ---
     const splashSigninForm = document.getElementById('splash-signin-form');
     if (splashSigninForm) {
-      splashSigninForm.addEventListener('submit', (e) => {
+      splashSigninForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const email = document.getElementById('splash-signin-email').value.trim().toLowerCase();
         const password = document.getElementById('splash-signin-password').value;
@@ -4253,70 +4293,84 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
         if (btnLabel) btnLabel.textContent = "Authenticating...";
 
-        setTimeout(() => {
-          const userRecord = getRegisteredUserRecord(email);
-          
-          if (!userRecord || userRecord.password !== password) {
-            showAlert("Incorrect email or password! Please check your credentials.", "error");
-            if (btnLabel) btnLabel.textContent = "SIGN IN";
-            return;
-          }
+        try {
+          const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ login: email, password: password })
+          });
+          const data = await response.json();
 
-          // Use the registered user's saved train preference automatically!
-          const rememberedTrain = userRecord.preferred_train || selectedTrain || 'blue-train';
-          setSelectedTrain(rememberedTrain);
+          if (response.ok && data.status === 'success') {
+            const token = data.access_token;
+            const user = data.user;
 
-          const displayName = userRecord.name || email.split('@')[0].replace('.', ' ').toUpperCase();
-          const rememberedLang = userRecord.preferred_language || localStorage.getItem('tracktales_lang') || 'en';
-          const userObj = {
-            name: displayName,
-            email: email,
-            preferred_train: rememberedTrain,
-            preferred_language: rememberedLang
-          };
+            localStorage.setItem('tracktales_jwt_token', token);
 
-          localStorage.setItem('tracktales_logged_user', JSON.stringify(userObj));
-          localStorage.setItem('tracktales_selected_train', rememberedTrain);
+            const rememberedTrain = selectedTrain || 'blue-train';
+            const displayName = user.full_name || user.username || email.split('@')[0];
+            const userObj = {
+              id: user.id,
+              name: displayName,
+              username: user.username,
+              email: user.email,
+              preferred_train: rememberedTrain
+            };
 
-          // Restore passenger preferred language seamlessly
-          if (window.TrackTalesTranslationEngine) {
-            window.TrackTalesTranslationEngine.setLanguage(rememberedLang, true);
-          }
+            localStorage.setItem('tracktales_logged_user', JSON.stringify(userObj));
+            localStorage.setItem('tracktales_selected_train', rememberedTrain);
 
-          if (!rememberMe || rememberMe.checked) {
-            localStorage.setItem('last_user', email);
-            localStorage.setItem('last_password', password);
-          } else {
-            localStorage.removeItem('last_user');
-            localStorage.removeItem('last_password');
-          }
-
-          const openBtn = document.getElementById('btn-open-login');
-          const desktopLabel = document.getElementById('desktop-login-label');
-          const signOutText = window.TrackTalesTranslateText ? window.TrackTalesTranslateText("Sign Out") : "Sign Out";
-          if (desktopLabel) desktopLabel.textContent = signOutText;
-          if (openBtn) openBtn.innerHTML = `<i data-lucide="log-out" class="w-4 h-4 text-[#D99B26]"></i> <span id="desktop-login-label">${signOutText}</span>`;
-          if (window.lucide) lucide.createIcons();
-
-          const chosenTrainName = rememberedTrain === 'blue-train' ? 'The Blue Train' : 'Rovos Rail Safari';
-          showAlert(`Welcome aboard, ${displayName}! Boarding your registered journey on ${chosenTrainName}...`, "success");
-
-          setTimeout(() => {
-            dismissSplash();
-            if (window.TrackTalesOpenSubscriptionModal) {
-              setTimeout(() => {
-                window.TrackTalesOpenSubscriptionModal();
-              }, 350);
+            if (!rememberMe || rememberMe.checked) {
+              localStorage.setItem('last_user', email);
+              localStorage.setItem('last_password', password);
+            } else {
+              localStorage.removeItem('last_user');
+              localStorage.removeItem('last_password');
             }
-          }, 450);
-        }, 300);
+
+            const openBtn = document.getElementById('btn-open-login');
+            const desktopLabel = document.getElementById('desktop-login-label');
+            const signOutText = window.TrackTalesTranslateText ? window.TrackTalesTranslateText("Sign Out") : "Sign Out";
+            if (desktopLabel) desktopLabel.textContent = signOutText;
+            if (openBtn) openBtn.innerHTML = `<i data-lucide="log-out" class="w-4 h-4 text-[#D99B26]"></i> <span id="desktop-login-label">${signOutText}</span>`;
+            if (window.lucide) lucide.createIcons();
+
+            const chosenTrainName = rememberedTrain === 'blue-train' ? 'The Blue Train' : 'Rovos Rail Safari';
+            showAlert(`Welcome back, ${displayName}! Account authenticated via central database.`, "success");
+
+            setTimeout(() => {
+              dismissSplash();
+              if (window.TrackTalesOpenSubscriptionModal) {
+                setTimeout(() => {
+                  window.TrackTalesOpenSubscriptionModal();
+                }, 350);
+              }
+            }, 450);
+            return;
+          } else {
+            showAlert(data.detail || "Invalid email/username or password!", "error");
+            if (btnLabel) btnLabel.textContent = "SIGN IN";
+          }
+        } catch (err) {
+          console.warn("Central login attempt failed, falling back to local user store:", err);
+          const userRecord = getRegisteredUserRecord(email);
+          if (userRecord && userRecord.password === password) {
+            const displayName = userRecord.name || email.split('@')[0];
+            localStorage.setItem('tracktales_logged_user', JSON.stringify({ name: displayName, email: email }));
+            showAlert(`Welcome back, ${displayName}!`, "success");
+            setTimeout(() => dismissSplash(), 450);
+          } else {
+            showAlert("Could not connect to central database server.", "error");
+            if (btnLabel) btnLabel.textContent = "SIGN IN";
+          }
+        }
       });
     }
 
-    // --- Sign Up Form Submission ---
+    // --- Sign Up Form Submission (Central Database Registration) ---
     const splashSignupForm = document.getElementById('splash-signup-form');
     if (splashSignupForm) {
-      splashSignupForm.addEventListener('submit', (e) => {
+      splashSignupForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const name = document.getElementById('splash-signup-name').value.trim();
         const email = document.getElementById('splash-signup-email').value.trim().toLowerCase();
@@ -4329,69 +4383,72 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
           return;
         }
 
-        const existingRecord = getRegisteredUserRecord(email);
-        if (existingRecord) {
-          showAlert("An account with this email already exists! Switching to Sign In...", "error");
-          showSignIn();
-          const emailInput = document.getElementById('splash-signin-email');
-          if (emailInput) {
-            emailInput.value = email;
-            updatePassengerRecognition(
-              email,
-              'splash-signin-saved-pass-banner',
-              'splash-signin-saved-pass-name',
-              'splash-signin-train-selector-container'
-            );
-          }
-          return;
-        }
+        if (btnLabel) btnLabel.textContent = "Creating Central Account...";
 
-        if (btnLabel) btnLabel.textContent = "Registering Passport...";
-
-        setTimeout(() => {
-          // Save full user profile with their selected train and language preferences
-          const savedLang = localStorage.getItem('tracktales_lang') || 'en';
-          const savedUser = saveRegisteredUserRecord({
-            name: name || email.split('@')[0],
-            email: email,
-            password: password,
-            preferred_train: selectedTrain,
-            preferred_language: savedLang,
-            created_at: new Date().toISOString()
+        try {
+          const cleanUsername = email.split('@')[0].replace(/[^a-zA-Z0-9_]/g, '') + Math.floor(Math.random() * 1000);
+          const response = await fetch('/api/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: email,
+              username: cleanUsername,
+              password: password,
+              full_name: name || cleanUsername
+            })
           });
-          
-          const displayName = savedUser.name || name || email.split('@')[0];
-          const userObj = {
-            name: displayName,
-            email: email,
-            preferred_train: selectedTrain,
-            preferred_language: savedLang
-          };
+          const data = await response.json();
 
-          localStorage.setItem('tracktales_logged_user', JSON.stringify(userObj));
-          localStorage.setItem('tracktales_selected_train', selectedTrain);
-          localStorage.setItem('last_user', email);
-          localStorage.setItem('last_password', password);
+          if (response.ok && data.status === 'success') {
+            const token = data.access_token;
+            const user = data.user;
 
-          const openBtn = document.getElementById('btn-open-login');
-          const desktopLabel = document.getElementById('desktop-login-label');
-          const signOutText = window.TrackTalesTranslateText ? window.TrackTalesTranslateText("Sign Out") : "Sign Out";
-          if (desktopLabel) desktopLabel.textContent = signOutText;
-          if (openBtn) openBtn.innerHTML = `<i data-lucide="log-out" class="w-4 h-4 text-[#D99B26]"></i> <span id="desktop-login-label">${signOutText}</span>`;
-          if (window.lucide) lucide.createIcons();
+            localStorage.setItem('tracktales_jwt_token', token);
+            const userObj = {
+              id: user.id,
+              name: user.full_name,
+              username: user.username,
+              email: user.email,
+              preferred_train: selectedTrain
+            };
+            localStorage.setItem('tracktales_logged_user', JSON.stringify(userObj));
+            localStorage.setItem('tracktales_selected_train', selectedTrain);
+            localStorage.setItem('last_user', email);
+            localStorage.setItem('last_password', password);
 
-          const chosenTrainName = selectedTrain === 'blue-train' ? 'The Blue Train' : 'Rovos Rail Safari';
-          showAlert(`Welcome, ${displayName}! Your pass for ${chosenTrainName} is safely saved. Boarding...`, "success");
+            saveRegisteredUserRecord({
+              name: name || user.full_name,
+              email: email,
+              password: password,
+              preferred_train: selectedTrain
+            });
 
-          setTimeout(() => {
-            dismissSplash();
-            if (window.TrackTalesOpenSubscriptionModal) {
-              setTimeout(() => {
-                window.TrackTalesOpenSubscriptionModal();
-              }, 350);
-            }
-          }, 450);
-        }, 300);
+            const openBtn = document.getElementById('btn-open-login');
+            const desktopLabel = document.getElementById('desktop-login-label');
+            const signOutText = window.TrackTalesTranslateText ? window.TrackTalesTranslateText("Sign Out") : "Sign Out";
+            if (desktopLabel) desktopLabel.textContent = signOutText;
+            if (openBtn) openBtn.innerHTML = `<i data-lucide="log-out" class="w-4 h-4 text-[#D99B26]"></i> <span id="desktop-login-label">${signOutText}</span>`;
+            if (window.lucide) lucide.createIcons();
+
+            showAlert(`Account created! Welcome, ${user.full_name}. Registered in central database for multi-device login.`, "success");
+
+            setTimeout(() => {
+              dismissSplash();
+              if (window.TrackTalesOpenSubscriptionModal) {
+                setTimeout(() => {
+                  window.TrackTalesOpenSubscriptionModal();
+                }, 350);
+              }
+            }, 450);
+          } else {
+            showAlert(data.detail || "Registration failed. Please try again.", "error");
+            if (btnLabel) btnLabel.textContent = "CREATE ACCOUNT";
+          }
+        } catch (err) {
+          console.error("Central signup error:", err);
+          showAlert("Could not connect to central database server.", "error");
+          if (btnLabel) btnLabel.textContent = "CREATE ACCOUNT";
+        }
       });
     }
 
