@@ -4,10 +4,18 @@ import secrets
 import hashlib
 import time
 import bcrypt
-from base64 import b64encode, b64decode
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Optional, Dict, List, Tuple
 from cryptography.fernet import Fernet
+
+# Optional Supabase Cloud Integration
+try:
+    from supabase import create_client, Client
+    SUPABASE_URL = os.getenv("SUPABASE_URL", "")
+    SUPABASE_KEY = os.getenv("SUPABASE_KEY", "") or os.getenv("SUPABASE_SERVICE_ROLE_KEY", "")
+    _SUPABASE_CLIENT: Optional[Client] = create_client(SUPABASE_URL, SUPABASE_KEY) if (SUPABASE_URL and SUPABASE_KEY) else None
+except Exception:
+    _SUPABASE_CLIENT = None
 
 DB_PATH = os.path.join(os.path.dirname(__file__), "tracktales.db")
 KEY_PATH = os.path.join(os.path.dirname(__file__), ".db_secret_key")
@@ -44,7 +52,6 @@ def decrypt_pii(ciphertext: str) -> str:
     try:
         return _FERNET.decrypt(ciphertext.encode('utf-8')).decode('utf-8')
     except Exception:
-        # Fallback if text was stored unencrypted
         return ciphertext
 
 def get_db():
@@ -57,7 +64,6 @@ def init_db():
     with get_db() as conn:
         cursor = conn.cursor()
         
-        # Create users table
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS users (
                 id TEXT PRIMARY KEY,
@@ -70,7 +76,6 @@ def init_db():
             )
         """)
         
-        # Create failed login attempt tracker table for brute-force prevention
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS login_attempts (
                 login TEXT PRIMARY KEY,
@@ -80,7 +85,6 @@ def init_db():
             )
         """)
         
-        # Create password reset codes table
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS password_resets (
                 email TEXT PRIMARY KEY,
@@ -89,7 +93,6 @@ def init_db():
             )
         """)
         
-        # Create user tickets table linked to central user accounts
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS user_tickets (
                 ticket_id TEXT PRIMARY KEY,
@@ -127,7 +130,6 @@ def verify_password(password: str, stored_hash: str) -> bool:
         if stored_hash.startswith("$2b$") or stored_hash.startswith("$2a$"):
             return bcrypt.checkpw(password.encode('utf-8'), stored_hash.encode('utf-8'))
         
-        # Legacy PBKDF2 fallback
         salt, key_hex = stored_hash.split("$")
         recalculated_key = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt.encode('utf-8'), 100000)
         return secrets.compare_digest(recalculated_key.hex(), key_hex)
@@ -140,7 +142,6 @@ MAX_FAILED_ATTEMPTS = 5
 LOCKOUT_DURATION_SECONDS = 900  # 15 minutes lockout
 
 def is_account_locked(login: str) -> Tuple[bool, int]:
-    """Check if account is temporarily locked due to failed login attempts."""
     clean_login = login.strip().lower()
     now = int(time.time())
     with get_db() as conn:
@@ -154,7 +155,6 @@ def is_account_locked(login: str) -> Tuple[bool, int]:
     return False, 0
 
 def record_login_attempt(login: str, success: bool):
-    """Record login attempt; locks account if failed attempts exceed limit."""
     clean_login = login.strip().lower()
     now = int(time.time())
     with get_db() as conn:
@@ -179,7 +179,7 @@ def record_login_attempt(login: str, success: bool):
                 """, (clean_login, now))
         conn.commit()
 
-# --- Database User Helper Functions ---
+# --- Database User Helper Functions (Dual Local & Supabase Cloud) ---
 
 def create_user(user_id: str, email: str, username: str, password_hash: str, full_name: str) -> Dict:
     now = datetime.utcnow().isoformat() + "Z"
@@ -187,6 +187,22 @@ def create_user(user_id: str, email: str, username: str, password_hash: str, ful
     clean_username = username.strip()
     encrypted_name = encrypt_pii(full_name.strip())
 
+    # 1. Supabase Cloud DB write if configured
+    if _SUPABASE_CLIENT:
+        try:
+            _SUPABASE_CLIENT.table("users").insert({
+                "id": user_id,
+                "email": clean_email,
+                "username": clean_username,
+                "password_hash": password_hash,
+                "full_name": encrypted_name,
+                "created_at": now,
+                "last_login": now
+            }).execute()
+        except Exception as e:
+            print("Supabase cloud insert warning:", e)
+
+    # 2. Local SQLite DB write
     with get_db() as conn:
         cursor = conn.cursor()
         cursor.execute("""
@@ -204,9 +220,20 @@ def create_user(user_id: str, email: str, username: str, password_hash: str, ful
     }
 
 def get_user_by_email(email: str) -> Optional[Dict]:
+    clean_email = email.lower().strip()
+    if _SUPABASE_CLIENT:
+        try:
+            res = _SUPABASE_CLIENT.table("users").select("*").eq("email", clean_email).execute()
+            if res.data and len(res.data) > 0:
+                d = dict(res.data[0])
+                d["full_name"] = decrypt_pii(d["full_name"])
+                return d
+        except Exception as e:
+            print("Supabase email query warning:", e)
+
     with get_db() as conn:
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM users WHERE LOWER(email) = ?", (email.lower().strip(),))
+        cursor.execute("SELECT * FROM users WHERE LOWER(email) = ?", (clean_email,))
         row = cursor.fetchone()
         if row:
             d = dict(row)
@@ -215,9 +242,20 @@ def get_user_by_email(email: str) -> Optional[Dict]:
     return None
 
 def get_user_by_username(username: str) -> Optional[Dict]:
+    clean_username = username.lower().strip()
+    if _SUPABASE_CLIENT:
+        try:
+            res = _SUPABASE_CLIENT.table("users").select("*").eq("username", clean_username).execute()
+            if res.data and len(res.data) > 0:
+                d = dict(res.data[0])
+                d["full_name"] = decrypt_pii(d["full_name"])
+                return d
+        except Exception as e:
+            print("Supabase username query warning:", e)
+
     with get_db() as conn:
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM users WHERE LOWER(username) = ?", (username.lower().strip(),))
+        cursor.execute("SELECT * FROM users WHERE LOWER(username) = ?", (clean_username,))
         row = cursor.fetchone()
         if row:
             d = dict(row)
@@ -226,6 +264,16 @@ def get_user_by_username(username: str) -> Optional[Dict]:
     return None
 
 def get_user_by_id(user_id: str) -> Optional[Dict]:
+    if _SUPABASE_CLIENT:
+        try:
+            res = _SUPABASE_CLIENT.table("users").select("id, email, username, full_name, created_at, last_login").eq("id", user_id).execute()
+            if res.data and len(res.data) > 0:
+                d = dict(res.data[0])
+                d["full_name"] = decrypt_pii(d["full_name"])
+                return d
+        except Exception as e:
+            print("Supabase id query warning:", e)
+
     with get_db() as conn:
         cursor = conn.cursor()
         cursor.execute("SELECT id, email, username, full_name, created_at, last_login FROM users WHERE id = ?", (user_id,))
@@ -238,6 +286,12 @@ def get_user_by_id(user_id: str) -> Optional[Dict]:
 
 def update_last_login(user_id: str):
     now = datetime.utcnow().isoformat() + "Z"
+    if _SUPABASE_CLIENT:
+        try:
+            _SUPABASE_CLIENT.table("users").update({"last_login": now}).eq("id", user_id).execute()
+        except Exception:
+            pass
+
     with get_db() as conn:
         cursor = conn.cursor()
         cursor.execute("UPDATE users SET last_login = ? WHERE id = ?", (now, user_id))
@@ -247,6 +301,30 @@ def update_last_login(user_id: str):
 
 def save_user_ticket(ticket: Dict, user_id: Optional[str] = None):
     encrypted_passenger = encrypt_pii(ticket["passenger_name"])
+    ticket_payload = {
+        "ticket_id": ticket["ticket_id"],
+        "user_id": user_id or "GUEST",
+        "passenger_name": encrypted_passenger,
+        "train_id": ticket["train_id"],
+        "train_name": ticket["train_name"],
+        "cabin_type": ticket["cabin_type"],
+        "travel_date": ticket["travel_date"],
+        "passengers_count": ticket["passengers_count"],
+        "carriage_number": ticket["carriage_number"],
+        "seat_number": ticket["seat_number"],
+        "boarding_station": ticket["boarding_station"],
+        "destination_station": ticket["destination_station"],
+        "qr_code_data": ticket["qr_code_data"],
+        "issued_at": ticket["issued_at"],
+        "status": ticket["status"]
+    }
+
+    if _SUPABASE_CLIENT:
+        try:
+            _SUPABASE_CLIENT.table("user_tickets").insert(ticket_payload).execute()
+        except Exception as e:
+            print("Supabase ticket insert warning:", e)
+
     with get_db() as conn:
         cursor = conn.cursor()
         cursor.execute("""
@@ -256,25 +334,38 @@ def save_user_ticket(ticket: Dict, user_id: Optional[str] = None):
                 seat_number, boarding_station, destination_station, qr_code_data, issued_at, status
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
-            ticket["ticket_id"],
-            user_id or "GUEST",
-            encrypted_passenger,
-            ticket["train_id"],
-            ticket["train_name"],
-            ticket["cabin_type"],
-            ticket["travel_date"],
-            ticket["passengers_count"],
-            ticket["carriage_number"],
-            ticket["seat_number"],
-            ticket["boarding_station"],
-            ticket["destination_station"],
-            ticket["qr_code_data"],
-            ticket["issued_at"],
-            ticket["status"]
+            ticket_payload["ticket_id"],
+            ticket_payload["user_id"],
+            ticket_payload["passenger_name"],
+            ticket_payload["train_id"],
+            ticket_payload["train_name"],
+            ticket_payload["cabin_type"],
+            ticket_payload["travel_date"],
+            ticket_payload["passengers_count"],
+            ticket_payload["carriage_number"],
+            ticket_payload["seat_number"],
+            ticket_payload["boarding_station"],
+            ticket_payload["destination_station"],
+            ticket_payload["qr_code_data"],
+            ticket_payload["issued_at"],
+            ticket_payload["status"]
         ))
         conn.commit()
 
 def get_user_tickets(user_id: str) -> List[Dict]:
+    if _SUPABASE_CLIENT:
+        try:
+            res = _SUPABASE_CLIENT.table("user_tickets").select("*").eq("user_id", user_id).order("issued_at", desc=True).execute()
+            if res.data:
+                tickets = []
+                for row in res.data:
+                    t = dict(row)
+                    t["passenger_name"] = decrypt_pii(t["passenger_name"])
+                    tickets.append(t)
+                return tickets
+        except Exception as e:
+            print("Supabase ticket query warning:", e)
+
     with get_db() as conn:
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM user_tickets WHERE user_id = ? ORDER BY issued_at DESC", (user_id,))
@@ -289,10 +380,20 @@ def get_user_tickets(user_id: str) -> List[Dict]:
 # --- Password Reset Helper Functions ---
 
 def create_password_reset_code(email: str) -> str:
-    """Generate a 6-digit password reset security code valid for 15 minutes."""
     clean_email = email.strip().lower()
     code = f"{secrets.randbelow(900000) + 100000}"
     expires_at = int(time.time()) + 900
+
+    if _SUPABASE_CLIENT:
+        try:
+            _SUPABASE_CLIENT.table("password_resets").upsert({
+                "email": clean_email,
+                "reset_code": code,
+                "expires_at": expires_at
+            }).execute()
+        except Exception as e:
+            print("Supabase reset code upsert warning:", e)
+
     with get_db() as conn:
         cursor = conn.cursor()
         cursor.execute("""
@@ -304,9 +405,19 @@ def create_password_reset_code(email: str) -> str:
     return code
 
 def verify_reset_code(email: str, code: str) -> bool:
-    """Verify if 6-digit reset code matches and is active."""
     clean_email = email.strip().lower()
     now = int(time.time())
+
+    if _SUPABASE_CLIENT:
+        try:
+            res = _SUPABASE_CLIENT.table("password_resets").select("reset_code, expires_at").eq("email", clean_email).execute()
+            if res.data and len(res.data) > 0:
+                r = res.data[0]
+                if r["reset_code"] == code.strip() and r["expires_at"] > now:
+                    return True
+        except Exception:
+            pass
+
     with get_db() as conn:
         cursor = conn.cursor()
         cursor.execute("SELECT reset_code, expires_at FROM password_resets WHERE email = ?", (clean_email,))
@@ -316,8 +427,15 @@ def verify_reset_code(email: str, code: str) -> bool:
     return False
 
 def reset_user_password(email: str, new_password_hash: str) -> bool:
-    """Update user password in central SQLite database and delete used code."""
     clean_email = email.strip().lower()
+
+    if _SUPABASE_CLIENT:
+        try:
+            _SUPABASE_CLIENT.table("users").update({"password_hash": new_password_hash}).eq("email", clean_email).execute()
+            _SUPABASE_CLIENT.table("password_resets").delete().eq("email", clean_email).execute()
+        except Exception as e:
+            print("Supabase password reset warning:", e)
+
     with get_db() as conn:
         cursor = conn.cursor()
         cursor.execute("UPDATE users SET password_hash = ? WHERE LOWER(email) = ?", (new_password_hash, clean_email))

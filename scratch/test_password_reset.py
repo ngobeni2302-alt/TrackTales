@@ -1,24 +1,23 @@
 import requests
+import time
 
 BASE_URL = "http://127.0.0.1:8000"
 
 def test_password_reset_flow():
-    email = "reset_test_user@tracktales.co.za"
+    unique_id = int(time.time())
+    email = f"reset_user_{unique_id}@tracktales.co.za"
     old_password = "OldPassword2026"
     new_password = "NewPassword2026"
     
-    print("=== 1. Register User Account ===")
+    print(f"=== 1. Register User Account ({email}) ===")
     reg_resp = requests.post(f"{BASE_URL}/api/auth/register", json={
         "email": email,
-        "username": "resettestuser",
+        "username": f"user{unique_id}",
         "password": old_password,
         "full_name": "Reset Test User"
     })
-    if reg_resp.status_code == 400 and "already exists" in reg_resp.text:
-        print("[OK] User already registered.")
-    else:
-        assert reg_resp.status_code == 200, f"Registration failed: {reg_resp.text}"
-        print("[OK] User registered successfully.")
+    assert reg_resp.status_code == 200, f"Registration failed: {reg_resp.text}"
+    print("[OK] User registered successfully.")
 
     print("\n=== 2. Test Login with Original Password ===")
     login_resp = requests.post(f"{BASE_URL}/api/auth/login", json={
@@ -44,7 +43,7 @@ def test_password_reset_flow():
         "new_password": new_password
     })
     assert reset_resp.status_code == 200, f"Reset password failed: {reset_resp.text}"
-    print("[OK] Password updated in central SQLite database.")
+    print("[OK] Password updated in central database.")
 
     print("\n=== 5. Test Login with Old Password (Should Fail 401) ===")
     fail_login = requests.post(f"{BASE_URL}/api/auth/login", json={
