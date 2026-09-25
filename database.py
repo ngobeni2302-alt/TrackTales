@@ -32,8 +32,27 @@ try:
 except Exception:
     _SUPABASE_CLIENT = None
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "tracktales.db")
-KEY_PATH = os.path.join(os.path.dirname(__file__), ".db_secret_key")
+import shutil
+
+IS_VERCEL = bool(os.getenv("VERCEL"))
+if IS_VERCEL:
+    DB_PATH = "/tmp/tracktales.db"
+    KEY_PATH = "/tmp/.db_secret_key"
+    bundled_db = os.path.join(os.path.dirname(__file__), "tracktales.db")
+    if not os.path.exists(DB_PATH) and os.path.exists(bundled_db):
+        try:
+            shutil.copyfile(bundled_db, DB_PATH)
+        except Exception:
+            pass
+    bundled_key = os.path.join(os.path.dirname(__file__), ".db_secret_key")
+    if not os.path.exists(KEY_PATH) and os.path.exists(bundled_key):
+        try:
+            shutil.copyfile(bundled_key, KEY_PATH)
+        except Exception:
+            pass
+else:
+    DB_PATH = os.path.join(os.path.dirname(__file__), "tracktales.db")
+    KEY_PATH = os.path.join(os.path.dirname(__file__), ".db_secret_key")
 
 def _get_or_create_cipher_key() -> bytes:
     """Load or generate master AES-256 key for field-level PII encryption."""
@@ -41,11 +60,17 @@ def _get_or_create_cipher_key() -> bytes:
     if env_key:
         return env_key.encode('utf-8')
     if os.path.exists(KEY_PATH):
-        with open(KEY_PATH, "rb") as f:
-            return f.read().strip()
+        try:
+            with open(KEY_PATH, "rb") as f:
+                return f.read().strip()
+        except Exception:
+            pass
     key = Fernet.generate_key()
-    with open(KEY_PATH, "wb") as f:
-        f.write(key)
+    try:
+        with open(KEY_PATH, "wb") as f:
+            f.write(key)
+    except Exception:
+        pass
     return key
 
 _CIPHER_KEY = _get_or_create_cipher_key()
@@ -76,60 +101,64 @@ def get_db():
 
 def init_db():
     """Initialize central SQLite database tables with security constraints."""
-    with get_db() as conn:
-        cursor = conn.cursor()
-        
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS users (
-                id TEXT PRIMARY KEY,
-                email TEXT UNIQUE NOT NULL,
-                username TEXT UNIQUE NOT NULL,
-                password_hash TEXT NOT NULL,
-                full_name TEXT NOT NULL,
-                created_at TEXT NOT NULL,
-                last_login TEXT
-            )
-        """)
-        
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS login_attempts (
-                login TEXT PRIMARY KEY,
-                failed_count INTEGER DEFAULT 0,
-                last_failed_at INTEGER DEFAULT 0,
-                locked_until INTEGER DEFAULT 0
-            )
-        """)
-        
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS password_resets (
-                email TEXT PRIMARY KEY,
-                reset_code TEXT NOT NULL,
-                expires_at INTEGER NOT NULL
-            )
-        """)
-        
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS user_tickets (
-                ticket_id TEXT PRIMARY KEY,
-                user_id TEXT NOT NULL,
-                passenger_name TEXT NOT NULL,
-                train_id TEXT NOT NULL,
-                train_name TEXT NOT NULL,
-                cabin_type TEXT NOT NULL,
-                travel_date TEXT NOT NULL,
-                passengers_count INTEGER NOT NULL,
-                carriage_number TEXT NOT NULL,
-                seat_number TEXT NOT NULL,
-                boarding_station TEXT NOT NULL,
-                destination_station TEXT NOT NULL,
-                qr_code_data TEXT NOT NULL,
-                issued_at TEXT NOT NULL,
-                status TEXT NOT NULL,
-                FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
-            )
-        """)
-        
-        conn.commit()
+    try:
+        with get_db() as conn:
+            cursor = conn.cursor()
+            
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS users (
+                    id TEXT PRIMARY KEY,
+                    email TEXT UNIQUE NOT NULL,
+                    username TEXT UNIQUE NOT NULL,
+                    password_hash TEXT NOT NULL,
+                    full_name TEXT NOT NULL,
+                    created_at TEXT NOT NULL,
+                    last_login TEXT
+                )
+            """)
+            
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS login_attempts (
+                    login TEXT PRIMARY KEY,
+                    failed_count INTEGER DEFAULT 0,
+                    last_failed_at INTEGER DEFAULT 0,
+                    locked_until INTEGER DEFAULT 0
+                )
+            """)
+            
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS password_resets (
+                    email TEXT PRIMARY KEY,
+                    reset_code TEXT NOT NULL,
+                    expires_at INTEGER NOT NULL
+                )
+            """)
+            
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS user_tickets (
+                    ticket_id TEXT PRIMARY KEY,
+                    user_id TEXT NOT NULL,
+                    passenger_name TEXT NOT NULL,
+                    train_id TEXT NOT NULL,
+                    train_name TEXT NOT NULL,
+                    cabin_type TEXT NOT NULL,
+                    travel_date TEXT NOT NULL,
+                    passengers_count INTEGER NOT NULL,
+                    carriage_number TEXT NOT NULL,
+                    seat_number TEXT NOT NULL,
+                    boarding_station TEXT NOT NULL,
+                    destination_station TEXT NOT NULL,
+                    qr_code_data TEXT NOT NULL,
+                    issued_at TEXT NOT NULL,
+                    status TEXT NOT NULL,
+                    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+                )
+            """)
+            
+            conn.commit()
+    except Exception as e:
+        print("SQLite init warning (fallback to memory/Supabase):", e)
+
 
 # --- Security & Hashing Functions ---
 
