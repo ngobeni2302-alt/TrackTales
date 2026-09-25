@@ -16,6 +16,8 @@ from database import (
 import auth
 from auth import create_access_token, get_current_user_optional, require_current_user
 
+from fastapi.middleware.cors import CORSMiddleware
+
 # Initialize database on module load
 init_db()
 
@@ -23,6 +25,15 @@ app = FastAPI(
     title="TrackTales API - South African Railway Stories & Journeys",
     description="Explore South Africa's 2 flagship luxury rail lines: The Blue Train and Rovos Rail from Pretoria to Cape Town.",
     version="1.0.0"
+)
+
+# Enable CORS for cross-origin and file:// access
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # --- Security HTTP Headers Middleware ---

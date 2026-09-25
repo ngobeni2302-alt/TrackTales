@@ -3275,7 +3275,8 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         if (token) {
           headers['Authorization'] = `Bearer ${token}`;
         }
-        const res = await fetch('/api/ticket', {
+        const endpoint = (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '8000')) ? 'http://127.0.0.1:8000/api/ticket' : '/api/ticket';
+        const res = await fetch(endpoint, {
           method: 'POST',
           headers: headers,
           body: JSON.stringify(payload)
@@ -3880,12 +3881,20 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
     };
     seedDefaultPassengers();
 
+    // Dynamic API endpoint resolver (handles file://, localhost:8000, or any dev port)
+    const getApiEndpoint = (path) => {
+      if (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '8000')) {
+        return 'http://127.0.0.1:8000' + path;
+      }
+      return path;
+    };
+
     // Check Active Session on Splash Load with Central Database Verification
     const updateSplashSessionUI = async () => {
       const token = localStorage.getItem('tracktales_jwt_token');
       if (token) {
         try {
-          const resp = await fetch('/api/auth/me', {
+          const resp = await fetch(getApiEndpoint('/api/auth/me'), {
             headers: { 'Authorization': `Bearer ${token}` }
           });
           if (resp.ok) {
@@ -4294,7 +4303,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         if (btnLabel) btnLabel.textContent = "Authenticating...";
 
         try {
-          const response = await fetch('/api/auth/login', {
+          const response = await fetch(getApiEndpoint('/api/auth/login'), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ login: email, password: password })
@@ -4387,7 +4396,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
         try {
           const cleanUsername = email.split('@')[0].replace(/[^a-zA-Z0-9_]/g, '') + Math.floor(Math.random() * 1000);
-          const response = await fetch('/api/auth/register', {
+          const response = await fetch(getApiEndpoint('/api/auth/register'), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
