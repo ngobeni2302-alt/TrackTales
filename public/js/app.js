@@ -3775,28 +3775,127 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       if (authAlert) authAlert.classList.add('hidden');
     };
 
+    const resetContent = document.getElementById('splash-reset-content');
+    const resetToSigninLink = document.getElementById('splash-reset-to-signin-link');
+
     const showSignIn = () => {
       hideAlert();
       if (signinContent) signinContent.classList.remove('hidden');
       if (signupContent) signupContent.classList.add('hidden');
+      if (resetContent) resetContent.classList.add('hidden');
     };
 
     const showSignUp = () => {
       hideAlert();
       if (signupContent) signupContent.classList.remove('hidden');
       if (signinContent) signinContent.classList.add('hidden');
+      if (resetContent) resetContent.classList.add('hidden');
+    };
+
+    const showResetPassword = () => {
+      hideAlert();
+      if (resetContent) resetContent.classList.remove('hidden');
+      if (signinContent) signinContent.classList.add('hidden');
+      if (signupContent) signupContent.classList.add('hidden');
     };
 
     if (toSignupLink) toSignupLink.addEventListener('click', showSignUp);
     if (toSigninLink) toSigninLink.addEventListener('click', showSignIn);
+    if (resetToSigninLink) resetToSigninLink.addEventListener('click', showSignIn);
 
     if (forgotPassBtn) {
       forgotPassBtn.addEventListener('click', () => {
-        const email = document.getElementById('splash-signin-email').value.trim();
-        if (!email) {
-          showAlert("Please enter your registered email address above to reset password.", "info");
-        } else {
-          showAlert(`Password reset link sent to ${email}. Please check your inbox.`, "success");
+        showResetPassword();
+        const signinEmail = document.getElementById('splash-signin-email').value.trim();
+        const resetEmailInput = document.getElementById('splash-reset-email');
+        if (signinEmail && resetEmailInput) {
+          resetEmailInput.value = signinEmail;
+        }
+      });
+    }
+
+    // --- Password Reset API Handlers ---
+    const requestCodeForm = document.getElementById('splash-request-code-form');
+    const confirmResetForm = document.getElementById('splash-confirm-reset-form');
+
+    if (requestCodeForm) {
+      requestCodeForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('splash-reset-email').value.trim().toLowerCase();
+        const btn = document.getElementById('splash-request-code-btn');
+        if (btn) btn.textContent = "Requesting Code...";
+
+        try {
+          const resp = await fetch(getApiEndpoint('/api/auth/forgot-password'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email })
+          });
+          const data = await resp.json();
+
+          if (resp.ok && data.status === 'success') {
+            const issuedBadge = document.getElementById('splash-issued-code-badge');
+            if (data.reset_code) {
+              if (issuedBadge) issuedBadge.textContent = data.reset_code;
+              showAlert(`Reset code issued: ${data.reset_code}. Enter code below with your new password.`, "success");
+            } else {
+              showAlert(data.message || "Reset code sent! Enter code below.", "info");
+            }
+            if (requestCodeForm) requestCodeForm.classList.add('hidden');
+            if (confirmResetForm) confirmResetForm.classList.remove('hidden');
+            const codeInput = document.getElementById('splash-reset-code-input');
+            if (codeInput && data.reset_code) codeInput.value = data.reset_code;
+          } else {
+            showAlert(data.detail || "Could not issue reset code.", "error");
+            if (btn) btn.textContent = "REQUEST RESET CODE";
+          }
+        } catch (err) {
+          console.error("Forgot password request error:", err);
+          showAlert("Connection error. Could not connect to central server.", "error");
+          if (btn) btn.textContent = "REQUEST RESET CODE";
+        }
+      });
+    }
+
+    if (confirmResetForm) {
+      confirmResetForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('splash-reset-email').value.trim().toLowerCase();
+        const code = document.getElementById('splash-reset-code-input').value.trim();
+        const newPassword = document.getElementById('splash-reset-new-password').value;
+        const btn = document.getElementById('splash-confirm-reset-btn');
+
+        if (btn) btn.textContent = "Updating Password...";
+
+        try {
+          const resp = await fetch(getApiEndpoint('/api/auth/reset-password'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: email,
+              reset_code: code,
+              new_password: newPassword
+            })
+          });
+          const data = await resp.json();
+
+          if (resp.ok && data.status === 'success') {
+            showAlert("Password reset successful! Switching to Sign In...", "success");
+            setTimeout(() => {
+              showSignIn();
+              const signinEmail = document.getElementById('splash-signin-email');
+              const signinPass = document.getElementById('splash-signin-password');
+              if (signinEmail) signinEmail.value = email;
+              if (signinPass) signinPass.value = newPassword;
+            }, 800);
+          } else {
+            showAlert(data.detail || "Failed to reset password.", "error");
+            if (btn) btn.textContent = "UPDATE PASSWORD";
+          }
+        } catch (err) {
+          console.error("Password reset error:", err);
+          showAlert("Connection error. Could not reset password.", "error");
+          if (btn) btn.textContent = "UPDATE PASSWORD";
         }
       });
     }
@@ -4369,7 +4468,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
             showAlert(`Welcome back, ${displayName}!`, "success");
             setTimeout(() => dismissSplash(), 450);
           } else {
-            showAlert("Could not connect to central database server.", "error");
+            showAlert(err && err.message ? `Connection error: ${err.message}` : "Could not connect to central database server. Please ensure server is running.", "error");
             if (btnLabel) btnLabel.textContent = "SIGN IN";
           }
         }
@@ -4455,7 +4554,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
           }
         } catch (err) {
           console.error("Central signup error:", err);
-          showAlert("Could not connect to central database server.", "error");
+          showAlert(err && err.message ? `Connection error: ${err.message}` : "Could not connect to central database server.", "error");
           if (btnLabel) btnLabel.textContent = "CREATE ACCOUNT";
         }
       });

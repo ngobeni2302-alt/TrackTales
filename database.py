@@ -80,6 +80,15 @@ def init_db():
             )
         """)
         
+        # Create password reset codes table
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS password_resets (
+                email TEXT PRIMARY KEY,
+                reset_code TEXT NOT NULL,
+                expires_at INTEGER NOT NULL
+            )
+        """)
+        
         # Create user tickets table linked to central user accounts
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS user_tickets (
@@ -276,3 +285,42 @@ def get_user_tickets(user_id: str) -> List[Dict]:
             t["passenger_name"] = decrypt_pii(t["passenger_name"])
             tickets.append(t)
         return tickets
+
+# --- Password Reset Helper Functions ---
+
+def create_password_reset_code(email: str) -> str:
+    """Generate a 6-digit password reset security code valid for 15 minutes."""
+    clean_email = email.strip().lower()
+    code = f"{secrets.randbelow(900000) + 100000}"
+    expires_at = int(time.time()) + 900
+    with get_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO password_resets (email, reset_code, expires_at)
+            VALUES (?, ?, ?)
+            ON CONFLICT(email) DO UPDATE SET reset_code = excluded.reset_code, expires_at = excluded.expires_at
+        """, (clean_email, code, expires_at))
+        conn.commit()
+    return code
+
+def verify_reset_code(email: str, code: str) -> bool:
+    """Verify if 6-digit reset code matches and is active."""
+    clean_email = email.strip().lower()
+    now = int(time.time())
+    with get_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT reset_code, expires_at FROM password_resets WHERE email = ?", (clean_email,))
+        row = cursor.fetchone()
+        if row and row["reset_code"] == code.strip() and row["expires_at"] > now:
+            return True
+    return False
+
+def reset_user_password(email: str, new_password_hash: str) -> bool:
+    """Update user password in central SQLite database and delete used code."""
+    clean_email = email.strip().lower()
+    with get_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("UPDATE users SET password_hash = ? WHERE LOWER(email) = ?", (new_password_hash, clean_email))
+        cursor.execute("DELETE FROM password_resets WHERE email = ?", (clean_email,))
+        conn.commit()
+        return cursor.rowcount > 0

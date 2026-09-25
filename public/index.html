@@ -401,6 +401,51 @@
           </div>
         </div>
 
+        <!-- FORGOT / RESET PASSWORD FORM SECTION -->
+        <div id="splash-reset-content" class="hidden space-y-4 my-auto">
+          <div>
+            <h2 class="font-sans font-extrabold text-3xl sm:text-4xl text-[#1C1917] tracking-tight mb-1">Reset Password</h2>
+            <p class="text-xs text-[#78716C] font-sans">Enter your registered email address to receive a 6-digit verification code.</p>
+          </div>
+
+          <!-- Step 1: Request Code Form -->
+          <form id="splash-request-code-form" class="space-y-4 font-sans text-sm">
+            <div class="relative">
+              <input type="email" id="splash-reset-email" class="w-full bg-transparent border-b border-[#D6CFC7] text-[#1C1917] placeholder-[#A8A29E] py-2 px-1 text-sm focus:outline-none focus:border-[#D99B26] transition-colors" placeholder="Registered Email Address *" required>
+            </div>
+            <button type="submit" id="splash-request-code-btn" class="w-full py-3 rounded-xl bg-[#D99B26] text-white font-bold uppercase tracking-wider hover:bg-[#C98B1E] transition-all shadow-md">
+              <span>REQUEST RESET CODE</span>
+            </button>
+          </form>
+
+          <!-- Step 2: Confirm Code & Set New Password Form -->
+          <form id="splash-confirm-reset-form" class="hidden space-y-3 font-sans text-sm">
+            <div class="p-2.5 rounded-xl bg-[#D99B26]/10 border border-[#D99B26]/30 text-xs text-[#D99B26] font-semibold flex items-center justify-between">
+              <span>Security Code Issued:</span>
+              <span id="splash-issued-code-badge" class="font-mono font-extrabold text-sm text-[#1C1917] bg-white px-2 py-0.5 rounded shadow-sm">------</span>
+            </div>
+
+            <div class="relative">
+              <input type="text" id="splash-reset-code-input" class="w-full bg-transparent border-b border-[#D6CFC7] text-[#1C1917] placeholder-[#A8A29E] py-2 px-1 text-sm font-mono tracking-widest focus:outline-none focus:border-[#D99B26] transition-colors" placeholder="6-Digit Verification Code *" required maxlength="6">
+            </div>
+
+            <div class="relative">
+              <input type="password" id="splash-reset-new-password" class="w-full bg-transparent border-b border-[#D6CFC7] text-[#1C1917] placeholder-[#A8A29E] py-2 pl-1 pr-8 text-sm focus:outline-none focus:border-[#D99B26] transition-colors" placeholder="New Password (min 8 chars, letters & numbers) *" required>
+              <button type="button" class="btn-toggle-password absolute right-1 top-1/2 -translate-y-1/2 text-[#A8A29E] hover:text-[#1C1917] p-1" title="Toggle password visibility">
+                <i data-lucide="eye" class="w-4 h-4 eye-icon"></i>
+              </button>
+            </div>
+
+            <button type="submit" id="splash-confirm-reset-btn" class="w-full py-3.5 rounded-xl bg-[#D99B26] text-white font-bold uppercase tracking-wider hover:bg-[#C98B1E] transition-all shadow-lg mt-2">
+              <span>UPDATE PASSWORD</span>
+            </button>
+          </form>
+
+          <div class="pt-3 border-t border-[#EBE5D9] text-xs font-sans text-[#78716C]">
+            Remembered your password? <button type="button" id="splash-reset-to-signin-link" class="text-[#D99B26] font-bold hover:underline ml-1">Back to Sign In</button>
+          </div>
+        </div>
+
         <!-- ALREADY LOGGED IN SECTION -->
         <div id="splash-logged-in-content" class="hidden text-center space-y-4 my-auto">
           <div class="p-5 rounded-2xl bg-[#D99B26]/10 border border-[#D99B26]/30">

@@ -11,7 +11,8 @@ import database
 from database import (
     init_db, create_user, get_user_by_email, get_user_by_username,
     get_user_by_id, verify_password, hash_password, update_last_login,
-    save_user_ticket, get_user_tickets, is_account_locked, record_login_attempt
+    save_user_ticket, get_user_tickets, is_account_locked, record_login_attempt,
+    create_password_reset_code, verify_reset_code, reset_user_password
 )
 import auth
 from auth import create_access_token, get_current_user_optional, require_current_user
@@ -27,10 +28,10 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Enable CORS for cross-origin and file:// access
+# Enable CORS for cross-origin and file:// access with credentials support
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origin_regex=r".*",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -70,6 +71,14 @@ class RegisterRequest(BaseModel):
 class LoginRequest(BaseModel):
     login: str
     password: str
+
+class ForgotPasswordRequest(BaseModel):
+    email: str
+
+class ResetPasswordRequest(BaseModel):
+    email: str
+    reset_code: str
+    new_password: str
 
 
 # --- In-Memory Railway Data ---
@@ -482,6 +491,49 @@ def get_me(current_user: dict = Depends(require_current_user)):
 def get_my_tickets(current_user: dict = Depends(require_current_user)):
     tickets = get_user_tickets(current_user["sub"])
     return {"status": "success", "count": len(tickets), "data": tickets}
+
+@app.post("/api/auth/forgot-password", summary="Request password reset verification code")
+def forgot_password(req: ForgotPasswordRequest):
+    email = req.email.strip().lower()
+    if not email or "@" not in email:
+        raise HTTPException(status_code=400, detail="Please enter a valid email address.")
+        
+    user = get_user_by_email(email)
+    if not user:
+        return {
+            "status": "success",
+            "message": "If your email is registered in our system, a 6-digit security reset code has been issued."
+        }
+        
+    code = create_password_reset_code(email)
+    return {
+        "status": "success",
+        "message": f"Security reset code generated for {email}.",
+        "reset_code": code
+    }
+
+@app.post("/api/auth/reset-password", summary="Reset password using 6-digit verification code")
+def reset_password(req: ResetPasswordRequest):
+    email = req.email.strip().lower()
+    code = req.reset_code.strip()
+    
+    if not email or not code or not req.new_password:
+        raise HTTPException(status_code=400, detail="Please provide your email, reset code, and new password.")
+        
+    validate_password_strength(req.new_password)
+    
+    if not verify_reset_code(email, code):
+        raise HTTPException(status_code=400, detail="Invalid or expired reset code. Please request a new code.")
+        
+    new_hash = hash_password(req.new_password)
+    success = reset_user_password(email, new_hash)
+    if not success:
+        raise HTTPException(status_code=404, detail="User account not found.")
+        
+    return {
+        "status": "success",
+        "message": "Password updated successfully in central database! You can now log in with your new password."
+    }
 
     
 class TranslateRequest(BaseModel):
