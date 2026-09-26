@@ -3740,6 +3740,60 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
     }
 
     let isDismissed = false;
+
+    // --- Tab / Screen Elements & View Switchers (Hoisted Functions) ---
+    const toSignupLink = document.getElementById('splash-to-signup-link');
+    const toSigninLink = document.getElementById('splash-to-signin-link');
+    const signinContent = document.getElementById('splash-signin-content');
+    const signupContent = document.getElementById('splash-signup-content');
+    const resetContent = document.getElementById('splash-reset-content');
+    const resetToSigninLink = document.getElementById('splash-reset-to-signin-link');
+    const loggedInContent = document.getElementById('splash-logged-in-content');
+    const authAlert = document.getElementById('splash-auth-alert');
+    const forgotPassBtn = document.getElementById('splash-forgot-pass-btn');
+    const splashCloseBtn = document.getElementById('splash-close-btn');
+
+    function showAlert(msg, type = 'info') {
+      if (!authAlert) return;
+      authAlert.classList.remove('hidden', 'bg-red-500/10', 'border-red-500/30', 'text-red-700', 'bg-[#D99B26]/15', 'border-[#D99B26]/35', 'text-[#A86F12]', 'bg-[#FAF8F5]', 'border-[#EBE5D9]', 'text-[#1C1917]');
+      if (type === 'error') {
+        authAlert.classList.add('bg-red-500/10', 'border-red-500/30', 'text-red-700');
+      } else if (type === 'success') {
+        authAlert.classList.add('bg-[#D99B26]/15', 'border-[#D99B26]/35', 'text-[#A86F12]');
+      } else {
+        authAlert.classList.add('bg-[#FAF8F5]', 'border-[#EBE5D9]', 'text-[#1C1917]');
+      }
+      authAlert.textContent = msg;
+    }
+
+    function hideAlert() {
+      if (authAlert) authAlert.classList.add('hidden');
+    }
+
+    function showSignIn() {
+      hideAlert();
+      if (signinContent) signinContent.classList.remove('hidden');
+      if (signupContent) signupContent.classList.add('hidden');
+      if (resetContent) resetContent.classList.add('hidden');
+      document.documentElement.classList.remove('show-splash-signup');
+    }
+
+    function showSignUp() {
+      hideAlert();
+      if (signupContent) signupContent.classList.remove('hidden');
+      if (signinContent) signinContent.classList.add('hidden');
+      if (resetContent) resetContent.classList.add('hidden');
+      document.documentElement.classList.add('show-splash-signup');
+    }
+
+    function showResetPassword() {
+      hideAlert();
+      if (resetContent) resetContent.classList.remove('hidden');
+      if (signinContent) signinContent.classList.add('hidden');
+      if (signupContent) signupContent.classList.add('hidden');
+      document.documentElement.classList.remove('show-splash-signup');
+    }
+
     const dismissSplash = () => {
       if (isDismissed) return;
       isDismissed = true;
@@ -3747,6 +3801,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         sessionStorage.setItem('tracktales_splash_dismissed', 'true');
         localStorage.setItem('tracktales_splash_dismissed', 'true');
         document.documentElement.classList.add('splash-already-dismissed');
+        document.documentElement.classList.remove('show-splash-signup');
       } catch (e) {}
       
       if (video) {
@@ -3758,21 +3813,69 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
           console.log("Error pausing splash video:", e);
         }
       }
+      if (cardPanelVideo) {
+        try { cardPanelVideo.pause(); } catch (e) {}
+      }
 
       splash.classList.add('fade-out');
       setTimeout(() => {
         splash.style.display = 'none';
-      }, 500);
+      }, 400);
+
+      // Cleanly transition route if currently on an auth hash
+      const currentH = window.location.hash || '';
+      if (currentH === '#signin' || currentH === '#signup' || currentH === '#login' || !currentH || currentH === '#') {
+        try {
+          history.replaceState(null, '', '#home');
+        } catch (e) {
+          window.location.hash = '#home';
+        }
+        if (window.TrackTalesSwitchPage) {
+          window.TrackTalesSwitchPage('home');
+        }
+      }
     };
 
-    // Strict Login Request Detection (e.g. from Guest Mode "Sign In / Register")
+    // Public method to open the authentic TrackTales split login / signup modal from anywhere in the app
+    window.TrackTalesOpenSplashLogin = (mode = 'signin') => {
+      isDismissed = false;
+      document.documentElement.classList.remove('splash-already-dismissed');
+      splash.classList.remove('fade-out');
+      splash.style.display = 'flex';
+      if (video) {
+        try { video.play(); } catch (e) {}
+      }
+      if (cardPanelVideo) {
+        try { cardPanelVideo.play(); } catch (e) {}
+      }
+      if (mode === 'signup') {
+        showSignUp();
+        try { history.replaceState(null, '', '#signup'); } catch(err) { window.location.hash = '#signup'; }
+        const nameInput = document.getElementById('splash-signup-name');
+        if (nameInput) setTimeout(() => nameInput.focus(), 250);
+      } else {
+        showSignIn();
+        try { history.replaceState(null, '', '#signin'); } catch(err) { window.location.hash = '#signin'; }
+        const emailInput = document.getElementById('splash-signin-email');
+        if (emailInput) setTimeout(() => emailInput.focus(), 250);
+      }
+      if (window.lucide) lucide.createIcons();
+    };
+
+    // Strict Login / Sign Up Request Detection
     const searchParams = window.location.search || '';
     const hashVal = window.location.hash || '';
+    const isSignUp = hashVal === '#signup' ||
+                     searchParams.indexOf('action=signup') !== -1 ||
+                     searchParams.indexOf('open=signup') !== -1 ||
+                     searchParams.indexOf('signup=true') !== -1;
+
     const isStrictLogin = searchParams.indexOf('open=login') !== -1 ||
                           searchParams.indexOf('login=true') !== -1 ||
                           searchParams.indexOf('action=login') !== -1 ||
                           hashVal === '#signin' ||
-                          hashVal === '#login';
+                          hashVal === '#login' ||
+                          isSignUp;
 
     if (isStrictLogin) {
       try {
@@ -3782,13 +3885,17 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       } catch (e) {}
     }
 
-    // If already entered in this session, logged in, or on a direct/refreshed page route: dismiss immediately!
-    const hasActiveHash = !isStrictLogin && Boolean(hashVal && hashVal.length > 1 && hashVal !== '#');
-    const wasAlreadyEntered = !isStrictLogin && (
+    // Determine if user is explicitly navigating to a content page route on reload
+    const contentPages = ['#home', '#stops', '#trains', '#games', '#voice', '#about', '#attractions'];
+    const isContentPage = contentPages.indexOf(hashVal) !== -1;
+
+    // When web is open initially (root '/' with empty hash or '#'), ALWAYS show login/signup!
+    // If reloaded on a content page (like #home), stay on that page!
+    // If reloaded on #signup or #signin, stay on login/signup modal!
+    const wasAlreadyEntered = !isStrictLogin && isContentPage && (
                               sessionStorage.getItem('tracktales_splash_dismissed') === 'true' ||
                               Boolean(localStorage.getItem('tracktales_jwt_token')) ||
-                              Boolean(localStorage.getItem('tracktales_logged_user')) ||
-                              hasActiveHash);
+                              Boolean(localStorage.getItem('tracktales_logged_user')));
 
     if (wasAlreadyEntered) {
       isDismissed = true;
@@ -3804,9 +3911,22 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       isDismissed = false;
       splash.style.display = 'flex';
       document.documentElement.classList.remove('splash-already-dismissed');
-      showSignIn();
-      const emailInput = document.getElementById('splash-signin-email');
-      if (emailInput) setTimeout(() => emailInput.focus(), 300);
+      if (isSignUp) {
+        showSignUp();
+        const nameInput = document.getElementById('splash-signup-name');
+        if (nameInput) setTimeout(() => nameInput.focus(), 300);
+      } else {
+        showSignIn();
+        const emailInput = document.getElementById('splash-signin-email');
+        if (emailInput) setTimeout(() => emailInput.focus(), 300);
+      }
+    }
+
+    if (splashCloseBtn) {
+      splashCloseBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dismissSplash();
+      });
     }
 
     if (skipBtn) {
@@ -3826,59 +3946,29 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       });
     }
 
-    // --- Tab / Screen Switcher Logic ---
-    const toSignupLink = document.getElementById('splash-to-signup-link');
-    const toSigninLink = document.getElementById('splash-to-signin-link');
-    const signinContent = document.getElementById('splash-signin-content');
-    const signupContent = document.getElementById('splash-signup-content');
-    const loggedInContent = document.getElementById('splash-logged-in-content');
-    const authAlert = document.getElementById('splash-auth-alert');
-    const forgotPassBtn = document.getElementById('splash-forgot-pass-btn');
+    if (toSignupLink) {
+      toSignupLink.addEventListener('click', (e) => {
+        if (e) e.preventDefault();
+        showSignUp();
+        try { history.replaceState(null, '', '#signup'); } catch(err) { window.location.hash = '#signup'; }
+      });
+    }
 
-    const showAlert = (msg, type = 'info') => {
-      if (!authAlert) return;
-      authAlert.classList.remove('hidden', 'bg-red-500/10', 'border-red-500/30', 'text-red-700', 'bg-[#D99B26]/15', 'border-[#D99B26]/35', 'text-[#A86F12]', 'bg-[#FAF8F5]', 'border-[#EBE5D9]', 'text-[#1C1917]');
-      if (type === 'error') {
-        authAlert.classList.add('bg-red-500/10', 'border-red-500/30', 'text-red-700');
-      } else if (type === 'success') {
-        authAlert.classList.add('bg-[#D99B26]/15', 'border-[#D99B26]/35', 'text-[#A86F12]');
-      } else {
-        authAlert.classList.add('bg-[#FAF8F5]', 'border-[#EBE5D9]', 'text-[#1C1917]');
-      }
-      authAlert.textContent = msg;
-    };
+    if (toSigninLink) {
+      toSigninLink.addEventListener('click', (e) => {
+        if (e) e.preventDefault();
+        showSignIn();
+        try { history.replaceState(null, '', '#signin'); } catch(err) { window.location.hash = '#signin'; }
+      });
+    }
 
-    const hideAlert = () => {
-      if (authAlert) authAlert.classList.add('hidden');
-    };
-
-    const resetContent = document.getElementById('splash-reset-content');
-    const resetToSigninLink = document.getElementById('splash-reset-to-signin-link');
-
-    const showSignIn = () => {
-      hideAlert();
-      if (signinContent) signinContent.classList.remove('hidden');
-      if (signupContent) signupContent.classList.add('hidden');
-      if (resetContent) resetContent.classList.add('hidden');
-    };
-
-    const showSignUp = () => {
-      hideAlert();
-      if (signupContent) signupContent.classList.remove('hidden');
-      if (signinContent) signinContent.classList.add('hidden');
-      if (resetContent) resetContent.classList.add('hidden');
-    };
-
-    const showResetPassword = () => {
-      hideAlert();
-      if (resetContent) resetContent.classList.remove('hidden');
-      if (signinContent) signinContent.classList.add('hidden');
-      if (signupContent) signupContent.classList.add('hidden');
-    };
-
-    if (toSignupLink) toSignupLink.addEventListener('click', showSignUp);
-    if (toSigninLink) toSigninLink.addEventListener('click', showSignIn);
-    if (resetToSigninLink) resetToSigninLink.addEventListener('click', showSignIn);
+    if (resetToSigninLink) {
+      resetToSigninLink.addEventListener('click', (e) => {
+        if (e) e.preventDefault();
+        showSignIn();
+        try { history.replaceState(null, '', '#signin'); } catch(err) { window.location.hash = '#signin'; }
+      });
+    }
 
     if (forgotPassBtn) {
       forgotPassBtn.addEventListener('click', () => {
@@ -6112,23 +6202,20 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
     // Restore exact page on load or refresh
     let targetInitialPage = 'home';
-    if (window.location.hash && window.location.hash.length > 1 && window.location.hash !== '#') {
-      targetInitialPage = window.location.hash.replace('#', '');
-    } else {
-      const savedPage = sessionStorage.getItem('tracktales_current_page') || localStorage.getItem('tracktales_current_page');
-      if (savedPage && document.getElementById('page-' + savedPage)) {
-        targetInitialPage = savedPage;
-      }
-    }
+    const authHashes = ['#signup', '#signin', '#login'];
+    const currentHash = window.location.hash || '';
 
-    if (targetInitialPage) {
-      switchPage(targetInitialPage);
-      if (window.location.hash !== '#' + targetInitialPage) {
-        try {
-          history.replaceState(null, '', '#' + targetInitialPage);
-        } catch (e) {
-          window.location.hash = '#' + targetInitialPage;
-        }
+    if (currentHash && authHashes.indexOf(currentHash) !== -1) {
+      // Keep background page on home while auth modal displays in foreground
+      targetInitialPage = 'home';
+      switchPage('home');
+      // DO NOT overwrite hash with #home! Preserve #signup or #signin so reloading keeps user on auth!
+    } else if (currentHash && currentHash.length > 1 && currentHash !== '#') {
+      targetInitialPage = currentHash.replace('#', '');
+      if (document.getElementById('page-' + targetInitialPage)) {
+        switchPage(targetInitialPage);
+      } else {
+        switchPage('home');
       }
       if (targetInitialPage === 'trains') {
         const savedTrain = localStorage.getItem('tracktales_selected_train') || 'blue-train';
@@ -6136,11 +6223,25 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
           renderTrains(savedTrain);
         }
       }
+    } else {
+      const savedPage = sessionStorage.getItem('tracktales_current_page') || localStorage.getItem('tracktales_current_page');
+      if (savedPage && document.getElementById('page-' + savedPage)) {
+        targetInitialPage = savedPage;
+      }
+      switchPage(targetInitialPage);
     }
 
     window.addEventListener('hashchange', () => {
-      if (window.location.hash) {
-        switchPage(window.location.hash);
+      const h = window.location.hash || '';
+      if (h === '#signup') {
+        if (window.TrackTalesOpenSplashLogin) window.TrackTalesOpenSplashLogin('signup');
+      } else if (h === '#signin' || h === '#login') {
+        if (window.TrackTalesOpenSplashLogin) window.TrackTalesOpenSplashLogin('signin');
+      } else if (h && h.length > 1 && h !== '#') {
+        const pageName = h.replace('#', '');
+        if (document.getElementById('page-' + pageName)) {
+          switchPage(pageName);
+        }
       }
     });
   }
@@ -6324,11 +6425,8 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
           window.TrackTalesSignOutAndReload(true);
         }
       } else {
-        const inlineSec = document.getElementById('inline-signin-section');
-        if (inlineSec) {
-          inlineSec.scrollIntoView({ behavior: 'smooth' });
-          const emailInput = document.getElementById('inline-signin-email');
-          if (emailInput) setTimeout(() => emailInput.focus(), 450);
+        if (window.TrackTalesOpenSplashLogin) {
+          window.TrackTalesOpenSplashLogin('signin');
         } else if (modal) {
           modal.classList.remove('hidden');
         }

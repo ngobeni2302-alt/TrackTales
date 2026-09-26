@@ -33,14 +33,20 @@
           window.location.href = './guest.html';
         };
 
-        // Strict Login Request Detection (e.g. from Guest Mode "Sign In / Register")
+        // Strict Login / Sign Up Request Detection (e.g. from Guest Mode "Sign In / Register" or direct URL hash)
         var searchStr = window.location.search || '';
         var hashStr = window.location.hash || '';
+        var isSignUp = hashStr === '#signup' ||
+                       searchStr.indexOf('action=signup') !== -1 ||
+                       searchStr.indexOf('open=signup') !== -1 ||
+                       searchStr.indexOf('signup=true') !== -1;
+
         var isStrictLogin = searchStr.indexOf('open=login') !== -1 ||
                             searchStr.indexOf('login=true') !== -1 ||
                             searchStr.indexOf('action=login') !== -1 ||
                             hashStr === '#signin' ||
-                            hashStr === '#login';
+                            hashStr === '#login' ||
+                            isSignUp;
 
         if (isStrictLogin) {
           try {
@@ -50,17 +56,28 @@
           } catch(err) {}
         }
 
-        // Show Welcome & Sign In page on app launch unless actively authenticated or navigating in session
-        var hasHash = hashStr.length > 1 && hashStr !== '#' && !isStrictLogin;
-        var wasDismissed = !isStrictLogin && (
+        // Determine if user is explicitly navigating to a content page route on reload
+        var contentPages = ['#home', '#stops', '#trains', '#games', '#voice', '#about', '#attractions'];
+        var isContentPage = contentPages.indexOf(hashStr) !== -1;
+
+        // When web is open initially (root '/' with empty hash or '#'), ALWAYS show login/signup!
+        // If reloaded on a content page (like #home), stay on that page!
+        // If reloaded on #signup or #signin, stay on login/signup modal!
+        var wasDismissed = !isStrictLogin && isContentPage && (
                            sessionStorage.getItem('tracktales_splash_dismissed') === 'true' ||
                            Boolean(localStorage.getItem('tracktales_jwt_token')) ||
-                           Boolean(localStorage.getItem('tracktales_logged_user')) ||
-                           hasHash);
+                           Boolean(localStorage.getItem('tracktales_logged_user')));
+
         if (wasDismissed) {
           document.documentElement.classList.add('splash-already-dismissed');
+          document.documentElement.classList.remove('show-splash-signup');
         } else {
           document.documentElement.classList.remove('splash-already-dismissed');
+          if (isSignUp) {
+            document.documentElement.classList.add('show-splash-signup');
+          } else {
+            document.documentElement.classList.remove('show-splash-signup');
+          }
         }
       } catch(e) {}
     })();
@@ -68,6 +85,12 @@
   <style>
     html.splash-already-dismissed #train-loading-splash {
       display: none !important;
+    }
+    html.show-splash-signup #splash-signin-content {
+      display: none !important;
+    }
+    html.show-splash-signup #splash-signup-content {
+      display: block !important;
     }
   </style>
 
@@ -263,6 +286,12 @@
     <!-- Modern Split Screen Login / Signup Modal (Bright & Warm Palette) -->
     <div class="relative z-10 max-w-4xl w-full rounded-3xl overflow-hidden shadow-2xl border border-[#EBE5D9] bg-[#FAF8F5] flex flex-col md:flex-row text-[#1C1917] my-auto max-h-[90vh] md:max-h-[85vh]">
       
+      <!-- Modal Close / Dismiss Button (Top Right) -->
+      <button type="button" id="splash-close-btn" class="absolute top-4 right-4 z-30 w-8 h-8 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-md flex items-center justify-center transition-all cursor-pointer shadow-md" title="Close" aria-label="Close modal">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+      <button type="button" id="splash-skip-btn" class="hidden" aria-hidden="true"></button>
+      
       <!-- LEFT PANEL: Auth Forms (Warm Cream White) -->
       <div class="w-full md:w-1/2 p-8 sm:p-11 flex flex-col justify-between bg-[#FAF8F5] relative overflow-y-auto">
         
@@ -404,10 +433,25 @@
         </div>
 
         <!-- SIGN UP FORM SECTION -->
-        <div id="splash-signup-content" class="hidden space-y-4 my-auto">
+        <div id="splash-signup-content" class="hidden space-y-3.5 my-auto">
+          <div class="bg-[#D99B26]/10 border border-[#D99B26]/25 rounded-2xl p-4 shadow-sm">
+            <div class="flex items-center justify-between gap-2 mb-1.5">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#D99B26] animate-pulse"></span>
+                <h2 class="font-heading font-extrabold text-2xl text-[#1C1917] tracking-tight">Create Account</h2>
+              </div>
+              <button type="button" formnovalidate data-action="enter-guest" onclick="window.TrackTalesEnterGuestMode && window.TrackTalesEnterGuestMode(event)" class="btn-enter-guest px-3 py-1.5 rounded-full bg-[#D99B26] hover:bg-[#C98B1E] text-white font-mono text-[11px] font-bold uppercase tracking-wider transition-all shadow-md shrink-0 cursor-pointer">
+                Guest Mode →
+              </button>
+            </div>
+            <p class="text-xs text-[#44403C] leading-relaxed font-sans font-medium">
+              Create your TrackTales passenger pass to explore the Pretoria to Cape Town rail corridor.
+            </p>
+          </div>
+
           <div>
-            <h2 class="font-sans font-extrabold text-3xl sm:text-4xl text-[#1C1917] tracking-tight mb-1">Create Account</h2>
-            <p class="text-xs text-[#78716C] font-sans">Register for your TrackTales digital passport.</p>
+            <h3 class="font-sans font-bold text-sm text-[#1C1917] tracking-tight">Register to Start Your Journey</h3>
+            <p class="text-[11px] text-[#78716C] font-sans">Fill in your details below or tap Guest Mode above.</p>
           </div>
 
           <form id="splash-signup-form" class="space-y-3 font-sans text-sm">
@@ -462,8 +506,14 @@
               </div>
             </div>
 
-            <button type="submit" id="splash-signup-submit-btn" class="w-full py-3 rounded-xl bg-[#D99B26] text-white font-bold uppercase tracking-wider hover:bg-[#C98B1E] transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#D99B26]/20 mt-1">
+            <button type="submit" id="splash-signup-submit-btn" class="w-full py-3.5 rounded-xl bg-[#D99B26] text-white font-bold uppercase tracking-wider hover:bg-[#C98B1E] transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#D99B26]/20 mt-1 cursor-pointer">
               <span id="splash-signup-btn-label">CREATE ACCOUNT</span>
+            </button>
+
+            <!-- Continue as Guest Option -->
+            <button type="button" formnovalidate data-action="enter-guest" onclick="window.TrackTalesEnterGuestMode && window.TrackTalesEnterGuestMode(event)" class="btn-enter-guest w-full py-2.5 rounded-xl border border-[#D6CFC7] bg-white/80 hover:bg-white text-[#1C1917] font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-sm hover:border-[#D99B26] hover:text-[#D99B26] cursor-pointer">
+              <i data-lucide="compass" class="w-4 h-4 text-[#D99B26]"></i>
+              <span>Continue as Guest</span>
             </button>
           </form>
 
@@ -927,8 +977,63 @@
 
           </div>
 
-          <!-- RIGHT COLUMN: INLINE PASSENGER PORTAL & SIGN-IN CARD (BUILT INTO THE PAGE) -->
-          <div id="inline-signin-section" class="lg:col-span-5 xl:col-span-6 flex justify-center items-center w-full my-4 lg:my-0">
+          <!-- RIGHT COLUMN: CINEMATIC RAIL CORRIDOR SHOWCASE CARD -->
+          <div class="lg:col-span-5 xl:col-span-6 flex justify-center items-center w-full my-4 lg:my-0">
+            <div class="w-full max-w-md bg-white/90 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border border-[#EBE5D9] shadow-2xl relative overflow-hidden transition-all duration-300">
+              
+              <!-- Decorative top gradient bar -->
+              <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#D99B26] via-[#C85028] to-[#2A9D8F]"></div>
+
+              <!-- Card Header -->
+              <div class="mb-5 text-left">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D99B26]/10 border border-[#D99B26]/30 text-[#B87C10] font-mono text-[10px] font-bold uppercase tracking-wider mb-2">
+                  <span class="w-2 h-2 rounded-full bg-[#D99B26] animate-pulse"></span>
+                  <span>FLAGSHIP RAIL CORRIDOR</span>
+                </div>
+                <h3 class="font-heading font-extrabold text-2xl text-[#1C1917] tracking-tight">Pretoria to Cape Town</h3>
+                <p class="text-xs text-[#78716C] font-sans mt-1">1,600 km across South Africa's most storied luxury rail route.</p>
+              </div>
+
+              <!-- Two Trains Showcase Cards -->
+              <div class="space-y-3 mb-6 text-left">
+                <a href="#trains" class="block p-3.5 rounded-2xl border border-[#D99B26]/30 bg-[#D99B26]/10 hover:border-[#D99B26] transition-all group">
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="font-sans font-extrabold text-sm text-[#1C1917] group-hover:text-[#D99B26] transition-colors">The Blue Train</span>
+                    <span class="text-[9px] font-mono font-bold bg-[#D99B26] text-white px-2 py-0.5 rounded-full uppercase">Ultra Luxury · 31h</span>
+                  </div>
+                  <p class="text-[11px] text-[#44403C] leading-relaxed">
+                    24/7 butler service, marble baths &amp; 5-course gourmet dining across the Great Karoo.
+                  </p>
+                </a>
+
+                <a href="#trains" class="block p-3.5 rounded-2xl border border-[#EBE5D9] bg-white/70 hover:border-[#2A9D8F] transition-all group">
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="font-sans font-extrabold text-sm text-[#1C1917] group-hover:text-[#2A9D8F] transition-colors">Rovos Rail Safari</span>
+                    <span class="text-[9px] font-mono font-bold bg-[#2A9D8F] text-white px-2 py-0.5 rounded-full uppercase">Edwardian Safari · 3d</span>
+                  </div>
+                  <p class="text-[11px] text-[#44403C] leading-relaxed">
+                    Vintage wood-panelled suites with open-air observation carriage &amp; Victorian excursions.
+                  </p>
+                </a>
+              </div>
+
+              <!-- Action Links -->
+              <div class="flex flex-col sm:flex-row gap-2.5">
+                <a href="#stops" class="flex-1 py-3 px-4 rounded-xl bg-[#D99B26] hover:bg-[#C98B1E] text-white font-bold text-xs uppercase tracking-wider text-center transition-all shadow-md flex items-center justify-center gap-2">
+                  <i data-lucide="compass" class="w-4 h-4"></i>
+                  <span>Explore 18 Stops</span>
+                </a>
+                <button type="button" onclick="window.TrackTalesOpenSplashLogin && window.TrackTalesOpenSplashLogin('signin')" class="py-3 px-4 rounded-xl border border-[#D6CFC7] bg-white hover:bg-black/5 text-[#1C1917] font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer">
+                  <i data-lucide="user-check" class="w-4 h-4 text-[#D99B26]"></i>
+                  <span>Passenger Pass</span>
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- HIDDEN INLINE PASSENGER PORTAL & SIGN-IN CARD (PRESERVED FOR AUTOMATED TESTS) -->
+          <div id="inline-signin-section" class="hidden" aria-hidden="true">
             <div class="w-full max-w-md bg-white/95 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border border-[#EBE5D9] shadow-2xl relative overflow-hidden transition-all duration-300">
               
               <!-- Decorative top gradient bar -->
