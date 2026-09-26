@@ -193,7 +193,8 @@ TRAINS_DATA = [
                 "tips": "Keep watch from the wood-framed picture windows during afternoon high tea."
             }
         ],
-        "image_url": "/images/rovos-rail.jpg"
+        "image_url": "/images/rovos-rail.jpg",
+        "video_url": "/videos/rovos-rail-showcase.mp4"
     }
 ]
 

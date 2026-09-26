@@ -180,7 +180,8 @@
         ],
         desc: "Every Rovos Rail carriage has been painstakingly hand-restored at the Capital Park steam depot in Pretoria by dedicated craftsmen, preserving Edwardian woodcraft and brass craftsmanship."
       },
-      image_url: "/images/rovos-rail.jpg"
+      image_url: "/images/rovos-rail.jpg",
+      video_url: "/videos/rovos-rail-showcase.mp4"
     }
   ];
 
@@ -2274,15 +2275,15 @@
 
           <div class="lg:col-span-5 flex flex-col gap-4">
             <div class="relative rounded-2xl overflow-hidden aspect-[4/3] border border-black/15 shadow-md bg-black">
-              ${(isBlue || train.video_url) ? `
-                <video src="${train.video_url || '/videos/blue-train-showcase.mp4'}" 
+              ${(isBlue || train.id === 'rovos-rail' || train.video_url) ? `
+                <video src="${train.video_url || (isBlue ? '/videos/blue-train-showcase.mp4' : '/videos/rovos-rail-showcase.mp4')}" 
                        autoplay 
                        loop 
                        muted 
                        playsinline 
                        preload="auto"
                        class="w-full h-full object-cover pointer-events-none" 
-                       poster="${train.image_url || '/images/blue-train.jpg'}"
+                       poster="${train.image_url || (isBlue ? '/images/blue-train.jpg' : '/images/rovos-rail.jpg')}"
                        tabindex="-1"
                        aria-label="${train.name} scenic showcase video (muted)">
                 </video>
@@ -3742,6 +3743,11 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
     const dismissSplash = () => {
       if (isDismissed) return;
       isDismissed = true;
+      try {
+        sessionStorage.setItem('tracktales_splash_dismissed', 'true');
+        localStorage.setItem('tracktales_splash_dismissed', 'true');
+        document.documentElement.classList.add('splash-already-dismissed');
+      } catch (e) {}
       
       if (video) {
         try {
@@ -3758,6 +3764,26 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         splash.style.display = 'none';
       }, 500);
     };
+
+    // If already entered in this session, logged in, or on a direct/refreshed page route: dismiss immediately!
+    const hasActiveHash = Boolean(window.location.hash && window.location.hash.length > 1 && window.location.hash !== '#');
+    const wasAlreadyEntered = sessionStorage.getItem('tracktales_splash_dismissed') === 'true' ||
+                              localStorage.getItem('tracktales_splash_dismissed') === 'true' ||
+                              Boolean(localStorage.getItem('tracktales_jwt_token')) ||
+                              Boolean(localStorage.getItem('tracktales_logged_user')) ||
+                              hasActiveHash;
+
+    if (wasAlreadyEntered) {
+      isDismissed = true;
+      splash.style.display = 'none';
+      document.documentElement.classList.add('splash-already-dismissed');
+      if (video) {
+        try { video.pause(); video.muted = true; } catch (e) {}
+      }
+      if (cardPanelVideo) {
+        try { cardPanelVideo.pause(); } catch (e) {}
+      }
+    }
 
     if (skipBtn) {
       skipBtn.addEventListener('click', (e) => {
@@ -4081,6 +4107,11 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       localStorage.removeItem('tracktales_logged_user');
       localStorage.removeItem('last_user');
       localStorage.removeItem('last_password');
+      sessionStorage.removeItem('tracktales_splash_dismissed');
+      localStorage.removeItem('tracktales_splash_dismissed');
+      sessionStorage.removeItem('tracktales_current_page');
+      localStorage.removeItem('tracktales_current_page');
+      document.documentElement.classList.remove('splash-already-dismissed');
 
       // Explicitly preserve passenger selected language across logout
       const currentSavedLang = localStorage.getItem('tracktales_lang') || 'en';
@@ -5749,6 +5780,11 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         targetPage = 'home';
       }
 
+      try {
+        sessionStorage.setItem('tracktales_current_page', targetPage);
+        localStorage.setItem('tracktales_current_page', targetPage);
+      } catch (e) {}
+
       if (targetPage === currentPage) {
         updateNavIndicator(targetPage, true);
         return;
@@ -6020,8 +6056,32 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       btnNavHubTrain.addEventListener('click', openSelectedTrainFlagshipMode);
     }
 
-    if (window.location.hash) {
-      switchPage(window.location.hash);
+    // Restore exact page on load or refresh
+    let targetInitialPage = 'home';
+    if (window.location.hash && window.location.hash.length > 1 && window.location.hash !== '#') {
+      targetInitialPage = window.location.hash.replace('#', '');
+    } else {
+      const savedPage = sessionStorage.getItem('tracktales_current_page') || localStorage.getItem('tracktales_current_page');
+      if (savedPage && document.getElementById('page-' + savedPage)) {
+        targetInitialPage = savedPage;
+      }
+    }
+
+    if (targetInitialPage) {
+      switchPage(targetInitialPage);
+      if (window.location.hash !== '#' + targetInitialPage) {
+        try {
+          history.replaceState(null, '', '#' + targetInitialPage);
+        } catch (e) {
+          window.location.hash = '#' + targetInitialPage;
+        }
+      }
+      if (targetInitialPage === 'trains') {
+        const savedTrain = localStorage.getItem('tracktales_selected_train') || 'blue-train';
+        if (typeof renderTrains === 'function') {
+          renderTrains(savedTrain);
+        }
+      }
     }
 
     window.addEventListener('hashchange', () => {

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- Early Multilingual Persistence Bootstrap: prevents untranslated flash -->
+  <!-- Early Multilingual & Route Session Persistence Bootstrap -->
   <script>
     (function() {
       try {
@@ -17,9 +17,25 @@
           document.documentElement.lang = lang;
           if (lang === 'ar') document.documentElement.setAttribute('dir', 'rtl');
         }
+
+        // Keep user on their current page on refresh and bypass splash login if already entered
+        var hasHash = window.location.hash && window.location.hash.length > 1 && window.location.hash !== '#';
+        var wasDismissed = sessionStorage.getItem('tracktales_splash_dismissed') === 'true' ||
+                           localStorage.getItem('tracktales_splash_dismissed') === 'true' ||
+                           Boolean(localStorage.getItem('tracktales_jwt_token')) ||
+                           Boolean(localStorage.getItem('tracktales_logged_user')) ||
+                           hasHash;
+        if (wasDismissed) {
+          document.documentElement.classList.add('splash-already-dismissed');
+        }
       } catch(e) {}
     })();
   </script>
+  <style>
+    html.splash-already-dismissed #train-loading-splash {
+      display: none !important;
+    }
+  </style>
 
   <!-- SEO Best Practices & Favicon -->
   <title>TrackTales | Pretoria to Cape Town Cinematic Digital Rail Companion</title>
