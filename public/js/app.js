@@ -95,7 +95,8 @@
         ],
         desc: "Equipped with specialized air-cushioned suspension bogies and gold-dusted insulated double-pane windows, The Blue Train glides almost silently across South Africa's rugged Karoo terrain."
       },
-      image_url: "/images/blue-train.jpg"
+      image_url: "/images/blue-train.jpg",
+      video_url: "/videos/blue-train-showcase.mp4"
     },
     {
       id: "rovos-rail",
@@ -2272,9 +2273,23 @@
           </div>
 
           <div class="lg:col-span-5 flex flex-col gap-4">
-            <div class="relative rounded-2xl overflow-hidden aspect-[4/3] border border-black/15 shadow-md">
-              <img src="${train.image_url}" alt="${train.name}" class="w-full h-full object-cover">
-              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6">
+            <div class="relative rounded-2xl overflow-hidden aspect-[4/3] border border-black/15 shadow-md bg-black">
+              ${(isBlue || train.video_url) ? `
+                <video src="${train.video_url || '/videos/blue-train-showcase.mp4'}" 
+                       autoplay 
+                       loop 
+                       muted 
+                       playsinline 
+                       preload="auto"
+                       class="w-full h-full object-cover pointer-events-none" 
+                       poster="${train.image_url || '/images/blue-train.jpg'}"
+                       tabindex="-1"
+                       aria-label="${train.name} scenic showcase video (muted)">
+                </video>
+              ` : `
+                <img src="${train.image_url}" alt="${train.name}" class="w-full h-full object-cover">
+              `}
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-6 pointer-events-none">
                 <span class="text-white font-mono text-xs font-bold tracking-wider uppercase">${isBlue ? 'Southbound: Pretoria (Irene/Park) -> Kimberley -> Cape Town' : 'Southbound: Pretoria (Capital Park) -> Kimberley -> Matjiesfontein -> Cape Town'}</span>
               </div>
             </div>
@@ -2336,6 +2351,15 @@
 
     if (window.lucide && typeof window.lucide.createIcons === 'function') {
       window.lucide.createIcons();
+    }
+
+    // Explicitly guarantee Blue Train video is 100% muted with zero sound
+    const showcaseVideo = container.querySelector('video');
+    if (showcaseVideo) {
+      showcaseVideo.muted = true;
+      showcaseVideo.defaultMuted = true;
+      showcaseVideo.volume = 0;
+      showcaseVideo.play().catch(function () {});
     }
   }
 

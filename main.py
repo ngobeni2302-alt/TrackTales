@@ -137,7 +137,8 @@ TRAINS_DATA = [
                 "tips": "Best enjoyed with morning espresso as the train reaches cruising speed."
             }
         ],
-        "image_url": "/images/blue-train.jpg"
+        "image_url": "/images/blue-train.jpg",
+        "video_url": "/videos/blue-train-showcase.mp4"
     },
     {
         "id": "rovos-rail",
