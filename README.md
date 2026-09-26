@@ -1,146 +1,192 @@
-# TrackTales - South Africa Railway Journeys, Tourism & Interactive Stories
+# TrackTales - South Africa Railway Journeys, Tourism and Interactive Stories
 
-**TrackTales** is a modern, inclusive, and visually stunning web application celebrating South Africa’s legendary rail transportation history and scenic tourism corridors from **Pretoria to Cape Town**:
-1. **The Blue Train**: The five-star ultra luxury express ("Window to the Soul of South Africa").
-2. **Rovos Rail**: The world's most opulent vintage Edwardian train safari.
-3. **Shosholoza Meyl**: Authentic long-distance passenger train connecting South Africa's heartland.
+TrackTales is a modern, inclusive, and visually stunning web application celebrating South Africa's legendary rail transportation history and scenic tourism corridors from Pretoria to Cape Town:
+1. The Blue Train: The five-star ultra luxury express ("Window to the Soul of South Africa").
+2. Rovos Rail: The world's most opulent vintage Edwardian train safari.
 
-Built with a **FastAPI** Python backend, **Vanilla JavaScript & CSS**, a **Light-Mode High-Contrast WCAG AAA Accessible Design System**, **Motion One** spring animations, and live deployed production hosting on **Vercel**.
+Built with a FastAPI Python backend, SQLite and Supabase database integrations, Vanilla JavaScript and CSS, a Light-Mode High-Contrast WCAG AAA Accessible Design System, Motion One spring animations, a 16-language client-side translation engine, dedicated cinematic guest mode, and serverless production hosting on Vercel.
 
-> 🌐 **Live Web Application URL**: **[https://track-tales.vercel.app](https://track-tales.vercel.app)**  
-> 💻 **Local Development URL**: **[http://localhost:8000](http://localhost:8000)** (via `./start.sh`)
-
----
-
-## Key Features & Highlights
-
-- **Motion One Animation Engine**: Enhanced micro-interactions, spring-based modal popups, smooth hash route transitions, and staggered card cascade animations.
-- **Fail-Safe Loading Splash**: Fast, optimized splash screen loading sequence equipped with auto-dismiss fail-safe timers for responsive entry.
-- **Persistent Auth & Passenger Portal**: Streamlined user login and logout management powered by browser local storage with clear session status displays.
-- **Interactive Mzansi Sight Solver & Trivia**: Landmark discovery games with educational pop-up modals, score tracking, and achievement progress.
-- **Digital Souvenir Boarding Pass Generator**: Interactive ticket generator with seat allocation maps and scannable QR verification codes.
-- **WCAG AAA High-Contrast Accessibility**: Standardized 60-30-10 color rule with dark and light mode toggle support.
+> Live Web Application URL: [https://track-tales.vercel.app](https://track-tales.vercel.app)
+> Local Development URL: [http://localhost:8000](http://localhost:8000) (via `./start.sh`)
 
 ---
 
-## 60-30-10 Color Coordination & Accessibility Design System
+## Architectural Highlights and Recent Implementations
 
-The application interface is built using a strict **60-30-10 color balance rule** designed for visual elegance, accessibility, young and elderly users, and individuals with color perception needs or sensitive eyes:
-- **60% Dominant (Pure White `#ffffff` & `#f8fafc`)**: Dominant canvas, section backgrounds, and card containers providing clean contrast and WCAG AAA readability.
-- **30% Secondary (Light Blue / Sky Blue `#38bdf8`, `#e0f2fe`, `#0284c7`)**: Secondary structural elements, navigation bar tinting, station cards, headers, section borders, and route map track connectors.
-- **10% Accent (Baby Blue `#bae6fd`, `#7dd3fc`, `#a5f3fc`)**: Interactive action buttons, active navigation indicators, game score badges, micro-animations, and high-visibility focus rings (`:focus-visible`).
-- **Light & Dark Mode Support**: Includes persistent theme toggle for low-light environments.
+### 1. Authentic Split Login and Sign-Up Splash Modal
+- First-Screen Launch Presentation: Visiting the root web address immediately presents an authentic split modal with dual tabs for Sign In and Sign Up.
+- Live Cinematic Background: Features an integrated high-definition railway video showcasing South Africa's heritage locomotives in motion.
+- Full Authentication Lifecycle: Includes password visibility toggles, interactive password strength validation, account lockout prevention, and password reset flows.
+- Guest Mode Entry: Direct "Continue as Guest" actions accessible from both Sign In and Sign Up views for instantaneous exploration without mandatory registration.
+- Pristine Hero Surface: Eliminated redundant inline login forms and duplicate cards from the landing hero to provide an elegant, uncrowded first impression.
 
----
+### 2. Route and Reload Persistence Engine
+- Early Head Bootstrap Script: An inline script executes in the HTML head before DOM rendering to parse URL hashes and routing tokens.
+- Hash-Preserving Reload: Reloading the browser preserves the active user route:
+  - Reloading on `#home` retains the Home page view with the modal dismissed.
+  - Reloading on `#signup` renders the Sign Up modal directly with no flash of the Sign In tab.
+  - Reloading on `#signin` renders the Sign In modal directly.
+  - Reloading on content views (`#trains`, `#stops`, `#games`, `#about`) keeps the traveler on that exact page without unwanted redirection.
+- Dynamic Hashchange Listeners: Seamlessly syncs modal state and page views when navigating via browser back and forward buttons or internal links.
 
-## Key Pages & Navigation Architecture
+### 3. Dedicated Guest Mode Video Portal (guest.html)
+- Standalone Experience: Accessible via `/guest` and `/guest.html`, allowing travelers to experience the corridor without logging in.
+- 21 Corridor Attraction Videos: Over 21 high-definition MP4 videos documenting historic and natural landmarks along the 1,600 km Pretoria-to-Cape Town corridor.
+- Master Cinematic Video Player: Feature video showcase with responsive 16:9 aspect ratio, seamless loop playback, and interactive audio mute/unmute toggles.
+- Filterable Directory: Filter attraction cards across Heritage, Nature, Luxury, and Architecture categories.
+- Strict Login Redirection: "Sign In / Register" links in both the header and footer invoke an authentication redirect that clears guest session flags and routes the user back to the primary login modal.
 
-The site navigation panel is organized in the following order:
-1. **Home**: Discover Mzansi through the Magic of Rail and explore section highlights.
-2. **Flagship Trains**: Compare luxury express details, speeds, and amenities for The Blue Train, Rovos Rail, and Shosholoza Meyl.
-3. **Attractions**: Browse landmark sights along the Pretoria to Cape Town rail corridor.
-4. **Sight Games**: Interactive trivia sight solver puzzles and "Did You Know?" educational pop-ups.
-5. **About**: Dedicated about page, interactive Pretoria-Cape Town route map, digital boarding pass generator, and rail folklore stories.
+### 4. 16-Language Multilingual Translation Engine
+- Comprehensive Language Support: Full localization across 11 official South African languages and 5 high-volume international tourist languages:
+  - South African Languages: English, isiZulu, isiXhosa, Afrikaans, Sepedi, Setswana, Sesotho, Xitsonga, siSwati, Tshivenda, isiNdebele.
+  - International Languages: German, French, Dutch, Mandarin Chinese, Japanese.
+- Client-Side Real-Time Translation: Instantaneous switching with collision-free phrase matching and persistent language preferences stored in localStorage.
+- Integrated Top Panel Controls: Language selector dropdown accessible in the primary navigation and guest portal header.
 
-### 1. Home Page
-- **Hero Section**: Gateway to South Africa railway tourism with interactive CTA buttons.
-- **Explore Portal Showcase**: Interactive cards linking directly to Flagship Trains, Attractions, Sight Games, and About.
+### 5. Interactive Mzansi Sight Solver and Educational Trivia
+- Sight Solver Puzzle Engine: Dynamic landmark quiz games featuring South African rail stations, historical figures, and geography.
+- "Did You Know?" Educational Modals: Correct solutions trigger educational popups explaining cultural heritage, diamond rush history, and engineering feats.
+- Score and Progress Tracking: Real-time point accumulation (+100 PTS per correct answer) with visual progress bars.
 
-### 2. Flagship Trains Page (Advertising Luxury Trains)
-- **Dedicated Showcase**: Displays in-depth luxury advertisements for South Africa's flagship trains: **The Blue Train** (Ultra Luxury Express), **Rovos Rail** (Vintage Edwardian Safari), and **Shosholoza Meyl** (Passenger Express).
-- **Luxury Specs & Highlights**: Speed, travel duration, 24/7 butler service, open balcony observation car, and fine dining details.
-- **Reserved Backend Integration Space**: Clear, structured containers reserved for live trail feeds, stop schedules, and cabin availability.
-
-### 3. Attractions Directory Page
-- Curated landmark directory showcasing South Africa's sights along the rail line (Kimberley Big Hole, Union Buildings, Lord Milner Hotel, Table Mountain, Hex River Valley Winelands).
-- Interactive city filter buttons (Pretoria, Johannesburg, Kimberley, Matjiesfontein, Worcester, Cape Town) and 3D flippable attraction cards.
-
-### 4. Interactive Games Page (Mzansi Sight Solver & "Did You Know?" Pop-ups)
-- **Interactive Sight Puzzles**: Solve trivia and landmark puzzles about South African rail stops (+100 PTS score tracker & progress bar).
-- **"Did You Know?" Pop-Up Modal**: Correctly solving a sight puzzle triggers an educational pop-up revealing South African tourism, geography, and rail folklore facts.
-
-### 5. About Page (About TrackTales, SA Tourism, Route Map & Souvenir Tickets)
-- **TrackTales Mission**: Explains the platform's vision connecting heritage rail history with modern digital travel.
-- **South Africa Tourism & Rail Transportation**: History of how the 1870s diamond rush in Kimberley and gold rush in Johannesburg established Mzansi's rail network.
-- **Why Travel South Africa By Rail?**: Cultural preserved stops, culinary & wine pairings, and eco-friendly travel insights.
-- **Interactive Journey Map**: Node graph tracking the **1,600 km corridor** across 6 major station stops (**Pretoria, Johannesburg, Kimberley, Matjiesfontein, Worcester, Cape Town**).
-- **Souvenir Digital Boarding Pass Generator**: Generate, print, or download personalized souvenir tickets with scannable QR code and 3D flippable seat allocation map.
-- **Railway Heritage Stories**: Read folklore and stories of how gold, diamonds, and visionaries forged South Africa’s rails.
+### 6. Digital Souvenir Boarding Pass Generator
+- Custom Ticket Creation: Travelers generate personalized souvenir tickets for The Blue Train or Rovos Rail.
+- 3D Flippable Seat Map: Interactive seat allocation card with flip animation displaying carriage layouts.
+- Scannable Verification QR Code: Embedded verification code and printable boarding pass format.
 
 ---
 
-## How to Access & Open the Web Application
+## 60-30-10 Color Coordination and Accessibility Design System
 
-TrackTales can be accessed directly online via the deployed web application or launched locally for development:
-
----
-
-### 🌐 Live Deployed Web Application (Recommended)
-
-TrackTales is deployed live on **Vercel** and can be accessed directly in your web browser:
-
-1. **Live Deployed Web Link**: **[https://track-tales.vercel.app](https://track-tales.vercel.app)**
-2. **Cross-Device Access**: Optimized for desktop browsers, tablets, and mobile devices.
-3. **Instant Full Functionality**: Access flagship train showcases, sights directory, interactive trivia games, and the boarding pass generator online.
+The application interface is built using a strict 60-30-10 color balance rule designed for visual elegance, accessibility, and high contrast:
+- 60% Dominant (Pure White `#ffffff` and Soft Slate `#f8fafc`): Dominant canvas, section backgrounds, and card containers providing clean contrast and WCAG AAA readability.
+- 30% Secondary (Deep Slate and Sky Blue `#1e293b`, `#0284c7`, `#e0f2fe`): Structural typography, station cards, headers, section borders, and route map connectors.
+- 10% Accent (Warm Gold and Amber `#d99b26`, `#b87c10`): Interactive action buttons, active navigation indicators, game score badges, and high-visibility focus rings (`:focus-visible`).
+- Light and Dark Theme Support: Persistent theme toggle for low-light viewing environments.
 
 ---
 
-### 💻 Local Development & Launch Options
+## Core Navigation Architecture
 
-To run or modify TrackTales locally, launch it using any of the following methods:
+The site navigation panel provides access to the following sections:
+1. Home: Hero introduction to South African rail heritage, quick-action links, and corridor overviews.
+2. Flagship Trains: In-depth luxury showcases for The Blue Train and Rovos Rail with looping muted showcase videos, specifications, and travel amenities.
+3. Attractions: Interactive landmark directory covering Pretoria, Johannesburg, Kimberley, Matjiesfontein, Worcester, and Cape Town.
+4. Sight Games: Interactive trivia sight solver puzzles with educational popups and score tracking.
+5. About: History of South Africa's rail network, 1,600 km interactive journey map, railway folklore stories, and souvenir ticket generator.
+6. Guest Portal: Standalone video theater at `/guest` featuring 21 corridor landmark films.
 
-#### Option 1: Easiest 1-Click Launch (Recommended for Local Dev)
-Simply run the launcher script in your terminal:
+---
+
+## Technical Stack and Architecture
+
+### Backend
+- Framework: FastAPI (Python 3.10+) with Uvicorn ASGI server.
+- Database: SQLite with WAL mode for local development and Supabase PostgreSQL integration for production.
+- Security and Authentication:
+  - Password hashing with bcrypt.
+  - JWT token generation with PyJWT.
+  - Brute-force protection with account lockout tracking.
+  - Security headers: nosniff, DENY, X-XSS-Protection, and strict-origin-when-cross-origin.
+- Serverless Runtime: Python serverless handler in `api/index.py` for Vercel deployment.
+
+### Frontend
+- Structure and Styling: Semantic HTML5, Vanilla CSS with custom properties, and Tailwind CSS utilities.
+- Animation Engine: Motion One spring physics for modals, card cascades, and hash route transitions.
+- Icons: Lucide icon suite.
+- Media: HTML5 video integration with responsive containers and fallback posters.
+- Internationalization: Multi-dictionary translation engine with localStorage persistence.
+
+---
+
+## Verification and Automated Test Suites
+
+The repository includes comprehensive automated test suites run directly via the Node.js native test runner:
+
+```bash
+npm test
+```
+
+### Test Coverage Overview (53 Passing Tests Across 14 Test Suites):
+1. `tests/auth_persistence.test.js` (18 Tests):
+   - Early head bootstrap script logic and route token parsing.
+   - Authentic split modal container rendering and tab switching.
+   - Dismissal close button and "Continue as Guest" actions.
+   - Elimination of duplicate inline auth forms and removal of corridor showcase cards.
+   - Hoisted JavaScript view functions in `setupSplash`.
+   - Hash routing simulation across fresh root visits, `#signup`, `#signin`, `#home`, and content routes.
+2. `tests/guest_mode.test.js` (35 Tests):
+   - File and asset integrity (guest.html, TrackTales logo, and 21 MP4 video files).
+   - Guest portal DOM structure, master video player, and audio toggle controls.
+   - Category filter partitions (Heritage, Nature, Luxury, Architecture).
+   - Guest mode entry points across navigation bar, splash screen, and modals.
+   - Event delegation and click handler binding in `app.js`.
+   - FastAPI `/guest` endpoint and Vercel routing configuration.
+   - Multilingual translation engine coverage for all 16 supported languages.
+   - Strict login redirection logic and session token invalidation.
+
+---
+
+## Local Development and Launch Instructions
+
+### Option 1: One-Click Terminal Launcher (Recommended)
+Run the launcher script in your terminal:
 ```bash
 ./start.sh
 ```
-*(Starts the Python server and automatically opens your default web browser to `http://localhost:8000`)*
+This starts the Python server and automatically opens `http://localhost:8000` in your default browser.
 
-#### Option 2: FastAPI Python Backend Launch
-A Python virtual environment (`venv`) with all required packages (`fastapi`, `uvicorn`, `pydantic`) is pre-installed in the repository:
-
-##### Method A (Using pre-installed Virtual Environment):
-```bash
-./venv/bin/python3 main.py
-```
-*Or activate the environment first:*
+### Option 2: FastAPI Python Backend
+Using a Python virtual environment:
 ```bash
 source venv/bin/activate
 python3 main.py
 ```
-
-##### Method B (Using system pip):
-```bash
-pip3 install -r requirements.txt --break-system-packages
-python3 main.py
+Or on Windows PowerShell:
+```powershell
+.\venv\Scripts\Activate.ps1
+python main.py
 ```
 
-##### Accessing Local Server:
-- Web Application: **`http://localhost:8000`**
-- Interactive API Documentation (Swagger UI): **`http://localhost:8000/docs`**
+Access Points:
+- Web Application: `http://localhost:8000`
+- Guest Mode Video Portal: `http://localhost:8000/guest`
+- Interactive API Documentation (Swagger UI): `http://localhost:8000/docs`
 
-#### Option 3: Node.js / JavaScript Server Launch
+### Option 3: Node.js Development Server
 ```bash
 npm run dev:node
 ```
-*Or using npx:*
+Or using npx:
 ```bash
 npx serve public -p 8000
 ```
 
-#### Option 4: Direct Browser Offline Launch
-TrackTales includes full client-side fallback data. Double-click or open **`public/index.html`** directly in any browser without running a local server!
+### Option 4: Direct Offline Browser Access
+TrackTales includes client-side fallback data. You can open `public/index.html` directly in any modern web browser without a local server.
 
 ---
 
-## Deployment & Vercel Configuration
+## Production Deployment Configuration
 
-TrackTales is configured for serverless production deployment on **Vercel**:
+TrackTales is configured for continuous serverless deployment on Vercel via `vercel.json`:
+- API Route: `/api/(.*)` routes to `api/index.py` using `@vercel/python`.
+- Static Asset Paths: `/js/`, `/css/`, `/images/`, `/videos/` route directly to `public/`.
+- Guest Mode Route: `/guest` and `/guest.html` map directly to `public/guest.html`.
+- SPA Fallback: `/(.*)` routes to `public/index.html`.
 
-- **Serverless API Engine**: `api/index.py` handles API endpoints (`/api/trains`, `/api/routes`, etc.) using Vercel Python serverless runtime.
-- **Explicit Static Asset Routing**: `vercel.json` maps static paths (`/js/`, `/css/`, `/images/`, `/videos/`) directly to static assets, preventing SPA fallback interference.
-- **Static CDN Asset Delivery**: `public/` directory assets are delivered via high-performance edge CDN.
-- **Deploying Updates**: Run `vercel` or `vercel --prod` from the terminal, or push commits to the connected git repository for automatic deployment.
+Deploy updates by pushing to the connected git repository or running:
+```bash
+vercel --prod
+```
+
+---
+
+## Flagship Luxury Trains Comparison
+
+| Train Line | Category | Speed and Duration | Key Route Stops | Signature Luxury Highlight |
+| :--- | :--- | :--- | :--- | :--- |
+| The Blue Train | Ultra Luxury Express | 90 km/h (31 Hours) | Pretoria -> Kimberley -> Cape Town | 24/7 Butler Service, Marble Baths, Fine Dining |
+| Rovos Rail | Vintage Edwardian Safari | 60 km/h (48 Hours) | Pretoria -> Matjiesfontein -> Cape Town | Open Balcony Observation Car, Victorian Excursions |
 
 ---
 
@@ -148,32 +194,33 @@ TrackTales is configured for serverless production deployment on **Vercel**:
 
 ```
 TrackTales/
-├── main.py              # FastAPI server entry point & REST endpoints (/api/trains, /api/routes, etc.)
+├── main.py                          # FastAPI server entry point and REST endpoints
+├── database.py                      # Database models, SQLite/Supabase operations, and auth helpers
+├── auth.py                          # JWT token verification and dependency functions
 ├── api/
-│   └── index.py         # Vercel Python serverless entry point
+│   └── index.py                     # Vercel Python serverless entry point
 ├── public/
-│   ├── index.html       # Multi-page SPA layout (Home, Flagship Trains, Attractions, Games, About)
+│   ├── index.html                   # Primary multi-page application with split auth modal
+│   ├── guest.html                   # Dedicated Guest Mode portal with 21 attraction videos
 │   ├── css/
-│   │   └── styles.css   # WCAG AAA Light/Dark design system & CSS keyframe animations
-│   └── js/
-│       └── app.js       # Page router, train loader splash, games engine, and auth modal
-├── requirements.txt     # Python backend dependencies
-├── start.sh             # 1-Click launcher script
-├── vercel.json          # Vercel deployment & static asset routing config
-├── package.json         # NPM scripts and project metadata
-└── README.md            # Project documentation
+│   │   └── styles.css               # WCAG AAA Light/Dark design system and animations
+│   ├── js/
+│   │   ├── app.js                   # Application router, splash logic, games, and UI controller
+│   │   ├── translations-data.js     # Primary 16-language translation dictionaries
+│   │   ├── guest-translations-data.js # Guest portal translation dictionaries
+│   │   └── translation-engine.js    # Client-side translation engine
+│   ├── images/                      # Optimized image assets and logos
+│   └── videos/                      # 21 attraction videos and flagship train showcase reels
+├── tests/
+│   ├── auth_persistence.test.js     # Test suite for auth modal, persistence, and hero layout
+│   └── guest_mode.test.js           # Test suite for guest mode, video assets, and translations
+├── requirements.txt                 # Python backend dependencies
+├── vercel.json                      # Vercel deployment routes and static rewrites
+├── package.json                     # NPM scripts, test runner, and dependencies
+├── start.sh                         # One-click startup script
+└── README.md                        # Project documentation
 ```
 
 ---
 
-## Flagship Trains Summary
-
-| Train Line | Category | Speed / Duration | Key Route Stops | Signature Luxury Highlight |
-| :--- | :--- | :--- | :--- | :--- |
-| **The Blue Train** | Ultra Luxury Express | 90 km/h (31 Hours) | Pretoria -> Kimberley -> Cape Town | 24/7 Butler Service & Marble En-suite Baths |
-| **Rovos Rail** | Vintage Edwardian Safari | 60 km/h (48 Hours) | Pretoria -> Matjiesfontein -> Cape Town | Open Balcony Observation Terrace & Gala Dinners |
-| **Shosholoza Meyl** | Passenger & Tourist Express | 80 km/h (26 Hours) | Pretoria -> Jo'burg -> Kimberley -> Cape Town | Authentic Mzansi Hospitality & Sleeper Compartments |
-
----
-
-*A Geekulcha Motivated Hackathon Web Application built for the Geekulcha Annual Hackathon 2026 ("Build for Use") celebrating South African railway history, tourism, and travel.*
+Built for the Geekulcha Annual Hackathon ("Build for Use") celebrating South African railway history, scenic tourism, and digital accessibility.

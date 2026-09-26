@@ -84,11 +84,9 @@ describe('TrackTales Splash Login/Sign-Up & Reload Persistence Verification', ()
       assert.ok(indexHtml.includes('id="inline-signin-section" class="hidden"'), '#inline-signin-section should be hidden');
     });
 
-    it('renders the cinematic rail corridor showcase card on the Home page hero', () => {
-      assert.ok(indexHtml.includes('FLAGSHIP RAIL CORRIDOR'), 'Corridor showcase header missing');
-      assert.ok(indexHtml.includes('Pretoria to Cape Town'), 'Pretoria to Cape Town title missing on hero card');
-      assert.ok(indexHtml.includes('The Blue Train'), 'The Blue Train missing on hero card');
-      assert.ok(indexHtml.includes('Rovos Rail Safari'), 'Rovos Rail Safari missing on hero card');
+    it('ensures clean hero presentation with FLAGSHIP RAIL CORRIDOR showcase card removed', () => {
+      assert.ok(!indexHtml.includes('FLAGSHIP RAIL CORRIDOR'), 'FLAGSHIP RAIL CORRIDOR card should be removed from hero');
+      assert.ok(!indexHtml.includes('1,600 km across South Africa\'s most storied luxury rail route'), 'Corridor subtitle should be removed');
     });
   });
 
