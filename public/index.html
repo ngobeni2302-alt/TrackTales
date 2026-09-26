@@ -256,19 +256,19 @@
   <!-- 3. Background Video Layer (STRICTLY ISOLATED TO "THE ROUTE" PAGE) -->
   <div id="heroVideoBgLayer" class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
     
-    <!-- Background Video Element using current video in videos folder -->
-    <video id="heroVideo" class="absolute inset-0 w-full h-full object-cover scale-105 zoomed-in opacity-85" autoplay loop muted playsinline>
-      <source src="./videos/Steam_locomotive_moving_on_tracks_202608181456.mp4" type="video/mp4">
+    <!-- Background Video Element using high-clarity direct video stream -->
+    <video id="heroVideo" class="absolute inset-0 w-full h-full object-cover scale-100 opacity-100" autoplay loop muted playsinline>
+      <source src="./videos/blue-train-showcase.mp4" type="video/mp4">
     </video>
 
-    <!-- 1. Left column gradient overlay for light mode high-contrast legibility -->
-    <div class="absolute inset-y-0 left-0 w-full sm:w-[60%] lg:w-[52%] bg-gradient-to-r from-[#F8F6F0] via-[#F8F6F0]/98 via-[#F8F6F0]/92 to-transparent pointer-events-none z-10"></div>
+    <!-- 1. Soft Left text backdrop (Keeps text legible while leaving the train completely clear and vibrant) -->
+    <div class="absolute inset-y-0 left-0 w-full sm:w-[46%] lg:w-[38%] bg-gradient-to-r from-[#F8F6F0]/85 via-[#F8F6F0]/40 to-transparent pointer-events-none z-10"></div>
 
-    <!-- 2. Top navigation overlay -->
-    <div class="absolute top-0 left-0 right-0 h-48 sm:h-56 lg:h-64 bg-gradient-to-b from-[#F8F6F0] via-[#F8F6F0]/95 via-[#F8F6F0]/60 to-transparent pointer-events-none z-10"></div>
+    <!-- 2. Subtle Top navigation blend -->
+    <div class="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-[#F8F6F0]/70 to-transparent pointer-events-none z-10"></div>
 
-    <!-- 3. Bottom overlay -->
-    <div class="absolute bottom-0 left-0 right-0 h-48 sm:h-56 lg:h-64 bg-gradient-to-t from-[#F8F6F0] via-[#F8F6F0]/95 via-[#F8F6F0]/60 to-transparent pointer-events-none z-10"></div>
+    <!-- 3. Subtle Bottom blend -->
+    <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#F8F6F0]/70 to-transparent pointer-events-none z-10"></div>
 
   </div>
 
@@ -1320,14 +1320,14 @@
       </div>
     </section>
 
-    <!-- PRETORIA TERMINUS CINEMATIC FEATURE OVERLAY PANEL -->
-    <div id="pretoria-feature-overlay" class="pretoria-feature-overlay fixed inset-0 z-[120] hidden items-center justify-center p-4 sm:p-8 bg-[#03050a]/92 backdrop-blur-2xl transition-all duration-700">
-      <div class="pretoria-feature-card relative max-w-4xl w-full bg-[#090e1a] border border-[#D4AF37]/40 rounded-3xl overflow-hidden shadow-[0_0_80px_rgba(212,175,55,0.25)] flex flex-col md:flex-row transform transition-transform duration-700 scale-95 opacity-0" id="pretoria-feature-panel">
+    <!-- CORRIDOR STOP CINEMATIC FEATURE OVERLAY PANEL -->
+    <div id="pretoria-feature-overlay" class="pretoria-feature-overlay fixed inset-0 z-[120] hidden items-center justify-center p-3 sm:p-5 md:p-8 bg-[#03050a]/92 backdrop-blur-2xl transition-all duration-500 overflow-hidden" role="dialog" aria-modal="true" aria-labelledby="stop-feature-title">
+      <div class="pretoria-feature-card relative max-w-4xl w-full max-h-[92vh] sm:max-h-[88vh] bg-[#0a1124] border-2 border-[#D4AF37] rounded-3xl overflow-hidden shadow-[0_0_80px_rgba(212,175,55,0.4),0_20px_50px_rgba(0,0,0,0.8)] flex flex-col md:flex-row transform transition-all duration-500 scale-95 opacity-0" id="pretoria-feature-panel">
         
-        <!-- Feature Header Video -->
-        <div class="md:w-1/2 relative min-h-[280px] md:min-h-[480px] overflow-hidden">
+        <!-- Feature Header Video (Left Column) -->
+        <div class="w-full md:w-1/2 relative h-[220px] sm:h-[260px] md:h-auto min-h-0 md:min-h-[460px] overflow-hidden bg-black flex-shrink-0">
           <video id="pretoria-feature-video" 
-                 src="/videos/Purple_leaves_falling_on_street_202608261538.mp4" 
+                 src="./videos/pretoria-station.mp4" 
                  poster="https://images.unsplash.com/photo-1577971132997-c10be9372519?auto=format&fit=crop&w=1200&q=80"
                  autoplay 
                  loop 
@@ -1335,56 +1335,58 @@
                  playsinline 
                  class="w-full h-full object-cover transition-transform duration-[4000ms] ease-out scale-105">
           </video>
-          <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#090e1a] via-[#090e1a]/40 to-transparent"></div>
+          <div class="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#0a1124] via-[#0a1124]/30 to-transparent"></div>
           
-          <div class="absolute top-6 left-6 flex flex-col gap-2 z-10">
-            <span class="px-3.5 py-1 rounded-full bg-[#D4AF37] text-[#060913] font-mono text-[11px] font-bold tracking-widest uppercase shadow-md">SCHEDULED TERMINUS</span>
-            <span class="px-3.5 py-1 rounded-full bg-[#060913]/80 border border-[#D4AF37]/50 text-[#E5C158] font-mono text-[10px] font-semibold tracking-wider">GAUTENG PROVINCE · 0 KM</span>
+          <div class="absolute top-4 left-4 flex flex-col gap-1.5 z-10">
+            <span id="stop-feature-badge" class="px-3 py-1 rounded-full bg-[#D4AF37] text-[#060913] font-mono text-[10px] sm:text-[11px] font-extrabold tracking-widest uppercase shadow-md">SCHEDULED TERMINUS</span>
+            <span id="stop-feature-province-distance" class="px-3 py-1 rounded-full bg-[#060913]/90 border border-[#D4AF37]/60 text-[#FCD34D] font-mono text-[9px] sm:text-[10px] font-bold tracking-wider">GAUTENG PROVINCE · 0 KM</span>
           </div>
 
-          <div class="absolute bottom-6 left-6 right-6 font-mono text-xs text-[#E5C158] z-10 flex items-center justify-between border-t border-[#D4AF37]/30 pt-3">
-            <span>PLATFORM 1</span>
-            <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i> 09:00 AM SCHEDULED DEPARTURE</span>
+          <div id="stop-feature-bottom-bar" class="absolute bottom-4 left-4 right-4 font-mono text-[10px] sm:text-xs text-[#FCD34D] z-10 flex items-center justify-between border border-[#D4AF37]/50 px-3 py-2 rounded-xl bg-black/80 backdrop-blur-md">
+            <span id="stop-feature-platform" class="font-bold tracking-wide text-white">PLATFORM 1</span>
+            <span id="stop-feature-time" class="flex items-center gap-1.5 font-bold text-[#FCD34D]"><i data-lucide="clock" class="w-3.5 h-3.5 text-[#FCD34D]"></i> 09:00 AM SCHEDULED DEPARTURE</span>
           </div>
         </div>
 
-        <!-- Feature Content Area -->
-        <div class="md:w-1/2 p-8 md:p-10 flex flex-col justify-between text-left relative">
+        <!-- Feature Content Area (Right Column) -->
+        <div class="w-full md:w-1/2 p-5 sm:p-7 md:p-8 flex flex-col justify-between text-left relative bg-[#0a1124] overflow-y-auto min-h-0">
           <!-- Close Button -->
-          <button id="pretoria-close-btn" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#E5C158] hover:bg-[#D4AF37] hover:text-[#060913] transition-all flex items-center justify-center" title="Close Station Feature">
-            <i data-lucide="x" class="w-5 h-5"></i>
+          <button id="pretoria-close-btn" class="absolute top-4 right-4 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/50 text-[#FCD34D] hover:bg-[#D4AF37] hover:text-[#060913] transition-all flex items-center justify-center shadow-lg cursor-pointer z-20" title="Close Station Feature" aria-label="Close Station Feature">
+            <i data-lucide="x" class="w-4 h-4 sm:w-5 sm:h-5"></i>
           </button>
 
-          <div>
-            <span class="text-xs font-mono text-[#D4AF37] font-bold tracking-[0.25em] uppercase block mb-2">HERITAGE FEATURE</span>
-            <h3 class="font-heading font-extrabold text-2xl sm:text-4xl text-[#FCFAF4] mb-4">Pretoria Terminus</h3>
+          <div class="pr-6 sm:pr-8">
+            <span id="stop-feature-tag" class="text-[10px] sm:text-xs font-mono text-[#F59E0B] font-extrabold tracking-[0.2em] uppercase block mb-1.5">HERITAGE FEATURE</span>
+            <h3 id="stop-feature-title" class="font-heading font-extrabold text-xl sm:text-2xl md:text-3xl text-white tracking-tight mb-3 drop-shadow-md leading-tight">Pretoria Terminus</h3>
             
-            <div class="w-12 h-0.5 bg-[#D4AF37] mb-6"></div>
+            <div class="w-12 sm:w-16 h-1 bg-gradient-to-r from-[#D4AF37] to-[#F59E0B] rounded-full mb-4"></div>
 
-            <p class="text-[#C4C9D4] font-sans text-sm sm:text-base leading-relaxed mb-6">
+            <p id="stop-feature-desc" class="text-[#F1F5F9] font-sans text-xs sm:text-sm leading-relaxed mb-4 font-normal">
               Known as the Jacaranda City terminal, Pretoria Capital Park serves as the northern grand terminus for South Africa's most prestigious express lines. Built with red sandstone and Victorian ironwork, the station has sent travelers across the continent since the 1890s.
             </p>
 
-            <div class="space-y-3 font-mono text-xs text-[#E5C158] bg-[#0c1324] p-4 rounded-xl border border-[#D4AF37]/20 mb-6">
-              <div class="flex items-center justify-between">
-                <span class="text-[#8e98b0]">Primary Express:</span>
-                <span class="font-bold">The Blue Train & Rovos Rail</span>
+            <div class="space-y-2.5 font-mono text-[11px] sm:text-xs text-[#FCD34D] bg-[#0f172a] p-3 sm:p-4 rounded-xl border border-[#D4AF37]/30 mb-5 shadow-inner">
+              <div class="flex flex-wrap items-center justify-between gap-1 border-b border-white/5 pb-2">
+                <span class="text-[#CBD5E1] font-semibold">Primary Express:</span>
+                <span id="stop-feature-express" class="font-bold text-white text-right">The Blue Train &amp; Rovos Rail</span>
               </div>
-              <div class="flex items-center justify-between">
-                <span class="text-[#8e98b0]">Corridor Route:</span>
-                <span class="font-bold">Pretoria to Cape Town (1,600 km)</span>
+              <div class="flex flex-wrap items-center justify-between gap-1 border-b border-white/5 pb-2">
+                <span class="text-[#CBD5E1] font-semibold">Corridor Route:</span>
+                <span id="stop-feature-route" class="font-bold text-[#FCD34D] text-right">Pretoria to Cape Town (1,600 km)</span>
               </div>
-              <div class="flex items-center justify-between">
-                <span class="text-[#8e98b0]">Heritage Status:</span>
-                <span class="font-bold text-[#D4AF37]">National Rail Monument</span>
+              <div class="flex flex-wrap items-center justify-between gap-1">
+                <span class="text-[#CBD5E1] font-semibold">Heritage Status:</span>
+                <span id="stop-feature-status" class="font-bold text-[#38BDF8] text-right">National Rail Monument</span>
               </div>
             </div>
           </div>
 
-          <button id="pretoria-collapse-cta" class="w-full py-3.5 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#B8860B] text-[#060913] font-bold font-mono text-xs uppercase tracking-wider hover:brightness-110 transition-all shadow-[0_0_25px_rgba(212,175,55,0.3)] flex items-center justify-center gap-2">
-            <span>Return to Corridor Journey Grid</span>
-            <i data-lucide="arrow-right" class="w-4 h-4"></i>
-          </button>
+          <div class="pt-2">
+            <button id="pretoria-collapse-cta" class="w-full py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-[#D99B26] via-[#E5C158] to-[#B8860B] text-[#060913] font-extrabold font-mono text-xs uppercase tracking-widest hover:brightness-110 transition-all shadow-[0_0_25px_rgba(217,155,38,0.4)] flex items-center justify-center gap-2 cursor-pointer">
+              <span>Return to Corridor Journey Grid</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </div>
         </div>
 
       </div>

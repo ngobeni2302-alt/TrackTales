@@ -4428,14 +4428,161 @@ p {
   }
 }
 
-/* Pretoria Terminus Feature Panel Overlays */
+/* Corridor Stops Cinematic Feature Panel Overlays */
+.pretoria-feature-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 120 !important;
+  display: none !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0.75rem !important;
+  background-color: rgba(3, 5, 10, 0.94) !important;
+  backdrop-filter: blur(24px) !important;
+  overflow: hidden !important;
+}
+
 .pretoria-feature-overlay.active {
   display: flex !important;
 }
 
 .pretoria-feature-overlay.active #pretoria-feature-panel {
-  transform: scale(1) translateY(0);
-  opacity: 1;
+  transform: scale(1) translateY(0) !important;
+  opacity: 1 !important;
+}
+
+#pretoria-feature-panel {
+  background-color: #0a1124 !important;
+  color: #f8fafc !important;
+  max-height: min(90vh, 760px) !important;
+  max-width: 960px !important;
+  width: 100% !important;
+  border: 2px solid #d4af37 !important;
+  border-radius: 1.5rem !important;
+  box-shadow: 0 0 60px rgba(212, 175, 55, 0.35), 0 25px 60px rgba(0, 0, 0, 0.9) !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: row !important;
+}
+
+@media (max-width: 768px) {
+  .pretoria-feature-overlay {
+    padding: 0.5rem !important;
+  }
+
+  #pretoria-feature-panel {
+    flex-direction: column !important;
+    max-height: 94vh !important;
+    border-radius: 1.25rem !important;
+  }
+}
+
+#pretoria-feature-panel h1,
+#pretoria-feature-panel h2,
+#pretoria-feature-panel h3,
+#pretoria-feature-panel #stop-feature-title {
+  color: #ffffff !important;
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-weight: 800 !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6) !important;
+}
+
+#pretoria-feature-panel p,
+#pretoria-feature-panel #stop-feature-desc {
+  color: #f1f5f9 !important;
+  font-size: 0.925rem !important;
+  line-height: 1.65 !important;
+  font-weight: 400 !important;
+}
+
+/* Custom sleek scrollbar for modal content */
+#pretoria-feature-panel ::-webkit-scrollbar {
+  width: 6px;
+}
+
+#pretoria-feature-panel ::-webkit-scrollbar-track {
+  background: rgba(10, 17, 36, 0.8);
+}
+
+#pretoria-feature-panel ::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.4);
+  border-radius: 9999px;
+}
+
+#pretoria-feature-panel ::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.7);
+}
+
+/* Force light theme to preserve dark luxury styling on modal */
+[data-theme="light"] .pretoria-feature-overlay #pretoria-feature-panel {
+  background-color: #0a1124 !important;
+}
+
+[data-theme="light"] #pretoria-feature-panel h3,
+[data-theme="light"] #pretoria-feature-panel #stop-feature-title {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] #pretoria-feature-panel p,
+[data-theme="light"] #pretoria-feature-panel #stop-feature-desc {
+  color: #f1f5f9 !important;
+}
+
+[data-theme="light"] #pretoria-feature-panel #stop-feature-tag {
+  color: #f59e0b !important;
+}
+
+[data-theme="light"] #pretoria-feature-panel #stop-feature-express {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] #pretoria-feature-panel #stop-feature-route {
+  color: #fcd34d !important;
+}
+
+[data-theme="light"] #pretoria-feature-panel #stop-feature-status {
+  color: #38bdf8 !important;
+}
+
+[data-theme="light"] #pretoria-feature-panel .text-\[\#CBD5E1\] {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="light"] #pretoria-feature-panel .text-\[\#FCD34D\] {
+  color: #fcd34d !important;
+}
+
+/* Modal video overlays and footer bar high-contrast overrides */
+#stop-feature-platform,
+#stop-feature-platform *,
+#stop-feature-time,
+#stop-feature-time *,
+#stop-feature-province-distance,
+#stop-feature-bottom-bar,
+#stop-feature-bottom-bar * {
+  color: #fcd34d !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95) !important;
+}
+
+#stop-feature-platform {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] #stop-feature-platform,
+[data-theme="light"] #stop-feature-platform * {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] #stop-feature-time,
+[data-theme="light"] #stop-feature-time *,
+[data-theme="light"] #stop-feature-province-distance,
+[data-theme="light"] #stop-feature-bottom-bar,
+[data-theme="light"] #stop-feature-bottom-bar * {
+  color: #fcd34d !important;
+}
+
+[data-theme="light"] #stop-feature-badge {
+  color: #060913 !important;
 }
 
 /* ==========================================================================

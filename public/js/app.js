@@ -2078,6 +2078,18 @@
     const descEl = document.getElementById('hero-train-description');
     const statsEl = document.getElementById('hero-train-stats');
 
+    // Dynamically update the Hero Section Background Video
+    const heroVideo = document.getElementById('heroVideo');
+    if (heroVideo) {
+      const targetVideoSrc = isBlue ? './videos/blue-train-showcase.mp4' : './videos/rovos-rail-showcase.mp4';
+      const currentSrc = heroVideo.currentSrc || heroVideo.getAttribute('src') || '';
+      if (!currentSrc.includes(isBlue ? 'blue-train-showcase.mp4' : 'rovos-rail-showcase.mp4')) {
+        heroVideo.src = targetVideoSrc;
+        heroVideo.load();
+        heroVideo.play().catch(() => {});
+      }
+    }
+
     const langCode = window.TrackTalesLanguageCode || localStorage.getItem('tracktales_lang') || 'en';
     const dict = (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[langCode]) ? TRANSLATIONS[langCode] : {};
 
@@ -7000,13 +7012,13 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
     if (!video) return;
 
-    // Set playbackRate to 0.75 for smooth cinematic ambient feel
-    video.playbackRate = 0.75;
+    // Full crisp standard playback rate
+    video.playbackRate = 1.0;
 
-    // Trigger Zoom-in-to-pull-back sequence: remove .zoomed-in after ~100ms
+    // Remove zoom classes
     setTimeout(() => {
       video.classList.remove('zoomed-in');
-    }, 100);
+    }, 50);
 
     if (muteBtn) {
       const syncMuteUI = () => {
@@ -7422,11 +7434,17 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       name: "Pretoria Station Lounge",
       category: "scheduled",
       badge: "ORIGIN HUB",
+      tag: "HERITAGE TERMINUS",
       province: "Gauteng",
       distance_km: 0,
       stop_time: "09:00 AM Departure · The Blue Train Lounge",
+      platform: "PLATFORM 1 · 09:00 AM DEPARTURE",
       teaser: "Check-in at the dedicated Blue Train pre-departure lounge at Pretoria Station. Champagne, live pianist, and butler baggage check-in before boarding.",
-      video: "/videos/Purple_leaves_falling_on_street_202608261538.mp4",
+      full_desc: "Known as the Jacaranda City terminal, Pretoria Capital Park serves as the northern grand terminus for South Africa's most prestigious express lines. Built with red sandstone and Victorian ironwork, the station has sent travelers across the continent since the 1890s. Guests enter an exclusive pre-departure lounge with crystal chandeliers, welcoming flutes of sparkling wine, and live piano before luxury boarding.",
+      primary_express: "The Blue Train (31-Hour Luxury Express)",
+      route_corridor: "Pretoria to Cape Town (1,600 km)",
+      heritage_status: "National Luxury Rail Monument",
+      video: "./videos/pretoria-station.mp4",
       img: "https://images.unsplash.com/photo-1577971132997-c10be9372519?auto=format&fit=crop&w=800&q=80",
       vector: "bottom"
     },
@@ -7435,10 +7453,17 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       name: "Johannesburg Gold Hub",
       category: "passthrough",
       badge: "PASS-THROUGH",
+      tag: "URBAN GOLD CORRIDOR",
       province: "Gauteng",
       distance_km: 68,
       stop_time: "Express Pass-through · 10:30 AM",
+      platform: "HIGH-SPEED TRANSIT · 10:30 AM",
       teaser: "Gliding across the Witwatersrand gold belt at 90 km/h with sound-insulated double gold-tinted acoustic windows.",
+      full_desc: "Gliding through the vibrant economic heart of South Africa, The Blue Train traverses the historic gold reef of the Witwatersrand. Guests observe the bustling skyline and historic mining headgear through sound-insulated, double gold-tinted acoustic windows while enjoying morning tea served on fine Noritake porcelain.",
+      primary_express: "The Blue Train Express",
+      route_corridor: "Pretoria – Johannesburg – Cape Town",
+      heritage_status: "Trans-Highveld Gold Corridor",
+      video: "./videos/johannesburg-gold-mine.mp4",
       img: "https://images.unsplash.com/photo-1576485290814-1c72aa4bbb8e?auto=format&fit=crop&w=800&q=80",
       vector: "side"
     },
@@ -7447,10 +7472,17 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       name: "Kimberley Diamond Mine",
       category: "scheduled",
       badge: "MAIN EXCURSION",
+      tag: "HISTORIC OFF-TRAIN EXCURSION",
       province: "Northern Cape",
       distance_km: 645,
       stop_time: "Scheduled Excursion · 2.5 Hours",
+      platform: "PLATFORM 2 · 2.5 HOUR EXCURSION HALT",
       teaser: "Southbound passengers disembark for an exclusive guided tour of Kimberley's Big Hole, the Diamond Museum, and a glass of sherry at the historic Kimberley Club.",
+      full_desc: "Southbound passengers disembark for an exclusive guided excursion to Kimberley's Big Hole — the largest hand-dug excavation in world history. Guests visit the Diamond Vault Museum, view uncut gemstones, explore the restored 1870s mining town, and enjoy vintage sherry at the historic Kimberley Club.",
+      primary_express: "The Blue Train & Rovos Rail",
+      route_corridor: "Kimberley Diamond Heritage Junction",
+      heritage_status: "Diamond Rush World Heritage Site",
+      video: "./videos/kimberley-big-hole.mp4",
       img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80",
       vector: "depth"
     },
@@ -7459,10 +7491,17 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       name: "De Aar Karoo Hub",
       category: "passthrough",
       badge: "PASS-THROUGH",
+      tag: "GREAT KAROO DESERT JUNCTION",
       province: "Northern Cape",
       distance_km: 810,
       stop_time: "Karoo Night Transit · 22:15 PM",
+      platform: "DESERT JUNCTION TRANSIT · 22:15 PM",
       teaser: "Passing through the historic desert rail junction under starlit skies while guests enjoy 5-course silver service dining.",
+      full_desc: "The central railway crossroads of South Africa in the vast Great Karoo desert. Under one of the clearest starlit night skies on Earth, The Blue Train glides through this historic junction while guests savor Karoo lamb and estate Pinotage in the gourmet dining car.",
+      primary_express: "The Blue Train Express",
+      route_corridor: "Great Karoo Desert Junction",
+      heritage_status: "Historic Railway Crossroads",
+      video: "./videos/de-aar-karoo-desert.mp4",
       img: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80",
       vector: "bottom"
     },
@@ -7471,10 +7510,17 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       name: "Hex River Mountain Valley",
       category: "passthrough",
       badge: "PASS-THROUGH",
+      tag: "SCENIC MOUNTAIN PASS",
       province: "Western Cape",
       distance_km: 1480,
       stop_time: "Scenic Morning Pass-through · 11:00 AM",
+      platform: "MOUNTAIN PASS TRANSIT · 11:00 AM",
       teaser: "Sweeping views of emerald vineyards and towering mountain passes during morning champagne brunch in the lounge car.",
+      full_desc: "One of the world's most dramatic railway descents. The train weaves down the steep Hex River Pass through sandstone tunnels and emerald table grape vineyards, framed by towering Cape Fold mountains as the scent of the Cape Winelands fills the air.",
+      primary_express: "The Blue Train Express",
+      route_corridor: "Hex River Pass to Cape Winelands",
+      heritage_status: "Cape Mountain Engineering Marvel",
+      video: "./videos/hex-river-valley.mp4",
       img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
       vector: "depth"
     },
@@ -7483,10 +7529,17 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       name: "Cape Town Station",
       category: "scheduled",
       badge: "TERMINUS ARRIVAL",
+      tag: "GRAND SOUTHERN TERMINUS",
       province: "Western Cape",
       distance_km: 1600,
       stop_time: "17:30 PM Arrival · Day 2 Terminus",
+      platform: "PLATFORM 24 · 17:30 PM GRAND ARRIVAL",
       teaser: "Grand arrival beneath Table Mountain. Personal butlers escort guests and luggage directly to private chauffeur transfers.",
+      full_desc: "The grand finale of the 1,600 km trans-continental odyssey. The train pulls majestically into Cape Town Station beneath the iconic flat summit of Table Mountain and Lion's Head. Private butlers transfer luggage to waiting luxury chauffeurs as guests step into the Mother City.",
+      primary_express: "The Blue Train & Rovos Rail",
+      route_corridor: "Cape Town Grand Atlantic Terminus",
+      heritage_status: "Iconic South African Gateway",
+      video: "./videos/cape-town-station.mp4",
       img: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=800&q=80",
       vector: "side"
     }
@@ -7498,11 +7551,17 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       name: "Capital Park Private Station",
       category: "scheduled",
       badge: "PRIVATE STATION HUB",
+      tag: "EDWARDIAN RAIL HEADQUARTERS",
       province: "Gauteng",
       distance_km: 0,
       stop_time: "10:00 AM Departure · Rovos Headquarters",
+      platform: "ROVOS PRIVATE PLATFORM · 10:00 AM",
       teaser: "Departing from Rovos Rail's private colonial-style station and railway museum in Capital Park, with red carpet boarding and sparkling wine.",
-      video: "/videos/Purple_leaves_falling_on_street_202608261538.mp4",
+      full_desc: "Rovos Rail's exclusive 60-acre private station and railway preservation museum in Capital Park, Pretoria. Passengers are welcomed with iced champagne, savory canapés, and a live string quartet before boarding meticulously restored Edwardian carriages.",
+      primary_express: "Rovos Rail Pride of Africa",
+      route_corridor: "Pretoria to Cape Town (3-Day Safari)",
+      heritage_status: "Living Steam Locomotive Museum",
+      video: "./videos/steam-locomotive-departure.mp4",
       img: "https://images.unsplash.com/photo-1577971132997-c10be9372519?auto=format&fit=crop&w=800&q=80",
       vector: "bottom"
     },
@@ -7511,10 +7570,17 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       name: "Kimberley Diamond Village",
       category: "scheduled",
       badge: "OFF-TRAIN EXCURSION",
+      tag: "VICTORIAN DIAMOND ODYSSEY",
       province: "Northern Cape",
       distance_km: 645,
       stop_time: "Scheduled Excursion · 2 Hours",
+      platform: "HISTORIC EXCURSION · 2 HOURS",
       teaser: "Arrive in Kimberley for a city tour, visit the Big Hole and Diamond Mine Museum, exploring the world's greatest diamond rush.",
+      full_desc: "Guests travel back in time to the 1870s diamond rush. A private coach escorts passengers from the train to the Big Hole overlook and mine museum, where thousands of prospectors transformed a sleepy koppie into the world's diamond capital.",
+      primary_express: "Rovos Rail Safari",
+      route_corridor: "Northern Cape Diamond Belt",
+      heritage_status: "National Heritage Landmark",
+      video: "./videos/kimberley-big-hole.mp4",
       img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80",
       vector: "depth"
     },
@@ -7523,10 +7589,17 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       name: "De Aar Steam Junction",
       category: "passthrough",
       badge: "PASS-THROUGH",
+      tag: "KAROO DESERT JUNCTION",
       province: "Northern Cape",
       distance_km: 810,
       stop_time: "Technical Steam Halt · Karoo",
+      platform: "TECHNICAL DESERT HALT · KAROO",
       teaser: "The central railway crossroads of the Great Karoo desert where vintage locomotives service water tanks under the Southern Cross.",
+      full_desc: "A romantic night stop in the heart of the Great Karoo. Rovos Rail locomotives take on fresh water while travelers enjoy a nightcap in the open-air observation car, gazing at millions of stars in the crystal unpolluted desert atmosphere.",
+      primary_express: "Rovos Rail Safari",
+      route_corridor: "Great Karoo Desert Route",
+      heritage_status: "Historic Karoo Water Halt",
+      video: "./videos/de-aar-karoo-desert.mp4",
       img: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80",
       vector: "bottom"
     },
@@ -7535,10 +7608,17 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       name: "Matjiesfontein Victorian Village",
       category: "scheduled",
       badge: "OFF-TRAIN EXCURSION",
+      tag: "1890S LIVING HISTORIC VILLAGE",
       province: "Western Cape",
       distance_km: 1320,
       stop_time: "Scheduled Excursion · 2 Hours",
+      platform: "HISTORIC RAIL PLATFORM · 2 HOURS",
       teaser: "Guests disembark for a 2-hour walking tour of this 1890s Victorian village frozen in time, visiting the Lord Milner Hotel, car museum, and historic rail bar.",
+      full_desc: "Founded in 1884 as a Victorian health resort, Matjiesfontein is preserved as a complete 19th-century village. Guests stroll past cast-iron street lamps to the famous Lord Milner Hotel, enjoy a pint at the Laird's Arms tavern, and listen to the village red London bus horn.",
+      primary_express: "Rovos Rail Safari",
+      route_corridor: "Southern Karoo Heritage Stop",
+      heritage_status: "National Heritage Village",
+      video: "./videos/matjiesfontein-station.mp4",
       img: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80",
       vector: "side"
     },
@@ -7547,10 +7627,17 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       name: "Hex River Pass & Tunnels",
       category: "passthrough",
       badge: "PASS-THROUGH",
+      tag: "ALPINE WINELANDS DESCENT",
       province: "Western Cape",
       distance_km: 1480,
       stop_time: "Spectacular Mountain Descent",
+      platform: "SCENIC MOUNTAIN DESCENT",
       teaser: "Enjoy 360-degree photography from the open-air rear observation balcony as the train descends 750 metres through mountain tunnels into Cape Winelands.",
+      full_desc: "The dramatic transition from high desert plateau into lush coastal valleys. Passengers gather on the open-air teak balcony at the rear of the train as the Edwardian convoy snakes down through mountain tunnels, offering panoramic views of vineyards and steep cliffs.",
+      primary_express: "Rovos Rail Safari",
+      route_corridor: "Cape Fold Mountain Corridor",
+      heritage_status: "Historic Mountain Railway Pass",
+      video: "./videos/hex-river-valley.mp4",
       img: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
       vector: "depth"
     },
@@ -7559,10 +7646,17 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       name: "Cape Town Platform 24",
       category: "scheduled",
       badge: "TERMINUS ARRIVAL",
+      tag: "MOTHER CITY TERMINUS",
       province: "Western Cape",
       distance_km: 1600,
       stop_time: "17:00 PM Day 3 Arrival · Platform 24",
+      platform: "PLATFORM 24 · 17:00 PM DAY 3",
       teaser: "Grand arrival at Cape Town Station's private Platform 24 after a 3-day slow-travel journey across the African subcontinent.",
+      full_desc: "The triumphant conclusion of a 3-day slow travel adventure. Rovos Rail pulls smoothly into Platform 24 at Cape Town Station, with Table Mountain towering above. The train manager and crew bid farewell as guests transfer to Cape Town's premier Atlantic seaboard accommodations.",
+      primary_express: "Rovos Rail Pride of Africa",
+      route_corridor: "Cape Town Grand Terminus",
+      heritage_status: "Historic Platform 24",
+      video: "./videos/cape-town-station.mp4",
       img: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=800&q=80",
       vector: "side"
     }
@@ -7638,7 +7732,6 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
     function buildGridHTML(stopsList) {
       gridContainer.innerHTML = stopsList.map((stop, index) => {
-        const isPretoria = stop.id === 'pretoria-terminus';
         const vectorClass = `enter-${stop.vector || 'bottom'}`;
         const delayMs = index * 70;
 
@@ -7693,7 +7786,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
               <!-- Static CTA Line (Visible by default, fades out on hover/focus-within) -->
               <div class="corridor-card-cta">
-                <span>${isPretoria ? 'Click to Expand Station Story' : 'Hover to Read Story'}</span>
+                <span>Click to Expand Station Story</span>
                 <i data-lucide="arrow-right" style="width: 12px; height: 12px;"></i>
               </div>
             </div>
@@ -7705,14 +7798,17 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         window.lucide.createIcons();
       }
 
-      attachCardEventListeners();
+      attachCardEventListeners(stopsList);
     }
 
-    function attachCardEventListeners() {
+    function attachCardEventListeners(currentStopsList) {
       const cards = gridContainer.querySelectorAll('.corridor-stop-card');
 
       cards.forEach(card => {
         const stopId = card.getAttribute('data-stop-id');
+        const currentStop = (currentStopsList || []).find(s => s.id === stopId) || 
+                            BLUE_TRAIN_CORRIDOR_STOPS.find(s => s.id === stopId) || 
+                            ROVOS_RAIL_CORRIDOR_STOPS.find(s => s.id === stopId);
 
         // 3D Tilt & Parallax Physics Engine
         card.addEventListener('mouseenter', () => {
@@ -7754,12 +7850,8 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
         // Click / Tap Event Logic
         card.addEventListener('click', () => {
-          if (stopId === 'pretoria-terminus') {
-            openPretoriaFeatureModal();
-          } else {
-            // Mobile or tap physical bounce feedback
-            card.style.transform = 'perspective(1000px) translateZ(40px) rotateX(-5deg)';
-            setTimeout(() => { card.style.transform = ''; }, 600);
+          if (currentStop) {
+            openCorridorFeatureModal(currentStop);
           }
         });
 
@@ -7767,8 +7859,8 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         card.addEventListener('keydown', (e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            if (stopId === 'pretoria-terminus') {
-              openPretoriaFeatureModal();
+            if (currentStop) {
+              openCorridorFeatureModal(currentStop);
             }
           }
         });
@@ -7790,7 +7882,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
     // Initial render
     renderCards('all');
 
-    // Setup Pretoria modal handlers
+    // Setup modal handlers
     setupPretoriaFeatureModal();
   }
 
@@ -7801,20 +7893,102 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
     if (!overlay) return;
 
-    window.openPretoriaFeatureModal = function () {
-      overlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
-      const featureVideo = overlay.querySelector('video');
+    window.openCorridorFeatureModal = function (stop) {
+      if (!stop) return;
+      const activeTrain = localStorage.getItem('tracktales_selected_train') || 'blue-train';
+      const isBlue = activeTrain === 'blue-train';
+
+      // Update Video
+      const featureVideo = overlay.querySelector('video') || document.getElementById('pretoria-feature-video');
       if (featureVideo) {
+        const videoSrc = stop.video || (isBlue ? './videos/Steam_locomotive_moving_on_tracks_202608181456.mp4' : './videos/rovos-rail-showcase.mp4');
+        if (featureVideo.getAttribute('src') !== videoSrc) {
+          featureVideo.src = videoSrc;
+          featureVideo.load();
+        }
+        featureVideo.poster = stop.img || '';
         featureVideo.currentTime = 0;
         featureVideo.play().catch(() => {});
       }
-      if (window.lucide && typeof window.lucide.createIcons === 'function') window.lucide.createIcons();
+
+      // Update Badges & Metadata
+      const badgeEl = document.getElementById('stop-feature-badge');
+      if (badgeEl) {
+        badgeEl.textContent = stop.badge || (stop.category === 'scheduled' ? 'SCHEDULED STOP' : 'PASS-THROUGH');
+        if (stop.category === 'scheduled') {
+          badgeEl.className = 'px-3.5 py-1 rounded-full bg-[#D4AF37] text-[#060913] font-mono text-[11px] font-extrabold tracking-widest uppercase shadow-md';
+        } else {
+          badgeEl.className = 'px-3.5 py-1 rounded-full bg-[#0284c7] text-white font-mono text-[11px] font-extrabold tracking-widest uppercase shadow-md';
+        }
+      }
+
+      const provDistEl = document.getElementById('stop-feature-province-distance');
+      if (provDistEl) {
+        provDistEl.textContent = `${(stop.province || 'South Africa').toUpperCase()} · ${stop.distance_km || 0} KM`;
+      }
+
+      const platformEl = document.getElementById('stop-feature-platform');
+      if (platformEl) {
+        platformEl.textContent = stop.platform || (stop.distance_km === 0 ? 'PLATFORM 1' : `KM ${stop.distance_km}`);
+      }
+
+      const timeEl = document.getElementById('stop-feature-time');
+      if (timeEl) {
+        timeEl.innerHTML = `<i data-lucide="clock" class="w-3.5 h-3.5 text-[#FCD34D]"></i> <span class="text-[#FCD34D] font-bold">${stop.stop_time || 'Corridor Transit'}</span>`;
+      }
+
+      const tagEl = document.getElementById('stop-feature-tag');
+      if (tagEl) {
+        tagEl.textContent = stop.tag || (stop.category === 'scheduled' ? 'HERITAGE STOP' : 'SCENIC PASS-THROUGH');
+      }
+
+      const titleEl = document.getElementById('stop-feature-title');
+      if (titleEl) {
+        titleEl.textContent = stop.name || 'Corridor Stop';
+      }
+
+      const descEl = document.getElementById('stop-feature-desc');
+      if (descEl) {
+        descEl.textContent = stop.full_desc || stop.teaser || '';
+      }
+
+      const expressEl = document.getElementById('stop-feature-express');
+      if (expressEl) {
+        expressEl.textContent = stop.primary_express || (isBlue ? 'The Blue Train (31-Hr Luxury Express)' : 'Rovos Rail Pride of Africa');
+      }
+
+      const routeEl = document.getElementById('stop-feature-route');
+      if (routeEl) {
+        routeEl.textContent = stop.route_corridor || 'Pretoria to Cape Town (1,600 km)';
+      }
+
+      const statusEl = document.getElementById('stop-feature-status');
+      if (statusEl) {
+        statusEl.textContent = stop.heritage_status || 'National Rail Heritage';
+      }
+
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+    };
+
+    // Backwards-compatible Pretoria feature opener
+    window.openPretoriaFeatureModal = function () {
+      const activeTrain = localStorage.getItem('tracktales_selected_train') || 'blue-train';
+      const stops = activeTrain === 'blue-train' ? BLUE_TRAIN_CORRIDOR_STOPS : ROVOS_RAIL_CORRIDOR_STOPS;
+      window.openCorridorFeatureModal(stops[0]);
     };
 
     function closePretoriaModal() {
       overlay.classList.remove('active');
       document.body.style.overflow = '';
+      const featureVideo = overlay.querySelector('video') || document.getElementById('pretoria-feature-video');
+      if (featureVideo) {
+        featureVideo.pause();
+      }
     }
 
     if (closeBtn) closeBtn.addEventListener('click', closePretoriaModal);
