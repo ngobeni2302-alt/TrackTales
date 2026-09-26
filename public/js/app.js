@@ -2082,11 +2082,20 @@
     const heroVideo = document.getElementById('heroVideo');
     if (heroVideo) {
       const targetVideoSrc = isBlue ? './videos/blue-train-showcase.mp4' : './videos/rovos-rail-showcase.mp4';
+      const targetPoster = isBlue 
+        ? 'https://images.unsplash.com/photo-1577971132997-c10be9372519?auto=format&fit=crop&w=1920&q=80'
+        : 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1920&q=80';
+      
+      heroVideo.poster = targetPoster;
       const currentSrc = heroVideo.currentSrc || heroVideo.getAttribute('src') || '';
       if (!currentSrc.includes(isBlue ? 'blue-train-showcase.mp4' : 'rovos-rail-showcase.mp4')) {
+        const sourceEl = document.getElementById('heroVideoSource') || heroVideo.querySelector('source');
+        if (sourceEl) {
+          sourceEl.src = targetVideoSrc;
+        }
         heroVideo.src = targetVideoSrc;
         heroVideo.load();
-        heroVideo.play().catch(() => {});
+        heroVideo.play().catch(e => console.warn('Hero video autoplay notice:', e));
       }
     }
 
@@ -4439,9 +4448,19 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         mobileTrainBadge.className = `w-full py-3 px-4 rounded-lg border text-[#0A0C10] flex items-center justify-between font-semibold cursor-pointer transition-all ${isBlue ? 'bg-[#D99B26]/10 hover:bg-[#D99B26]/20 border-[#D99B26]/30' : 'bg-[#2A9D8F]/10 hover:bg-[#2A9D8F]/20 border-[#2A9D8F]/30'}`;
       }
 
-      // 4. Update Right Panel Interactive Cards
+      // 4. Update Right Panel Interactive Cards & Modal Video
       const cardBlue = document.getElementById('splash-card-blue');
       const cardRovos = document.getElementById('splash-card-rovos');
+      const cardPanelVideo = document.getElementById('card-panel-video');
+
+      if (cardPanelVideo) {
+        const targetVideo = isBlue ? './videos/blue-train-showcase.mp4' : './videos/rovos-rail-showcase.mp4';
+        const sourceEl = cardPanelVideo.querySelector('source');
+        if (sourceEl) sourceEl.src = targetVideo;
+        cardPanelVideo.src = targetVideo;
+        cardPanelVideo.load();
+        cardPanelVideo.play().catch(() => {});
+      }
 
       if (cardBlue && cardRovos) {
         if (isBlue) {

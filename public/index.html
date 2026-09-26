@@ -257,8 +257,8 @@
   <div id="heroVideoBgLayer" class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
     
     <!-- Background Video Element using high-clarity direct video stream -->
-    <video id="heroVideo" class="absolute inset-0 w-full h-full object-cover scale-100 opacity-100" autoplay loop muted playsinline>
-      <source src="./videos/blue-train-showcase.mp4" type="video/mp4">
+    <video id="heroVideo" src="./videos/blue-train-showcase.mp4" poster="https://images.unsplash.com/photo-1577971132997-c10be9372519?auto=format&fit=crop&w=1920&q=80" class="absolute inset-0 w-full h-full object-cover scale-100 opacity-100" autoplay loop muted playsinline>
+      <source id="heroVideoSource" src="./videos/blue-train-showcase.mp4" type="video/mp4">
     </video>
 
     <!-- 1. Soft Left text backdrop (Keeps text legible while leaving the train completely clear and vibrant) -->
