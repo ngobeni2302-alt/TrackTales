@@ -40,10 +40,25 @@ CREATE TABLE IF NOT EXISTS public.password_resets (
     expires_at BIGINT NOT NULL
 );
 
--- 4. Enable Row Level Security (RLS) & Grant Policies for API Access
+-- 4. Create User Journals / Voice Notes Table (Permanent multi-year cloud storage)
+CREATE TABLE IF NOT EXISTS public.user_journals (
+    id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
+    train_id TEXT NOT NULL,
+    train_name TEXT NOT NULL,
+    stop_name TEXT NOT NULL,
+    category TEXT NOT NULL,
+    date_str TEXT NOT NULL,
+    timestamp BIGINT NOT NULL,
+    text TEXT NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 5. Enable Row Level Security (RLS) & Grant Policies for API Access
 ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.user_tickets ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.password_resets ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.user_journals ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Allow anonymous read/write on users" ON public.users;
 CREATE POLICY "Allow anonymous read/write on users" ON public.users FOR ALL USING (true) WITH CHECK (true);
@@ -53,3 +68,7 @@ CREATE POLICY "Allow anonymous read/write on user_tickets" ON public.user_ticket
 
 DROP POLICY IF EXISTS "Allow anonymous read/write on password_resets" ON public.password_resets;
 CREATE POLICY "Allow anonymous read/write on password_resets" ON public.password_resets FOR ALL USING (true) WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Allow anonymous read/write on user_journals" ON public.user_journals;
+CREATE POLICY "Allow anonymous read/write on user_journals" ON public.user_journals FOR ALL USING (true) WITH CHECK (true);
+

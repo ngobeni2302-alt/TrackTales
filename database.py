@@ -154,6 +154,22 @@ def init_db():
                     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
                 )
             """)
+
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS user_journals (
+                    id TEXT PRIMARY KEY,
+                    user_id TEXT NOT NULL,
+                    train_id TEXT NOT NULL,
+                    train_name TEXT NOT NULL,
+                    stop_name TEXT NOT NULL,
+                    category TEXT NOT NULL,
+                    date_str TEXT NOT NULL,
+                    timestamp INTEGER NOT NULL,
+                    text TEXT NOT NULL,
+                    created_at TEXT NOT NULL,
+                    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+                )
+            """)
             
             conn.commit()
     except Exception as e:
@@ -486,3 +502,121 @@ def reset_user_password(email: str, new_password_hash: str) -> bool:
         cursor.execute("DELETE FROM password_resets WHERE email = ?", (clean_email,))
         conn.commit()
         return cursor.rowcount > 0
+
+# --- User Journals / Voice Notes Persistence ---
+
+def save_user_journal(user_id: str, journal: dict) -> dict:
+    clean_id = journal.get("id") or f"voice-{int(time.time() * 1000)}"
+    entry_payload = {
+        "id": clean_id,
+        "user_id": user_id,
+        "train_id": journal.get("trainId") or journal.get("train_id") or "blue-train",
+        "train_name": journal.get("trainName") or journal.get("train_name") or "The Blue Train",
+        "stop_name": journal.get("stop") or journal.get("stop_name") or "Pretoria Hub",
+        "category": journal.get("category") or "Route Reflection",
+        "date_str": journal.get("date") or journal.get("date_str") or datetime.now().strftime("%d %b %Y, %H:%M"),
+        "timestamp": int(journal.get("timestamp") or (time.time() * 1000)),
+        "text": (journal.get("text") or "").strip(),
+        "created_at": datetime.now().isoformat()
+    }
+
+    if _SUPABASE_CLIENT:
+        try:
+            _SUPABASE_CLIENT.table("user_journals").upsert(entry_payload).execute()
+        except Exception as e:
+            print("Supabase journal insert warning:", e)
+
+    with get_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO user_journals (
+                id, user_id, train_id, train_name, stop_name,
+                category, date_str, timestamp, text, created_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(id) DO UPDATE SET
+                train_id = excluded.train_id,
+                train_name = excluded.train_name,
+                stop_name = excluded.stop_name,
+                category = excluded.category,
+                date_str = excluded.date_str,
+                timestamp = excluded.timestamp,
+                text = excluded.text
+        """, (
+            entry_payload["id"],
+            entry_payload["user_id"],
+            entry_payload["train_id"],
+            entry_payload["train_name"],
+            entry_payload["stop_name"],
+            entry_payload["category"],
+            entry_payload["date_str"],
+            entry_payload["timestamp"],
+            entry_payload["text"],
+            entry_payload["created_at"]
+        ))
+        conn.commit()
+
+    return {
+        "id": entry_payload["id"],
+        "trainId": entry_payload["train_id"],
+        "trainName": entry_payload["train_name"],
+        "stop": entry_payload["stop_name"],
+        "category": entry_payload["category"],
+        "date": entry_payload["date_str"],
+        "timestamp": entry_payload["timestamp"],
+        "text": entry_payload["text"]
+    }
+
+def get_user_journals(user_id: str) -> List[Dict]:
+    if _SUPABASE_CLIENT:
+        try:
+            res = _SUPABASE_CLIENT.table("user_journals").select("*").eq("user_id", user_id).order("timestamp", desc=True).execute()
+            if res.data:
+                return [{
+                    "id": r["id"],
+                    "trainId": r["train_id"],
+                    "trainName": r["train_name"],
+                    "stop": r["stop_name"],
+                    "category": r["category"],
+                    "date": r["date_str"],
+                    "timestamp": r["timestamp"],
+                    "text": r["text"]
+                } for r in res.data]
+        except Exception as e:
+            print("Supabase journal query warning:", e)
+
+    with get_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM user_journals WHERE user_id = ? ORDER BY timestamp DESC", (user_id,))
+        rows = cursor.fetchall()
+        return [{
+            "id": r["id"],
+            "trainId": r["train_id"],
+            "trainName": r["train_name"],
+            "stop": r["stop_name"],
+            "category": r["category"],
+            "date": r["date_str"],
+            "timestamp": r["timestamp"],
+            "text": r["text"]
+        } for r in rows]
+
+def delete_user_journal(user_id: str, journal_id: str) -> bool:
+    if _SUPABASE_CLIENT:
+        try:
+            _SUPABASE_CLIENT.table("user_journals").delete().eq("user_id", user_id).eq("id", journal_id).execute()
+        except Exception as e:
+            print("Supabase journal delete warning:", e)
+
+    with get_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM user_journals WHERE user_id = ? AND id = ?", (user_id, journal_id))
+        conn.commit()
+        return cursor.rowcount > 0
+
+def sync_user_journals(user_id: str, client_entries: List[Dict]) -> List[Dict]:
+    """Sync client-side local storage entries with persistent server entries, preserving both."""
+    if isinstance(client_entries, list):
+        for entry in client_entries:
+            if isinstance(entry, dict) and entry.get("text") and not str(entry.get("id", "")).startswith("voice-sample-"):
+                save_user_journal(user_id, entry)
+    return get_user_journals(user_id)
+

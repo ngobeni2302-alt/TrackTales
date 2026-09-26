@@ -80,6 +80,24 @@ class ResetPasswordRequest(BaseModel):
     reset_code: str
     new_password: str
 
+class JournalEntryRequest(BaseModel):
+    id: Optional[str] = None
+    train_id: Optional[str] = None
+    trainId: Optional[str] = None
+    train_name: Optional[str] = None
+    trainName: Optional[str] = None
+    stop: Optional[str] = None
+    stop_name: Optional[str] = None
+    category: Optional[str] = None
+    date: Optional[str] = None
+    date_str: Optional[str] = None
+    timestamp: Optional[int] = None
+    text: str
+
+class JournalSyncRequest(BaseModel):
+    entries: List[dict]
+
+
 
 # --- In-Memory Railway Data ---
 
@@ -535,6 +553,47 @@ def reset_password(req: ResetPasswordRequest):
     return {
         "status": "success",
         "message": "Password updated successfully in central database! You can now log in with your new password."
+    }
+
+# --- Multi-Year Permanent Journal / Voice Notes Endpoints ---
+
+@app.get("/api/journals", summary="Get user's permanent journal entries from central database")
+def get_user_journal_entries(current_user: dict = Depends(require_current_user)):
+    entries = database.get_user_journals(current_user["sub"])
+    return {
+        "status": "success",
+        "count": len(entries),
+        "data": entries
+    }
+
+@app.post("/api/journals", summary="Save or update a permanent journal entry in database")
+def save_user_journal_entry(req: JournalEntryRequest, current_user: dict = Depends(require_current_user)):
+    payload = req.model_dump() if hasattr(req, "model_dump") else req.dict()
+    saved = database.save_user_journal(current_user["sub"], payload)
+    return {
+        "status": "success",
+        "message": "Journal memory saved permanently to your account cloud storage!",
+        "data": saved
+    }
+
+@app.post("/api/journals/sync", summary="Two-way sync journal entries between browser storage and permanent database")
+def sync_user_journal_entries(req: JournalSyncRequest, current_user: dict = Depends(require_current_user)):
+    merged = database.sync_user_journals(current_user["sub"], req.entries)
+    return {
+        "status": "success",
+        "message": "Journal entries synchronized with cloud account.",
+        "count": len(merged),
+        "data": merged
+    }
+
+@app.delete("/api/journals/{journal_id}", summary="Delete a journal entry from permanent database")
+def delete_user_journal_entry(journal_id: str, current_user: dict = Depends(require_current_user)):
+    deleted = database.delete_user_journal(current_user["sub"], journal_id)
+    if not deleted:
+        raise HTTPException(status_code=404, detail="Journal entry not found or already deleted.")
+    return {
+        "status": "success",
+        "message": "Journal entry deleted from account."
     }
 
     

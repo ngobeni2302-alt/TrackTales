@@ -4182,6 +4182,10 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
             const userEmailEl = document.getElementById('splash-user-email');
             if (userNameEl) userNameEl.textContent = `Welcome Back, ${user.full_name || user.username}!`;
             if (userEmailEl) userEmailEl.textContent = user.email || '';
+
+            if (window.TrackTalesSyncJournals) {
+              window.TrackTalesSyncJournals();
+            }
             return;
           } else {
             localStorage.removeItem('tracktales_jwt_token');
@@ -4645,6 +4649,10 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
             const chosenTrainName = rememberedTrain === 'blue-train' ? 'The Blue Train' : 'Rovos Rail Safari';
             showAlert(`Welcome back, ${displayName}! Account authenticated via central database.`, "success");
 
+            if (window.TrackTalesSyncJournals) {
+              window.TrackTalesSyncJournals();
+            }
+
             setTimeout(() => {
               dismissSplash();
               if (window.TrackTalesOpenSubscriptionModal) {
@@ -4738,6 +4746,10 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
             if (window.lucide) lucide.createIcons();
 
             showAlert(`Account created! Welcome, ${user.full_name}. Registered in central database for multi-device login.`, "success");
+
+            if (window.TrackTalesSyncJournals) {
+              window.TrackTalesSyncJournals();
+            }
 
             setTimeout(() => {
               dismissSplash();
@@ -7785,6 +7797,8 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
     const notesList = document.getElementById('voiceNotesList');
     const countBadge = document.getElementById('voiceNotesCountBadge');
     const exportBtn = document.getElementById('btnExportVoiceDiary');
+    const cloudSyncStatus = document.getElementById('voiceCloudSyncStatus');
+    const cloudSyncLabel = document.getElementById('voiceCloudSyncLabel');
 
     if (!recordBtn || !transcriptInput) return;
 
@@ -7863,6 +7877,65 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       } catch (e) {}
       renderJournalList();
     }
+
+    // Multi-Year Central Cloud Synchronization
+    async function syncCloudJournals() {
+      const token = localStorage.getItem('tracktales_jwt_token');
+      if (!token) {
+        if (cloudSyncLabel) cloudSyncLabel.textContent = 'Local Storage · Sign In to Back Up to Cloud';
+        if (cloudSyncStatus) {
+          cloudSyncStatus.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-black/5 text-[#78716C] transition-all';
+        }
+        return;
+      }
+
+      if (cloudSyncLabel) cloudSyncLabel.textContent = 'Syncing cloud entries...';
+
+      try {
+        const localEntries = getStoredEntries();
+        const resp = await fetch(getApiEndpoint('/api/journals/sync'), {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ entries: localEntries })
+        });
+
+        if (resp.ok) {
+          const result = await resp.json();
+          if (result && Array.isArray(result.data)) {
+            const remoteMap = new Map();
+            result.data.forEach(e => remoteMap.set(e.id, e));
+
+            const merged = [...result.data];
+            localEntries.forEach(localItem => {
+              if (!remoteMap.has(localItem.id)) {
+                merged.push(localItem);
+              }
+            });
+
+            merged.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+            localStorage.setItem('tracktales_voice_journal', JSON.stringify(merged));
+            renderJournalList();
+
+            if (cloudSyncLabel) {
+              cloudSyncLabel.textContent = 'Multi-Year Cloud Storage Active';
+            }
+            if (cloudSyncStatus) {
+              cloudSyncStatus.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 transition-all';
+            }
+            if (window.lucide) lucide.createIcons();
+          }
+        }
+      } catch (e) {
+        console.warn('Cloud journal sync offline fallback:', e);
+        if (cloudSyncLabel) cloudSyncLabel.textContent = 'Offline (Local Storage Active)';
+      }
+    }
+
+    window.TrackTalesSyncJournals = syncCloudJournals;
+
 
     // Sync selected train badge in Voice Studio
     function updateStudioTrainBadge() {
@@ -8272,6 +8345,25 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         entries.unshift(newEntry);
         saveEntries(entries);
 
+        const token = localStorage.getItem('tracktales_jwt_token');
+        if (token) {
+          fetch(getApiEndpoint('/api/journals'), {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(newEntry)
+          }).then(res => res.json()).then(data => {
+            if (data && data.status === 'success') {
+              if (statusEl) statusEl.innerHTML = '<i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-600"></i> <span class="text-emerald-700 font-bold">Saved Permanently to Account!</span>';
+              if (window.lucide) lucide.createIcons();
+            }
+          }).catch(err => {
+            console.warn('Background cloud journal save fallback:', err);
+          });
+        }
+
         transcriptInput.value = '';
         updateCounts();
         if (isRecording) stopRecording();
@@ -8412,6 +8504,14 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
           if (confirm('Delete this voice journal entry?')) {
             const current = getStoredEntries().filter(x => x.id !== id);
             saveEntries(current);
+
+            const token = localStorage.getItem('tracktales_jwt_token');
+            if (token) {
+              fetch(getApiEndpoint(`/api/journals/${id}`), {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+              }).catch(() => {});
+            }
           }
         });
       });
@@ -8469,8 +8569,9 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       });
     }
 
-    // Initial render of journal
+    // Initial render of journal & automatic cloud sync
     renderJournalList();
+    syncCloudJournals();
 
     // Export global trigger for train changes
     window.TrackTalesUpdateVoiceStudioTrain = updateStudioTrainBadge;
