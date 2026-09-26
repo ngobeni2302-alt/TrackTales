@@ -5725,7 +5725,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
       if (btnLabel) {
         if (planId === 'free') {
-          btnLabel.textContent = 'Continue Free';
+          btnLabel.textContent = 'Free Plan';
         } else {
           btnLabel.textContent = `Activate for ${plan.price}`;
         }

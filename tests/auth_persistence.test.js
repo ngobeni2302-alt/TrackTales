@@ -58,13 +58,21 @@ describe('TrackTales Splash Login/Sign-Up & Reload Persistence Verification', ()
       assert.ok(appJs.includes('splashCloseBtn.addEventListener'), 'splashCloseBtn listener missing in app.js');
     });
 
-    it('provides Continue as Guest button on both Sign In and Sign Up tabs', () => {
-      assert.ok(indexHtml.includes('id="splash-guest-btn"'), '#splash-guest-btn missing on signin tab');
+    it('ensures Continue as Guest button is removed from login tab and available on sign up tab', () => {
+      const signinIdx = indexHtml.indexOf('id="splash-signin-content"');
       const signupIdx = indexHtml.indexOf('id="splash-signup-content"');
-      assert.ok(signupIdx !== -1, 'signup content missing');
+      assert.ok(signinIdx !== -1 && signupIdx !== -1, 'splash tabs missing');
+      const signinSnippet = indexHtml.substring(signinIdx, signupIdx);
+      assert.ok(!signinSnippet.includes('Continue as Guest'), 'Continue as Guest should be removed from login tab');
       const signupEndIdx = indexHtml.indexOf('id="splash-reset-content"', signupIdx);
       const signupSnippet = indexHtml.substring(signupIdx, signupEndIdx !== -1 ? signupEndIdx : signupIdx + 10000);
       assert.ok(signupSnippet.includes('Continue as Guest'), 'Continue as Guest missing on signup tab');
+    });
+
+    it('ensures subscription plan removes Continue with Free button and renames label to Free Plan', () => {
+      assert.ok(!indexHtml.includes('id="subscription-skip-btn"'), 'subscription-skip-btn should be removed');
+      assert.ok(!indexHtml.includes('Continue with Free'), 'Continue with Free text should be removed');
+      assert.ok(appJs.includes("btnLabel.textContent = 'Free Plan'"), "btnLabel should be renamed to 'Free Plan'");
     });
 
     it('provides seamless tab switching links between Sign In and Sign Up', () => {

@@ -413,12 +413,6 @@
               <span id="splash-signin-btn-label">SIGN IN</span>
             </button>
 
-            <!-- Continue as Guest Option -->
-            <button type="button" id="splash-guest-btn" formnovalidate data-action="enter-guest" onclick="window.TrackTalesEnterGuestMode && window.TrackTalesEnterGuestMode(event)" class="btn-enter-guest w-full py-3 rounded-xl border border-[#D6CFC7] bg-white/80 hover:bg-white text-[#1C1917] font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-sm hover:border-[#D99B26] hover:text-[#D99B26] cursor-pointer">
-              <i data-lucide="compass" class="w-4 h-4 text-[#D99B26]"></i>
-              <span>Continue as Guest</span>
-            </button>
-
             <div class="flex items-center gap-2 text-xs text-[#44403C] font-medium">
               <label class="flex items-center gap-2 cursor-pointer">
                 <input type="checkbox" id="splash-remember-me" checked class="rounded accent-[#D99B26] w-4 h-4">
@@ -511,7 +505,7 @@
             </button>
 
             <!-- Continue as Guest Option -->
-            <button type="button" formnovalidate data-action="enter-guest" onclick="window.TrackTalesEnterGuestMode && window.TrackTalesEnterGuestMode(event)" class="btn-enter-guest w-full py-2.5 rounded-xl border border-[#D6CFC7] bg-white/80 hover:bg-white text-[#1C1917] font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-sm hover:border-[#D99B26] hover:text-[#D99B26] cursor-pointer">
+            <button type="button" id="splash-guest-btn" formnovalidate data-action="enter-guest" onclick="window.TrackTalesEnterGuestMode && window.TrackTalesEnterGuestMode(event)" class="btn-enter-guest w-full py-2.5 rounded-xl border border-[#D6CFC7] bg-white/80 hover:bg-white text-[#1C1917] font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-sm hover:border-[#D99B26] hover:text-[#D99B26] cursor-pointer">
               <i data-lucide="compass" class="w-4 h-4 text-[#D99B26]"></i>
               <span>Continue as Guest</span>
             </button>
@@ -2280,11 +2274,8 @@
           Selected Plan: <span id="subscription-selected-tier-name" class="font-bold text-[#D99B26]">Free Journey (R0)</span>
         </div>
         <div class="flex items-center gap-2 w-full sm:w-auto">
-          <button type="button" id="subscription-skip-btn" class="w-full sm:w-auto px-4 py-3 rounded-xl border border-[#D6CFC7] text-[#44403C] text-xs font-bold hover:bg-black/5 transition-colors">
-            Continue with Free
-          </button>
           <button type="button" id="subscription-confirm-btn" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#D99B26] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#C98B1E] transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#D99B26]/20">
-            <span id="subscription-btn-label">Activate Pass</span>
+            <span id="subscription-btn-label">Free Plan</span>
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </button>
         </div>
