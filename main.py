@@ -638,6 +638,21 @@ def read_root():
         )
     return JSONResponse({"message": "TrackTales API active. Open /public/index.html or run via uvicorn."})
 
+@app.get("/guest")
+@app.get("/guest.html")
+def read_guest_portal():
+    guest_file = os.path.join(static_dir, "guest.html")
+    if os.path.exists(guest_file):
+        return FileResponse(
+            guest_file,
+            headers={
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Pragma": "no-cache",
+                "Expires": "0"
+            }
+        )
+    return JSONResponse({"message": "TrackTales Guest Portal file not found."})
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

@@ -3768,7 +3768,6 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
     // If already entered in this session, logged in, or on a direct/refreshed page route: dismiss immediately!
     const hasActiveHash = Boolean(window.location.hash && window.location.hash.length > 1 && window.location.hash !== '#');
     const wasAlreadyEntered = sessionStorage.getItem('tracktales_splash_dismissed') === 'true' ||
-                              localStorage.getItem('tracktales_splash_dismissed') === 'true' ||
                               Boolean(localStorage.getItem('tracktales_jwt_token')) ||
                               Boolean(localStorage.getItem('tracktales_logged_user')) ||
                               hasActiveHash;
@@ -3794,8 +3793,11 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
     if (guestBtn) {
       guestBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        dismissSplash();
+        if (window.TrackTalesEnterGuestMode) {
+          window.TrackTalesEnterGuestMode(e);
+        } else {
+          dismissSplash();
+        }
       });
     }
 
@@ -4430,13 +4432,36 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       });
     });
 
-    // Delegated click listener as fail-safe for any child element clicks
+    // Delegated click listener as fail-safe for train choice and guest mode entry
     document.addEventListener('click', (e) => {
       const choiceEl = e.target.closest('[data-train-choice]');
       if (choiceEl) {
         const train = choiceEl.getAttribute('data-train-choice');
         if (train) {
           setSelectedTrain(train);
+        }
+      }
+
+      const guestBtnEl = e.target.closest('#splash-guest-btn, #inline-guest-btn, #modal-guest-btn, .btn-enter-guest, [data-action="enter-guest"]');
+      if (guestBtnEl) {
+        e.preventDefault();
+        e.stopPropagation();
+        localStorage.setItem('tracktales_is_guest', 'true');
+        dismissSplash();
+        
+        const loginModal = document.getElementById('login-modal');
+        if (loginModal) {
+          loginModal.classList.add('hidden');
+          loginModal.style.display = 'none';
+        }
+
+        showAlert("Welcome to TrackTales! Guest Mode activated.", "success");
+
+        const attrSec = document.getElementById('page-attractions') || document.getElementById('main-content');
+        if (attrSec) {
+          setTimeout(() => {
+            attrSec.scrollIntoView({ behavior: 'smooth' });
+          }, 350);
         }
       }
     });
@@ -6264,14 +6289,20 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       if (window.closeMobileDrawer) {
         window.closeMobileDrawer();
       }
-      // Automatically reload to the main login page with zero information filled in
-      if (window.TrackTalesSignOutAndReload) {
-        window.TrackTalesSignOutAndReload(true);
+      const loggedUser = localStorage.getItem('tracktales_logged_user');
+      if (loggedUser) {
+        if (window.TrackTalesSignOutAndReload) {
+          window.TrackTalesSignOutAndReload(true);
+        }
       } else {
-        localStorage.removeItem('tracktales_logged_user');
-        localStorage.removeItem('last_user');
-        localStorage.removeItem('last_password');
-        window.location.href = '/';
+        const inlineSec = document.getElementById('inline-signin-section');
+        if (inlineSec) {
+          inlineSec.scrollIntoView({ behavior: 'smooth' });
+          const emailInput = document.getElementById('inline-signin-email');
+          if (emailInput) setTimeout(() => emailInput.focus(), 450);
+        } else if (modal) {
+          modal.classList.remove('hidden');
+        }
       }
     }
 
@@ -6284,6 +6315,118 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         if (e.target === modal) handleCloseLogin();
       });
     }
+
+    const modalGuestBtn = document.getElementById('modal-guest-btn');
+    if (modalGuestBtn && modal) {
+      modalGuestBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        handleCloseLogin();
+      });
+    }
+
+    // --- Inline Sign In Card Handlers (Built directly into page) ---
+    const inlineForm = document.getElementById('inline-signin-form');
+    const inlineGuestBtn = document.getElementById('inline-guest-btn');
+    const inlineSignoutBtn = document.getElementById('inline-signout-btn');
+
+    if (inlineGuestBtn) {
+      inlineGuestBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const attrSec = document.getElementById('page-attractions');
+        if (attrSec) attrSec.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+
+    if (inlineSignoutBtn) {
+      inlineSignoutBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (window.TrackTalesSignOutAndReload) {
+          window.TrackTalesSignOutAndReload(true);
+        }
+      });
+    }
+
+    if (inlineForm) {
+      inlineForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('inline-signin-email').value.trim().toLowerCase();
+        const password = document.getElementById('inline-signin-password').value;
+        const btnLabel = document.getElementById('inline-signin-btn-label');
+
+        if (btnLabel) btnLabel.textContent = "Authenticating...";
+
+        try {
+          const response = await fetch(getApiEndpoint('/api/auth/login'), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ login: email, password: password })
+          });
+          const data = await response.json();
+
+          if (response.ok && data.status === 'success') {
+            const token = data.access_token;
+            const user = data.user;
+            localStorage.setItem('tracktales_jwt_token', token);
+
+            const rememberedTrain = selectedTrain || 'blue-train';
+            const displayName = user.full_name || user.username || email.split('@')[0];
+            const userObj = { id: user.id, name: displayName, username: user.username, email: user.email, preferred_train: rememberedTrain };
+
+            localStorage.setItem('tracktales_logged_user', JSON.stringify(userObj));
+            localStorage.setItem('tracktales_selected_train', rememberedTrain);
+
+            const openBtnEl = document.getElementById('btn-open-login');
+            const desktopLabel = document.getElementById('desktop-login-label');
+            const signOutText = window.TrackTalesTranslateText ? window.TrackTalesTranslateText("Sign Out") : "Sign Out";
+            if (desktopLabel) desktopLabel.textContent = signOutText;
+            if (openBtnEl) openBtnEl.innerHTML = `<i data-lucide="log-out" class="w-4 h-4 text-[#D99B26]"></i> <span id="desktop-login-label">${signOutText}</span>`;
+            if (window.lucide) lucide.createIcons();
+
+            showAlert(`Welcome back, ${displayName}! Account authenticated.`, "success");
+            updateInlineUserDisplay();
+            return;
+          } else {
+            showAlert(data.detail || "Invalid email/username or password!", "error");
+            if (btnLabel) btnLabel.textContent = "SIGN IN";
+          }
+        } catch (err) {
+          const userRecord = getRegisteredUserRecord ? getRegisteredUserRecord(email) : null;
+          if (userRecord && userRecord.password === password) {
+            const displayName = userRecord.name || email.split('@')[0];
+            localStorage.setItem('tracktales_logged_user', JSON.stringify({ name: displayName, email: email }));
+            showAlert(`Welcome back, ${displayName}!`, "success");
+            updateInlineUserDisplay();
+          } else {
+            showAlert("Could not connect to central database server.", "error");
+            if (btnLabel) btnLabel.textContent = "SIGN IN";
+          }
+        }
+      });
+    }
+
+    function updateInlineUserDisplay() {
+      const formEl = document.getElementById('inline-signin-form');
+      const inlineLoggedState = document.getElementById('inline-user-logged-state');
+      const nameEl = document.getElementById('inline-logged-user-name');
+      const emailEl = document.getElementById('inline-logged-user-email');
+      const trainEl = document.getElementById('inline-logged-user-train');
+
+      const loggedUser = localStorage.getItem('tracktales_logged_user');
+      if (loggedUser && formEl && inlineLoggedState) {
+        try {
+          const u = JSON.parse(loggedUser);
+          if (nameEl) nameEl.textContent = `Welcome Back, ${u.name || u.email}!`;
+          if (emailEl) emailEl.textContent = u.email || '';
+          if (trainEl) trainEl.textContent = (u.preferred_train === 'rovos-rail') ? 'Rovos Rail Safari' : 'The Blue Train';
+          formEl.classList.add('hidden');
+          inlineLoggedState.classList.remove('hidden');
+        } catch(e) {}
+      } else if (formEl && inlineLoggedState) {
+        formEl.classList.remove('hidden');
+        inlineLoggedState.classList.add('hidden');
+      }
+    }
+    updateInlineUserDisplay();
 
     // Sign Up form handler in Modal
     const signupForm = document.getElementById('signup-form');
@@ -11542,6 +11685,443 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
   try { setupMultiLanguage(); } catch (e) { console.error(e); }
   try { setupEmergencyHotlines(); } catch (e) { console.error(e); }
   try { setupInteractiveGames(); } catch (e) { console.error(e); }
+  try { setupAttractionsShowcase(); } catch (e) { console.error(e); }
+
+  // --- 21 Corridor Video Attractions Showcase ---
+  const ATTRACTIONS_DATA = [
+    {
+      id: "gods-window",
+      title: "God's Window & Panorama Route",
+      location: "Blyde River Escarpment, Mpumalanga",
+      category: "Natural Wonder",
+      video: "./videos/01_Gods_Window_Panorama_Route.mp4",
+      description: "Perched high on the Drakensberg escarpment, God's Window offers a breathtaking 900-meter sheer drop looking over the lush indigenous rainforest and Blyde River Canyon. On clear days, the expansive panoramic view extends across the Lowveld all the way to the Kruger Park border and Mozambique.",
+      highlights: [
+        "900m sheer vertical drop overlooking pristine subtropical rainforest",
+        "Gateway to the famous Panorama Route and Lisbon & Berlin Waterfalls",
+        "Panoramic views extending across the Lowveld to the Mozambique border"
+      ],
+      proximity: "Pretoria Departure Hub Excursion"
+    },
+    {
+      id: "drakensberg-cliff",
+      title: "Drakensberg Cliff Viewpoint",
+      location: "uKhahlamba Drakensberg Park, KwaZulu-Natal",
+      category: "Natural Wonder",
+      video: "./videos/02_Drakensberg_Cliff_Viewpoint.mp4",
+      description: "The uKhahlamba-Drakensberg range—meaning 'Barrier of Spears' in isiZulu—is a UNESCO World Heritage site featuring dramatic basalt cliffs rising over 3,000 meters above sea level. The cliffs shelter ancient San rock art caves and alpine waterfall valleys.",
+      highlights: [
+        "UNESCO World Heritage Site with peaks exceeding 3,000 meters",
+        "Over 35,000 individual San Bushman rock paintings in natural sandstone caves",
+        "Dramatic mountain basalt wall forming the high kingdom border with Lesotho"
+      ],
+      proximity: "Highveld Rail Junction Vantage Point"
+    },
+    {
+      id: "robben-island-table-mountain",
+      title: "Robben Island & Table Mountain",
+      location: "Table Bay, Cape Town, Western Cape",
+      category: "Heritage Site",
+      video: "./videos/03_Robben_Island_and_Table_Mountain.mp4",
+      description: "Floating in Table Bay, Robben Island is a solemn symbol of South Africa's journey to democracy. Former President Nelson Mandela was imprisoned here for 18 years. Today, guided tours led by former political prisoners offer unforgettable history against the backdrop of Table Mountain.",
+      highlights: [
+        "Nelson Mandela's historic cell in Maximum Security Prison",
+        "Guided tours conducted by former political prisoners",
+        "Panoramic views of Table Mountain and Cape Town across Table Bay"
+      ],
+      proximity: "Cape Town Station Terminus Arrival"
+    },
+    {
+      id: "boulders-beach",
+      title: "Boulders Beach African Penguins",
+      location: "Simon's Town, Cape Peninsula, Western Cape",
+      category: "Wildlife Sanctuary",
+      video: "./videos/04_Boulders_Beach_Penguins.mp4",
+      description: "Sheltered by massive 540-million-year-old granite boulders, Boulders Beach is home to a thriving land-based colony of over 2,000 wild African Penguins (Spheniscus demersus). Raised wooden boardwalks allow visitors to observe the penguins swimming and nesting up close.",
+      highlights: [
+        "Colony of over 2,000 wild endangered African Penguins",
+        "Sheltered calm turquoise coves framed by ancient granite boulders",
+        "Elevated wooden boardwalks for eco-friendly wildlife viewing"
+      ],
+      proximity: "Cape Town Southern Line Extension"
+    },
+    {
+      id: "cape-good-hope",
+      title: "Cape of Good Hope Point",
+      location: "Cape Peninsula National Park, Western Cape",
+      category: "Coastal Reserve",
+      video: "./videos/05_Cape_of_Good_Hope.mp4",
+      description: "The southwesternmost point of the African continent, where towering ocean cliffs plunge into roaring Atlantic surf. Rich in floral diversity with protected Cape Fynbos, free-roaming ostriches, mountain zebras, and baboons along coastal trails.",
+      highlights: [
+        "Southwesternmost point of the African continent",
+        "Cape Point Funicular to the historic 1859 lighthouse cliff lookout",
+        "Protected Cape Floral Kingdom with endemic proteas, fynbos & wildlife"
+      ],
+      proximity: "Cape Town Station Scenic Excursion"
+    },
+    {
+      id: "namaqualand-wildflowers",
+      title: "Namaqualand Wildflower Spring Bloom",
+      location: "Namaqualand, Northern Cape",
+      category: "Natural Wonder",
+      video: "./videos/06_Namaqualand_Wildflowers_Windmill.mp4",
+      description: "Every spring (August to September), the arid semi-desert plains of Namaqualand undergo a magical transformation. Following winter rains, millions of dormant wildflower seeds burst into a vivid tapestry of orange, purple, yellow, and white carpets stretching to the horizon.",
+      highlights: [
+        "World-famous desert bloom featuring over 3,500 plant species",
+        "Vivid carpets of orange Namaqualand daisies stretching to infinity",
+        "Historic Karoo windmills framing golden hour photography"
+      ],
+      proximity: "Karoo Northern Cape Rail Corridor"
+    },
+    {
+      id: "blyde-river-canyon",
+      title: "Blyde River Canyon & Three Rondavels",
+      location: "Blyde River Canyon Reserve, Mpumalanga",
+      category: "Natural Wonder",
+      video: "./videos/07_Blyde_River_Canyon_Three_Rondavels.mp4",
+      description: "The third largest canyon in the world and the largest green vegetation canyon on Earth. Famous for the 'Three Rondavels'—huge quartzite rock formations shaped like traditional conical African huts overlooking the winding Blyde River below.",
+      highlights: [
+        "The largest green vegetation canyon on Earth (26 km long, 800m deep)",
+        "The Three Rondavels quartzite mountain peaks resembling traditional huts",
+        "Bourke's Luck Potholes carved by swirling river whirlpools"
+      ],
+      proximity: "Pretoria Highveld Rail Route"
+    },
+    {
+      id: "cradle-of-humankind",
+      title: "Cradle of Humankind (Maropeng)",
+      location: "Gauteng / North West Border",
+      category: "Heritage Site",
+      video: "./videos/08_Cradle_of_Humankind_Maropeng.mp4",
+      description: "A UNESCO World Heritage Site spanning 47,000 hectares of limestone caves. The site has yielded over 40% of the world's human ancestor fossils, including 'Mrs. Ples' (Australopithecus africanus) and 'Little Foot', tracing over 3 million years of human evolution.",
+      highlights: [
+        "Site of 40%+ of global hominid ancestor fossil discoveries",
+        "Interactive underground boat ride through Earth's creation elements at Maropeng",
+        "Sterkfontein Caves guided underground paleontology tours"
+      ],
+      proximity: "Pretoria & Johannesburg Rail Hubs"
+    },
+    {
+      id: "sun-city-palace",
+      title: "Sun City & Palace of the Lost City",
+      location: "Pilanesberg Crater, North West Province",
+      category: "Heritage Site",
+      video: "./videos/09_Sun_City_Palace_of_Lost_City.mp4",
+      description: "Nestled within an ancient 1.2-billion-year-old extinct volcanic crater, Sun City and the Palace of the Lost City are iconic South African architectural achievements. Featuring hand-carved stone architecture, lush botanical gardens, and the Valley of Waves.",
+      highlights: [
+        "Architectural masterpiece in an extinct volcanic crater",
+        "Valley of Waves roaring inland surf lagoon and hydraulic wave pool",
+        "Bordering Pilanesberg National Park Big Five game reserve"
+      ],
+      proximity: "Pretoria Corridor Excursion Route"
+    },
+    {
+      id: "drakensberg-amphitheatre",
+      title: "Drakensberg Amphitheatre & Tugela Trail",
+      location: "Royal Natal National Park, KwaZulu-Natal",
+      category: "Natural Wonder",
+      video: "./videos/10_Drakensberg_Amphitheatre_Hiking_Trail.mp4",
+      description: "The Drakensberg Amphitheatre is widely regarded as one of the most impressive cliff faces on Earth—stretching 5 km long and rising 1,220 meters sheer. At its crest lies Tugela Falls, plunging 948 meters as the tallest waterfall in the world.",
+      highlights: [
+        "5 km long and 1,220m high sheer basalt rock wall",
+        "Tugela Falls—the highest waterfall on Earth (948m total drop)",
+        "Chain ladder mountain trails with views across Mont-aux-Sources"
+      ],
+      proximity: "Drakensberg Corridor Overlook"
+    },
+    {
+      id: "augrabies-falls",
+      title: "Augrabies Falls & Orange River Gorge",
+      location: "Augrabies Falls National Park, Northern Cape",
+      category: "Natural Wonder",
+      video: "./videos/11_Augrabies_Falls_Orange_River_Gorge.mp4",
+      description: "Named 'Ankoerebis' ('Place of Great Noise') by the original Khoi inhabitants, Augrabies Falls sees the mighty Orange River thunder down a 56-meter granite cataract into an 18-kilometer deep ravine carved through solid moonscape granite.",
+      highlights: [
+        "Mighty 56m main waterfall plunge into solid granite canyon",
+        "18 km deep granite gorge carved over millions of years",
+        "Moon Rock massive domed granite outcrop overlooking the Karoo desert"
+      ],
+      proximity: "Northern Cape Karoo Corridor"
+    },
+    {
+      id: "apartheid-museum",
+      title: "Apartheid Museum (Johannesburg)",
+      location: "Gold Reef City, Johannesburg, Gauteng",
+      category: "Heritage Site",
+      video: "./videos/12_Apartheid_Museum_Johannesburg.mp4",
+      description: "A world-renowned museum providing a powerful, multi-sensory journey through 20th-century South Africa. Visitors enter through separate entrances based on randomly assigned racial tickets, experiencing the rise, resistance, and victory over apartheid.",
+      highlights: [
+        "Immersive architectural exhibition chronicling South Africa's history",
+        "Nelson Mandela permanent tribute collection of speeches, film & artifacts",
+        "Pillar of the Constitution garden celebrating freedom and human rights"
+      ],
+      proximity: "Pretoria & Johannesburg Central Junction"
+    },
+    {
+      id: "elephants-river",
+      title: "Olifants (Elephants) River Delta",
+      location: "Greater Kruger & Lowveld Corridor, Limpopo",
+      category: "Wildlife Sanctuary",
+      video: "./videos/13_Elephants_River_Delta_Aerial.mp4",
+      description: "The Olifants River is one of the largest river systems in southern Africa, cutting through quartzite mountain gorges to nourish vast wildlife reserves. Aerial views reveal wild elephant herds bathing alongside hippos and crocodiles.",
+      highlights: [
+        "Major river corridor supporting giant herds of wild African elephants",
+        "Abundant pod of hippos and Nile crocodiles along sandy riverbanks",
+        "Unbroken wilderness ecosystem connecting Drakensberg streams to Kruger"
+      ],
+      proximity: "Highveld & Lowveld Corridor Route"
+    },
+    {
+      id: "cango-caves",
+      title: "Cango Caves (Oudtshoorn)",
+      location: "Klein Karoo, Oudtshoorn, Western Cape",
+      category: "Heritage Site",
+      video: "./videos/14_Cango_Caves.mp4",
+      description: "Situated in the Swartberg Mountains of the Klein Karoo, Cango Caves is South Africa's oldest tourist attraction. Its subterranean limestone chambers feature vast halls filled with towering stalagmites, stalactites, and ancient San cave art.",
+      highlights: [
+        "20-million-year-old underground limestone cavern network",
+        "Van Zyl's Hall featuring the 9-meter high 'Organ Pipe' dripstone structure",
+        "Heritage and Adventure crawl routes through narrow mountain tunnels"
+      ],
+      proximity: "Karoo to Garden Route Corridor Excursion"
+    },
+    {
+      id: "garden-route",
+      title: "Garden Route Scenic Coastal Drive",
+      location: "Mossel Bay to Tsitsikamma, Western Cape",
+      category: "Coastal Reserve",
+      video: "./videos/15_Garden_Route_Coastal_Road.mp4",
+      description: "A world-famous 300-kilometer stretch of coastal paradise snaking between ocean cliffs, ancient yellowwood Tsitsikamma forests, freshwater lagoons, and white sand beaches along South Africa's southern ocean edge.",
+      highlights: [
+        "300 km coastal corridor through Knysna, Wilderness & Plettenberg Bay",
+        "Bloukrans Bridge—highest commercial bungee jump in the world (216m)",
+        "Tsitsikamma National Park suspension bridges over Storms River Mouth"
+      ],
+      proximity: "Cape Coastal Rail Extension"
+    },
+    {
+      id: "constitution-hill",
+      title: "Constitution Hill & Constitutional Court",
+      location: "Braamfontein, Johannesburg, Gauteng",
+      category: "Heritage Site",
+      video: "./videos/16_Constitutional_Court_Constitution_Hill.mp4",
+      description: "A former 19th-century military fort and infamous prison complex where Nelson Mandela, Mahatma Gandhi, and Albertina Sisulu were held. Today, it houses South Africa's highest court, built using bricks from demolished prison walls.",
+      highlights: [
+        "South Africa's Supreme Constitutional Court housed in repurposed history",
+        "Old Fort, Number Four, and Women's Jail historical museum tours",
+        "Bricks from former prison walls recycled into the new court chamber"
+      ],
+      proximity: "Pretoria & Gauteng Rail Hub"
+    },
+    {
+      id: "va-waterfront",
+      title: "V&A Waterfront & Working Harbor",
+      location: "Table Bay Harbor, Cape Town, Western Cape",
+      category: "Coastal Reserve",
+      video: "./videos/17_VA_Waterfront_Cape_Town.mp4",
+      description: "Situated between Table Mountain and Table Bay, the Victoria & Alfred Waterfront is South Africa's premier harbor hub. It combines operating commercial tugboats and fishing dhows with fine dining, street buskers, and ocean catamaran cruises.",
+      highlights: [
+        "South Africa's oldest working harbor operating since 1860",
+        "Zeitz Museum of Contemporary Art Africa (MOCAA) housed in grain silos",
+        "Departure ferry point for Robben Island tours and Cape sunset cruises"
+      ],
+      proximity: "Cape Town Station Terminus (2 km distance)"
+    },
+    {
+      id: "table-mountain-sunset",
+      title: "Table Mountain & Lion's Head Sunset",
+      location: "Table Mountain National Park, Cape Town",
+      category: "Natural Wonder",
+      video: "./videos/18_Table_Mountain_Sunset_Lions_Head.mp4",
+      description: "One of the New 7 Wonders of Nature, Table Mountain rises 1,086 meters over Cape Town. The rotating Cableway carries passengers to the flat table summit for panoramic sunset views over Lion's Head, Camps Bay, and Atlantic horizons.",
+      highlights: [
+        "One of the official New 7 Wonders of Nature",
+        "Revolving Aerial Cableway with 360° views of the Cape Peninsula",
+        "Endemic Table Mountain fynbos vegetation with over 1,470 floral species"
+      ],
+      proximity: "Cape Town Station Main Terminus"
+    },
+    {
+      id: "mandela-house-soweto",
+      title: "Nelson Mandela House (Vilakazi Street)",
+      location: "Orlando West, Soweto, Gauteng",
+      category: "Heritage Site",
+      video: "./videos/19_Mandela_House_Soweto.mp4",
+      description: "Located at 8115 Vilakazi Street in Soweto, this simple red-brick matchbox house was home to Nelson Mandela from 1946 to 1962. It preserves original furniture, photographs, bullet holes, and historical artifacts from the struggle era.",
+      highlights: [
+        "Historic family home of Nelson Mandela during the anti-apartheid movement",
+        "Located on Vilakazi Street—the only street in the world home to two Nobel Peace Laureates",
+        "Preserved bullet holes and firebomb damage from apartheid police raids"
+      ],
+      proximity: "Gauteng Rail Junction Excursion"
+    },
+    {
+      id: "pilanesberg-game-reserve",
+      title: "Pilanesberg National Game Reserve",
+      location: "Bojanala District, North West Province",
+      category: "Wildlife Sanctuary",
+      video: "./videos/20_Pilanesberg_Game_Reserve_Entrance.mp4",
+      description: "Set inside a 1.2-billion-year-old extinct alkaline volcano crater, Pilanesberg is a 55,000-hectare malaria-free game reserve home to the Big Five (lion, leopard, elephant, rhino, buffalo), wild dogs, cheetahs, and over 360 bird species.",
+      highlights: [
+        "Malaria-free Big Five game reserve inside an extinct volcanic crater",
+        "Over 7,000 animals including rare brown hyenas and sable antelope",
+        "Mankwe Dam central hide for photographic birdwatching and safari"
+      ],
+      proximity: "Pretoria Departure Safari Extension"
+    },
+    {
+      id: "addo-elephant-park",
+      title: "Addo Elephant National Park Safari",
+      location: "Zuurberg Mountains, Eastern Cape",
+      category: "Wildlife Sanctuary",
+      video: "./videos/21_Addo_Elephant_Park_Safari.mp4",
+      description: "Founded in 1931 to save 11 remaining Eastern Cape elephants, Addo has grown into a world-famous sanctuary harboring over 600 wild African elephants along with cape buffalo, black rhinos, lions, and Great White Sharks in its marine reserve.",
+      highlights: [
+        "Home to over 600 free-roaming wild African elephants",
+        "Only park in the world harboring the 'Big Seven' (Big 5 + Southern Right Whale & Great White Shark)",
+        "Spekboom succulent thickets providing natural elephant habitat"
+      ],
+      proximity: "Eastern Cape Rail Corridor Extension"
+    }
+  ];
+
+  function setupAttractionsShowcase() {
+    const grid = document.getElementById('attraction-cards-grid');
+    if (!grid) return;
+
+    let currentAttractionIndex = 0;
+    let isSoundOn = false;
+
+    function renderAttractionMaster(item, index) {
+      currentAttractionIndex = index;
+      const videoEl = document.getElementById('attraction-main-video');
+      const sourceEl = document.getElementById('attraction-main-source');
+      const titleEl = document.getElementById('attraction-main-title');
+      const locEl = document.getElementById('attraction-main-location');
+      const catEl = document.getElementById('attraction-main-category');
+      const descEl = document.getElementById('attraction-main-desc');
+      const proxEl = document.getElementById('attraction-main-proximity');
+      const highlightsEl = document.getElementById('attraction-main-highlights');
+      const counterEl = document.getElementById('attraction-counter-badge');
+
+      if (titleEl) titleEl.textContent = item.title;
+      if (locEl) locEl.textContent = item.location;
+      if (catEl) catEl.textContent = item.category.toUpperCase();
+      if (descEl) descEl.textContent = item.description;
+      if (proxEl) proxEl.textContent = item.proximity;
+      if (counterEl) counterEl.textContent = `Attraction ${index + 1} of ${ATTRACTIONS_DATA.length}`;
+
+      if (highlightsEl && item.highlights) {
+        highlightsEl.innerHTML = item.highlights.map(h => `<li class="flex items-start gap-2"><span class="text-[#D99B26] font-bold">•</span> <span>${h}</span></li>`).join('');
+      }
+
+      if (videoEl && sourceEl) {
+        sourceEl.src = item.video;
+        videoEl.load();
+        videoEl.play().catch(e => console.log("Attraction video play error:", e));
+      }
+
+      grid.querySelectorAll('.attraction-item-card').forEach((card) => {
+        const cardGlobalIdx = parseInt(card.getAttribute('data-idx'), 10);
+        if (cardGlobalIdx === index) {
+          card.classList.add('ring-2', 'ring-[#D99B26]', 'bg-[#D99B26]/10');
+          card.classList.remove('bg-white');
+        } else {
+          card.classList.remove('ring-2', 'ring-[#D99B26]', 'bg-[#D99B26]/10');
+          card.classList.add('bg-white');
+        }
+      });
+    }
+
+    function renderGrid(filterCategory = 'all') {
+      const filtered = filterCategory === 'all' 
+        ? ATTRACTIONS_DATA 
+        : ATTRACTIONS_DATA.filter(item => item.category === filterCategory);
+
+      grid.innerHTML = filtered.map((item) => {
+        const globalIdx = ATTRACTIONS_DATA.findIndex(x => x.id === item.id);
+        return `
+          <div class="attraction-item-card cursor-pointer bg-white rounded-2xl border border-[#E7E2D8] overflow-hidden shadow-sm hover:shadow-xl hover:border-[#D99B26] transition-all duration-300 flex flex-col justify-between group p-3.5" data-idx="${globalIdx}">
+            <div>
+              <div class="relative rounded-xl overflow-hidden mb-3 aspect-video bg-black">
+                <video class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" muted loop playsinline preload="metadata">
+                  <source src="${item.video}" type="video/mp4">
+                </video>
+                <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
+                <div class="absolute top-2 left-2">
+                  <span class="px-2 py-0.5 rounded-full bg-black/70 text-white font-mono text-[9px] font-bold uppercase tracking-wider backdrop-blur-md border border-white/20">
+                    ${item.category}
+                  </span>
+                </div>
+                <div class="absolute bottom-2 right-2 w-7 h-7 rounded-full bg-[#D99B26] text-white flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                  <i data-lucide="play" class="w-3.5 h-3.5 fill-current ml-0.5"></i>
+                </div>
+              </div>
+              <h4 class="font-sans font-extrabold text-sm text-[#1C1917] group-hover:text-[#D99B26] transition-colors leading-snug mb-1">
+                ${item.title}
+              </h4>
+              <p class="text-[11px] font-mono text-[#78716C] mb-2 font-semibold line-clamp-1">
+                ${item.location}
+              </p>
+              <p class="text-xs text-[#57534E] font-sans font-medium line-clamp-2 leading-relaxed mb-3">
+                ${item.description}
+              </p>
+            </div>
+            <button type="button" class="w-full py-2 rounded-xl bg-[#F8F6F0] group-hover:bg-[#D99B26] text-[#1C1917] group-hover:text-white font-mono text-[11px] font-bold transition-colors flex items-center justify-center gap-1.5 border border-[#E7E2D8] group-hover:border-[#D99B26]">
+              <i data-lucide="video" class="w-3.5 h-3.5"></i>
+              <span>Play Video & Info</span>
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      if (window.lucide) lucide.createIcons();
+
+      grid.querySelectorAll('.attraction-item-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const idx = parseInt(card.getAttribute('data-idx'), 10);
+          if (!isNaN(idx) && ATTRACTIONS_DATA[idx]) {
+            renderAttractionMaster(ATTRACTIONS_DATA[idx], idx);
+            const container = document.getElementById('attraction-master-container');
+            if (container) container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        });
+      });
+    }
+
+    const filterGroup = document.getElementById('attraction-filter-group');
+    if (filterGroup) {
+      filterGroup.querySelectorAll('.attraction-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterGroup.querySelectorAll('.attraction-filter-btn').forEach(b => {
+            b.className = 'attraction-filter-btn px-4 py-2 rounded-full text-xs font-mono font-bold transition-all bg-white/80 border border-[#D6CFC7] text-[#44403C] hover:border-[#D99B26]';
+          });
+          btn.className = 'attraction-filter-btn px-4 py-2 rounded-full text-xs font-mono font-bold transition-all bg-[#D99B26] text-white shadow-sm';
+          const cat = btn.getAttribute('data-cat');
+          renderGrid(cat || 'all');
+        });
+      });
+    }
+
+    const soundBtn = document.getElementById('btn-toggle-attraction-sound');
+    const mainVideo = document.getElementById('attraction-main-video');
+    if (soundBtn && mainVideo) {
+      soundBtn.addEventListener('click', () => {
+        isSoundOn = !isSoundOn;
+        mainVideo.muted = !isSoundOn;
+        if (isSoundOn) {
+          mainVideo.play().catch(e => console.log(e));
+          soundBtn.innerHTML = `<i data-lucide="volume-2" class="w-4 h-4"></i> <span>Sound On</span>`;
+        } else {
+          soundBtn.innerHTML = `<i data-lucide="volume-x" class="w-4 h-4"></i> <span>Muted</span>`;
+        }
+        if (window.lucide) lucide.createIcons();
+      });
+    }
+
+    renderGrid('all');
+    renderAttractionMaster(ATTRACTIONS_DATA[0], 0);
+  }
 
 })();
 

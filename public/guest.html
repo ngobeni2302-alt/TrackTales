@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en" class="light scroll-smooth" data-theme="light" style="scrollbar-width: none;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TrackTales | Guest Passenger Portal & Corridor Attractions</title>
+  <link rel="icon" type="image/jpeg" href="./images/tracktales-logo.jpg">
+  <link rel="shortcut icon" type="image/jpeg" href="./images/tracktales-logo.jpg">
+  <meta name="description" content="TrackTales Guest Passenger Portal: Explore 21 iconic South African video attractions, natural wonders, and historic landmarks along the Pretoria to Cape Town rail corridor.">
+
+  <!-- Google Fonts & Tailwind CSS CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500..900;1,9..144,500..900&family=IBM+Plex+Mono:wght@500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              ink: '#0A0C10',
+              paper: '#F8F6F0',
+              gold: '#D99B26',
+              highveld: '#2E7D46',
+              ember: '#C85028'
+            }
+          },
+          fontFamily: {
+            heading: ['Fraunces', 'serif'],
+            serif: ['Fraunces', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+            mono: ['"IBM Plex Mono"', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-[#FAF8F5] text-[#1C1917] font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-[#D99B26]/30 selection:text-[#0A0C10]">
+
+  <!-- Header Navigation Bar -->
+  <header class="w-full fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-[#EBE5D9] shadow-sm">
+    <div class="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="/" class="flex items-center gap-3 group">
+        <img src="./images/tracktales-logo.jpg" alt="TrackTales Logo" class="w-10 h-10 rounded-full object-cover shadow-md border-2 border-[#D99B26] group-hover:scale-105 transition-transform">
+        <div class="flex flex-col text-left">
+          <span class="font-heading font-extrabold tracking-wider text-xl text-[#1C1917] leading-none">TRACK<span class="text-[#D99B26]">TALES</span></span>
+          <span class="text-[9px] font-mono text-[#78716C] font-bold tracking-widest uppercase mt-0.5">GUEST PASSENGER PORTAL</span>
+        </div>
+      </a>
+
+      <!-- Guest Status Badge & Auth Redirect Link -->
+      <div class="flex items-center gap-3">
+        <div class="hidden sm:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D99B26]/10 border border-[#D99B26]/30 text-[#D99B26] font-mono text-xs font-bold uppercase tracking-wider">
+          <span class="w-2 h-2 rounded-full bg-[#D99B26] animate-pulse"></span>
+          <span>Guest Mode</span>
+        </div>
+
+        <a href="/#inline-signin-section" class="px-4 py-2 rounded-full bg-[#D99B26] hover:bg-[#C98B1E] text-white font-mono text-xs font-bold uppercase tracking-wider transition-all shadow-md flex items-center gap-2">
+          <i data-lucide="log-in" class="w-4 h-4"></i>
+          <span>Sign In / Register</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN GUEST CONTENT -->
+  <main class="flex-1 pt-28 sm:pt-32 pb-24 px-4 sm:px-8 lg:px-12 max-w-[1440px] mx-auto w-full relative">
+    
+    <!-- Hero Banner Header -->
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#D99B26]/10 border border-[#D99B26]/30 text-[#B87C10] font-mono text-xs font-bold tracking-widest uppercase mb-4 shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-[#D99B26] animate-pulse"></span>
+        <span>SOUTH AFRICAN RAIL CORRIDOR GUEST SHOWCASE</span>
+      </div>
+      <h1 class="font-heading font-extrabold text-3xl sm:text-5xl lg:text-6xl text-[#0A0C10] tracking-tight mb-4">
+        Corridor Video <span class="text-[#D99B26] italic font-serif">Attractions</span>
+      </h1>
+      <p class="text-[#44403C] font-medium leading-relaxed font-sans text-base sm:text-lg max-w-2xl mx-auto">
+        Welcome Guest Passenger! Explore 21 iconic South African natural wonders, wildlife sanctuaries, and historic landmarks captured in high-definition video along the Pretoria to Cape Town rail corridor.
+      </p>
+    </div>
+
+    <!-- Featured Master Video Player & Information Card -->
+    <div id="attraction-master-container" class="bg-white/95 backdrop-blur-xl rounded-3xl border border-[#EBE5D9] shadow-2xl p-6 sm:p-10 mb-14 transition-all duration-500">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <!-- Video Player Column (7 cols) -->
+        <div class="lg:col-span-7 relative rounded-2xl overflow-hidden shadow-xl bg-black group min-h-[300px] sm:min-h-[400px]">
+          <video id="attraction-main-video" class="w-full h-full object-cover max-h-[480px]" autoplay loop muted playsinline>
+            <source id="attraction-main-source" src="./videos/01_Gods_Window_Panorama_Route.mp4" type="video/mp4">
+          </video>
+          
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none"></div>
+
+          <div class="absolute top-4 left-4 z-10">
+            <span id="attraction-main-category" class="px-3 py-1 rounded-full bg-[#D99B26] text-white font-mono text-[10px] font-bold uppercase tracking-wider shadow-md">
+              NATURAL WONDER
+            </span>
+          </div>
+
+          <div class="absolute bottom-4 right-4 z-10 flex items-center gap-2">
+            <button type="button" id="btn-toggle-attraction-sound" class="p-2.5 rounded-full bg-black/60 hover:bg-black text-white text-xs font-mono backdrop-blur-md transition-all flex items-center gap-2 cursor-pointer border border-white/20">
+              <i data-lucide="volume-x" class="w-4 h-4"></i>
+              <span>Muted</span>
+            </button>
+          </div>
+
+          <div class="absolute bottom-4 left-4 z-10 text-white text-xs font-mono font-semibold opacity-90">
+            <span id="attraction-main-proximity">Pretoria Departure Hub Excursion</span>
+          </div>
+        </div>
+
+        <!-- Details Column (5 cols) -->
+        <div class="lg:col-span-5 flex flex-col justify-between text-left space-y-5">
+          <div>
+            <span id="attraction-main-location" class="text-xs font-mono font-bold text-[#D99B26] uppercase tracking-wider block mb-1">
+              Blyde River Escarpment, Mpumalanga
+            </span>
+            <h2 id="attraction-main-title" class="font-heading font-extrabold text-2xl sm:text-3xl text-[#1C1917] tracking-tight mb-3">
+              God's Window & Panorama Route
+            </h2>
+            <p id="attraction-main-desc" class="text-sm text-[#44403C] leading-relaxed font-sans font-medium mb-4">
+              Perched high on the Drakensberg escarpment, God's Window offers a breathtaking 900-meter sheer drop looking over the lush indigenous rainforest and Blyde River Canyon. On clear days, the view extends into Mozambique.
+            </p>
+          </div>
+
+          <div class="bg-[#F8F6F0] p-4 sm:p-5 rounded-2xl border border-[#E7E2D8]">
+            <h3 class="text-xs font-mono font-bold text-[#1C1917] uppercase tracking-wider mb-2 flex items-center gap-2">
+              <i data-lucide="sparkles" class="w-4 h-4 text-[#D99B26]"></i>
+              Key Attraction Highlights
+            </h3>
+            <ul id="attraction-main-highlights" class="space-y-2 text-xs text-[#57534E] font-sans font-medium">
+              <li class="flex items-start gap-2"><span class="text-[#D99B26] font-bold">•</span> 900m sheer vertical drop overlooking pristine rainforest</li>
+              <li class="flex items-start gap-2"><span class="text-[#D99B26] font-bold">•</span> Gateway to Lisbon & Berlin Waterfalls</li>
+              <li class="flex items-start gap-2"><span class="text-[#D99B26] font-bold">•</span> Panoramas extending across the Lowveld to Mozambique</li>
+            </ul>
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-[#EBE5D9] text-xs font-mono font-bold text-[#78716C]">
+            <span>Guest Video Guide</span>
+            <span id="attraction-counter-badge" class="text-[#D99B26]">Attraction 1 of 21</span>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Filter Category Pills -->
+    <div class="flex flex-wrap items-center justify-center gap-2 mb-8" id="attraction-filter-group">
+      <button type="button" class="attraction-filter-btn px-4 py-2 rounded-full text-xs font-mono font-bold transition-all bg-[#D99B26] text-white shadow-sm" data-cat="all">All Attractions (21)</button>
+      <button type="button" class="attraction-filter-btn px-4 py-2 rounded-full text-xs font-mono font-bold transition-all bg-white/80 border border-[#D6CFC7] text-[#44403C] hover:border-[#D99B26]" data-cat="Natural Wonder">Natural Wonders</button>
+      <button type="button" class="attraction-filter-btn px-4 py-2 rounded-full text-xs font-mono font-bold transition-all bg-white/80 border border-[#D6CFC7] text-[#44403C] hover:border-[#D99B26]" data-cat="Heritage Site">Heritage & History</button>
+      <button type="button" class="attraction-filter-btn px-4 py-2 rounded-full text-xs font-mono font-bold transition-all bg-white/80 border border-[#D6CFC7] text-[#44403C] hover:border-[#D99B26]" data-cat="Wildlife Sanctuary">Wildlife & Safaris</button>
+      <button type="button" class="attraction-filter-btn px-4 py-2 rounded-full text-xs font-mono font-bold transition-all bg-white/80 border border-[#D6CFC7] text-[#44403C] hover:border-[#D99B26]" data-cat="Coastal Reserve">Coastal & Mountain</button>
+    </div>
+
+    <!-- All 21 Attraction Video Cards Grid -->
+    <div id="attraction-cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <!-- Dynamically populated -->
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-[#EBE5D9] py-8 text-center text-xs font-mono font-semibold text-[#78716C]">
+    <div class="max-w-[1440px] mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>TrackTales Guest Passenger Portal · Pretoria to Cape Town Rail Companion</div>
+      <a href="/" class="text-[#D99B26] hover:underline font-bold">Return to Main Route & Sign In</a>
+    </div>
+  </footer>
+
+  <!-- Guest Page Script -->
+  <script>
+    (function() {
+      const ATTRACTIONS_DATA = [
+        {
+          id: "gods-window",
+          title: "God's Window & Panorama Route",
+          location: "Blyde River Escarpment, Mpumalanga",
+          category: "Natural Wonder",
+          video: "./videos/01_Gods_Window_Panorama_Route.mp4",
+          description: "Perched high on the Drakensberg escarpment, God's Window offers a breathtaking 900-meter sheer drop looking over the lush indigenous rainforest and Blyde River Canyon. On clear days, the view extends into Mozambique.",
+          highlights: [
+            "900m sheer vertical drop overlooking pristine subtropical rainforest",
+            "Gateway to the famous Panorama Route and Lisbon & Berlin Waterfalls",
+            "Panoramic views extending across the Lowveld to the Mozambique border"
+          ],
+          proximity: "Pretoria Departure Hub Excursion"
+        },
+        {
+          id: "drakensberg-cliff",
+          title: "Drakensberg Cliff Viewpoint",
+          location: "uKhahlamba Drakensberg Park, KwaZulu-Natal",
+          category: "Natural Wonder",
+          video: "./videos/02_Drakensberg_Cliff_Viewpoint.mp4",
+          description: "The uKhahlamba-Drakensberg range is a UNESCO World Heritage site featuring dramatic basalt cliffs rising over 3,000 meters above sea level. The cliffs shelter ancient San rock art caves.",
+          highlights: [
+            "UNESCO World Heritage Site with peaks exceeding 3,000 meters",
+            "Over 35,000 individual San Bushman rock paintings in caves",
+            "Dramatic mountain basalt wall forming the high border with Lesotho"
+          ],
+          proximity: "Highveld Rail Junction Vantage Point"
+        },
+        {
+          id: "robben-island-table-mountain",
+          title: "Robben Island & Table Mountain",
+          location: "Table Bay, Cape Town, Western Cape",
+          category: "Heritage Site",
+          video: "./videos/03_Robben_Island_and_Table_Mountain.mp4",
+          description: "Floating in Table Bay, Robben Island is a solemn symbol of South Africa's journey to democracy. Former President Nelson Mandela was imprisoned here for 18 years.",
+          highlights: [
+            "Nelson Mandela's historic cell in Maximum Security Prison",
+            "Guided tours conducted by former political prisoners",
+            "Panoramic views of Table Mountain and Cape Town across Table Bay"
+          ],
+          proximity: "Cape Town Station Terminus Arrival"
+        },
+        {
+          id: "boulders-beach",
+          title: "Boulders Beach African Penguins",
+          location: "Simon's Town, Cape Peninsula, Western Cape",
+          category: "Wildlife Sanctuary",
+          video: "./videos/04_Boulders_Beach_Penguins.mp4",
+          description: "Sheltered by massive 540-million-year-old granite boulders, Boulders Beach is home to a thriving land-based colony of over 2,000 wild African Penguins.",
+          highlights: [
+            "Colony of over 2,000 wild endangered African Penguins",
+            "Sheltered calm turquoise coves framed by ancient granite boulders",
+            "Elevated wooden boardwalks for eco-friendly wildlife viewing"
+          ],
+          proximity: "Cape Town Southern Line Extension"
+        },
+        {
+          id: "cape-good-hope",
+          title: "Cape of Good Hope Point",
+          location: "Cape Peninsula National Park, Western Cape",
+          category: "Coastal Reserve",
+          video: "./videos/05_Cape_of_Good_Hope.mp4",
+          description: "The southwesternmost point of the African continent, where towering ocean cliffs plunge into roaring Atlantic surf.",
+          highlights: [
+            "Southwesternmost point of the African continent",
+            "Cape Point Funicular to the historic 1859 lighthouse lookout",
+            "Protected Cape Floral Kingdom with endemic proteas & wildlife"
+          ],
+          proximity: "Cape Town Station Scenic Excursion"
+        },
+        {
+          id: "namaqualand-wildflowers",
+          title: "Namaqualand Wildflower Spring Bloom",
+          location: "Namaqualand, Northern Cape",
+          category: "Natural Wonder",
+          video: "./videos/06_Namaqualand_Wildflowers_Windmill.mp4",
+          description: "Every spring, the semi-desert plains of Namaqualand undergo a magical transformation, bursting into an endless carpet of vibrant wildflowers.",
+          highlights: [
+            "World-famous desert bloom featuring over 3,500 plant species",
+            "Vivid carpets of orange Namaqualand daisies stretching to infinity",
+            "Historic Karoo windmills framing golden hour photography"
+          ],
+          proximity: "Karoo Northern Cape Rail Corridor"
+        },
+        {
+          id: "blyde-river-canyon",
+          title: "Blyde River Canyon & Three Rondavels",
+          location: "Blyde River Canyon Reserve, Mpumalanga",
+          category: "Natural Wonder",
+          video: "./videos/07_Blyde_River_Canyon_Three_Rondavels.mp4",
+          description: "The third largest canyon in the world and the largest green vegetation canyon on Earth. Famous for the 'Three Rondavels' rock peaks.",
+          highlights: [
+            "The largest green vegetation canyon on Earth (26 km long, 800m deep)",
+            "The Three Rondavels quartzite mountain peaks resembling traditional huts",
+            "Bourke's Luck Potholes carved by swirling river whirlpools"
+          ],
+          proximity: "Pretoria Highveld Rail Route"
+        },
+        {
+          id: "cradle-of-humankind",
+          title: "Cradle of Humankind (Maropeng)",
+          location: "Gauteng / North West Border",
+          category: "Heritage Site",
+          video: "./videos/08_Cradle_of_Humankind_Maropeng.mp4",
+          description: "A UNESCO World Heritage Site yielding over 40% of the world's human ancestor fossils, including 'Mrs. Ples' and 'Little Foot'.",
+          highlights: [
+            "Site of 40%+ of global hominid ancestor fossil discoveries",
+            "Interactive underground boat ride through Earth's elements at Maropeng",
+            "Sterkfontein Caves guided underground paleontology tours"
+          ],
+          proximity: "Pretoria & Johannesburg Rail Hubs"
+        },
+        {
+          id: "sun-city-palace",
+          title: "Sun City & Palace of the Lost City",
+          location: "Pilanesberg Crater, North West Province",
+          category: "Heritage Site",
+          video: "./videos/09_Sun_City_Palace_of_Lost_City.mp4",
+          description: "Nestled within an ancient 1.2-billion-year-old extinct volcanic crater, featuring hand-carved stone architecture and the Valley of Waves.",
+          highlights: [
+            "Architectural masterpiece in an extinct volcanic crater",
+            "Valley of Waves roaring inland surf lagoon and hydraulic wave pool",
+            "Bordering Pilanesberg National Park Big Five game reserve"
+          ],
+          proximity: "Pretoria Corridor Excursion Route"
+        },
+        {
+          id: "drakensberg-amphitheatre",
+          title: "Drakensberg Amphitheatre & Tugela Trail",
+          location: "Royal Natal National Park, KZN",
+          category: "Natural Wonder",
+          video: "./videos/10_Drakensberg_Amphitheatre_Hiking_Trail.mp4",
+          description: "The Drakensberg Amphitheatre stretches 5 km long and 1,220m sheer, featuring Tugela Falls—the highest waterfall in the world.",
+          highlights: [
+            "5 km long and 1,220m high sheer basalt rock wall",
+            "Tugela Falls—the highest waterfall on Earth (948m total drop)",
+            "Chain ladder mountain trails with views across Mont-aux-Sources"
+          ],
+          proximity: "Drakensberg Corridor Overlook"
+        },
+        {
+          id: "augrabies-falls",
+          title: "Augrabies Falls & Orange River Gorge",
+          location: "Augrabies Falls National Park, Northern Cape",
+          category: "Natural Wonder",
+          video: "./videos/11_Augrabies_Falls_Orange_River_Gorge.mp4",
+          description: "The Orange River thunders down a 56-meter granite cataract into an 18-kilometer deep ravine carved through solid moonscape granite.",
+          highlights: [
+            "Mighty 56m main waterfall plunge into solid granite canyon",
+            "18 km deep granite gorge carved over millions of years",
+            "Moon Rock massive domed granite outcrop overlooking the Karoo desert"
+          ],
+          proximity: "Northern Cape Karoo Corridor"
+        },
+        {
+          id: "apartheid-museum",
+          title: "Apartheid Museum (Johannesburg)",
+          location: "Gold Reef City, Johannesburg, Gauteng",
+          category: "Heritage Site",
+          video: "./videos/12_Apartheid_Museum_Johannesburg.mp4",
+          description: "A world-renowned museum providing a powerful multi-sensory journey through 20th-century South Africa.",
+          highlights: [
+            "Immersive architectural exhibition chronicling South Africa's history",
+            "Nelson Mandela permanent tribute collection",
+            "Pillar of the Constitution garden celebrating human rights"
+          ],
+          proximity: "Pretoria & Johannesburg Central Junction"
+        },
+        {
+          id: "elephants-river",
+          title: "Olifants (Elephants) River Delta",
+          location: "Greater Kruger Corridor, Limpopo",
+          category: "Wildlife Sanctuary",
+          video: "./videos/13_Elephants_River_Delta_Aerial.mp4",
+          description: "Pristine wilderness river corridor supporting giant herds of wild African elephants, hippos, and Nile crocodiles.",
+          highlights: [
+            "Major river corridor supporting wild elephant herds",
+            "Abundant pods of hippos and crocodiles along sandy riverbanks",
+            "Unbroken wilderness ecosystem connecting Drakensberg streams to Kruger"
+          ],
+          proximity: "Highveld & Lowveld Corridor Route"
+        },
+        {
+          id: "cango-caves",
+          title: "Cango Caves (Oudtshoorn)",
+          location: "Klein Karoo, Oudtshoorn, Western Cape",
+          category: "Heritage Site",
+          video: "./videos/14_Cango_Caves.mp4",
+          description: "20-million-year-old subterranean limestone chambers filled with towering stalagmites, stalactites, and ancient cave art.",
+          highlights: [
+            "20-million-year-old underground limestone cavern network",
+            "Van Zyl's Hall featuring 9m 'Organ Pipe' dripstone structure",
+            "Heritage and Adventure crawl routes through mountain tunnels"
+          ],
+          proximity: "Karoo to Garden Route Corridor Excursion"
+        },
+        {
+          id: "garden-route",
+          title: "Garden Route Scenic Coastal Drive",
+          location: "Mossel Bay to Tsitsikamma, Western Cape",
+          category: "Coastal Reserve",
+          video: "./videos/15_Garden_Route_Coastal_Road.mp4",
+          description: "World-famous 300 km coastal drive snaking between ocean cliffs, yellowwood forests, freshwater lagoons, and white sand beaches.",
+          highlights: [
+            "300 km coastal corridor through Knysna & Tsitsikamma",
+            "Bloukrans Bridge—highest commercial bungee jump in world (216m)",
+            "Tsitsikamma National Park suspension bridges over Storms River"
+          ],
+          proximity: "Cape Coastal Rail Extension"
+        },
+        {
+          id: "constitution-hill",
+          title: "Constitution Hill & Constitutional Court",
+          location: "Braamfontein, Johannesburg, Gauteng",
+          category: "Heritage Site",
+          video: "./videos/16_Constitutional_Court_Constitution_Hill.mp4",
+          description: "Former 19th-century fort and prison complex where Mandela and Gandhi were held, now housing South Africa's Constitutional Court.",
+          highlights: [
+            "South Africa's Supreme Constitutional Court",
+            "Old Fort & Women's Jail historical museum tours",
+            "Recycled prison brick architecture in court chamber"
+          ],
+          proximity: "Pretoria & Gauteng Rail Hub"
+        },
+        {
+          id: "va-waterfront",
+          title: "V&A Waterfront & Working Harbor",
+          location: "Table Bay Harbor, Cape Town, Western Cape",
+          category: "Coastal Reserve",
+          video: "./videos/17_VA_Waterfront_Cape_Town.mp4",
+          description: "Historic seaport hub combining operating tugboats and fishing dhows with fine dining, craft markets, and sunset cruises.",
+          highlights: [
+            "South Africa's oldest working harbor operating since 1860",
+            "Zeitz Museum of Contemporary Art Africa (MOCAA)",
+            "Departure ferry point for Robben Island tours"
+          ],
+          proximity: "Cape Town Station Terminus (2 km distance)"
+        },
+        {
+          id: "table-mountain-sunset",
+          title: "Table Mountain & Lion's Head Sunset",
+          location: "Table Mountain National Park, Cape Town",
+          category: "Natural Wonder",
+          video: "./videos/18_Table_Mountain_Sunset_Lions_Head.mp4",
+          description: "One of the New 7 Wonders of Nature, Table Mountain rises 1,086 meters over Cape Town with revolving Cableway views.",
+          highlights: [
+            "Official New 7 Wonders of Nature",
+            "Revolving Aerial Cableway with 360° Cape Peninsula views",
+            "Endemic Table Mountain fynbos vegetation with 1,470+ species"
+          ],
+          proximity: "Cape Town Station Main Terminus"
+        },
+        {
+          id: "mandela-house-soweto",
+          title: "Nelson Mandela House (Vilakazi Street)",
+          location: "Orlando West, Soweto, Gauteng",
+          category: "Heritage Site",
+          video: "./videos/19_Mandela_House_Soweto.mp4",
+          description: "Historic family home at 8115 Vilakazi Street in Soweto where Nelson Mandela lived from 1946 to 1962.",
+          highlights: [
+            "Historic family home of Nelson Mandela during anti-apartheid movement",
+            "Located on Vilakazi Street—only street in world with 2 Nobel Laureates",
+            "Preserved struggle era artifacts and photographs"
+          ],
+          proximity: "Gauteng Rail Junction Excursion"
+        },
+        {
+          id: "pilanesberg-game-reserve",
+          title: "Pilanesberg National Game Reserve",
+          location: "Bojanala District, North West Province",
+          category: "Wildlife Sanctuary",
+          video: "./videos/20_Pilanesberg_Game_Reserve_Entrance.mp4",
+          description: "Malaria-free 55,000-hectare Big Five game reserve set inside a 1.2-billion-year-old extinct alkaline volcano crater.",
+          highlights: [
+            "Malaria-free Big Five game reserve inside extinct volcanic crater",
+            "Over 7,000 animals including rare brown hyenas",
+            "Mankwe Dam central hide for photographic safari"
+          ],
+          proximity: "Pretoria Departure Safari Extension"
+        },
+        {
+          id: "addo-elephant-park",
+          title: "Addo Elephant National Park Safari",
+          location: "Zuurberg Mountains, Eastern Cape",
+          category: "Wildlife Sanctuary",
+          video: "./videos/21_Addo_Elephant_Park_Safari.mp4",
+          description: "World-famous sanctuary harboring over 600 wild African elephants along with cape buffalo, rhinos, lions, and marine life.",
+          highlights: [
+            "Home to over 600 free-roaming wild African elephants",
+            "Only park in world harboring the 'Big Seven' (Big 5 + Whale & White Shark)",
+            "Spekboom succulent thickets providing natural habitat"
+          ],
+          proximity: "Eastern Cape Rail Corridor Extension"
+        }
+      ];
+
+      const grid = document.getElementById('attraction-cards-grid');
+      let isSoundOn = false;
+
+      function renderMaster(item, index) {
+        document.getElementById('attraction-main-title').textContent = item.title;
+        document.getElementById('attraction-main-location').textContent = item.location;
+        document.getElementById('attraction-main-category').textContent = item.category.toUpperCase();
+        document.getElementById('attraction-main-desc').textContent = item.description;
+        document.getElementById('attraction-main-proximity').textContent = item.proximity;
+        document.getElementById('attraction-counter-badge').textContent = `Attraction ${index + 1} of ${ATTRACTIONS_DATA.length}`;
+        
+        const highlightsEl = document.getElementById('attraction-main-highlights');
+        if (highlightsEl && item.highlights) {
+          highlightsEl.innerHTML = item.highlights.map(h => `<li class="flex items-start gap-2"><span class="text-[#D99B26] font-bold">•</span> <span>${h}</span></li>`).join('');
+        }
+
+        const videoEl = document.getElementById('attraction-main-video');
+        const sourceEl = document.getElementById('attraction-main-source');
+        if (videoEl && sourceEl) {
+          sourceEl.src = item.video;
+          videoEl.load();
+          videoEl.play().catch(e => console.log(e));
+        }
+
+        grid.querySelectorAll('.attraction-item-card').forEach((card) => {
+          const cardIdx = parseInt(card.getAttribute('data-idx'), 10);
+          if (cardIdx === index) {
+            card.classList.add('ring-2', 'ring-[#D99B26]', 'bg-[#D99B26]/10');
+            card.classList.remove('bg-white');
+          } else {
+            card.classList.remove('ring-2', 'ring-[#D99B26]', 'bg-[#D99B26]/10');
+            card.classList.add('bg-white');
+          }
+        });
+      }
+
+      function renderGrid(cat = 'all') {
+        const filtered = cat === 'all' ? ATTRACTIONS_DATA : ATTRACTIONS_DATA.filter(x => x.category === cat);
+        grid.innerHTML = filtered.map(item => {
+          const globalIdx = ATTRACTIONS_DATA.findIndex(x => x.id === item.id);
+          return `
+            <div class="attraction-item-card cursor-pointer bg-white rounded-2xl border border-[#E7E2D8] overflow-hidden shadow-sm hover:shadow-xl hover:border-[#D99B26] transition-all duration-300 flex flex-col justify-between group p-3.5" data-idx="${globalIdx}">
+              <div>
+                <div class="relative rounded-xl overflow-hidden mb-3 aspect-video bg-black">
+                  <video class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" muted loop playsinline preload="metadata">
+                    <source src="${item.video}" type="video/mp4">
+                  </video>
+                  <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
+                  <div class="absolute top-2 left-2">
+                    <span class="px-2 py-0.5 rounded-full bg-black/70 text-white font-mono text-[9px] font-bold uppercase tracking-wider backdrop-blur-md border border-white/20">
+                      ${item.category}
+                    </span>
+                  </div>
+                  <div class="absolute bottom-2 right-2 w-7 h-7 rounded-full bg-[#D99B26] text-white flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                    <i data-lucide="play" class="w-3.5 h-3.5 fill-current ml-0.5"></i>
+                  </div>
+                </div>
+                <h4 class="font-sans font-extrabold text-sm text-[#1C1917] group-hover:text-[#D99B26] transition-colors leading-snug mb-1">
+                  ${item.title}
+                </h4>
+                <p class="text-[11px] font-mono text-[#78716C] mb-2 font-semibold line-clamp-1">
+                  ${item.location}
+                </p>
+                <p class="text-xs text-[#57534E] font-sans font-medium line-clamp-2 leading-relaxed mb-3">
+                  ${item.description}
+                </p>
+              </div>
+              <button type="button" class="w-full py-2 rounded-xl bg-[#F8F6F0] group-hover:bg-[#D99B26] text-[#1C1917] group-hover:text-white font-mono text-[11px] font-bold transition-colors flex items-center justify-center gap-1.5 border border-[#E7E2D8] group-hover:border-[#D99B26]">
+                <i data-lucide="video" class="w-3.5 h-3.5"></i>
+                <span>Play Video & Info</span>
+              </button>
+            </div>
+          `;
+        }).join('');
+
+        if (window.lucide) lucide.createIcons();
+
+        grid.querySelectorAll('.attraction-item-card').forEach(card => {
+          card.addEventListener('click', () => {
+            const idx = parseInt(card.getAttribute('data-idx'), 10);
+            if (!isNaN(idx) && ATTRACTIONS_DATA[idx]) {
+              renderMaster(ATTRACTIONS_DATA[idx], idx);
+              document.getElementById('attraction-master-container').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          });
+        });
+      }
+
+      const filterGroup = document.getElementById('attraction-filter-group');
+      if (filterGroup) {
+        filterGroup.querySelectorAll('.attraction-filter-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            filterGroup.querySelectorAll('.attraction-filter-btn').forEach(b => {
+              b.className = 'attraction-filter-btn px-4 py-2 rounded-full text-xs font-mono font-bold transition-all bg-white/80 border border-[#D6CFC7] text-[#44403C] hover:border-[#D99B26]';
+            });
+            btn.className = 'attraction-filter-btn px-4 py-2 rounded-full text-xs font-mono font-bold transition-all bg-[#D99B26] text-white shadow-sm';
+            renderGrid(btn.getAttribute('data-cat') || 'all');
+          });
+        });
+      }
+
+      const soundBtn = document.getElementById('btn-toggle-attraction-sound');
+      const mainVideo = document.getElementById('attraction-main-video');
+      if (soundBtn && mainVideo) {
+        soundBtn.addEventListener('click', () => {
+          isSoundOn = !isSoundOn;
+          mainVideo.muted = !isSoundOn;
+          soundBtn.innerHTML = isSoundOn 
+            ? `<i data-lucide="volume-2" class="w-4 h-4"></i> <span>Sound On</span>` 
+            : `<i data-lucide="volume-x" class="w-4 h-4"></i> <span>Muted</span>`;
+          if (window.lucide) lucide.createIcons();
+        });
+      }
+
+      renderGrid('all');
+      renderMaster(ATTRACTIONS_DATA[0], 0);
+      if (window.lucide) lucide.createIcons();
+    })();
+  </script>
+</body>
+</html>

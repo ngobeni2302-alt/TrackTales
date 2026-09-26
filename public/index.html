@@ -18,10 +18,24 @@
           if (lang === 'ar') document.documentElement.setAttribute('dir', 'rtl');
         }
 
-        // Keep user on their current page on refresh and bypass splash login if already entered
+        // Global fail-safe Guest Mode entry function (Redirects to Guest Portal Page)
+        window.TrackTalesEnterGuestMode = function(e) {
+          if (e) {
+            if (e.preventDefault) e.preventDefault();
+            if (e.stopPropagation) e.stopPropagation();
+          }
+          try {
+            sessionStorage.setItem('tracktales_splash_dismissed', 'true');
+            localStorage.setItem('tracktales_splash_dismissed', 'true');
+            localStorage.setItem('tracktales_is_guest', 'true');
+          } catch(err) {}
+
+          window.location.href = './guest.html';
+        };
+
+        // Show Welcome & Sign In page on app launch unless actively authenticated or navigating in session
         var hasHash = window.location.hash && window.location.hash.length > 1 && window.location.hash !== '#';
         var wasDismissed = sessionStorage.getItem('tracktales_splash_dismissed') === 'true' ||
-                           localStorage.getItem('tracktales_splash_dismissed') === 'true' ||
                            Boolean(localStorage.getItem('tracktales_jwt_token')) ||
                            Boolean(localStorage.getItem('tracktales_logged_user')) ||
                            hasHash;
@@ -269,10 +283,25 @@
         <div id="splash-auth-alert" class="hidden mb-4 p-3 rounded-xl text-xs font-sans border text-center transition-all"></div>
 
         <!-- SIGN IN FORM SECTION -->
-        <div id="splash-signin-content" class="space-y-5 my-auto">
+        <div id="splash-signin-content" class="space-y-4 my-auto">
+          <div class="bg-[#D99B26]/10 border border-[#D99B26]/25 rounded-2xl p-4 shadow-sm">
+            <div class="flex items-center justify-between gap-2 mb-1.5">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#D99B26] animate-pulse"></span>
+                <h2 class="font-heading font-extrabold text-2xl sm:text-3xl text-[#1C1917] tracking-tight">Welcome to TrackTales</h2>
+              </div>
+              <button type="button" formnovalidate data-action="enter-guest" onclick="window.TrackTalesEnterGuestMode && window.TrackTalesEnterGuestMode(event)" class="btn-enter-guest px-3 py-1.5 rounded-full bg-[#D99B26] hover:bg-[#C98B1E] text-white font-mono text-[11px] font-bold uppercase tracking-wider transition-all shadow-md shrink-0 cursor-pointer">
+                Guest Mode →
+              </button>
+            </div>
+            <p class="text-xs text-[#44403C] leading-relaxed font-sans font-medium">
+              Your digital rail companion for South Africa's iconic 1,600 km corridor between Pretoria and Cape Town. Experience historical stories, interactive route maps, audio soundscapes, and flagship train passes.
+            </p>
+          </div>
+
           <div>
-            <h2 class="font-sans font-extrabold text-3xl sm:text-4xl text-[#1C1917] tracking-tight mb-1">Welcome</h2>
-            <p class="text-xs text-[#78716C] font-sans">Sign in to access your South Africa rail companion pass.</p>
+            <h3 class="font-sans font-bold text-sm text-[#1C1917] tracking-tight">Sign In to Start Your Journey</h3>
+            <p class="text-[11px] text-[#78716C] font-sans">Sign in to access your saved companion pass, or tap Guest Mode above.</p>
           </div>
 
           <form id="splash-signin-form" class="space-y-4 font-sans text-sm">
@@ -333,6 +362,12 @@
 
             <button type="submit" id="splash-signin-submit-btn" class="w-full py-3.5 rounded-xl bg-[#D99B26] text-white font-bold uppercase tracking-wider hover:bg-[#C98B1E] transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#D99B26]/20 mt-2">
               <span id="splash-signin-btn-label">SIGN IN</span>
+            </button>
+
+            <!-- Continue as Guest Option -->
+            <button type="button" id="splash-guest-btn" formnovalidate data-action="enter-guest" onclick="window.TrackTalesEnterGuestMode && window.TrackTalesEnterGuestMode(event)" class="btn-enter-guest w-full py-3 rounded-xl border border-[#D6CFC7] bg-white/80 hover:bg-white text-[#1C1917] font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-sm hover:border-[#D99B26] hover:text-[#D99B26] cursor-pointer">
+              <i data-lucide="compass" class="w-4 h-4 text-[#D99B26]"></i>
+              <span>Continue as Guest</span>
             </button>
 
             <div class="flex items-center gap-2 text-xs text-[#44403C] font-medium">
@@ -693,6 +728,7 @@
           <nav class="nav-hub-icon-rail" aria-label="Quick navigation">
             <a href="#home" class="nav-hub-rail-link nav-page-link active" data-page="home" title="The Route" aria-label="The Route"><i data-lucide="compass" class="w-4 h-4"></i></a>
             <a href="#stops" class="nav-hub-rail-link nav-page-link" data-page="stops" title="Corridor Stops" aria-label="Corridor Stops"><i data-lucide="map-pin" class="w-4 h-4"></i></a>
+            <a href="#attractions" class="nav-hub-rail-link nav-page-link" data-page="attractions" title="Corridor Video Attractions" aria-label="Corridor Video Attractions"><i data-lucide="video" class="w-4 h-4"></i></a>
             <a href="#about" class="nav-hub-rail-link nav-page-link" data-page="about" title="Stories and Vault" aria-label="Stories and Vault"><i data-lucide="book-open" class="w-4 h-4"></i></a>
             <a href="#games" class="nav-hub-rail-link nav-page-link" data-page="games" title="Corridor Games" aria-label="Corridor Games"><i data-lucide="gamepad-2" class="w-4 h-4"></i></a>
             <a href="#voice" class="nav-hub-rail-link nav-page-link" data-page="voice" title="Voice Journal" aria-label="Voice Journal"><i data-lucide="mic" class="w-4 h-4"></i></a>
@@ -871,9 +907,107 @@
 
           </div>
 
-          <!-- CENTER-RIGHT CENTERPIECE (Locomotive Video Zone - Clear & Unmasked) -->
-          <div class="hidden lg:flex lg:col-span-5 xl:col-span-6 justify-center items-center relative min-h-[380px] pointer-events-none">
-            <!-- Reserved unmasked visual focal space for locomotive zoom choreography -->
+          <!-- RIGHT COLUMN: INLINE PASSENGER PORTAL & SIGN-IN CARD (BUILT INTO THE PAGE) -->
+          <div id="inline-signin-section" class="lg:col-span-5 xl:col-span-6 flex justify-center items-center w-full my-4 lg:my-0">
+            <div class="w-full max-w-md bg-white/95 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border border-[#EBE5D9] shadow-2xl relative overflow-hidden transition-all duration-300">
+              
+              <!-- Decorative top gradient bar -->
+              <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#D99B26] via-[#C85028] to-[#2A9D8F]"></div>
+
+              <!-- Card Header -->
+              <div class="mb-5 text-left">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D99B26]/10 border border-[#D99B26]/30 text-[#B87C10] font-mono text-[10px] font-bold uppercase tracking-wider mb-2">
+                  <span class="w-2 h-2 rounded-full bg-[#D99B26] animate-pulse"></span>
+                  <span>PASSENGER PORTAL</span>
+                </div>
+                <h3 class="font-heading font-extrabold text-2xl text-[#1C1917] tracking-tight">Sign In to TrackTales</h3>
+                <p class="text-xs text-[#78716C] font-sans mt-1">Access your luxury South Africa rail companion pass & saved tickets.</p>
+              </div>
+
+              <!-- Sign In Form (Built into the page) -->
+              <form id="inline-signin-form" class="space-y-4 font-sans text-sm">
+                <div class="relative">
+                  <input type="email" id="inline-signin-email" class="w-full bg-white/80 border border-[#D6CFC7] rounded-xl text-[#1C1917] placeholder-[#A8A29E] py-2.5 px-3.5 text-sm focus:outline-none focus:border-[#D99B26] focus:ring-1 focus:ring-[#D99B26] transition-all" placeholder="Passenger Email *" required>
+                </div>
+                
+                <div class="relative">
+                  <input type="password" id="inline-signin-password" class="w-full bg-white/80 border border-[#D6CFC7] rounded-xl text-[#1C1917] placeholder-[#A8A29E] py-2.5 pl-3.5 pr-10 text-sm focus:outline-none focus:border-[#D99B26] focus:ring-1 focus:ring-[#D99B26] transition-all" placeholder="Password *" required>
+                  <button type="button" class="btn-toggle-password absolute right-2.5 top-1/2 -translate-y-1/2 text-[#A8A29E] hover:text-[#1C1917] p-1" title="Toggle password visibility">
+                    <i data-lucide="eye" class="w-4 h-4 eye-icon"></i>
+                  </button>
+                </div>
+
+                <!-- Saved Registered Passenger Pass Banner -->
+                <div id="inline-signin-saved-pass-banner" class="hidden p-3 rounded-2xl bg-[#D99B26]/10 border border-[#D99B26]/30 flex items-center justify-between text-xs transition-all">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-[#D99B26] animate-pulse"></span>
+                    <span class="text-[#78716C] font-semibold">Your Registered Journey:</span>
+                  </div>
+                  <span id="inline-signin-saved-pass-name" class="font-bold text-[#D99B26] font-sans">The Blue Train</span>
+                </div>
+
+                <!-- Train Choice Selector -->
+                <div id="inline-signin-train-selector-container" class="space-y-1.5 pt-1">
+                  <div class="flex items-center justify-between">
+                    <label class="block text-[10px] font-mono font-bold uppercase tracking-wider text-[#78716C]">Select Train Journey *</label>
+                    <span id="inline-signin-train-label" class="text-[10px] font-mono font-bold text-[#D99B26]">The Blue Train</span>
+                  </div>
+                  <div class="grid grid-cols-2 gap-2" role="radiogroup" aria-label="Select Train">
+                    <!-- Button: The Blue Train -->
+                    <button type="button" data-train-choice="blue-train" class="splash-train-choice-btn p-2.5 rounded-xl border-2 text-left transition-all duration-200 flex flex-col justify-between relative group active bg-[#D99B26]/15 border-[#D99B26] shadow-sm">
+                      <div class="flex items-center justify-between w-full mb-1">
+                        <span class="text-xs font-extrabold text-[#1C1917] font-sans">The Blue Train</span>
+                        <span class="train-choice-radio w-3.5 h-3.5 rounded-full border-2 border-[#D99B26] bg-[#D99B26] flex items-center justify-center">
+                          <i data-lucide="check" class="w-2.5 h-2.5 text-white stroke-[3]"></i>
+                        </span>
+                      </div>
+                      <span class="text-[9px] font-mono font-bold text-[#D99B26] tracking-tight uppercase">Ultra Luxury • 31h</span>
+                    </button>
+
+                    <!-- Button: Rovos Rail -->
+                    <button type="button" data-train-choice="rovos-rail" class="splash-train-choice-btn p-2.5 rounded-xl border-2 text-left transition-all duration-200 flex flex-col justify-between relative group border-[#E7E2D8] bg-white/70 hover:border-[#2A9D8F]/60">
+                      <div class="flex items-center justify-between w-full mb-1">
+                        <span class="text-xs font-extrabold text-[#1C1917] font-sans">Rovos Rail</span>
+                        <span class="train-choice-radio w-3.5 h-3.5 rounded-full border-2 border-[#D6CFC7] bg-transparent flex items-center justify-center">
+                          <i data-lucide="check" class="w-2.5 h-2.5 text-white stroke-[3] hidden"></i>
+                        </span>
+                      </div>
+                      <span class="text-[9px] font-mono font-bold text-[#2A9D8F] tracking-tight uppercase">Edwardian Safari • 3d</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="inline-signin-submit-btn" class="w-full py-3.5 rounded-xl bg-[#D99B26] text-white font-bold uppercase tracking-wider hover:bg-[#C98B1E] transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#D99B26]/20 mt-2 cursor-pointer">
+                  <span id="inline-signin-btn-label">SIGN IN</span>
+                </button>
+
+                <!-- Continue as Guest Option -->
+                <button type="button" id="inline-guest-btn" formnovalidate data-action="enter-guest" onclick="window.TrackTalesEnterGuestMode && window.TrackTalesEnterGuestMode(event)" class="btn-enter-guest w-full py-3 rounded-xl border border-[#D6CFC7] bg-white/80 hover:bg-white text-[#1C1917] font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-sm hover:border-[#D99B26] hover:text-[#D99B26] cursor-pointer">
+                  <i data-lucide="compass" class="w-4 h-4 text-[#D99B26]"></i>
+                  <span>Continue as Guest</span>
+                </button>
+              </form>
+
+              <!-- Authenticated User Logged Card -->
+              <div id="inline-user-logged-state" class="hidden text-center space-y-4 py-2">
+                <div class="w-12 h-12 mx-auto rounded-full bg-[#D99B26]/20 border border-[#D99B26]/40 flex items-center justify-center text-[#D99B26]">
+                  <i data-lucide="user-check" class="w-6 h-6"></i>
+                </div>
+                <div>
+                  <h4 id="inline-logged-user-name" class="font-heading font-extrabold text-lg text-[#1C1917]">Welcome Back, Passenger!</h4>
+                  <p id="inline-logged-user-email" class="text-xs text-[#78716C]">active@tracktales.co.za</p>
+                </div>
+                <div class="p-3 rounded-2xl bg-[#D99B26]/10 border border-[#D99B26]/30 text-xs font-mono font-bold text-[#D99B26]">
+                  Active Journey Pass: <span id="inline-logged-user-train">The Blue Train</span>
+                </div>
+                <button type="button" id="inline-signout-btn" class="w-full py-2.5 rounded-xl border border-[#D6CFC7] text-[#44403C] text-xs font-bold hover:bg-black/5 transition-all flex items-center justify-center gap-2 cursor-pointer">
+                  <i data-lucide="log-out" class="w-3.5 h-3.5 text-red-500"></i>
+                  <span>Sign Out / Switch Account</span>
+                </button>
+              </div>
+
+            </div>
           </div>
 
         </div>
@@ -948,6 +1082,117 @@
         <div id="corridor-stops-grid" class="corridor-stops-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           <!-- Dynamically populated via app.js -->
         </div>
+      </div>
+    </section>
+
+    <!-- PAGE: SOUTH AFRICAN LANDMARKS & CORRIDOR ATTRACTIONS (GUEST SHOWCASE) -->
+    <section id="page-attractions" class="page-view pt-28 sm:pt-32 pb-24 px-4 sm:px-8 lg:px-12 max-w-[1440px] mx-auto w-full min-h-screen relative overflow-hidden">
+      <!-- Atmospheric Background Layer -->
+      <div class="absolute inset-0 pointer-events-none z-0">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-radial from-[#d99b26]/12 via-transparent to-transparent blur-3xl"></div>
+      </div>
+
+      <div class="max-w-[1440px] mx-auto relative z-10">
+        
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-12">
+          <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#D99B26]/10 border border-[#D99B26]/30 text-[#B87C10] font-mono text-xs font-bold tracking-widest uppercase mb-4 shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-[#D99B26] animate-pulse"></span>
+            <span>SOUTH AFRICAN RAIL CORRIDOR ATTRACTIONS</span>
+          </div>
+          <h2 class="font-heading font-extrabold text-3xl sm:text-5xl lg:text-6xl text-[#0A0C10] tracking-tight mb-4">
+            Corridor <span class="text-[#D99B26] italic font-serif">Attractions</span>
+          </h2>
+          <p class="text-[#111827] font-medium leading-relaxed font-sans text-base sm:text-lg max-w-2xl mx-auto">
+            Discover 21 iconic South African natural wonders, wildlife sanctuaries, and historic landmarks captured in high-definition video along the Pretoria to Cape Town rail corridor.
+          </p>
+        </div>
+
+        <!-- Featured Active Attraction Master Player & Details Card -->
+        <div id="attraction-master-container" class="bg-white/90 backdrop-blur-xl rounded-3xl border border-[#EBE5D9] shadow-2xl p-6 sm:p-10 mb-14 transition-all duration-500">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            <!-- Video Player Column (7 cols) -->
+            <div class="lg:col-span-7 relative rounded-2xl overflow-hidden shadow-xl bg-black group min-h-[300px] sm:min-h-[400px]">
+              <video id="attraction-main-video" class="w-full h-full object-cover max-h-[480px]" autoplay loop muted playsinline>
+                <source id="attraction-main-source" src="./videos/01_Gods_Window_Panorama_Route.mp4" type="video/mp4">
+              </video>
+              
+              <!-- Video Overlay Gradient -->
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none"></div>
+
+              <!-- Top Left Tag -->
+              <div class="absolute top-4 left-4 z-10">
+                <span id="attraction-main-category" class="px-3 py-1 rounded-full bg-[#D99B26] text-white font-mono text-[10px] font-bold uppercase tracking-wider shadow-md">
+                  NATURAL WONDER
+                </span>
+              </div>
+
+              <!-- Sound Toggle Controls -->
+              <div class="absolute bottom-4 right-4 z-10 flex items-center gap-2">
+                <button type="button" id="btn-toggle-attraction-sound" class="p-2.5 rounded-full bg-black/60 hover:bg-black text-white text-xs font-mono backdrop-blur-md transition-all flex items-center gap-2 cursor-pointer border border-white/20">
+                  <i data-lucide="volume-x" class="w-4 h-4"></i>
+                  <span>Muted</span>
+                </button>
+              </div>
+
+              <div class="absolute bottom-4 left-4 z-10 text-white text-xs font-mono font-semibold opacity-90">
+                <span id="attraction-main-proximity">Pretoria Corridor Excursion</span>
+              </div>
+            </div>
+
+            <!-- Details Column (5 cols) -->
+            <div class="lg:col-span-5 flex flex-col justify-between text-left space-y-5">
+              <div>
+                <span id="attraction-main-location" class="text-xs font-mono font-bold text-[#D99B26] uppercase tracking-wider block mb-1">
+                  Blyde River Escarpment, Mpumalanga
+                </span>
+                <h3 id="attraction-main-title" class="font-heading font-extrabold text-2xl sm:text-3xl text-[#1C1917] tracking-tight mb-3">
+                  God's Window & Panorama Route
+                </h3>
+                <p id="attraction-main-desc" class="text-sm text-[#44403C] leading-relaxed font-sans font-medium mb-4">
+                  Perched high on the Drakensberg escarpment, God's Window offers a breathtaking 900-meter sheer drop looking over the lush indigenous rainforest and Blyde River Canyon. On clear days, the view extends into Mozambique.
+                </p>
+              </div>
+
+              <!-- Key Highlights Box -->
+              <div class="bg-[#F8F6F0] p-4 sm:p-5 rounded-2xl border border-[#E7E2D8]">
+                <h4 class="text-xs font-mono font-bold text-[#1C1917] uppercase tracking-wider mb-2 flex items-center gap-2">
+                  <i data-lucide="sparkles" class="w-4 h-4 text-[#D99B26]"></i>
+                  Key Attraction Highlights
+                </h4>
+                <ul id="attraction-main-highlights" class="space-y-2 text-xs text-[#57534E] font-sans font-medium">
+                  <li class="flex items-start gap-2"><span class="text-[#D99B26]">•</span> 900m sheer vertical drop overlooking pristine rainforest</li>
+                  <li class="flex items-start gap-2"><span class="text-[#D99B26]">•</span> Gateway to Lisbon & Berlin Waterfalls</li>
+                  <li class="flex items-start gap-2"><span class="text-[#D99B26]">•</span> Panoramas extending across the Lowveld to Mozambique</li>
+                </ul>
+              </div>
+
+              <!-- Counter Badge -->
+              <div class="flex items-center justify-between pt-2 border-t border-[#EBE5D9] text-xs font-mono font-bold text-[#78716C]">
+                <span>Corridor Video Guide</span>
+                <span id="attraction-counter-badge" class="text-[#D99B26]">Attraction 1 of 21</span>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Filter Category Pills -->
+        <div class="flex flex-wrap items-center justify-center gap-2 mb-8" id="attraction-filter-group">
+          <button type="button" class="attraction-filter-btn px-4 py-2 rounded-full text-xs font-mono font-bold transition-all bg-[#D99B26] text-white shadow-sm" data-cat="all">All Attractions (21)</button>
+          <button type="button" class="attraction-filter-btn px-4 py-2 rounded-full text-xs font-mono font-bold transition-all bg-white/80 border border-[#D6CFC7] text-[#44403C] hover:border-[#D99B26]" data-cat="Natural Wonder">Natural Wonders</button>
+          <button type="button" class="attraction-filter-btn px-4 py-2 rounded-full text-xs font-mono font-bold transition-all bg-white/80 border border-[#D6CFC7] text-[#44403C] hover:border-[#D99B26]" data-cat="Heritage Site">Heritage & History</button>
+          <button type="button" class="attraction-filter-btn px-4 py-2 rounded-full text-xs font-mono font-bold transition-all bg-white/80 border border-[#D6CFC7] text-[#44403C] hover:border-[#D99B26]" data-cat="Wildlife Sanctuary">Wildlife & Safaris</button>
+          <button type="button" class="attraction-filter-btn px-4 py-2 rounded-full text-xs font-mono font-bold transition-all bg-white/80 border border-[#D6CFC7] text-[#44403C] hover:border-[#D99B26]" data-cat="Coastal Reserve">Coastal & Mountain</button>
+        </div>
+
+        <!-- All 21 Attraction Video Cards Grid -->
+        <div id="attraction-cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <!-- Dynamically populated via app.js -->
+        </div>
+
       </div>
     </section>
 
@@ -2011,6 +2256,11 @@
 
           <button type="submit" class="w-full py-3.5 rounded-full bg-[#D99B26] text-white font-bold uppercase tracking-wider hover:bg-[#C98B1E] transition-all flex items-center justify-center gap-2 shadow-md mt-2">
             <i data-lucide="log-in" class="w-4 h-4"></i> <span id="login-btn-label">Sign In</span>
+          </button>
+          
+          <button type="button" id="modal-guest-btn" formnovalidate data-action="enter-guest" onclick="window.TrackTalesEnterGuestMode && window.TrackTalesEnterGuestMode(event)" class="btn-enter-guest w-full py-3 rounded-full border border-[#D6CFC7] bg-white/80 hover:bg-white text-[#1C1917] font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-sm hover:border-[#D99B26] hover:text-[#D99B26] mt-2 cursor-pointer">
+            <i data-lucide="compass" class="w-4 h-4 text-[#D99B26]"></i>
+            <span>Continue as Guest</span>
           </button>
         </form>
 
