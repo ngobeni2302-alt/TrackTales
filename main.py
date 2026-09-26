@@ -674,6 +674,7 @@ if os.path.exists(static_dir):
     js_dir = os.path.join(static_dir, "js")
     videos_dir = os.path.join(static_dir, "videos")
     images_dir = os.path.join(static_dir, "images")
+    games_media_dir = os.path.join(static_dir, "games_media")
     if os.path.exists(css_dir):
         app.mount("/css", StaticFiles(directory=css_dir), name="css")
     if os.path.exists(js_dir):
@@ -682,6 +683,8 @@ if os.path.exists(static_dir):
         app.mount("/videos", StaticFiles(directory=videos_dir), name="videos")
     if os.path.exists(images_dir):
         app.mount("/images", StaticFiles(directory=images_dir), name="images")
+    if os.path.exists(games_media_dir):
+        app.mount("/games_media", StaticFiles(directory=games_media_dir), name="games_media")
 
 @app.get("/")
 def read_root():
