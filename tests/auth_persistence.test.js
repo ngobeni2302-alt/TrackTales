@@ -191,4 +191,52 @@ describe('TrackTales Splash Login/Sign-Up & Reload Persistence Verification', ()
       assert.strictEqual(result.isContentPage, true);
     });
   });
+
+  describe('6. Subscription Modal Presentation Policy (Sign Up vs Sign In)', () => {
+    it('ensures subscription modal is NOT shown when logging in via splashSigninForm', () => {
+      const signinFormStart = appJs.indexOf('splashSigninForm.addEventListener');
+      assert.ok(signinFormStart !== -1, 'splashSigninForm handler must exist');
+      const signupFormStart = appJs.indexOf('splashSignupForm.addEventListener');
+      const signinHandlerCode = appJs.substring(signinFormStart, signupFormStart);
+
+      assert.ok(
+        !signinHandlerCode.includes('TrackTalesOpenSubscriptionModal'),
+        'Subscription modal must NOT be opened when logging in via splashSigninForm'
+      );
+    });
+
+    it('ensures subscription modal IS shown when signing up for the first time via splashSignupForm', () => {
+      const signupFormStart = appJs.indexOf('splashSignupForm.addEventListener');
+      assert.ok(signupFormStart !== -1, 'splashSignupForm handler must exist');
+      const signupHandlerCode = appJs.substring(signupFormStart, signupFormStart + 5000);
+
+      assert.ok(
+        signupHandlerCode.includes('TrackTalesOpenSubscriptionModal'),
+        'Subscription modal MUST be opened when signing up via splashSignupForm'
+      );
+    });
+
+    it('ensures subscription modal is NOT shown when logging in via modal signin form', () => {
+      const modalLoginStart = appJs.indexOf('// Sign In form handler in Modal');
+      assert.ok(modalLoginStart !== -1, 'Modal login handler must exist');
+      const modalLoginCode = appJs.substring(modalLoginStart, modalLoginStart + 1500);
+
+      assert.ok(
+        !modalLoginCode.includes('TrackTalesOpenSubscriptionModal'),
+        'Subscription modal must NOT be opened when logging in via modal form'
+      );
+    });
+
+    it('ensures subscription modal IS shown when registering for the first time via modal signupForm', () => {
+      const modalSignupStart = appJs.indexOf('// Sign Up form handler in Modal');
+      assert.ok(modalSignupStart !== -1, 'Modal signup handler must exist');
+      const modalSignupCode = appJs.substring(modalSignupStart, modalSignupStart + 3500);
+
+      assert.ok(
+        modalSignupCode.includes('TrackTalesOpenSubscriptionModal'),
+        'Subscription modal MUST be opened when signing up via modal signupForm'
+      );
+    });
+  });
 });
+

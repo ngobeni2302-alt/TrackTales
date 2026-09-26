@@ -4692,11 +4692,6 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
             setTimeout(() => {
               dismissSplash();
-              if (window.TrackTalesOpenSubscriptionModal) {
-                setTimeout(() => {
-                  window.TrackTalesOpenSubscriptionModal();
-                }, 350);
-              }
             }, 450);
             return;
           } else {
@@ -6686,6 +6681,12 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
         handleCloseLogin();
         isAuthenticated = true;
+
+        if (window.TrackTalesOpenSubscriptionModal) {
+          setTimeout(() => {
+            window.TrackTalesOpenSubscriptionModal();
+          }, 350);
+        }
 
         if (openBtn) openBtn.innerHTML = `<i data-lucide="log-out" class="w-4 h-4 text-[#D99B26]"></i> <span id="desktop-login-label">Sign Out</span>`;
         if (mobileOpenBtn) mobileOpenBtn.innerHTML = `<i data-lucide="log-out" class="w-4 h-4"></i> <span>Sign Out</span>`;
