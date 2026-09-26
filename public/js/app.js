@@ -8936,8 +8936,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         stops_desc: 'An immersive living journey tracing historic stations, mountain passes, and Karoo desert junctions along Mzansi\'s iconic 1,600 km rail corridor.',
         stories_title: 'Journey <span class="text-[#D99B26] italic font-serif">Stories</span>',
         stories_sub: 'Archival stories, engineering milestones, and folklore along South Africa\'s luxury corridor.',
-        auth_welcome: 'Welcome',
-        auth_welcome_sub: 'Sign in to access your South Africa rail companion pass.',
+        auth_welcome: 'Welcome to TrackTales',
         auth_create: 'Create Account',
         auth_create_sub: 'Register for your TrackTales digital passport.',
         auth_signin_btn: 'SIGN IN',
@@ -10940,11 +10939,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       if (storiesTitle && dict.stories_title) storiesTitle.innerHTML = dict.stories_title;
       if (storiesSub && dict.stories_sub) storiesSub.textContent = dict.stories_sub;
 
-      // Auth Splash Elements
-      const signinHeading = document.querySelector('#splash-signin-content h2');
-      const signinSub = document.querySelector('#splash-signin-content p');
-      const signupHeading = document.querySelector('#splash-signup-content h2');
-      const signupSub = document.querySelector('#splash-signup-content p');
+      // Auth Splash Form Button Labels & Input Placeholders
       const signinBtnLabel = document.getElementById('splash-signin-btn-label');
       const signupBtnLabel = document.getElementById('splash-signup-btn-label');
       const signinEmail = document.getElementById('splash-signin-email');
@@ -10954,10 +10949,6 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       const signupPass = document.getElementById('splash-signup-password');
       const signupConfirmPass = document.getElementById('splash-signup-confirm-password');
 
-      if (signinHeading && dict.auth_welcome) signinHeading.textContent = dict.auth_welcome;
-      if (signinSub && dict.auth_welcome_sub) signinSub.textContent = dict.auth_welcome_sub;
-      if (signupHeading && dict.auth_create) signupHeading.textContent = dict.auth_create;
-      if (signupSub && dict.auth_create_sub) signupSub.textContent = dict.auth_create_sub;
       if (signinBtnLabel && dict.auth_signin_btn) signinBtnLabel.textContent = dict.auth_signin_btn;
       if (signupBtnLabel && dict.auth_signup_btn) signupBtnLabel.textContent = dict.auth_signup_btn;
 

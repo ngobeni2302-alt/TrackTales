@@ -71,6 +71,12 @@ describe('TrackTales Splash Login/Sign-Up & Reload Persistence Verification', ()
       assert.ok(indexHtml.includes('id="splash-to-signup-link"'), '#splash-to-signup-link missing');
       assert.ok(indexHtml.includes('id="splash-to-signin-link"'), '#splash-to-signin-link missing');
     });
+
+    it('preserves the authentic welcome text written from the start without overwriting it', () => {
+      assert.ok(indexHtml.includes("Your digital rail companion for South Africa's iconic 1,600 km corridor between Pretoria and Cape Town."), 'Original welcome description missing in index.html');
+      assert.ok(!appJs.includes("auth_welcome_sub: 'Sign in to access your South Africa rail companion pass.'"), 'Forbidden phrase should not be in dictionary');
+      assert.ok(!appJs.includes('signinSub.textContent = dict.auth_welcome_sub'), 'signinSub override should not exist in app.js');
+    });
   });
 
   describe('3. Elimination of Duplicate Auth Surfaces on Home Page', () => {
