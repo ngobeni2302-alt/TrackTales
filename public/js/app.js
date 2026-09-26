@@ -2611,17 +2611,58 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
   function updateStoriesHeaderAutomation() {
     const activeSubEl = document.getElementById('stories-active-sub-name');
     const changePassBtn = document.getElementById('btn-upgrade-from-stories');
+    const navHubCard = document.getElementById('nav-hub-membership-card');
+    const navHubRailBtn = document.getElementById('nav-hub-rail-membership-btn');
+    const mobileManageBtn = document.getElementById('mobile-manage-membership-btn');
+    const mobileManageLabel = document.getElementById('mobile-manage-sub-label');
+    const badgeEl = document.getElementById('nav-hub-membership-badge');
 
     const subKey = localStorage.getItem('tracktales_subscription') || 'free';
     const subNames = {
       'free': 'Free Journey (R0)',
+      'premium-pack': 'Premium Journey Pack (R79)',
       'audio-exp': 'Audio Experience (R49)',
       'corridor-pass': 'Corridor Pass (R99)',
       'membership': 'Future Membership (R149)'
     };
 
+    const passName = subNames[subKey] || 'Free Journey (R0)';
+
     if (activeSubEl) {
-      activeSubEl.textContent = subNames[subKey] || 'Free Journey (R0)';
+      activeSubEl.textContent = passName;
+    }
+    if (mobileManageLabel) {
+      mobileManageLabel.textContent = passName;
+    }
+    if (badgeEl && SUBSCRIPTION_PLANS[subKey]) {
+      badgeEl.textContent = SUBSCRIPTION_PLANS[subKey].badge || 'Pass Tier';
+    }
+
+    const openSubModal = (e) => {
+      if (e) {
+        if (e.preventDefault) e.preventDefault();
+        if (e.stopPropagation) e.stopPropagation();
+      }
+      if (window.closeNavHubPanel) window.closeNavHubPanel();
+      if (window.closeMobileDrawer) window.closeMobileDrawer();
+      if (window.TrackTalesOpenSubscriptionModal) {
+        window.TrackTalesOpenSubscriptionModal(subKey === 'free' ? 'membership' : subKey);
+      }
+    };
+
+    if (navHubCard && !navHubCard.dataset.bound) {
+      navHubCard.dataset.bound = 'true';
+      navHubCard.addEventListener('click', openSubModal);
+    }
+
+    if (navHubRailBtn && !navHubRailBtn.dataset.bound) {
+      navHubRailBtn.dataset.bound = 'true';
+      navHubRailBtn.addEventListener('click', openSubModal);
+    }
+
+    if (mobileManageBtn && !mobileManageBtn.dataset.bound) {
+      mobileManageBtn.dataset.bound = 'true';
+      mobileManageBtn.addEventListener('click', openSubModal);
     }
 
     if (changePassBtn && !changePassBtn.dataset.bound) {
@@ -2638,11 +2679,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         changePassBtn.style.transform = 'translate(0px, 0px)';
       });
 
-      changePassBtn.addEventListener('click', () => {
-        if (window.TrackTalesOpenSubscriptionModal) {
-          window.TrackTalesOpenSubscriptionModal(subKey === 'free' ? 'membership' : subKey);
-        }
-      });
+      changePassBtn.addEventListener('click', openSubModal);
     }
   }
 
@@ -4977,11 +5014,18 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
     const train = getTrainInLanguage(rawTrain, langCode);
     const trainName = train.name;
 
-    // 1. Render Status Bar on Stories Page
+    // 1. Render Status Bar on Stories Page & Side Panel Manage Membership
     const subStatusBar = document.getElementById('stories-sub-status-bar');
     const activeSubName = document.getElementById('stories-active-sub-name');
+    const mobileManageLabel = document.getElementById('mobile-manage-sub-label');
+    const navHubBadge = document.getElementById('nav-hub-membership-badge');
+    const formattedPass = `${plan.name} (${plan.price})`;
+
+    if (activeSubName) activeSubName.textContent = formattedPass;
+    if (mobileManageLabel) mobileManageLabel.textContent = formattedPass;
+    if (navHubBadge) navHubBadge.textContent = plan.badge || 'Pass Tier';
+
     if (subStatusBar && activeSubName) {
-      activeSubName.textContent = `${plan.name} (${plan.price})`;
       if (currentPlanId === 'free') {
         subStatusBar.className = 'max-w-xl mx-auto mb-8 p-3 rounded-2xl border border-[#EBE5D9] bg-[#FAF8F5] flex items-center justify-between text-xs font-mono transition-all';
       } else if (currentPlanId === 'premium-pack') {
@@ -4995,8 +5039,11 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
     const upgradeFromStoriesBtn = document.getElementById('btn-upgrade-from-stories');
     if (upgradeFromStoriesBtn) {
-      upgradeFromStoriesBtn.onclick = () => {
-        if (window.TrackTalesOpenSubscriptionModal) window.TrackTalesOpenSubscriptionModal();
+      upgradeFromStoriesBtn.onclick = (e) => {
+        if (e) e.preventDefault();
+        if (window.closeNavHubPanel) window.closeNavHubPanel();
+        if (window.closeMobileDrawer) window.closeMobileDrawer();
+        if (window.TrackTalesOpenSubscriptionModal) window.TrackTalesOpenSubscriptionModal(currentPlanId === 'free' ? 'membership' : currentPlanId);
       };
     }
 
@@ -5703,6 +5750,18 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       }
       if (mobileSubLabel) {
         mobileSubLabel.textContent = plan.badge;
+      }
+      const activeSubName = document.getElementById('stories-active-sub-name');
+      if (activeSubName) {
+        activeSubName.textContent = `${plan.name} (${plan.price})`;
+      }
+      const mobileManageLabel = document.getElementById('mobile-manage-sub-label');
+      if (mobileManageLabel) {
+        mobileManageLabel.textContent = `${plan.name} (${plan.price})`;
+      }
+      const navHubBadge = document.getElementById('nav-hub-membership-badge');
+      if (navHubBadge) {
+        navHubBadge.textContent = plan.badge || 'Pass Tier';
       }
     };
 
@@ -7103,6 +7162,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       if (chevron) chevron.style.transform = 'rotate(180deg)';
       btnOpen.setAttribute('aria-expanded', 'true');
       syncTrainBadge();
+      updateStoriesHeaderAutomation();
       
       if (window.motion && window.motion.animate) {
         window.motion.animate(panel, { opacity: [0, 1], y: [-10, 0] }, { duration: 0.22, ease: "ease-out" });
@@ -11025,7 +11085,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
       // Stories Section Badges & Buttons
       const storiesBadge = document.getElementById('stories-section-badge');
-      const storiesActivePassLabel = document.querySelector('#stories-sub-status-bar .text-\\[\\#78716C\\]');
+      const storiesActivePassLabel = document.querySelector('#stories-sub-status-bar .text-\\[\\#78716C\\]') || document.querySelector('#nav-hub-membership-card .active-pass-label');
       const storiesChangePassBtn = document.querySelector('#btn-upgrade-from-stories span');
       const storiesAllPassesLabel = document.querySelector('#page-about .flex.items-center.justify-between span.text-xs.font-mono.text-\\[\\#78716C\\]');
 
