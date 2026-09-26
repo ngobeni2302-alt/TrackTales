@@ -33,14 +33,34 @@
           window.location.href = './guest.html';
         };
 
+        // Strict Login Request Detection (e.g. from Guest Mode "Sign In / Register")
+        var searchStr = window.location.search || '';
+        var hashStr = window.location.hash || '';
+        var isStrictLogin = searchStr.indexOf('open=login') !== -1 ||
+                            searchStr.indexOf('login=true') !== -1 ||
+                            searchStr.indexOf('action=login') !== -1 ||
+                            hashStr === '#signin' ||
+                            hashStr === '#login';
+
+        if (isStrictLogin) {
+          try {
+            sessionStorage.removeItem('tracktales_splash_dismissed');
+            localStorage.removeItem('tracktales_splash_dismissed');
+            localStorage.removeItem('tracktales_is_guest');
+          } catch(err) {}
+        }
+
         // Show Welcome & Sign In page on app launch unless actively authenticated or navigating in session
-        var hasHash = window.location.hash && window.location.hash.length > 1 && window.location.hash !== '#';
-        var wasDismissed = sessionStorage.getItem('tracktales_splash_dismissed') === 'true' ||
+        var hasHash = hashStr.length > 1 && hashStr !== '#' && !isStrictLogin;
+        var wasDismissed = !isStrictLogin && (
+                           sessionStorage.getItem('tracktales_splash_dismissed') === 'true' ||
                            Boolean(localStorage.getItem('tracktales_jwt_token')) ||
                            Boolean(localStorage.getItem('tracktales_logged_user')) ||
-                           hasHash;
+                           hasHash);
         if (wasDismissed) {
           document.documentElement.classList.add('splash-already-dismissed');
+        } else {
+          document.documentElement.classList.remove('splash-already-dismissed');
         }
       } catch(e) {}
     })();
@@ -2794,6 +2814,7 @@
 
   <!-- TrackTales Universal Multilingual Engine & Dictionary Data -->
   <script src="./js/translations-data.js?v=2.0"></script>
+  <script src="./js/guest-translations-data.js?v=2.0"></script>
   <script src="./js/translation-engine.js?v=2.0"></script>
 
   <!-- Main JavaScript App Logic -->

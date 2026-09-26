@@ -3765,12 +3765,30 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       }, 500);
     };
 
+    // Strict Login Request Detection (e.g. from Guest Mode "Sign In / Register")
+    const searchParams = window.location.search || '';
+    const hashVal = window.location.hash || '';
+    const isStrictLogin = searchParams.indexOf('open=login') !== -1 ||
+                          searchParams.indexOf('login=true') !== -1 ||
+                          searchParams.indexOf('action=login') !== -1 ||
+                          hashVal === '#signin' ||
+                          hashVal === '#login';
+
+    if (isStrictLogin) {
+      try {
+        sessionStorage.removeItem('tracktales_splash_dismissed');
+        localStorage.removeItem('tracktales_splash_dismissed');
+        localStorage.removeItem('tracktales_is_guest');
+      } catch (e) {}
+    }
+
     // If already entered in this session, logged in, or on a direct/refreshed page route: dismiss immediately!
-    const hasActiveHash = Boolean(window.location.hash && window.location.hash.length > 1 && window.location.hash !== '#');
-    const wasAlreadyEntered = sessionStorage.getItem('tracktales_splash_dismissed') === 'true' ||
+    const hasActiveHash = !isStrictLogin && Boolean(hashVal && hashVal.length > 1 && hashVal !== '#');
+    const wasAlreadyEntered = !isStrictLogin && (
+                              sessionStorage.getItem('tracktales_splash_dismissed') === 'true' ||
                               Boolean(localStorage.getItem('tracktales_jwt_token')) ||
                               Boolean(localStorage.getItem('tracktales_logged_user')) ||
-                              hasActiveHash;
+                              hasActiveHash);
 
     if (wasAlreadyEntered) {
       isDismissed = true;
@@ -3782,6 +3800,13 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       if (cardPanelVideo) {
         try { cardPanelVideo.pause(); } catch (e) {}
       }
+    } else {
+      isDismissed = false;
+      splash.style.display = 'flex';
+      document.documentElement.classList.remove('splash-already-dismissed');
+      showSignIn();
+      const emailInput = document.getElementById('splash-signin-email');
+      if (emailInput) setTimeout(() => emailInput.focus(), 300);
     }
 
     if (skipBtn) {

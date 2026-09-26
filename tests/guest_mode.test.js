@@ -138,8 +138,7 @@ describe('TrackTales Guest Mode & Portal Verification', () => {
     });
 
     it('provides return links to main route and sign-in', () => {
-      assert.ok(guestHtml.includes('href="./"'), 'Logo or return link must point to relative root ./');
-      assert.ok(guestHtml.includes('href="./#inline-signin-section"'), 'Sign In / Register button must link to sign-in section');
+      assert.ok(guestHtml.includes('TrackTalesGoToLogin') || guestHtml.includes('open=login'), 'Must have strict login navigation handler');
       assert.ok(guestHtml.includes('Return to Main Route & Sign In'), 'Footer must have return link text');
     });
   });
@@ -233,7 +232,7 @@ describe('TrackTales Guest Mode & Portal Verification', () => {
   describe('6. Interactive Functional Logic Simulator', () => {
     // Extract ATTRACTIONS_DATA from guest.html to test business logic directly
     const guestHtml = fs.readFileSync(guestHtmlPath, 'utf8');
-    const match = guestHtml.match(/const ATTRACTIONS_DATA = (\[[\s\S]*?\]);\s*const grid/);
+    const match = guestHtml.match(/const ATTRACTIONS_DATA = (\[[\s\S]*?\]);/);
     assert.ok(match && match[1], 'Could not extract ATTRACTIONS_DATA from guest.html');
     
     // Evaluate safely in isolated context
@@ -285,6 +284,109 @@ describe('TrackTales Guest Mode & Portal Verification', () => {
       assert.strictEqual(mockStorage['tracktales_splash_dismissed'], 'true');
       assert.strictEqual(mockStorage['tracktales_is_guest'], 'true');
       assert.strictEqual(mockLocation.href, './guest.html');
+    });
+  });
+
+  describe('7. Strict Login Redirection and Multilingual Translation in Guest Mode', () => {
+    const guestHtml = fs.readFileSync(guestHtmlPath, 'utf8');
+    const indexHtml = fs.readFileSync(indexHtmlPath, 'utf8');
+    const appJs = fs.readFileSync(appJsPath, 'utf8');
+    const guestTranslationsPath = path.join(publicDir, 'js', 'guest-translations-data.js');
+
+    it('guest.html top panel header provides the language switcher (#guest-lang-select) with all 16 supported languages', () => {
+      assert.ok(guestHtml.includes('id="guest-lang-select"'), '#guest-lang-select missing in header');
+      const expectedLangs = ['en', 'af', 'zu', 'xh', 'de', 'fr', 'nl', 'es', 'it', 'pt', 'zh', 'ja', 'ko', 'hi', 'ru', 'ar'];
+      for (const lang of expectedLangs) {
+        assert.ok(guestHtml.includes(`value="${lang}"`), `Missing language option value="${lang}" in guest-lang-select`);
+      }
+    });
+
+    it('guest.html "Sign In / Register" in header and footer links strictly back to login with TrackTalesGoToLogin', () => {
+      assert.ok(guestHtml.includes('id="guest-nav-signin-btn"'), 'Nav sign in button missing');
+      assert.ok(guestHtml.includes('id="guest-footer-signin-btn"'), 'Footer sign in button missing');
+      assert.ok(guestHtml.includes('open=login'), 'Must include open=login parameter');
+      assert.ok(guestHtml.includes('TrackTalesGoToLogin'), 'Must call TrackTalesGoToLogin');
+    });
+
+    it('window.TrackTalesGoToLogin clears guest & splash dismissed tokens and redirects to index.html with login query', () => {
+      assert.ok(guestHtml.includes('window.TrackTalesGoToLogin = function'), 'TrackTalesGoToLogin function missing');
+      assert.ok(guestHtml.includes("sessionStorage.removeItem('tracktales_splash_dismissed')"));
+      assert.ok(guestHtml.includes("localStorage.removeItem('tracktales_splash_dismissed')"));
+      assert.ok(guestHtml.includes("localStorage.removeItem('tracktales_is_guest')"));
+      assert.ok(guestHtml.includes("open=login#signin"));
+    });
+
+    it('index.html and app.js detect strict login redirect and strictly display the login portal', () => {
+      assert.ok(indexHtml.includes('isStrictLogin'), 'isStrictLogin check missing in index.html head script');
+      assert.ok(indexHtml.includes('open=login'), 'open=login check missing in index.html head script');
+      assert.ok(appJs.includes('isStrictLogin'), 'isStrictLogin check missing in app.js setupSplash');
+      assert.ok(appJs.includes('showSignIn()'), 'showSignIn call missing in app.js setupSplash');
+    });
+
+    it('public/js/guest-translations-data.js exists and exports translations for all 16 languages', () => {
+      assert.ok(fs.existsSync(guestTranslationsPath), 'guest-translations-data.js is missing');
+      const content = fs.readFileSync(guestTranslationsPath, 'utf8');
+      const expectedLangs = ['af', 'zu', 'xh', 'de', 'fr', 'nl', 'es', 'it', 'pt', 'zh', 'ja', 'ko', 'hi', 'ru', 'ar'];
+      for (const lang of expectedLangs) {
+        assert.ok(content.includes(`${lang}: {`), `Language ${lang} missing in guest-translations-data.js`);
+      }
+    });
+
+    it('guest.html includes translations-data.js, guest-translations-data.js, and translation-engine.js', () => {
+      assert.ok(guestHtml.includes('src="./js/translations-data.js?v=2.0"'), 'translations-data.js missing');
+      assert.ok(guestHtml.includes('src="./js/guest-translations-data.js?v=2.0"'), 'guest-translations-data.js missing');
+      assert.ok(guestHtml.includes('src="./js/translation-engine.js?v=2.0"'), 'translation-engine.js missing');
+    });
+
+    it('guest-translations-data.js covers core UI phrases and attraction titles across languages', () => {
+      const code = fs.readFileSync(guestTranslationsPath, 'utf8');
+      const sandbox = { window: {} };
+      const runFn = new Function('window', code);
+      runFn(sandbox.window);
+
+      const guestDict = sandbox.window.TrackTalesGuestTranslations;
+      assert.ok(guestDict, 'TrackTalesGuestTranslations should be exposed on window');
+
+      // Test all 15 supported non-English languages
+      const testLangs = ['af', 'zu', 'xh', 'de', 'fr', 'nl', 'es', 'it', 'pt', 'zh', 'ja', 'ko', 'hi', 'ru', 'ar'];
+      const requiredKeys = [
+        "GUEST PASSENGER PORTAL",
+        "Guest Mode",
+        "Sign In / Register",
+        "Corridor Video Attractions",
+        "All Attractions",
+        "Natural Wonders",
+        "Play Video & Info",
+        "Return to Main Route & Sign In",
+        "God's Window & Panorama Route",
+        "Drakensberg Cliff Viewpoint",
+        "Robben Island & Table Mountain",
+        "Boulders Beach African Penguins",
+        "Cape of Good Hope Point",
+        "Namaqualand Wildflower Spring Bloom",
+        "Blyde River Canyon & Three Rondavels",
+        "Cradle of Humankind (Maropeng)",
+        "Sun City & Palace of the Lost City",
+        "Drakensberg Amphitheatre & Tugela Trail",
+        "Augrabies Falls & Orange River Gorge",
+        "Apartheid Museum (Johannesburg)",
+        "Olifants (Elephants) River Delta",
+        "Cango Caves (Oudtshoorn)",
+        "Garden Route Scenic Coastal Drive",
+        "Constitution Hill & Constitutional Court",
+        "V&A Waterfront & Working Harbor",
+        "Table Mountain & Lion's Head Sunset",
+        "Nelson Mandela House (Vilakazi Street)",
+        "Pilanesberg National Game Reserve",
+        "Addo Elephant National Park Safari"
+      ];
+
+      for (const lang of testLangs) {
+        assert.ok(guestDict[lang], `Dictionary missing for language ${lang}`);
+        for (const key of requiredKeys) {
+          assert.ok(guestDict[lang][key], `Missing translation for "${key}" in language "${lang}"`);
+        }
+      }
     });
   });
 
