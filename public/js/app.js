@@ -11815,301 +11815,490 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
   // --- 21 Corridor Video Attractions Showcase ---
   const ATTRACTIONS_DATA = [
-    {
-      id: "gods-window",
-      title: "God's Window & Panorama Route",
-      location: "Blyde River Escarpment, Mpumalanga",
-      category: "Natural Wonder",
-      video: "./videos/01_Gods_Window_Panorama_Route.mp4",
-      description: "Perched high on the Drakensberg escarpment, God's Window offers a breathtaking 900-meter sheer drop looking over the lush indigenous rainforest and Blyde River Canyon. On clear days, the expansive panoramic view extends across the Lowveld all the way to the Kruger Park border and Mozambique.",
-      highlights: [
-        "900m sheer vertical drop overlooking pristine subtropical rainforest",
-        "Gateway to the famous Panorama Route and Lisbon & Berlin Waterfalls",
-        "Panoramic views extending across the Lowveld to the Mozambique border"
-      ],
-      proximity: "Pretoria Departure Hub Excursion"
-    },
-    {
-      id: "drakensberg-cliff",
-      title: "Drakensberg Cliff Viewpoint",
-      location: "uKhahlamba Drakensberg Park, KwaZulu-Natal",
-      category: "Natural Wonder",
-      video: "./videos/02_Drakensberg_Cliff_Viewpoint.mp4",
-      description: "The uKhahlamba-Drakensberg range—meaning 'Barrier of Spears' in isiZulu—is a UNESCO World Heritage site featuring dramatic basalt cliffs rising over 3,000 meters above sea level. The cliffs shelter ancient San rock art caves and alpine waterfall valleys.",
-      highlights: [
-        "UNESCO World Heritage Site with peaks exceeding 3,000 meters",
-        "Over 35,000 individual San Bushman rock paintings in natural sandstone caves",
-        "Dramatic mountain basalt wall forming the high kingdom border with Lesotho"
-      ],
-      proximity: "Highveld Rail Junction Vantage Point"
-    },
-    {
-      id: "robben-island-table-mountain",
-      title: "Robben Island & Table Mountain",
-      location: "Table Bay, Cape Town, Western Cape",
-      category: "Heritage Site",
-      video: "./videos/03_Robben_Island_and_Table_Mountain.mp4",
-      description: "Floating in Table Bay, Robben Island is a solemn symbol of South Africa's journey to democracy. Former President Nelson Mandela was imprisoned here for 18 years. Today, guided tours led by former political prisoners offer unforgettable history against the backdrop of Table Mountain.",
-      highlights: [
-        "Nelson Mandela's historic cell in Maximum Security Prison",
-        "Guided tours conducted by former political prisoners",
-        "Panoramic views of Table Mountain and Cape Town across Table Bay"
-      ],
-      proximity: "Cape Town Station Terminus Arrival"
-    },
-    {
-      id: "boulders-beach",
-      title: "Boulders Beach African Penguins",
-      location: "Simon's Town, Cape Peninsula, Western Cape",
-      category: "Wildlife Sanctuary",
-      video: "./videos/04_Boulders_Beach_Penguins.mp4",
-      description: "Sheltered by massive 540-million-year-old granite boulders, Boulders Beach is home to a thriving land-based colony of over 2,000 wild African Penguins (Spheniscus demersus). Raised wooden boardwalks allow visitors to observe the penguins swimming and nesting up close.",
-      highlights: [
-        "Colony of over 2,000 wild endangered African Penguins",
-        "Sheltered calm turquoise coves framed by ancient granite boulders",
-        "Elevated wooden boardwalks for eco-friendly wildlife viewing"
-      ],
-      proximity: "Cape Town Southern Line Extension"
-    },
-    {
-      id: "cape-good-hope",
-      title: "Cape of Good Hope Point",
-      location: "Cape Peninsula National Park, Western Cape",
-      category: "Coastal Reserve",
-      video: "./videos/05_Cape_of_Good_Hope.mp4",
-      description: "The southwesternmost point of the African continent, where towering ocean cliffs plunge into roaring Atlantic surf. Rich in floral diversity with protected Cape Fynbos, free-roaming ostriches, mountain zebras, and baboons along coastal trails.",
-      highlights: [
-        "Southwesternmost point of the African continent",
-        "Cape Point Funicular to the historic 1859 lighthouse cliff lookout",
-        "Protected Cape Floral Kingdom with endemic proteas, fynbos & wildlife"
-      ],
-      proximity: "Cape Town Station Scenic Excursion"
-    },
-    {
-      id: "namaqualand-wildflowers",
-      title: "Namaqualand Wildflower Spring Bloom",
-      location: "Namaqualand, Northern Cape",
-      category: "Natural Wonder",
-      video: "./videos/06_Namaqualand_Wildflowers_Windmill.mp4",
-      description: "Every spring (August to September), the arid semi-desert plains of Namaqualand undergo a magical transformation. Following winter rains, millions of dormant wildflower seeds burst into a vivid tapestry of orange, purple, yellow, and white carpets stretching to the horizon.",
-      highlights: [
-        "World-famous desert bloom featuring over 3,500 plant species",
-        "Vivid carpets of orange Namaqualand daisies stretching to infinity",
-        "Historic Karoo windmills framing golden hour photography"
-      ],
-      proximity: "Karoo Northern Cape Rail Corridor"
-    },
-    {
-      id: "blyde-river-canyon",
-      title: "Blyde River Canyon & Three Rondavels",
-      location: "Blyde River Canyon Reserve, Mpumalanga",
-      category: "Natural Wonder",
-      video: "./videos/07_Blyde_River_Canyon_Three_Rondavels.mp4",
-      description: "The third largest canyon in the world and the largest green vegetation canyon on Earth. Famous for the 'Three Rondavels'—huge quartzite rock formations shaped like traditional conical African huts overlooking the winding Blyde River below.",
-      highlights: [
-        "The largest green vegetation canyon on Earth (26 km long, 800m deep)",
-        "The Three Rondavels quartzite mountain peaks resembling traditional huts",
-        "Bourke's Luck Potholes carved by swirling river whirlpools"
-      ],
-      proximity: "Pretoria Highveld Rail Route"
-    },
-    {
-      id: "cradle-of-humankind",
-      title: "Cradle of Humankind (Maropeng)",
-      location: "Gauteng / North West Border",
-      category: "Heritage Site",
-      video: "./videos/08_Cradle_of_Humankind_Maropeng.mp4",
-      description: "A UNESCO World Heritage Site spanning 47,000 hectares of limestone caves. The site has yielded over 40% of the world's human ancestor fossils, including 'Mrs. Ples' (Australopithecus africanus) and 'Little Foot', tracing over 3 million years of human evolution.",
-      highlights: [
-        "Site of 40%+ of global hominid ancestor fossil discoveries",
-        "Interactive underground boat ride through Earth's creation elements at Maropeng",
-        "Sterkfontein Caves guided underground paleontology tours"
-      ],
-      proximity: "Pretoria & Johannesburg Rail Hubs"
-    },
-    {
-      id: "sun-city-palace",
-      title: "Sun City & Palace of the Lost City",
-      location: "Pilanesberg Crater, North West Province",
-      category: "Heritage Site",
-      video: "./videos/09_Sun_City_Palace_of_Lost_City.mp4",
-      description: "Nestled within an ancient 1.2-billion-year-old extinct volcanic crater, Sun City and the Palace of the Lost City are iconic South African architectural achievements. Featuring hand-carved stone architecture, lush botanical gardens, and the Valley of Waves.",
-      highlights: [
-        "Architectural masterpiece in an extinct volcanic crater",
-        "Valley of Waves roaring inland surf lagoon and hydraulic wave pool",
-        "Bordering Pilanesberg National Park Big Five game reserve"
-      ],
-      proximity: "Pretoria Corridor Excursion Route"
-    },
-    {
-      id: "drakensberg-amphitheatre",
-      title: "Drakensberg Amphitheatre & Tugela Trail",
-      location: "Royal Natal National Park, KwaZulu-Natal",
-      category: "Natural Wonder",
-      video: "./videos/10_Drakensberg_Amphitheatre_Hiking_Trail.mp4",
-      description: "The Drakensberg Amphitheatre is widely regarded as one of the most impressive cliff faces on Earth—stretching 5 km long and rising 1,220 meters sheer. At its crest lies Tugela Falls, plunging 948 meters as the tallest waterfall in the world.",
-      highlights: [
-        "5 km long and 1,220m high sheer basalt rock wall",
-        "Tugela Falls—the highest waterfall on Earth (948m total drop)",
-        "Chain ladder mountain trails with views across Mont-aux-Sources"
-      ],
-      proximity: "Drakensberg Corridor Overlook"
-    },
-    {
-      id: "augrabies-falls",
-      title: "Augrabies Falls & Orange River Gorge",
-      location: "Augrabies Falls National Park, Northern Cape",
-      category: "Natural Wonder",
-      video: "./videos/11_Augrabies_Falls_Orange_River_Gorge.mp4",
-      description: "Named 'Ankoerebis' ('Place of Great Noise') by the original Khoi inhabitants, Augrabies Falls sees the mighty Orange River thunder down a 56-meter granite cataract into an 18-kilometer deep ravine carved through solid moonscape granite.",
-      highlights: [
-        "Mighty 56m main waterfall plunge into solid granite canyon",
-        "18 km deep granite gorge carved over millions of years",
-        "Moon Rock massive domed granite outcrop overlooking the Karoo desert"
-      ],
-      proximity: "Northern Cape Karoo Corridor"
-    },
-    {
-      id: "apartheid-museum",
-      title: "Apartheid Museum (Johannesburg)",
-      location: "Gold Reef City, Johannesburg, Gauteng",
-      category: "Heritage Site",
-      video: "./videos/12_Apartheid_Museum_Johannesburg.mp4",
-      description: "A world-renowned museum providing a powerful, multi-sensory journey through 20th-century South Africa. Visitors enter through separate entrances based on randomly assigned racial tickets, experiencing the rise, resistance, and victory over apartheid.",
-      highlights: [
-        "Immersive architectural exhibition chronicling South Africa's history",
-        "Nelson Mandela permanent tribute collection of speeches, film & artifacts",
-        "Pillar of the Constitution garden celebrating freedom and human rights"
-      ],
-      proximity: "Pretoria & Johannesburg Central Junction"
-    },
-    {
-      id: "elephants-river",
-      title: "Olifants (Elephants) River Delta",
-      location: "Greater Kruger & Lowveld Corridor, Limpopo",
-      category: "Wildlife Sanctuary",
-      video: "./videos/13_Elephants_River_Delta_Aerial.mp4",
-      description: "The Olifants River is one of the largest river systems in southern Africa, cutting through quartzite mountain gorges to nourish vast wildlife reserves. Aerial views reveal wild elephant herds bathing alongside hippos and crocodiles.",
-      highlights: [
-        "Major river corridor supporting giant herds of wild African elephants",
-        "Abundant pod of hippos and Nile crocodiles along sandy riverbanks",
-        "Unbroken wilderness ecosystem connecting Drakensberg streams to Kruger"
-      ],
-      proximity: "Highveld & Lowveld Corridor Route"
-    },
-    {
-      id: "cango-caves",
-      title: "Cango Caves (Oudtshoorn)",
-      location: "Klein Karoo, Oudtshoorn, Western Cape",
-      category: "Heritage Site",
-      video: "./videos/14_Cango_Caves.mp4",
-      description: "Situated in the Swartberg Mountains of the Klein Karoo, Cango Caves is South Africa's oldest tourist attraction. Its subterranean limestone chambers feature vast halls filled with towering stalagmites, stalactites, and ancient San cave art.",
-      highlights: [
-        "20-million-year-old underground limestone cavern network",
-        "Van Zyl's Hall featuring the 9-meter high 'Organ Pipe' dripstone structure",
-        "Heritage and Adventure crawl routes through narrow mountain tunnels"
-      ],
-      proximity: "Karoo to Garden Route Corridor Excursion"
-    },
-    {
-      id: "garden-route",
-      title: "Garden Route Scenic Coastal Drive",
-      location: "Mossel Bay to Tsitsikamma, Western Cape",
-      category: "Coastal Reserve",
-      video: "./videos/15_Garden_Route_Coastal_Road.mp4",
-      description: "A world-famous 300-kilometer stretch of coastal paradise snaking between ocean cliffs, ancient yellowwood Tsitsikamma forests, freshwater lagoons, and white sand beaches along South Africa's southern ocean edge.",
-      highlights: [
-        "300 km coastal corridor through Knysna, Wilderness & Plettenberg Bay",
-        "Bloukrans Bridge—highest commercial bungee jump in the world (216m)",
-        "Tsitsikamma National Park suspension bridges over Storms River Mouth"
-      ],
-      proximity: "Cape Coastal Rail Extension"
-    },
-    {
-      id: "constitution-hill",
-      title: "Constitution Hill & Constitutional Court",
-      location: "Braamfontein, Johannesburg, Gauteng",
-      category: "Heritage Site",
-      video: "./videos/16_Constitutional_Court_Constitution_Hill.mp4",
-      description: "A former 19th-century military fort and infamous prison complex where Nelson Mandela, Mahatma Gandhi, and Albertina Sisulu were held. Today, it houses South Africa's highest court, built using bricks from demolished prison walls.",
-      highlights: [
-        "South Africa's Supreme Constitutional Court housed in repurposed history",
-        "Old Fort, Number Four, and Women's Jail historical museum tours",
-        "Bricks from former prison walls recycled into the new court chamber"
-      ],
-      proximity: "Pretoria & Gauteng Rail Hub"
-    },
-    {
-      id: "va-waterfront",
-      title: "V&A Waterfront & Working Harbor",
-      location: "Table Bay Harbor, Cape Town, Western Cape",
-      category: "Coastal Reserve",
-      video: "./videos/17_VA_Waterfront_Cape_Town.mp4",
-      description: "Situated between Table Mountain and Table Bay, the Victoria & Alfred Waterfront is South Africa's premier harbor hub. It combines operating commercial tugboats and fishing dhows with fine dining, street buskers, and ocean catamaran cruises.",
-      highlights: [
-        "South Africa's oldest working harbor operating since 1860",
-        "Zeitz Museum of Contemporary Art Africa (MOCAA) housed in grain silos",
-        "Departure ferry point for Robben Island tours and Cape sunset cruises"
-      ],
-      proximity: "Cape Town Station Terminus (2 km distance)"
-    },
-    {
-      id: "table-mountain-sunset",
-      title: "Table Mountain & Lion's Head Sunset",
-      location: "Table Mountain National Park, Cape Town",
-      category: "Natural Wonder",
-      video: "./videos/18_Table_Mountain_Sunset_Lions_Head.mp4",
-      description: "One of the New 7 Wonders of Nature, Table Mountain rises 1,086 meters over Cape Town. The rotating Cableway carries passengers to the flat table summit for panoramic sunset views over Lion's Head, Camps Bay, and Atlantic horizons.",
-      highlights: [
-        "One of the official New 7 Wonders of Nature",
-        "Revolving Aerial Cableway with 360° views of the Cape Peninsula",
-        "Endemic Table Mountain fynbos vegetation with over 1,470 floral species"
-      ],
-      proximity: "Cape Town Station Main Terminus"
-    },
-    {
-      id: "mandela-house-soweto",
-      title: "Nelson Mandela House (Vilakazi Street)",
-      location: "Orlando West, Soweto, Gauteng",
-      category: "Heritage Site",
-      video: "./videos/19_Mandela_House_Soweto.mp4",
-      description: "Located at 8115 Vilakazi Street in Soweto, this simple red-brick matchbox house was home to Nelson Mandela from 1946 to 1962. It preserves original furniture, photographs, bullet holes, and historical artifacts from the struggle era.",
-      highlights: [
-        "Historic family home of Nelson Mandela during the anti-apartheid movement",
-        "Located on Vilakazi Street—the only street in the world home to two Nobel Peace Laureates",
-        "Preserved bullet holes and firebomb damage from apartheid police raids"
-      ],
-      proximity: "Gauteng Rail Junction Excursion"
-    },
-    {
-      id: "pilanesberg-game-reserve",
-      title: "Pilanesberg National Game Reserve",
-      location: "Bojanala District, North West Province",
-      category: "Wildlife Sanctuary",
-      video: "./videos/20_Pilanesberg_Game_Reserve_Entrance.mp4",
-      description: "Set inside a 1.2-billion-year-old extinct alkaline volcano crater, Pilanesberg is a 55,000-hectare malaria-free game reserve home to the Big Five (lion, leopard, elephant, rhino, buffalo), wild dogs, cheetahs, and over 360 bird species.",
-      highlights: [
-        "Malaria-free Big Five game reserve inside an extinct volcanic crater",
-        "Over 7,000 animals including rare brown hyenas and sable antelope",
-        "Mankwe Dam central hide for photographic birdwatching and safari"
-      ],
-      proximity: "Pretoria Departure Safari Extension"
-    },
-    {
-      id: "addo-elephant-park",
-      title: "Addo Elephant National Park Safari",
-      location: "Zuurberg Mountains, Eastern Cape",
-      category: "Wildlife Sanctuary",
-      video: "./videos/21_Addo_Elephant_Park_Safari.mp4",
-      description: "Founded in 1931 to save 11 remaining Eastern Cape elephants, Addo has grown into a world-famous sanctuary harboring over 600 wild African elephants along with cape buffalo, black rhinos, lions, and Great White Sharks in its marine reserve.",
-      highlights: [
-        "Home to over 600 free-roaming wild African elephants",
-        "Only park in the world harboring the 'Big Seven' (Big 5 + Southern Right Whale & Great White Shark)",
-        "Spekboom succulent thickets providing natural elephant habitat"
-      ],
-      proximity: "Eastern Cape Rail Corridor Extension"
-    }
-  ];
+        {
+          id: "gods-window",
+          title: "God's Window & Panorama Route",
+          location: "Blyde River Escarpment, Mpumalanga",
+          category: "Natural Wonder",
+          video: "./videos/01_Gods_Window_Panorama_Route.mp4",
+          description: "Perched high on the Drakensberg escarpment, God's Window offers a breathtaking 900-meter sheer drop looking over the lush indigenous rainforest and Blyde River Canyon. On clear days, the view extends into Mozambique.",
+          highlights: [
+            "900m sheer vertical drop overlooking pristine subtropical rainforest",
+            "Gateway to the famous Panorama Route and Lisbon & Berlin Waterfalls",
+            "Panoramic views extending across the Lowveld to the Mozambique border"
+          ],
+          proximity: "Pretoria Departure Hub Excursion",
+          accommodation: {
+            name: "Angels View Hotel",
+            badge: "Best Reviewed Stay",
+            rating: "4.8 ★ Best Reviewed",
+            type: "Luxury Escarpment Hotel & Spa",
+            distance: "6.4 km (10 mins) from God's Window",
+            description: "Perched high on the Graskop gorge edge with glass-front suites, heated infinity pools overlooking the Lowveld, fine dining, and direct access to the Panorama Route.",
+            bookingQuery: "Angels View Hotel Graskop Mpumalanga"
+          }
+        },
+        {
+          id: "drakensberg-cliff",
+          title: "Drakensberg Cliff Viewpoint",
+          location: "uKhahlamba Drakensberg Park, KwaZulu-Natal",
+          category: "Natural Wonder",
+          video: "./videos/02_Drakensberg_Cliff_Viewpoint.mp4",
+          description: "The uKhahlamba-Drakensberg range is a UNESCO World Heritage site featuring dramatic basalt cliffs rising over 3,000 meters above sea level. The cliffs shelter ancient San rock art caves.",
+          highlights: [
+            "UNESCO World Heritage Site with peaks exceeding 3,000 meters",
+            "Over 35,000 individual San Bushman rock paintings in caves",
+            "Dramatic mountain basalt wall forming the high border with Lesotho"
+          ],
+          proximity: "Highveld Rail Junction Vantage Point",
+          accommodation: {
+            name: "Cathedral Peak Hotel",
+            badge: "Best Reviewed Mountain Resort",
+            rating: "4.9 ★ Best Reviewed",
+            type: "Premier Alpine Mountain Resort & Spa",
+            distance: "Nestled directly at the base of Cathedral Peak",
+            description: "South Africa's premier Drakensberg mountain hotel offering thatch mountain chalets, crystal mountain stream pools, daily guided rock art walks, and panoramic alpine views.",
+            bookingQuery: "Cathedral Peak Hotel Drakensberg KwaZulu-Natal"
+          }
+        },
+        {
+          id: "robben-island-table-mountain",
+          title: "Robben Island & Table Mountain",
+          location: "Table Bay, Cape Town, Western Cape",
+          category: "Heritage Site",
+          video: "./videos/03_Robben_Island_and_Table_Mountain.mp4",
+          description: "Floating in Table Bay, Robben Island is a solemn symbol of South Africa's journey to democracy. Former President Nelson Mandela was imprisoned here for 18 years.",
+          highlights: [
+            "Nelson Mandela's historic cell in Maximum Security Prison",
+            "Guided tours conducted by former political prisoners",
+            "Panoramic views of Table Mountain and Cape Town across Table Bay"
+          ],
+          proximity: "Cape Town Station Terminus Arrival",
+          accommodation: {
+            name: "The Silo Hotel",
+            badge: "Best Reviewed Luxury Hotel",
+            rating: "4.9 ★ Best Reviewed",
+            type: "5-Star Architectural Masterpiece (V&A Waterfront)",
+            distance: "500m from the Robben Island Ferry Terminal",
+            description: "Built above the Zeitz MOCAA in the historic grain silo, offering world-famous pillow-glass windows, rooftop infinity pool, and uninterrupted panoramas across Table Bay.",
+            bookingQuery: "The Silo Hotel V&A Waterfront Cape Town"
+          }
+        },
+        {
+          id: "boulders-beach",
+          title: "Boulders Beach African Penguins",
+          location: "Simon's Town, Cape Peninsula, Western Cape",
+          category: "Wildlife Sanctuary",
+          video: "./videos/04_Boulders_Beach_Penguins.mp4",
+          description: "Sheltered by massive 540-million-year-old granite boulders, Boulders Beach is home to a thriving land-based colony of over 2,000 wild African Penguins.",
+          highlights: [
+            "Colony of over 2,000 wild endangered African Penguins",
+            "Sheltered calm turquoise coves framed by ancient granite boulders",
+            "Elevated wooden boardwalks for eco-friendly wildlife viewing"
+          ],
+          proximity: "Cape Town Southern Line Extension",
+          accommodation: {
+            name: "Tintswalo at Boulders Boutique Villa",
+            badge: "Best Reviewed Ocean Villa",
+            rating: "4.9 ★ Best Reviewed",
+            type: "Luxury Beachfront Villa with Penguin Boardwalk Access",
+            distance: "Direct private gate leading onto Boulders Beach",
+            description: "Unrivaled private oceanfront villa overlooking False Bay, giving travelers private early-morning boardwalk access to the penguin colony before public tour buses arrive.",
+            bookingQuery: "Tintswalo at Boulders Simons Town Cape Town"
+          }
+        },
+        {
+          id: "cape-good-hope",
+          title: "Cape of Good Hope Point",
+          location: "Cape Peninsula National Park, Western Cape",
+          category: "Coastal Reserve",
+          video: "./videos/05_Cape_of_Good_Hope.mp4",
+          description: "The southwesternmost point of the African continent, where towering ocean cliffs plunge into roaring Atlantic surf.",
+          highlights: [
+            "Southwesternmost point of the African continent",
+            "Cape Point Funicular to the historic 1859 lighthouse lookout",
+            "Protected Cape Floral Kingdom with endemic proteas & wildlife"
+          ],
+          proximity: "Cape Town Station Scenic Excursion",
+          accommodation: {
+            name: "Tintswalo Atlantic",
+            badge: "Best Reviewed Coastal Hideaway",
+            rating: "4.9 ★ Best Reviewed",
+            type: "5-Star Oceanfront Boutique Lodge (Chapman's Peak)",
+            distance: "En route to Cape Point along Chapman's Peak Coastal Pass",
+            description: "The only lodge situated directly at the water's edge within Table Mountain National Park, offering heated ocean suites, private decks, and panoramic Atlantic sunsets.",
+            bookingQuery: "Tintswalo Atlantic Chapmans Peak Cape Town"
+          }
+        },
+        {
+          id: "namaqualand-wildflowers",
+          title: "Namaqualand Wildflower Spring Bloom",
+          location: "Namaqualand, Northern Cape",
+          category: "Natural Wonder",
+          video: "./videos/06_Namaqualand_Wildflowers_Windmill.mp4",
+          description: "Every spring, the semi-desert plains of Namaqualand undergo a magical transformation, bursting into an endless carpet of vibrant wildflowers.",
+          highlights: [
+            "World-famous desert bloom featuring over 3,500 plant species",
+            "Vivid carpets of orange Namaqualand daisies stretching to infinity",
+            "Historic Karoo windmills framing golden hour photography"
+          ],
+          proximity: "Karoo Northern Cape Rail Corridor",
+          accommodation: {
+            name: "Naries Namakwa Retreat",
+            badge: "Best Reviewed Desert Retreat",
+            rating: "4.9 ★ Best Reviewed",
+            type: "Luxury Mountain Dome Suites & Heritage Manor",
+            distance: "Spektakelberg Escarpment, heart of the flower corridor",
+            description: "Spectacular domed thatched suites built into natural boulders on the Spektakelberg escarpment, providing front-row sunrise vistas over the blossoming desert wildflowers.",
+            bookingQuery: "Naries Namakwa Retreat Springbok Northern Cape"
+          }
+        },
+        {
+          id: "blyde-river-canyon",
+          title: "Blyde River Canyon & Three Rondavels",
+          location: "Blyde River Canyon Reserve, Mpumalanga",
+          category: "Natural Wonder",
+          video: "./videos/07_Blyde_River_Canyon_Three_Rondavels.mp4",
+          description: "The third largest canyon in the world and the largest green vegetation canyon on Earth. Famous for the 'Three Rondavels' rock peaks.",
+          highlights: [
+            "The largest green vegetation canyon on Earth (26 km long, 800m deep)",
+            "The Three Rondavels quartzite mountain peaks resembling traditional huts",
+            "Bourke's Luck Potholes carved by swirling river whirlpools"
+          ],
+          proximity: "Pretoria Highveld Rail Route",
+          accommodation: {
+            name: "Blyde Canyon, A Forever Resort",
+            badge: "Best Reviewed Canyon Resort",
+            rating: "4.8 ★ Best Reviewed",
+            type: "Clifftop Canyon Chalets & Luxury Lodge",
+            distance: "Direct private trails to Three Rondavels Viewpoints",
+            description: "Positioned directly atop the canyon rim, featuring private cliffside chalets, Kadishi river trailheads, and panoramic private vistas of the Three Rondavels.",
+            bookingQuery: "Blyde River Canyon Forever Resort Mpumalanga"
+          }
+        },
+        {
+          id: "cradle-of-humankind",
+          title: "Cradle of Humankind (Maropeng)",
+          location: "Gauteng / North West Border",
+          category: "Heritage Site",
+          video: "./videos/08_Cradle_of_Humankind_Maropeng.mp4",
+          description: "A UNESCO World Heritage Site yielding over 40% of the world's human ancestor fossils, including 'Mrs. Ples' and 'Little Foot'.",
+          highlights: [
+            "Site of 40%+ of global hominid ancestor fossil discoveries",
+            "Interactive underground boat ride through Earth's elements at Maropeng",
+            "Sterkfontein Caves guided underground paleontology tours"
+          ],
+          proximity: "Pretoria & Johannesburg Rail Hubs",
+          accommodation: {
+            name: "Forum Homini Hotel & Roots Gourmet",
+            badge: "Best Reviewed Boutique Estate",
+            rating: "4.9 ★ Best Reviewed",
+            type: "5-Star Eco-Cave Luxury Hotel inside Game Estate",
+            distance: "8 mins (7.2 km) from Maropeng Visitor Centre",
+            description: "Stunning subterranean cave-style luxury suites nestled in Letamo Game Reserve, where zebra and blesbok roam right outside your private terrace with a 6-course wine pairing restaurant.",
+            bookingQuery: "Forum Homini Hotel Cradle of Humankind Gauteng"
+          }
+        },
+        {
+          id: "sun-city-palace",
+          title: "Sun City & Palace of the Lost City",
+          location: "Pilanesberg Crater, North West Province",
+          category: "Heritage Site",
+          video: "./videos/09_Sun_City_Palace_of_Lost_City.mp4",
+          description: "Nestled within an ancient 1.2-billion-year-old extinct volcanic crater, featuring hand-carved stone architecture and the Valley of Waves.",
+          highlights: [
+            "Architectural masterpiece in an extinct volcanic crater",
+            "Valley of Waves roaring inland surf lagoon and hydraulic wave pool",
+            "Bordering Pilanesberg National Park Big Five game reserve"
+          ],
+          proximity: "Pretoria Corridor Excursion Route",
+          accommodation: {
+            name: "The Palace of the Lost City",
+            badge: "Best Reviewed Fantasy Resort",
+            rating: "4.8 ★ Best Reviewed",
+            type: "World-Famous 5-Star Luxury Palace Hotel",
+            distance: "Inside the Sun City Resort & Pilanesberg gate",
+            description: "An architectural marvel with hand-carved stone towers, mosaic pools, 24/7 butler service, and VIP express passes to the Valley of Waves and Gary Player Country Club.",
+            bookingQuery: "The Palace of the Lost City Sun City North West"
+          }
+        },
+        {
+          id: "drakensberg-amphitheatre",
+          title: "Drakensberg Amphitheatre & Tugela Trail",
+          location: "Royal Natal National Park, KZN",
+          category: "Natural Wonder",
+          video: "./videos/10_Drakensberg_Amphitheatre_Hiking_Trail.mp4",
+          description: "The Drakensberg Amphitheatre stretches 5 km long and 1,220m sheer, featuring Tugela Falls—the highest waterfall in the world.",
+          highlights: [
+            "5 km long and 1,220m high sheer basalt rock wall",
+            "Tugela Falls—the highest waterfall on Earth (948m total drop)",
+            "Chain ladder mountain trails with views across Mont-aux-Sources"
+          ],
+          proximity: "Drakensberg Corridor Overlook",
+          accommodation: {
+            name: "Thendele Luxury Mountain Camp",
+            badge: "Best Reviewed Mountain Camp",
+            rating: "4.9 ★ Best Reviewed",
+            type: "Premier Clifftop Stone Chalets (Royal Natal)",
+            distance: "Inside Royal Natal National Park facing the Amphitheatre",
+            description: "Widely rated as the best-positioned camp in South Africa, built of natural stone with uninterrupted floor-to-ceiling vistas of the 1,000m Amphitheatre wall and Tugela Falls.",
+            bookingQuery: "Thendele Luxury Camp Royal Natal National Park Drakensberg"
+          }
+        },
+        {
+          id: "augrabies-falls",
+          title: "Augrabies Falls & Orange River Gorge",
+          location: "Augrabies Falls National Park, Northern Cape",
+          category: "Natural Wonder",
+          video: "./videos/11_Augrabies_Falls_Orange_River_Gorge.mp4",
+          description: "The Orange River thunders down a 56-meter granite cataract into an 18-kilometer deep ravine carved through solid moonscape granite.",
+          highlights: [
+            "Mighty 56m main waterfall plunge into solid granite canyon",
+            "18 km deep granite gorge carved over millions of years",
+            "Moon Rock massive domed granite outcrop overlooking the Karoo desert"
+          ],
+          proximity: "Northern Cape Karoo Corridor",
+          accommodation: {
+            name: "Dundi Lodge Augrabies",
+            badge: "Best Reviewed Country Lodge",
+            rating: "4.9 ★ Best Reviewed",
+            type: "4-Star Tranquil Country Lodge & Kalahari Dining",
+            distance: "3.5 km (5 mins) from Augrabies Falls Gate",
+            description: "A luxurious Kalahari oasis nestled among green vineyards, offering stone suites, a private airfield, crystal swimming pool, and bespoke guided sunset tours to the Orange River Gorge.",
+            bookingQuery: "Dundi Lodge Augrabies Northern Cape"
+          }
+        },
+        {
+          id: "apartheid-museum",
+          title: "Apartheid Museum (Johannesburg)",
+          location: "Gold Reef City, Johannesburg, Gauteng",
+          category: "Heritage Site",
+          video: "./videos/12_Apartheid_Museum_Johannesburg.mp4",
+          description: "A world-renowned museum providing a powerful multi-sensory journey through 20th-century South Africa.",
+          highlights: [
+            "Immersive architectural exhibition chronicling South Africa's history",
+            "Nelson Mandela permanent tribute collection",
+            "Pillar of the Constitution garden celebrating human rights"
+          ],
+          proximity: "Pretoria & Johannesburg Central Junction",
+          accommodation: {
+            name: "Four Seasons Hotel The Westcliff",
+            badge: "Best Reviewed Heritage Luxury",
+            rating: "4.9 ★ Best Reviewed",
+            type: "5-Star Hillside Palace & Urban Retreat",
+            distance: "12 km (15 mins) via M1 Highway corridor",
+            description: "An iconic hillside village hotel offering sweeping views across Johannesburg's jacaranda canopy, Michelin-inspired dining, and seamless private chauffeur service to the Apartheid Museum.",
+            bookingQuery: "Four Seasons Hotel The Westcliff Johannesburg"
+          }
+        },
+        {
+          id: "elephants-river",
+          title: "Olifants (Elephants) River Delta",
+          location: "Greater Kruger Corridor, Limpopo",
+          category: "Wildlife Sanctuary",
+          video: "./videos/13_Elephants_River_Delta_Aerial.mp4",
+          description: "Pristine wilderness river corridor supporting giant herds of wild African elephants, hippos, and Nile crocodiles.",
+          highlights: [
+            "Major river corridor supporting wild elephant herds",
+            "Abundant pods of hippos and crocodiles along sandy riverbanks",
+            "Unbroken wilderness ecosystem connecting Drakensberg streams to Kruger"
+          ],
+          proximity: "Highveld & Lowveld Corridor Route",
+          accommodation: {
+            name: "Singita Lebombo Lodge",
+            badge: "Best Reviewed Safari Lodge",
+            rating: "4.9 ★ Best Reviewed",
+            type: "Ultra-Luxury River Clifftop Safari Lodge",
+            distance: "Suspended directly above the Olifants River gorge",
+            description: "Suspended like eagles' nests along the Olifants River cliffs, featuring glass-walled suites, private lap pools, and daily wildlife viewing of elephant herds drinking below.",
+            bookingQuery: "Singita Lebombo Lodge Kruger National Park"
+          }
+        },
+        {
+          id: "cango-caves",
+          title: "Cango Caves (Oudtshoorn)",
+          location: "Klein Karoo, Oudtshoorn, Western Cape",
+          category: "Heritage Site",
+          video: "./videos/14_Cango_Caves.mp4",
+          description: "20-million-year-old subterranean limestone chambers filled with towering stalagmites, stalactites, and ancient cave art.",
+          highlights: [
+            "20-million-year-old underground limestone cavern network",
+            "Van Zyl's Hall featuring 9m 'Organ Pipe' dripstone structure",
+            "Heritage and Adventure crawl routes through mountain tunnels"
+          ],
+          proximity: "Karoo to Garden Route Corridor Excursion",
+          accommodation: {
+            name: "Buffelsdrift Game Lodge",
+            badge: "Best Reviewed Waterfront Safari",
+            rating: "4.9 ★ Best Reviewed",
+            type: "Luxury Waterfront Tented Chalets & Spa",
+            distance: "18 km (15 mins) on Cango Caves Scenic Valley Road",
+            description: "Authentic luxury canvas tents set on a pristine natural waterhole at the foot of the Swartberg mountains, where resident hippos and free-ranging elephants greet guests.",
+            bookingQuery: "Buffelsdrift Game Lodge Oudtshoorn Western Cape"
+          }
+        },
+        {
+          id: "garden-route",
+          title: "Garden Route Scenic Coastal Drive",
+          location: "Mossel Bay to Tsitsikamma, Western Cape",
+          category: "Coastal Reserve",
+          video: "./videos/15_Garden_Route_Coastal_Road.mp4",
+          description: "World-famous 300 km coastal drive snaking between ocean cliffs, yellowwood forests, freshwater lagoons, and white sand beaches.",
+          highlights: [
+            "300 km coastal corridor through Knysna & Tsitsikamma",
+            "Bloukrans Bridge—highest commercial bungee jump in world (216m)",
+            "Tsitsikamma National Park suspension bridges over Storms River"
+          ],
+          proximity: "Cape Coastal Rail Extension",
+          accommodation: {
+            name: "The Plettenberg Hotel",
+            badge: "Best Reviewed Ocean Haven",
+            rating: "4.9 ★ Best Reviewed",
+            type: "5-Star Clifftop Relais & Châteaux Sanctuary",
+            distance: "Center of the Garden Route Coastal Corridor",
+            description: "Perched on a rocky promontory with infinity pools overlooking Plettenberg Bay, offering direct views of playful dolphins and southern right whales from your private bedroom terrace.",
+            bookingQuery: "The Plettenberg Hotel Plettenberg Bay Garden Route"
+          }
+        },
+        {
+          id: "constitution-hill",
+          title: "Constitution Hill & Constitutional Court",
+          location: "Braamfontein, Johannesburg, Gauteng",
+          category: "Heritage Site",
+          video: "./videos/16_Constitutional_Court_Constitution_Hill.mp4",
+          description: "Former 19th-century fort and prison complex where Mandela and Gandhi were held, now housing South Africa's Constitutional Court.",
+          highlights: [
+            "South Africa's Supreme Constitutional Court",
+            "Old Fort & Women's Jail historical museum tours",
+            "Recycled prison brick architecture in court chamber"
+          ],
+          proximity: "Pretoria & Gauteng Rail Hub",
+          accommodation: {
+            name: "voco Johannesburg Rosebank (IHG)",
+            badge: "Best Reviewed Urban Sanctuary",
+            rating: "4.9 ★ Best Reviewed",
+            type: "Contemporary 5-Star Boutique Design Hotel",
+            distance: "4.5 km (8 mins) from Constitution Hill",
+            description: "Located in the trendy Rosebank arts precinct with Gautrain rail access, offering designer suites, a tranquil curated art gallery, and express transfers to Constitution Hill.",
+            bookingQuery: "voco Johannesburg Rosebank Gauteng"
+          }
+        },
+        {
+          id: "va-waterfront",
+          title: "V&A Waterfront & Working Harbor",
+          location: "Table Bay Harbor, Cape Town, Western Cape",
+          category: "Coastal Reserve",
+          video: "./videos/17_VA_Waterfront_Cape_Town.mp4",
+          description: "Historic seaport hub combining operating tugboats and fishing dhows with fine dining, craft markets, and sunset cruises.",
+          highlights: [
+            "South Africa's oldest working harbor operating since 1860",
+            "Zeitz Museum of Contemporary Art Africa (MOCAA)",
+            "Departure ferry point for Robben Island tours"
+          ],
+          proximity: "Cape Town Station Terminus (2 km distance)",
+          accommodation: {
+            name: "Cape Grace, A Fairmont Managed Hotel",
+            badge: "Best Reviewed Waterfront Hotel",
+            rating: "4.9 ★ Best Reviewed",
+            type: "5-Star Private Marina Quayside Hotel",
+            distance: "Directly on West Quay in the heart of V&A Waterfront",
+            description: "Situated on its own private quay in the V&A Waterfront with antique French nautical decor, private yacht slipway, Bascule whisky cellar, and safe walking access to harbor attractions.",
+            bookingQuery: "Cape Grace Hotel V&A Waterfront Cape Town"
+          }
+        },
+        {
+          id: "table-mountain-sunset",
+          title: "Table Mountain & Lion's Head Sunset",
+          location: "Table Mountain National Park, Cape Town",
+          category: "Natural Wonder",
+          video: "./videos/18_Table_Mountain_Sunset_Lions_Head.mp4",
+          description: "One of the New 7 Wonders of Nature, Table Mountain rises 1,086 meters over Cape Town with revolving Cableway views.",
+          highlights: [
+            "Official New 7 Wonders of Nature",
+            "Revolving Aerial Cableway with 360° Cape Peninsula views",
+            "Endemic Table Mountain fynbos vegetation with 1,470+ species"
+          ],
+          proximity: "Cape Town Station Main Terminus",
+          accommodation: {
+            name: "Mount Nelson, A Belmond Hotel",
+            badge: "Best Reviewed Historic Oasis",
+            rating: "4.9 ★ Best Reviewed",
+            type: "Legendary 5-Star Luxury Garden Estate",
+            distance: "5 mins (2.8 km) from Table Mountain Aerial Cableway",
+            description: "Cape Town's iconic 'Pink Lady' set in 9 acres of heritage palm gardens directly beneath Table Mountain, famous for its afternoon tea, heated pools, and chauffeured cableway access.",
+            bookingQuery: "Mount Nelson Belmond Hotel Cape Town"
+          }
+        },
+        {
+          id: "mandela-house-soweto",
+          title: "Nelson Mandela House (Vilakazi Street)",
+          location: "Orlando West, Soweto, Gauteng",
+          category: "Heritage Site",
+          video: "./videos/19_Mandela_House_Soweto.mp4",
+          description: "Historic family home at 8115 Vilakazi Street in Soweto where Nelson Mandela lived from 1946 to 1962.",
+          highlights: [
+            "Historic family home of Nelson Mandela during anti-apartheid movement",
+            "Located on Vilakazi Street—only street in world with 2 Nobel Laureates",
+            "Preserved struggle era artifacts and photographs"
+          ],
+          proximity: "Gauteng Rail Junction Excursion",
+          accommodation: {
+            name: "The Soweto Hotel on Freedom Square",
+            badge: "Best Reviewed Cultural Hotel",
+            rating: "4.8 ★ Best Reviewed",
+            type: "4-Star Historic Boutique Heritage Hotel",
+            distance: "6 km (10 mins) from Vilakazi Street",
+            description: "A vibrant boutique hotel on historic Walter Sisulu Square celebrating South African struggle heritage with jazz dining, authentic local hospitality, and guided Vilakazi tours.",
+            bookingQuery: "The Soweto Hotel on Freedom Square Soweto Johannesburg"
+          }
+        },
+        {
+          id: "pilanesberg-game-reserve",
+          title: "Pilanesberg National Game Reserve",
+          location: "Bojanala District, North West Province",
+          category: "Wildlife Sanctuary",
+          video: "./videos/20_Pilanesberg_Game_Reserve_Entrance.mp4",
+          description: "Malaria-free 55,000-hectare Big Five game reserve set inside a 1.2-billion-year-old extinct alkaline volcano crater.",
+          highlights: [
+            "Malaria-free Big Five game reserve inside extinct volcanic crater",
+            "Over 7,000 animals including rare brown hyenas",
+            "Mankwe Dam central hide for photographic safari"
+          ],
+          proximity: "Pretoria Departure Safari Extension",
+          accommodation: {
+            name: "Tshukudu Bush Lodge",
+            badge: "Best Reviewed Big 5 Safari",
+            rating: "4.9 ★ Best Reviewed",
+            type: "5-Star Ultra-Luxury Clifftop Safari Chalets",
+            distance: "Nestled deep within Pilanesberg Game Reserve",
+            description: "Only 6 exclusive stone-and-thatch chalets perched on a volcanic hilltop overlooking a bustling game waterhole, complete with private plunge pools and personalized game rangers.",
+            bookingQuery: "Tshukudu Bush Lodge Pilanesberg National Park"
+          }
+        },
+        {
+          id: "addo-elephant-park",
+          title: "Addo Elephant National Park Safari",
+          location: "Zuurberg Mountains, Eastern Cape",
+          category: "Wildlife Sanctuary",
+          video: "./videos/21_Addo_Elephant_Park_Safari.mp4",
+          description: "World-famous sanctuary harboring over 600 wild African elephants along with cape buffalo, rhinos, lions, and marine life.",
+          highlights: [
+            "Home to over 600 free-roaming wild African elephants",
+            "Only park in world harboring the 'Big Seven' (Big 5 + Whale & White Shark)",
+            "Spekboom succulent thickets providing natural habitat"
+          ],
+          proximity: "Eastern Cape Rail Corridor Extension",
+          accommodation: {
+            name: "Gorah Elephant Camp",
+            badge: "Best Reviewed Safari Camp",
+            rating: "4.9 ★ Best Reviewed",
+            type: "Relais & Châteaux 5-Star Tented Safari Camp",
+            distance: "Inside private concession of Addo Elephant National Park",
+            description: "The premier private luxury concession inside Addo, with opulent 1900s safari tents overlooking a waterhole teeming with elephant herds, cape buffalo, and lion prides.",
+            bookingQuery: "Gorah Elephant Camp Addo Elephant National Park Eastern Cape"
+          }
+        }
+      ];
 
   function setupAttractionsShowcase() {
     const grid = document.getElementById('attraction-cards-grid');
@@ -12139,6 +12328,25 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
       if (highlightsEl && item.highlights) {
         highlightsEl.innerHTML = item.highlights.map(h => `<li class="flex items-start gap-2"><span class="text-[#D99B26] font-bold">•</span> <span>${h}</span></li>`).join('');
+      }
+
+      // Update Accommodation Info
+      const hotelNameEl = document.getElementById('attraction-hotel-name');
+      const hotelTypeEl = document.getElementById('attraction-hotel-type');
+      const hotelRatingEl = document.getElementById('attraction-hotel-rating');
+      const hotelDistEl = document.getElementById('attraction-hotel-distance');
+      const hotelDescEl = document.getElementById('attraction-hotel-desc');
+      const hotelBookBtn = document.getElementById('attraction-hotel-book-btn');
+
+      if (item.accommodation) {
+        if (hotelNameEl) hotelNameEl.textContent = item.accommodation.name;
+        if (hotelTypeEl) hotelTypeEl.textContent = item.accommodation.type;
+        if (hotelRatingEl) hotelRatingEl.textContent = item.accommodation.rating;
+        if (hotelDistEl) hotelDistEl.textContent = item.accommodation.distance;
+        if (hotelDescEl) hotelDescEl.textContent = item.accommodation.description;
+        if (hotelBookBtn) {
+          hotelBookBtn.href = `https://www.google.com/travel/hotels?q=${encodeURIComponent(item.accommodation.bookingQuery)}`;
+        }
       }
 
       if (videoEl && sourceEl) {
@@ -12192,6 +12400,22 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
               <p class="text-xs text-[#57534E] font-sans font-medium line-clamp-2 leading-relaxed mb-3">
                 ${item.description}
               </p>
+              ${item.accommodation ? `
+                <div class="mt-2 pt-2 border-t border-[#E7E2D8] mb-3">
+                  <div class="flex items-center justify-between text-[11px] mb-0.5">
+                    <span class="font-bold text-[#B87C10] flex items-center gap-1 truncate max-w-[170px]" title="${item.accommodation.name}">
+                      <i data-lucide="bed" class="w-3.5 h-3.5 shrink-0"></i>
+                      <span class="truncate">${item.accommodation.name}</span>
+                    </span>
+                    <span class="font-mono text-[9px] font-extrabold bg-[#D99B26]/10 text-[#B87C10] px-1.5 py-0.5 rounded shrink-0">
+                      ${item.accommodation.rating.split(' ')[0]} ★
+                    </span>
+                  </div>
+                  <div class="text-[10px] text-[#78716C] font-mono truncate">
+                    ${item.accommodation.distance}
+                  </div>
+                </div>
+              ` : ''}
             </div>
             <button type="button" class="w-full py-2 rounded-xl bg-[#F8F6F0] group-hover:bg-[#D99B26] text-[#1C1917] group-hover:text-white font-mono text-[11px] font-bold transition-colors flex items-center justify-center gap-1.5 border border-[#E7E2D8] group-hover:border-[#D99B26]">
               <i data-lucide="video" class="w-3.5 h-3.5"></i>

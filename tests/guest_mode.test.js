@@ -112,6 +112,12 @@ describe('TrackTales Guest Mode & Portal Verification', () => {
       assert.ok(guestHtml.includes('id="attraction-main-highlights"'), 'Master highlights missing');
       assert.ok(guestHtml.includes('id="attraction-main-proximity"'), 'Master proximity missing');
       assert.ok(guestHtml.includes('id="attraction-counter-badge"'), 'Attraction counter badge missing');
+      assert.ok(guestHtml.includes('id="attraction-hotel-card"'), 'Accommodation card missing');
+      assert.ok(guestHtml.includes('id="attraction-hotel-name"'), 'Accommodation name element missing');
+      assert.ok(guestHtml.includes('id="attraction-hotel-rating"'), 'Accommodation rating element missing');
+      assert.ok(guestHtml.includes('id="attraction-hotel-distance"'), 'Accommodation distance element missing');
+      assert.ok(guestHtml.includes('id="attraction-hotel-desc"'), 'Accommodation description element missing');
+      assert.ok(guestHtml.includes('id="attraction-hotel-book-btn"'), 'Accommodation booking button missing');
     });
 
     it('includes interactive audio toggle control', () => {
@@ -254,6 +260,18 @@ describe('TrackTales Guest Mode & Portal Verification', () => {
         assert.ok(item.description && item.description.length > 20);
         assert.ok(Array.isArray(item.highlights) && item.highlights.length >= 3, `${item.id} should have at least 3 highlights`);
         assert.ok(item.proximity && item.proximity.length > 5);
+      }
+    });
+
+    it('Every attraction includes nearest best-reviewed accommodation for tourists with full details', () => {
+      for (const item of attractions) {
+        assert.ok(item.accommodation && typeof item.accommodation === 'object', `${item.id} missing accommodation object`);
+        assert.ok(item.accommodation.name && item.accommodation.name.length > 2, `${item.id} missing accommodation name`);
+        assert.ok(item.accommodation.rating && item.accommodation.rating.includes('★'), `${item.id} should have rating with star`);
+        assert.ok(item.accommodation.type && item.accommodation.type.length > 3, `${item.id} missing accommodation type`);
+        assert.ok(item.accommodation.distance && item.accommodation.distance.length > 3, `${item.id} missing accommodation distance`);
+        assert.ok(item.accommodation.description && item.accommodation.description.length > 15, `${item.id} missing accommodation description`);
+        assert.ok(item.accommodation.bookingQuery && item.accommodation.bookingQuery.length > 5, `${item.id} missing booking query`);
       }
     });
 

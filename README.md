@@ -35,6 +35,7 @@ Built with a FastAPI Python backend, SQLite and Supabase database integrations, 
 - Master Cinematic Video Player: Feature video showcase with responsive 16:9 aspect ratio, seamless loop playback, and interactive audio mute/unmute toggles.
 - Filterable Directory: Filter attraction cards across Heritage, Nature, Luxury, and Architecture categories.
 - Strict Login Redirection: "Sign In / Register" links in both the header and footer invoke an authentication redirect that clears guest session flags and routes the user back to the primary login modal.
+- Nearest Best-Reviewed Accommodation: Comprehensive tourist booking guide integrated into every attraction profile, recommending the closest premier-reviewed lodge, historic hotel, or safari camp with star ratings, travel distance, and availability lookups.
 
 ### 4. 16-Language Multilingual Translation Engine
 - Comprehensive Language Support: Full localization across 11 official South African languages and 5 high-volume international tourist languages:

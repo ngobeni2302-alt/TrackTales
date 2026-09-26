@@ -184,6 +184,39 @@
             </ul>
           </div>
 
+          <!-- Nearest Best-Reviewed Accommodation to Book & Rest -->
+          <div id="attraction-hotel-card" class="bg-gradient-to-br from-white to-[#F8F6F0] p-4 sm:p-5 rounded-2xl border-2 border-[#D99B26]/30 shadow-md relative overflow-hidden">
+            <div class="flex items-center justify-between gap-2 mb-2.5">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#D99B26]/15 text-[#B87C10] font-mono text-[10px] font-bold uppercase tracking-wider">
+                <i data-lucide="bed" class="w-3.5 h-3.5"></i>
+                <span id="attraction-hotel-badge">Where to Book &amp; Rest · Top Reviewed</span>
+              </span>
+              <span id="attraction-hotel-rating" class="font-mono text-[11px] font-extrabold text-[#B87C10] bg-[#D99B26]/10 border border-[#D99B26]/20 px-2 py-0.5 rounded-md">
+                4.8 ★ Best Reviewed
+              </span>
+            </div>
+            
+            <h4 id="attraction-hotel-name" class="font-heading font-extrabold text-base sm:text-lg text-[#1C1917] tracking-tight">
+              Angels View Hotel
+            </h4>
+            
+            <div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[#78716C] font-mono mt-1 mb-2">
+              <span id="attraction-hotel-type" class="text-[#0A0C10] font-bold">Luxury Escarpment Hotel &amp; Spa</span>
+              <span class="text-[#D6CFC7]">•</span>
+              <span id="attraction-hotel-distance" class="text-[#B87C10] font-semibold">6.4 km (10 mins) from God's Window</span>
+            </div>
+
+            <p id="attraction-hotel-desc" class="text-xs text-[#57534E] font-sans leading-relaxed mb-3">
+              Perched high on the Graskop gorge edge with glass-front suites, heated infinity pools overlooking the Lowveld, fine dining, and direct access to the Panorama Route.
+            </p>
+
+            <a id="attraction-hotel-book-btn" href="https://www.google.com/travel/hotels?q=Angels+View+Hotel+Graskop+Mpumalanga" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 w-full py-2.5 px-3 rounded-xl bg-[#D99B26] hover:bg-[#C98B1E] text-white font-mono text-xs font-bold uppercase tracking-wider transition-all shadow-sm group">
+              <i data-lucide="calendar-check" class="w-4 h-4"></i>
+              <span>Book &amp; Check Availability</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5 opacity-80 group-hover:translate-x-0.5 transition-transform"></i>
+            </a>
+          </div>
+
           <div class="flex items-center justify-between pt-2 border-t border-[#EBE5D9] text-xs font-mono font-bold text-[#78716C]">
             <span>Guest Video Guide</span>
             <span id="attraction-counter-badge" class="text-[#D99B26]">Attraction 1 of 21</span>
@@ -239,7 +272,16 @@
             "Gateway to the famous Panorama Route and Lisbon & Berlin Waterfalls",
             "Panoramic views extending across the Lowveld to the Mozambique border"
           ],
-          proximity: "Pretoria Departure Hub Excursion"
+          proximity: "Pretoria Departure Hub Excursion",
+          accommodation: {
+            name: "Angels View Hotel",
+            badge: "Best Reviewed Stay",
+            rating: "4.8 ★ Best Reviewed",
+            type: "Luxury Escarpment Hotel & Spa",
+            distance: "6.4 km (10 mins) from God's Window",
+            description: "Perched high on the Graskop gorge edge with glass-front suites, heated infinity pools overlooking the Lowveld, fine dining, and direct access to the Panorama Route.",
+            bookingQuery: "Angels View Hotel Graskop Mpumalanga"
+          }
         },
         {
           id: "drakensberg-cliff",
@@ -253,7 +295,16 @@
             "Over 35,000 individual San Bushman rock paintings in caves",
             "Dramatic mountain basalt wall forming the high border with Lesotho"
           ],
-          proximity: "Highveld Rail Junction Vantage Point"
+          proximity: "Highveld Rail Junction Vantage Point",
+          accommodation: {
+            name: "Cathedral Peak Hotel",
+            badge: "Best Reviewed Mountain Resort",
+            rating: "4.9 ★ Best Reviewed",
+            type: "Premier Alpine Mountain Resort & Spa",
+            distance: "Nestled directly at the base of Cathedral Peak",
+            description: "South Africa's premier Drakensberg mountain hotel offering thatch mountain chalets, crystal mountain stream pools, daily guided rock art walks, and panoramic alpine views.",
+            bookingQuery: "Cathedral Peak Hotel Drakensberg KwaZulu-Natal"
+          }
         },
         {
           id: "robben-island-table-mountain",
@@ -267,7 +318,16 @@
             "Guided tours conducted by former political prisoners",
             "Panoramic views of Table Mountain and Cape Town across Table Bay"
           ],
-          proximity: "Cape Town Station Terminus Arrival"
+          proximity: "Cape Town Station Terminus Arrival",
+          accommodation: {
+            name: "The Silo Hotel",
+            badge: "Best Reviewed Luxury Hotel",
+            rating: "4.9 ★ Best Reviewed",
+            type: "5-Star Architectural Masterpiece (V&A Waterfront)",
+            distance: "500m from the Robben Island Ferry Terminal",
+            description: "Built above the Zeitz MOCAA in the historic grain silo, offering world-famous pillow-glass windows, rooftop infinity pool, and uninterrupted panoramas across Table Bay.",
+            bookingQuery: "The Silo Hotel V&A Waterfront Cape Town"
+          }
         },
         {
           id: "boulders-beach",
@@ -281,7 +341,16 @@
             "Sheltered calm turquoise coves framed by ancient granite boulders",
             "Elevated wooden boardwalks for eco-friendly wildlife viewing"
           ],
-          proximity: "Cape Town Southern Line Extension"
+          proximity: "Cape Town Southern Line Extension",
+          accommodation: {
+            name: "Tintswalo at Boulders Boutique Villa",
+            badge: "Best Reviewed Ocean Villa",
+            rating: "4.9 ★ Best Reviewed",
+            type: "Luxury Beachfront Villa with Penguin Boardwalk Access",
+            distance: "Direct private gate leading onto Boulders Beach",
+            description: "Unrivaled private oceanfront villa overlooking False Bay, giving travelers private early-morning boardwalk access to the penguin colony before public tour buses arrive.",
+            bookingQuery: "Tintswalo at Boulders Simons Town Cape Town"
+          }
         },
         {
           id: "cape-good-hope",
@@ -295,7 +364,16 @@
             "Cape Point Funicular to the historic 1859 lighthouse lookout",
             "Protected Cape Floral Kingdom with endemic proteas & wildlife"
           ],
-          proximity: "Cape Town Station Scenic Excursion"
+          proximity: "Cape Town Station Scenic Excursion",
+          accommodation: {
+            name: "Tintswalo Atlantic",
+            badge: "Best Reviewed Coastal Hideaway",
+            rating: "4.9 ★ Best Reviewed",
+            type: "5-Star Oceanfront Boutique Lodge (Chapman's Peak)",
+            distance: "En route to Cape Point along Chapman's Peak Coastal Pass",
+            description: "The only lodge situated directly at the water's edge within Table Mountain National Park, offering heated ocean suites, private decks, and panoramic Atlantic sunsets.",
+            bookingQuery: "Tintswalo Atlantic Chapmans Peak Cape Town"
+          }
         },
         {
           id: "namaqualand-wildflowers",
@@ -309,7 +387,16 @@
             "Vivid carpets of orange Namaqualand daisies stretching to infinity",
             "Historic Karoo windmills framing golden hour photography"
           ],
-          proximity: "Karoo Northern Cape Rail Corridor"
+          proximity: "Karoo Northern Cape Rail Corridor",
+          accommodation: {
+            name: "Naries Namakwa Retreat",
+            badge: "Best Reviewed Desert Retreat",
+            rating: "4.9 ★ Best Reviewed",
+            type: "Luxury Mountain Dome Suites & Heritage Manor",
+            distance: "Spektakelberg Escarpment, heart of the flower corridor",
+            description: "Spectacular domed thatched suites built into natural boulders on the Spektakelberg escarpment, providing front-row sunrise vistas over the blossoming desert wildflowers.",
+            bookingQuery: "Naries Namakwa Retreat Springbok Northern Cape"
+          }
         },
         {
           id: "blyde-river-canyon",
@@ -323,7 +410,16 @@
             "The Three Rondavels quartzite mountain peaks resembling traditional huts",
             "Bourke's Luck Potholes carved by swirling river whirlpools"
           ],
-          proximity: "Pretoria Highveld Rail Route"
+          proximity: "Pretoria Highveld Rail Route",
+          accommodation: {
+            name: "Blyde Canyon, A Forever Resort",
+            badge: "Best Reviewed Canyon Resort",
+            rating: "4.8 ★ Best Reviewed",
+            type: "Clifftop Canyon Chalets & Luxury Lodge",
+            distance: "Direct private trails to Three Rondavels Viewpoints",
+            description: "Positioned directly atop the canyon rim, featuring private cliffside chalets, Kadishi river trailheads, and panoramic private vistas of the Three Rondavels.",
+            bookingQuery: "Blyde River Canyon Forever Resort Mpumalanga"
+          }
         },
         {
           id: "cradle-of-humankind",
@@ -337,7 +433,16 @@
             "Interactive underground boat ride through Earth's elements at Maropeng",
             "Sterkfontein Caves guided underground paleontology tours"
           ],
-          proximity: "Pretoria & Johannesburg Rail Hubs"
+          proximity: "Pretoria & Johannesburg Rail Hubs",
+          accommodation: {
+            name: "Forum Homini Hotel & Roots Gourmet",
+            badge: "Best Reviewed Boutique Estate",
+            rating: "4.9 ★ Best Reviewed",
+            type: "5-Star Eco-Cave Luxury Hotel inside Game Estate",
+            distance: "8 mins (7.2 km) from Maropeng Visitor Centre",
+            description: "Stunning subterranean cave-style luxury suites nestled in Letamo Game Reserve, where zebra and blesbok roam right outside your private terrace with a 6-course wine pairing restaurant.",
+            bookingQuery: "Forum Homini Hotel Cradle of Humankind Gauteng"
+          }
         },
         {
           id: "sun-city-palace",
@@ -351,7 +456,16 @@
             "Valley of Waves roaring inland surf lagoon and hydraulic wave pool",
             "Bordering Pilanesberg National Park Big Five game reserve"
           ],
-          proximity: "Pretoria Corridor Excursion Route"
+          proximity: "Pretoria Corridor Excursion Route",
+          accommodation: {
+            name: "The Palace of the Lost City",
+            badge: "Best Reviewed Fantasy Resort",
+            rating: "4.8 ★ Best Reviewed",
+            type: "World-Famous 5-Star Luxury Palace Hotel",
+            distance: "Inside the Sun City Resort & Pilanesberg gate",
+            description: "An architectural marvel with hand-carved stone towers, mosaic pools, 24/7 butler service, and VIP express passes to the Valley of Waves and Gary Player Country Club.",
+            bookingQuery: "The Palace of the Lost City Sun City North West"
+          }
         },
         {
           id: "drakensberg-amphitheatre",
@@ -365,7 +479,16 @@
             "Tugela Falls—the highest waterfall on Earth (948m total drop)",
             "Chain ladder mountain trails with views across Mont-aux-Sources"
           ],
-          proximity: "Drakensberg Corridor Overlook"
+          proximity: "Drakensberg Corridor Overlook",
+          accommodation: {
+            name: "Thendele Luxury Mountain Camp",
+            badge: "Best Reviewed Mountain Camp",
+            rating: "4.9 ★ Best Reviewed",
+            type: "Premier Clifftop Stone Chalets (Royal Natal)",
+            distance: "Inside Royal Natal National Park facing the Amphitheatre",
+            description: "Widely rated as the best-positioned camp in South Africa, built of natural stone with uninterrupted floor-to-ceiling vistas of the 1,000m Amphitheatre wall and Tugela Falls.",
+            bookingQuery: "Thendele Luxury Camp Royal Natal National Park Drakensberg"
+          }
         },
         {
           id: "augrabies-falls",
@@ -379,7 +502,16 @@
             "18 km deep granite gorge carved over millions of years",
             "Moon Rock massive domed granite outcrop overlooking the Karoo desert"
           ],
-          proximity: "Northern Cape Karoo Corridor"
+          proximity: "Northern Cape Karoo Corridor",
+          accommodation: {
+            name: "Dundi Lodge Augrabies",
+            badge: "Best Reviewed Country Lodge",
+            rating: "4.9 ★ Best Reviewed",
+            type: "4-Star Tranquil Country Lodge & Kalahari Dining",
+            distance: "3.5 km (5 mins) from Augrabies Falls Gate",
+            description: "A luxurious Kalahari oasis nestled among green vineyards, offering stone suites, a private airfield, crystal swimming pool, and bespoke guided sunset tours to the Orange River Gorge.",
+            bookingQuery: "Dundi Lodge Augrabies Northern Cape"
+          }
         },
         {
           id: "apartheid-museum",
@@ -393,7 +525,16 @@
             "Nelson Mandela permanent tribute collection",
             "Pillar of the Constitution garden celebrating human rights"
           ],
-          proximity: "Pretoria & Johannesburg Central Junction"
+          proximity: "Pretoria & Johannesburg Central Junction",
+          accommodation: {
+            name: "Four Seasons Hotel The Westcliff",
+            badge: "Best Reviewed Heritage Luxury",
+            rating: "4.9 ★ Best Reviewed",
+            type: "5-Star Hillside Palace & Urban Retreat",
+            distance: "12 km (15 mins) via M1 Highway corridor",
+            description: "An iconic hillside village hotel offering sweeping views across Johannesburg's jacaranda canopy, Michelin-inspired dining, and seamless private chauffeur service to the Apartheid Museum.",
+            bookingQuery: "Four Seasons Hotel The Westcliff Johannesburg"
+          }
         },
         {
           id: "elephants-river",
@@ -407,7 +548,16 @@
             "Abundant pods of hippos and crocodiles along sandy riverbanks",
             "Unbroken wilderness ecosystem connecting Drakensberg streams to Kruger"
           ],
-          proximity: "Highveld & Lowveld Corridor Route"
+          proximity: "Highveld & Lowveld Corridor Route",
+          accommodation: {
+            name: "Singita Lebombo Lodge",
+            badge: "Best Reviewed Safari Lodge",
+            rating: "4.9 ★ Best Reviewed",
+            type: "Ultra-Luxury River Clifftop Safari Lodge",
+            distance: "Suspended directly above the Olifants River gorge",
+            description: "Suspended like eagles' nests along the Olifants River cliffs, featuring glass-walled suites, private lap pools, and daily wildlife viewing of elephant herds drinking below.",
+            bookingQuery: "Singita Lebombo Lodge Kruger National Park"
+          }
         },
         {
           id: "cango-caves",
@@ -421,7 +571,16 @@
             "Van Zyl's Hall featuring 9m 'Organ Pipe' dripstone structure",
             "Heritage and Adventure crawl routes through mountain tunnels"
           ],
-          proximity: "Karoo to Garden Route Corridor Excursion"
+          proximity: "Karoo to Garden Route Corridor Excursion",
+          accommodation: {
+            name: "Buffelsdrift Game Lodge",
+            badge: "Best Reviewed Waterfront Safari",
+            rating: "4.9 ★ Best Reviewed",
+            type: "Luxury Waterfront Tented Chalets & Spa",
+            distance: "18 km (15 mins) on Cango Caves Scenic Valley Road",
+            description: "Authentic luxury canvas tents set on a pristine natural waterhole at the foot of the Swartberg mountains, where resident hippos and free-ranging elephants greet guests.",
+            bookingQuery: "Buffelsdrift Game Lodge Oudtshoorn Western Cape"
+          }
         },
         {
           id: "garden-route",
@@ -435,7 +594,16 @@
             "Bloukrans Bridge—highest commercial bungee jump in world (216m)",
             "Tsitsikamma National Park suspension bridges over Storms River"
           ],
-          proximity: "Cape Coastal Rail Extension"
+          proximity: "Cape Coastal Rail Extension",
+          accommodation: {
+            name: "The Plettenberg Hotel",
+            badge: "Best Reviewed Ocean Haven",
+            rating: "4.9 ★ Best Reviewed",
+            type: "5-Star Clifftop Relais & Châteaux Sanctuary",
+            distance: "Center of the Garden Route Coastal Corridor",
+            description: "Perched on a rocky promontory with infinity pools overlooking Plettenberg Bay, offering direct views of playful dolphins and southern right whales from your private bedroom terrace.",
+            bookingQuery: "The Plettenberg Hotel Plettenberg Bay Garden Route"
+          }
         },
         {
           id: "constitution-hill",
@@ -449,7 +617,16 @@
             "Old Fort & Women's Jail historical museum tours",
             "Recycled prison brick architecture in court chamber"
           ],
-          proximity: "Pretoria & Gauteng Rail Hub"
+          proximity: "Pretoria & Gauteng Rail Hub",
+          accommodation: {
+            name: "voco Johannesburg Rosebank (IHG)",
+            badge: "Best Reviewed Urban Sanctuary",
+            rating: "4.9 ★ Best Reviewed",
+            type: "Contemporary 5-Star Boutique Design Hotel",
+            distance: "4.5 km (8 mins) from Constitution Hill",
+            description: "Located in the trendy Rosebank arts precinct with Gautrain rail access, offering designer suites, a tranquil curated art gallery, and express transfers to Constitution Hill.",
+            bookingQuery: "voco Johannesburg Rosebank Gauteng"
+          }
         },
         {
           id: "va-waterfront",
@@ -463,7 +640,16 @@
             "Zeitz Museum of Contemporary Art Africa (MOCAA)",
             "Departure ferry point for Robben Island tours"
           ],
-          proximity: "Cape Town Station Terminus (2 km distance)"
+          proximity: "Cape Town Station Terminus (2 km distance)",
+          accommodation: {
+            name: "Cape Grace, A Fairmont Managed Hotel",
+            badge: "Best Reviewed Waterfront Hotel",
+            rating: "4.9 ★ Best Reviewed",
+            type: "5-Star Private Marina Quayside Hotel",
+            distance: "Directly on West Quay in the heart of V&A Waterfront",
+            description: "Situated on its own private quay in the V&A Waterfront with antique French nautical decor, private yacht slipway, Bascule whisky cellar, and safe walking access to harbor attractions.",
+            bookingQuery: "Cape Grace Hotel V&A Waterfront Cape Town"
+          }
         },
         {
           id: "table-mountain-sunset",
@@ -477,7 +663,16 @@
             "Revolving Aerial Cableway with 360° Cape Peninsula views",
             "Endemic Table Mountain fynbos vegetation with 1,470+ species"
           ],
-          proximity: "Cape Town Station Main Terminus"
+          proximity: "Cape Town Station Main Terminus",
+          accommodation: {
+            name: "Mount Nelson, A Belmond Hotel",
+            badge: "Best Reviewed Historic Oasis",
+            rating: "4.9 ★ Best Reviewed",
+            type: "Legendary 5-Star Luxury Garden Estate",
+            distance: "5 mins (2.8 km) from Table Mountain Aerial Cableway",
+            description: "Cape Town's iconic 'Pink Lady' set in 9 acres of heritage palm gardens directly beneath Table Mountain, famous for its afternoon tea, heated pools, and chauffeured cableway access.",
+            bookingQuery: "Mount Nelson Belmond Hotel Cape Town"
+          }
         },
         {
           id: "mandela-house-soweto",
@@ -491,7 +686,16 @@
             "Located on Vilakazi Street—only street in world with 2 Nobel Laureates",
             "Preserved struggle era artifacts and photographs"
           ],
-          proximity: "Gauteng Rail Junction Excursion"
+          proximity: "Gauteng Rail Junction Excursion",
+          accommodation: {
+            name: "The Soweto Hotel on Freedom Square",
+            badge: "Best Reviewed Cultural Hotel",
+            rating: "4.8 ★ Best Reviewed",
+            type: "4-Star Historic Boutique Heritage Hotel",
+            distance: "6 km (10 mins) from Vilakazi Street",
+            description: "A vibrant boutique hotel on historic Walter Sisulu Square celebrating South African struggle heritage with jazz dining, authentic local hospitality, and guided Vilakazi tours.",
+            bookingQuery: "The Soweto Hotel on Freedom Square Soweto Johannesburg"
+          }
         },
         {
           id: "pilanesberg-game-reserve",
@@ -505,7 +709,16 @@
             "Over 7,000 animals including rare brown hyenas",
             "Mankwe Dam central hide for photographic safari"
           ],
-          proximity: "Pretoria Departure Safari Extension"
+          proximity: "Pretoria Departure Safari Extension",
+          accommodation: {
+            name: "Tshukudu Bush Lodge",
+            badge: "Best Reviewed Big 5 Safari",
+            rating: "4.9 ★ Best Reviewed",
+            type: "5-Star Ultra-Luxury Clifftop Safari Chalets",
+            distance: "Nestled deep within Pilanesberg Game Reserve",
+            description: "Only 6 exclusive stone-and-thatch chalets perched on a volcanic hilltop overlooking a bustling game waterhole, complete with private plunge pools and personalized game rangers.",
+            bookingQuery: "Tshukudu Bush Lodge Pilanesberg National Park"
+          }
         },
         {
           id: "addo-elephant-park",
@@ -519,7 +732,16 @@
             "Only park in world harboring the 'Big Seven' (Big 5 + Whale & White Shark)",
             "Spekboom succulent thickets providing natural habitat"
           ],
-          proximity: "Eastern Cape Rail Corridor Extension"
+          proximity: "Eastern Cape Rail Corridor Extension",
+          accommodation: {
+            name: "Gorah Elephant Camp",
+            badge: "Best Reviewed Safari Camp",
+            rating: "4.9 ★ Best Reviewed",
+            type: "Relais & Châteaux 5-Star Tented Safari Camp",
+            distance: "Inside private concession of Addo Elephant National Park",
+            description: "The premier private luxury concession inside Addo, with opulent 1900s safari tents overlooking a waterhole teeming with elephant herds, cape buffalo, and lion prides.",
+            bookingQuery: "Gorah Elephant Camp Addo Elephant National Park Eastern Cape"
+          }
         }
       ];
 
@@ -576,6 +798,25 @@
         
         if (highlightsEl && item.highlights) {
           highlightsEl.innerHTML = item.highlights.map(h => `<li class="flex items-start gap-2"><span class="text-[#D99B26] font-bold">•</span> <span>${t(h)}</span></li>`).join('');
+        }
+
+        // Update Accommodation Info
+        const hotelNameEl = document.getElementById('attraction-hotel-name');
+        const hotelTypeEl = document.getElementById('attraction-hotel-type');
+        const hotelRatingEl = document.getElementById('attraction-hotel-rating');
+        const hotelDistEl = document.getElementById('attraction-hotel-distance');
+        const hotelDescEl = document.getElementById('attraction-hotel-desc');
+        const hotelBookBtn = document.getElementById('attraction-hotel-book-btn');
+
+        if (item.accommodation) {
+          if (hotelNameEl) hotelNameEl.textContent = item.accommodation.name;
+          if (hotelTypeEl) hotelTypeEl.textContent = t(item.accommodation.type);
+          if (hotelRatingEl) hotelRatingEl.textContent = item.accommodation.rating;
+          if (hotelDistEl) hotelDistEl.textContent = t(item.accommodation.distance);
+          if (hotelDescEl) hotelDescEl.textContent = t(item.accommodation.description);
+          if (hotelBookBtn) {
+            hotelBookBtn.href = `https://www.google.com/travel/hotels?q=${encodeURIComponent(item.accommodation.bookingQuery)}`;
+          }
         }
 
         const videoEl = document.getElementById('attraction-main-video');
@@ -636,6 +877,22 @@
                 <p class="text-xs text-[#57534E] font-sans font-medium line-clamp-2 leading-relaxed mb-3">
                   ${t(item.description)}
                 </p>
+                ${item.accommodation ? `
+                  <div class="mt-2 pt-2 border-t border-[#E7E2D8] mb-3">
+                    <div class="flex items-center justify-between text-[11px] mb-0.5">
+                      <span class="font-bold text-[#B87C10] flex items-center gap-1 truncate max-w-[170px]" title="${item.accommodation.name}">
+                        <i data-lucide="bed" class="w-3.5 h-3.5 shrink-0"></i>
+                        <span class="truncate">${item.accommodation.name}</span>
+                      </span>
+                      <span class="font-mono text-[9px] font-extrabold bg-[#D99B26]/10 text-[#B87C10] px-1.5 py-0.5 rounded shrink-0">
+                        ${item.accommodation.rating.split(' ')[0]} ★
+                      </span>
+                    </div>
+                    <div class="text-[10px] text-[#78716C] font-mono truncate">
+                      ${t(item.accommodation.distance)}
+                    </div>
+                  </div>
+                ` : ''}
               </div>
               <button type="button" class="w-full py-2 rounded-xl bg-[#F8F6F0] group-hover:bg-[#D99B26] text-[#1C1917] group-hover:text-white font-mono text-[11px] font-bold transition-colors flex items-center justify-center gap-1.5 border border-[#E7E2D8] group-hover:border-[#D99B26]">
                 <i data-lucide="video" class="w-3.5 h-3.5"></i>
