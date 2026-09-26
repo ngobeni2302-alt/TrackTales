@@ -32,6 +32,14 @@
       "dest": "public/videos/$1"
     },
     {
+      "src": "/guest",
+      "dest": "public/guest.html"
+    },
+    {
+      "src": "/guest.html",
+      "dest": "public/guest.html"
+    },
+    {
       "handle": "filesystem"
     },
     {

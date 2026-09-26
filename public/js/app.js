@@ -4444,6 +4444,10 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
       const guestBtnEl = e.target.closest('#splash-guest-btn, #inline-guest-btn, #modal-guest-btn, .btn-enter-guest, [data-action="enter-guest"]');
       if (guestBtnEl) {
+        if (window.TrackTalesEnterGuestMode) {
+          window.TrackTalesEnterGuestMode(e);
+          return;
+        }
         e.preventDefault();
         e.stopPropagation();
         localStorage.setItem('tracktales_is_guest', 'true');
@@ -6319,6 +6323,10 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
     const modalGuestBtn = document.getElementById('modal-guest-btn');
     if (modalGuestBtn && modal) {
       modalGuestBtn.addEventListener('click', (e) => {
+        if (window.TrackTalesEnterGuestMode) {
+          window.TrackTalesEnterGuestMode(e);
+          return;
+        }
         e.preventDefault();
         handleCloseLogin();
       });
@@ -6331,6 +6339,10 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
     if (inlineGuestBtn) {
       inlineGuestBtn.addEventListener('click', (e) => {
+        if (window.TrackTalesEnterGuestMode) {
+          window.TrackTalesEnterGuestMode(e);
+          return;
+        }
         e.preventDefault();
         const attrSec = document.getElementById('page-attractions');
         if (attrSec) attrSec.scrollIntoView({ behavior: 'smooth' });
