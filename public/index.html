@@ -1486,7 +1486,7 @@
       </div>
 
       <!-- GAME TAB 1: STOP-BY-STOP TRIVIA QUIZ -->
-      <div id="game-panel-quiz" class="game-panel block max-w-4xl mx-auto">
+      <div id="game-panel-quiz" class="game-panel max-w-4xl mx-auto">
         <div class="glass-card p-6 sm:p-10 rounded-3xl border border-black/10 shadow-xl relative bg-white">
           <!-- Quiz Top Meta -->
           <div class="flex flex-wrap items-center justify-between gap-3 mb-6 pb-4 border-b border-black/10">
@@ -1526,12 +1526,16 @@
 
           <!-- Quiz Action Footer -->
           <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-black/10">
-            <button id="btn-quiz-prev" class="glass-button px-4 py-2.5 rounded-xl text-xs font-mono text-[#78716C] hover:text-[#0A0C10] flex items-center gap-2 font-semibold cursor-pointer">
+            <button id="btn-quiz-prev" type="button" class="glass-button px-4 py-2.5 rounded-xl text-xs font-mono text-[#78716C] hover:text-[#0A0C10] flex items-center gap-2 font-semibold cursor-pointer">
               <i data-lucide="arrow-left" class="w-4 h-4"></i> Previous Stop
             </button>
 
+            <button id="btn-toggle-custom-quiz" type="button" class="glass-button px-4 py-2.5 rounded-xl text-xs font-mono text-[#D99B26] hover:bg-[#D99B26]/10 flex items-center gap-1.5 font-bold cursor-pointer transition-all">
+              <i data-lucide="plus-circle" class="w-4 h-4"></i>
+              <span id="btn-toggle-custom-quiz-label">+ Add Custom Trivia</span>
+            </button>
 
-            <button id="btn-quiz-next" class="px-5 py-2.5 rounded-xl bg-[#C85028] text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#B5441E] transition-all flex items-center gap-2 shadow-md cursor-pointer">
+            <button id="btn-quiz-next" type="button" class="px-5 py-2.5 rounded-xl bg-[#C85028] text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#B5441E] transition-all flex items-center gap-2 shadow-md cursor-pointer">
               <span>Next Stop Quiz</span>
               <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </button>

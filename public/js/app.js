@@ -11599,9 +11599,27 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         btn.classList.add('active', 'bg-[#C85028]', 'text-white', 'shadow-sm');
         btn.classList.remove('bg-transparent', 'text-[#111827]');
 
-        if (panelQuiz) panelQuiz.classList.toggle('hidden', mode !== 'quiz');
-        if (panelBingo) panelBingo.classList.toggle('hidden', mode !== 'bingo');
-        if (panelPuzzle) panelPuzzle.classList.toggle('hidden', mode !== 'puzzle');
+        if (panelQuiz) {
+          if (mode === 'quiz') {
+            panelQuiz.classList.remove('hidden');
+          } else {
+            panelQuiz.classList.add('hidden');
+          }
+        }
+        if (panelBingo) {
+          if (mode === 'bingo') {
+            panelBingo.classList.remove('hidden');
+          } else {
+            panelBingo.classList.add('hidden');
+          }
+        }
+        if (panelPuzzle) {
+          if (mode === 'puzzle') {
+            panelPuzzle.classList.remove('hidden');
+          } else {
+            panelPuzzle.classList.add('hidden');
+          }
+        }
 
         if (window.TrackTalesAnnounce) {
           window.TrackTalesAnnounce(`Switched game mode to ${btn.innerText}`);
@@ -11609,12 +11627,19 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       });
     });
 
+    const answeredQuizzes = new Map();
+    const puzzleSolvedModes = new Set();
+
     if (resetMasterBtn) {
       resetMasterBtn.addEventListener('click', () => {
         if (confirm('Reset all corridor game scores, bingo stamps, and puzzle sequences?')) {
           totalScore = 0;
           completedChallenges = 0;
           streakCount = 0;
+          bingoWon = false;
+          bingoState = [false, false, false, false, true, false, false, false, false];
+          answeredQuizzes.clear();
+          puzzleSolvedModes.clear();
           updateScoreboard();
           initBingoGrid();
           initPuzzleSequence();
@@ -11722,77 +11747,95 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       if (quizImg) quizImg.src = q.image;
       if (quizCaption) quizCaption.textContent = q.caption;
       if (quizTitle) quizTitle.textContent = q.question;
+
+      const answered = answeredQuizzes.get(currentQuizIndex);
+
       if (quizFeedbackBox) {
-        quizFeedbackBox.classList.add('hidden');
-        quizFeedbackBox.innerHTML = '';
+        if (answered) {
+          quizFeedbackBox.classList.remove('hidden');
+          if (answered.isCorrect) {
+            quizFeedbackBox.className = 'p-4 rounded-xl border border-[#2E7D46]/30 bg-[#2E7D46]/10 text-[#2E7D46] text-xs font-sans text-left space-y-1';
+            quizFeedbackBox.innerHTML = `
+              <div class="font-bold flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4"></i> Correct! +${q.points} Points Awarded.</div>
+              <div>${q.explanation}</div>
+            `;
+          } else {
+            quizFeedbackBox.className = 'p-4 rounded-xl border border-red-200 bg-red-50 text-red-700 text-xs font-sans text-left space-y-1';
+            quizFeedbackBox.innerHTML = `
+              <div class="font-bold flex items-center gap-1.5"><i data-lucide="alert-circle" class="w-4 h-4"></i> Not quite right!</div>
+              <div>${q.explanation}</div>
+            `;
+          }
+        } else {
+          quizFeedbackBox.classList.add('hidden');
+          quizFeedbackBox.innerHTML = '';
+        }
       }
 
       if (quizOptionsGrid) {
-        quizOptionsGrid.innerHTML = q.options.map((opt, i) => `
-          <button type="button" data-quiz-opt="${i}" class="quiz-option-btn p-3.5 sm:p-4 rounded-2xl border-2 border-[#E7E2D8] bg-white hover:border-[#C85028]/60 hover:bg-[#FFF9F6] text-left transition-all flex items-center justify-between group cursor-pointer">
-            <span class="text-xs sm:text-sm font-sans font-bold text-[#1C1917] group-hover:text-[#C85028]">${opt}</span>
-            <span class="w-6 h-6 rounded-full border border-black/15 bg-black/5 group-hover:border-[#C85028] flex items-center justify-center text-[10px] font-mono font-bold text-[#78716C] group-hover:text-[#C85028]">
-              ${String.fromCharCode(65 + i)}
-            </span>
-          </button>
-        `).join('');
+        quizOptionsGrid.innerHTML = q.options.map((opt, i) => {
+          let btnClass = 'quiz-option-btn p-3.5 sm:p-4 rounded-2xl border-2 border-[#E7E2D8] bg-white hover:border-[#C85028]/60 hover:bg-[#FFF9F6] text-left transition-all flex items-center justify-between group cursor-pointer';
+          let iconHtml = `<span class="w-6 h-6 rounded-full border border-black/15 bg-black/5 group-hover:border-[#C85028] flex items-center justify-center text-[10px] font-mono font-bold text-[#78716C] group-hover:text-[#C85028]">${String.fromCharCode(65 + i)}</span>`;
+          let disabled = false;
 
-        quizOptionsGrid.querySelectorAll('.quiz-option-btn').forEach(btn => {
-          btn.addEventListener('click', () => {
-            const selectedIdx = parseInt(btn.getAttribute('data-quiz-opt'), 10);
-            handleQuizAnswer(selectedIdx, q);
+          if (answered) {
+            disabled = true;
+            if (i === q.correctIndex) {
+              btnClass = 'quiz-option-btn p-3.5 sm:p-4 rounded-2xl border-2 border-[#2E7D46] bg-[#2E7D46]/10 text-left transition-all flex items-center justify-between';
+              iconHtml = '<i data-lucide="check" class="w-5 h-5 text-[#2E7D46]"></i>';
+            } else if (i === answered.selectedIdx && !answered.isCorrect) {
+              btnClass = 'quiz-option-btn p-3.5 sm:p-4 rounded-2xl border-2 border-red-500 bg-red-50 text-left transition-all flex items-center justify-between';
+              iconHtml = '<i data-lucide="x" class="w-5 h-5 text-red-600"></i>';
+            } else {
+              btnClass = 'quiz-option-btn p-3.5 sm:p-4 rounded-2xl border-2 border-[#E7E2D8] bg-white text-left opacity-60';
+            }
+          }
+
+          return `
+            <button type="button" data-quiz-opt="${i}" class="${btnClass}" ${disabled ? 'disabled' : ''}>
+              <span class="text-xs sm:text-sm font-sans font-bold text-[#1C1917] group-hover:text-[#C85028]">${opt}</span>
+              ${iconHtml}
+            </button>
+          `;
+        }).join('');
+
+        if (!answered) {
+          quizOptionsGrid.querySelectorAll('.quiz-option-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+              const selectedIdx = parseInt(btn.getAttribute('data-quiz-opt'), 10);
+              handleQuizAnswer(selectedIdx, q);
+            });
           });
-        });
+        }
       }
+
+      if (window.lucide) lucide.createIcons();
     }
 
     function handleQuizAnswer(selectedIdx, q) {
+      if (answeredQuizzes.has(currentQuizIndex)) return;
       const isCorrect = selectedIdx === q.correctIndex;
-      const optionBtns = quizOptionsGrid.querySelectorAll('.quiz-option-btn');
-      
-      optionBtns.forEach((b, idx) => {
-        b.disabled = true;
-        b.classList.remove('cursor-pointer');
-        if (idx === q.correctIndex) {
-          b.className = 'quiz-option-btn p-3.5 sm:p-4 rounded-2xl border-2 border-[#2E7D46] bg-[#2E7D46]/10 text-left transition-all flex items-center justify-between';
-          b.innerHTML += '<i data-lucide="check" class="w-5 h-5 text-[#2E7D46]"></i>';
-        } else if (idx === selectedIdx && !isCorrect) {
-          b.className = 'quiz-option-btn p-3.5 sm:p-4 rounded-2xl border-2 border-red-500 bg-red-50 text-left transition-all flex items-center justify-between';
-          b.innerHTML += '<i data-lucide="x" class="w-5 h-5 text-red-600"></i>';
+      answeredQuizzes.set(currentQuizIndex, { selectedIdx, isCorrect });
+
+      if (isCorrect) {
+        totalScore += q.points;
+        completedChallenges += 1;
+        streakCount += 1;
+        updateScoreboard();
+
+        if (window.TrackTalesAnnounce) {
+          window.TrackTalesAnnounce(`Correct answer! +${q.points} points. ${q.explanation}`);
         }
-      });
+      } else {
+        streakCount = 0;
+        updateScoreboard();
 
-      if (quizFeedbackBox) {
-        quizFeedbackBox.classList.remove('hidden');
-        if (isCorrect) {
-          totalScore += q.points;
-          completedChallenges += 1;
-          streakCount += 1;
-          updateScoreboard();
-
-          quizFeedbackBox.className = 'p-4 rounded-xl border border-[#2E7D46]/30 bg-[#2E7D46]/10 text-[#2E7D46] text-xs font-sans text-left space-y-1';
-          quizFeedbackBox.innerHTML = `
-            <div class="font-bold flex items-center gap-1.5"><i data-lucide="check-circle" class="w-4 h-4"></i> Correct! +${q.points} Points Awarded.</div>
-            <div>${q.explanation}</div>
-          `;
-          if (window.TrackTalesAnnounce) {
-            window.TrackTalesAnnounce(`Correct answer! +${q.points} points. ${q.explanation}`);
-          }
-        } else {
-          streakCount = 0;
-          updateScoreboard();
-
-          quizFeedbackBox.className = 'p-4 rounded-xl border border-red-200 bg-red-50 text-red-700 text-xs font-sans text-left space-y-1';
-          quizFeedbackBox.innerHTML = `
-            <div class="font-bold flex items-center gap-1.5"><i data-lucide="alert-circle" class="w-4 h-4"></i> Not quite right!</div>
-            <div>${q.explanation}</div>
-          `;
-          if (window.TrackTalesAnnounce) {
-            window.TrackTalesAnnounce(`Incorrect. ${q.explanation}`);
-          }
+        if (window.TrackTalesAnnounce) {
+          window.TrackTalesAnnounce(`Incorrect. ${q.explanation}`);
         }
-        if (window.lucide) lucide.createIcons();
       }
+
+      renderQuizQuestion(currentQuizIndex);
     }
 
     if (quizPrevBtn) {
@@ -11849,6 +11892,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         newQ.correctIndex = newQ.options.indexOf(correct);
 
         STOP_QUIZZES.unshift(newQ);
+        answeredQuizzes.clear();
         customQuizForm.reset();
         customQuizWrapper.classList.add('hidden');
         renderQuizQuestion(0);
@@ -11886,8 +11930,9 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
 
     function initBingoGrid() {
       if (!bingoGridContainer) return;
-      bingoWon = false;
-      if (bingoWinBanner) bingoWinBanner.classList.add('hidden');
+      if (bingoWinBanner) {
+        bingoWinBanner.classList.toggle('hidden', !bingoWon);
+      }
 
       bingoGridContainer.innerHTML = BINGO_ITEMS.map((item, idx) => {
         const isMarked = bingoState[idx];
@@ -11898,7 +11943,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
               ${isMarked ? '<div class="absolute inset-0 bg-[#D99B26]/60 backdrop-blur-[0.5px] flex items-center justify-center text-white"><i data-lucide="check" class="w-4 h-4 text-white"></i></div>' : ''}
             </div>
             <strong class="text-[10px] sm:text-xs font-heading font-bold leading-tight ${isMarked ? 'text-white' : 'text-[#0A0C10]'} line-clamp-1">${item.label}</strong>
-            <span class="text-[8px] sm:text-[9px] font-mono ${isMarked ? 'text-white/90' : 'text-[#78716C]'} mt-0.5">${idx === 4 ? 'FREE STAMP' : 'Tap to Stamp'}</span>
+            <span class="text-[8px] sm:text-[9px] font-mono ${isMarked ? 'text-white/90' : 'text-[#78716C]'} mt-0.5">${idx === 4 ? 'FREE STAMP' : (isMarked ? 'Stamped' : 'Tap to Stamp')}</span>
           </button>
         `;
       }).join('');
@@ -11916,6 +11961,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
     }
 
     function toggleBingoCell(idx) {
+      if (idx === 4) return; // Keep center Free stamp marked
       bingoState[idx] = !bingoState[idx];
       initBingoGrid();
       checkBingoWin();
@@ -11929,7 +11975,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         [0, 4, 8], [2, 4, 6]             // Diagonals
       ];
 
-      const hasWon = WIN_LINES.some(line => line.every(idx => bingoState[idx]));
+      const hasWon = WIN_LINES.some(line => line.every(i => bingoState[i]));
 
       if (hasWon && !bingoWon) {
         bingoWon = true;
@@ -11944,28 +11990,41 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         if (window.TrackTalesAnnounce) {
           window.TrackTalesAnnounce('Bingo! You completed 3 in a row across the rail corridor. 250 points awarded!');
         }
+      } else if (!hasWon && bingoWon) {
+        bingoWon = false;
+        if (bingoWinBanner) bingoWinBanner.classList.add('hidden');
       }
+      updateBingoStatus();
     }
 
     function updateBingoStatus() {
       const count = bingoState.filter(Boolean).length;
       if (bingoMarkedCountEl) bingoMarkedCountEl.textContent = count;
-      if (bingoStatusTextEl && !bingoWon) {
-        bingoStatusTextEl.textContent = count > 0 ? `${count} Sights Stamped` : 'Tap cells to stamp';
+      if (bingoStatusTextEl) {
+        bingoStatusTextEl.textContent = bingoWon ? 'BINGO COMPLETED! +250 PTS' : (count > 1 ? `${count} Sights Stamped` : (count === 1 ? '1 Sight Stamped (Free Stamp)' : 'Tap cells to stamp'));
       }
     }
 
     if (btnResetBingo) {
       btnResetBingo.addEventListener('click', () => {
         bingoState = [false, false, false, false, true, false, false, false, false];
+        bingoWon = false;
+        if (bingoWinBanner) bingoWinBanner.classList.add('hidden');
         initBingoGrid();
       });
     }
 
     if (btnShuffleBingo) {
       btnShuffleBingo.addEventListener('click', () => {
-        BINGO_ITEMS.sort(() => Math.random() - 0.5);
+        const center = BINGO_ITEMS[4];
+        const others = BINGO_ITEMS.filter((_, i) => i !== 4).sort(() => Math.random() - 0.5);
+        BINGO_ITEMS.splice(0, 4, ...others.slice(0, 4));
+        BINGO_ITEMS[4] = center;
+        BINGO_ITEMS.splice(5, 4, ...others.slice(4));
+
         bingoState = [false, false, false, false, true, false, false, false, false];
+        bingoWon = false;
+        if (bingoWinBanner) bingoWinBanner.classList.add('hidden');
         initBingoGrid();
       });
     }
@@ -12099,10 +12158,13 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         const isCorrect = puzzleUserSlots.every((val, idx) => val === mode.correctSequence[idx]);
 
         if (isCorrect) {
-          totalScore += 150;
-          completedChallenges += 1;
-          streakCount += 1;
-          updateScoreboard();
+          if (!puzzleSolvedModes.has(mode.id)) {
+            puzzleSolvedModes.add(mode.id);
+            totalScore += 150;
+            completedChallenges += 1;
+            streakCount += 1;
+            updateScoreboard();
+          }
 
           if (puzzleFeedbackBanner) {
             puzzleFeedbackBanner.className = 'mb-6 p-4 rounded-2xl border border-[#2E7D46]/40 bg-[#2E7D46]/10 text-[#2E7D46] text-xs font-sans text-left space-y-1.5';
