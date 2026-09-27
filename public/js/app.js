@@ -6784,7 +6784,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       points: 100,
       title: "Sight Puzzle 1: The Giant Hand-Dug Excavation",
       prompt: "Which world-famous diamond mining crater in Kimberley was hand-dug by 50,000 miners between 1871 and 1914?",
-      img: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80",
+      img: "./games_media/02 - The Big Hole Kimberley (Crater).jpeg",
       options: [
         "The Big Hole (Kimberley Mine Museum)",
         "Cullinan Diamond Gorge",
@@ -6801,7 +6801,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       points: 100,
       title: "Sight Puzzle 2: Grand Sandstone Seat of Power",
       prompt: "Which sandstone architectural masterpiece in Pretoria serves as the official seat of the South African government?",
-      img: "https://images.unsplash.com/photo-1577971132997-c10be9372519?auto=format&fit=crop&w=800&q=80",
+      img: "./games_media/17 - Rovos Rail Station Pretoria (Clock Tower Building).jpeg",
       options: [
         "Voortrekker Heritage Monument",
         "The Union Buildings & Mandela Statue",
@@ -6818,7 +6818,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       points: 100,
       title: "Sight Puzzle 3: Karoo Victorian Rail Oasis",
       prompt: "Which Victorian rail outpost in the Karoo desert boasts a 19th-century hotel frequented by Cecil Rhodes and Olive Schreiner?",
-      img: "https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=800&q=80",
+      img: "./games_media/15 - Lord Milner Hotel Matjiesfontein.jpeg",
       options: [
         "Lord Milner Hotel (Matjiesfontein)",
         "Prince Albert Karoo Manor",
@@ -6835,7 +6835,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       points: 100,
       title: "Sight Puzzle 4: World Heritage Flat Mountain",
       prompt: "Which iconic flat-topped mountain overlooking Table Bay and Table Mountain National Park is one of the New 7 Wonders of Nature?",
-      img: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=800&q=80",
+      img: "./games_media/10 - Table Mountain from Cape Town Street.jpeg",
       options: [
         "Lion's Head Peak",
         "Devil's Peak Crest",
@@ -6852,7 +6852,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       points: 100,
       title: "Sight Puzzle 5: Valley of Table Grapes",
       prompt: "Which lush Western Cape valley along the rail line is world-renowned for its table grapes, wine estates, and snow-capped winter peaks?",
-      img: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=80",
+      img: "./games_media/05 - Hex River Valley Winelands.jpeg",
       options: [
         "Hex River Valley Winelands",
         "Franschhoek Pass",
@@ -11630,7 +11630,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       {
         stop: 'Pretoria Terminus',
         badge: 'Stop 1: Pretoria Terminus',
-        image: 'https://images.unsplash.com/photo-1577971132997-c10be9372519?auto=format&fit=crop&w=800&q=80',
+        image: './games_media/11 - Rovos Rail Station Pretoria (Entrance).jpeg',
         caption: 'Pretoria Jacaranda City & Victorian Rail Works',
         question: 'Which historic Pretoria terminus serves as the northern luxury hub for The Blue Train and Rovos Rail?',
         options: ['Capital Park Station', 'Park Station Johannesburg', 'Centurion Gautrain Hub', 'Mamelodi Depot'],
@@ -11641,7 +11641,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       {
         stop: 'Kimberley Big Hole',
         badge: 'Stop 2: Kimberley Big Hole',
-        image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
+        image: './games_media/02 - The Big Hole Kimberley (Crater).jpeg',
         caption: 'Kimberley Diamond Vaults & Historic Crater',
         question: 'How many diamond miners hand-dug the massive Kimberley Big Hole between 1871 and 1914?',
         options: ['Approximately 50,000 miners', 'Around 2,000 miners', 'Over 500,000 miners', 'Only 500 miners'],
@@ -11652,7 +11652,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       {
         stop: 'De Aar Junction',
         badge: 'Stop 3: De Aar Junction',
-        image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80',
+        image: './images/de_aar_karoo.jpg',
         caption: 'De Aar Steam Crossroads of Southern Africa',
         question: 'Why did De Aar historically earn fame across southern Africa\'s rail network?',
         options: ['It is the second most important railway junction connecting inland lines', 'It was the site of the first South African gold strike', 'It hosted the 1994 presidential inauguration', 'It is the highest mountain peak in the Karoo'],
@@ -11663,7 +11663,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       {
         stop: 'The Great Karoo',
         badge: 'Stop 4: The Great Karoo Desert',
-        image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
+        image: './games_media/04 - Karoo Desert Landscape.jpeg',
         caption: 'Vast Great Karoo Desert Plains & Starry Skies',
         question: 'What distinctive acoustic engineering keeps The Blue Train passenger cabins whisper-quiet through the windy Karoo?',
         options: ['Gold-coated acoustic double glazing windows', 'Lead plates installed under carpets', 'Wooden sound baffles', 'Rubber locomotive wheels'],
@@ -11674,7 +11674,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       {
         stop: 'Matjiesfontein Village',
         badge: 'Stop 5: Matjiesfontein Village',
-        image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80',
+        image: './games_media/15 - Lord Milner Hotel Matjiesfontein.jpeg',
         caption: 'Preserved 1890 Victorian Railway Village',
         question: 'Which legendary Victorian hotel in Matjiesfontein hosted Lord Randolph Churchill and Cecil John Rhodes?',
         options: ['The Lord Milner Hotel', 'The Mount Nelson Hotel', 'The Carlton Hotel', 'The Cape Marine Lodge'],
@@ -11685,7 +11685,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       {
         stop: 'Cape Town Terminus',
         badge: 'Stop 6: Cape Town Terminus',
-        image: 'https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=800&q=80',
+        image: './games_media/09 - Cape Town Station (Rail Yard and Table Mountain).jpeg',
         caption: 'Cape Town Terminus in the shadow of Table Mountain',
         question: 'What is the total rail distance traversed from Pretoria to Cape Town on this legendary journey?',
         options: ['1,600 Kilometers', '850 Kilometers', '3,200 Kilometers', '500 Kilometers'],
@@ -11836,7 +11836,7 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
         const newQ = {
           stop,
           badge: `Custom Stop: ${stop}`,
-          image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80',
+          image: './games_media/18 - Steam Locomotive Departure.jpeg',
           caption: `Community Corridor Trivia for ${stop}`,
           question,
           options: [correct, wrong1, wrong2, wrong3].sort(() => Math.random() - 0.5),
@@ -11863,15 +11863,15 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
     // MODE 2: MZANSI RAIL CORRIDOR BINGO (3x3 Interactive Card)
     // ------------------------------------------------------------------------
     const BINGO_ITEMS = [
-      { id: 'b0', label: 'Pretoria Jacarandas', icon: 'tree-pine', desc: 'Purple blooms along Capital Park' },
-      { id: 'b1', label: 'Kimberley Diamond Pit', icon: 'gem', desc: 'Hand-excavated Big Hole crater' },
-      { id: 'b2', label: 'Karoo Windmill', icon: 'wind', desc: 'Classic farm windmill in the veld' },
-      { id: 'b3', label: 'Great Karoo Desert Sky', icon: 'moon', desc: 'Vast starry desert nightscape' },
-      { id: 'b4', label: 'Blue Locomotive', icon: 'train', desc: 'Flagship dual-electric engine (FREE)' },
-      { id: 'b5', label: 'Lord Milner Hotel', icon: 'landmark', desc: 'Victorian turret in Matjiesfontein' },
-      { id: 'b6', label: 'Hex River Vineyards', icon: 'grape', desc: 'Lush mountain wine valleys' },
-      { id: 'b7', label: 'Springbok Wildlife Herd', icon: 'paw-print', desc: 'Mzansi national animal in the plains' },
-      { id: 'b8', label: 'Table Mountain Peak', icon: 'mountain', desc: 'Flat-top coastal landmark in Cape Town' }
+      { id: 'b0', label: 'Pretoria Jacarandas', icon: 'tree-pine', desc: 'Purple blooms along Capital Park', img: './games_media/17 - Rovos Rail Station Pretoria (Clock Tower Building).jpeg' },
+      { id: 'b1', label: 'Kimberley Diamond Pit', icon: 'gem', desc: 'Hand-excavated Big Hole crater', img: './games_media/02 - The Big Hole Kimberley (Crater).jpeg' },
+      { id: 'b2', label: 'Karoo Windmill', icon: 'wind', desc: 'Classic farm windmill in the veld', img: './games_media/03 - Karoo Farm (Windmill and Sheep).jpeg' },
+      { id: 'b3', label: 'Great Karoo Desert Sky', icon: 'moon', desc: 'Vast starry desert nightscape', img: './games_media/04 - Karoo Desert Landscape.jpeg' },
+      { id: 'b4', label: 'Blue Locomotive', icon: 'train', desc: 'Flagship dual-electric engine (FREE)', img: './games_media/19 - Pretoria Station (The Blue Train).jpeg' },
+      { id: 'b5', label: 'Lord Milner Hotel', icon: 'landmark', desc: 'Victorian turret in Matjiesfontein', img: './games_media/15 - Lord Milner Hotel Matjiesfontein.jpeg' },
+      { id: 'b6', label: 'Hex River Vineyards', icon: 'grape', desc: 'Lush mountain wine valleys', img: './games_media/05 - Hex River Valley Winelands.jpeg' },
+      { id: 'b7', label: 'Springbok Wildlife Herd', icon: 'paw-print', desc: 'Mzansi national animal in the plains', img: './games_media/06 - Mountain Pass Gorge (Train).jpeg' },
+      { id: 'b8', label: 'Table Mountain Peak', icon: 'mountain', desc: 'Flat-top coastal landmark in Cape Town', img: './games_media/10 - Table Mountain from Cape Town Street.jpeg' }
     ];
 
     let bingoState = [false, false, false, false, true, false, false, false, false]; // Center is marked by default
@@ -11892,12 +11892,13 @@ A preservação é, portanto, uma responsabilidade ativa. Um vagão, uma locomot
       bingoGridContainer.innerHTML = BINGO_ITEMS.map((item, idx) => {
         const isMarked = bingoState[idx];
         return `
-          <button type="button" data-bingo-idx="${idx}" class="bingo-cell p-3 sm:p-4 rounded-2xl border-2 ${isMarked ? 'marked' : 'border-[#E7E2D8] bg-white hover:border-[#D99B26]/60'} flex flex-col items-center justify-center text-center transition-all cursor-pointer aspect-square shadow-sm">
-            <div class="w-8 h-8 rounded-full ${isMarked ? 'bg-white/20 text-white' : 'bg-[#D99B26]/10 text-[#D99B26]'} flex items-center justify-center mb-1.5">
-              <i data-lucide="${item.icon}" class="w-4 h-4"></i>
+          <button type="button" data-bingo-idx="${idx}" class="bingo-cell p-2 sm:p-3 rounded-2xl border-2 ${isMarked ? 'marked' : 'border-[#E7E2D8] bg-white hover:border-[#D99B26]/60'} flex flex-col items-center justify-center text-center transition-all cursor-pointer aspect-square shadow-sm overflow-hidden relative">
+            <div class="relative w-10 h-10 sm:w-12 sm:h-12 rounded-xl overflow-hidden mb-1 border ${isMarked ? 'border-white/40' : 'border-black/10 shadow-sm'} flex-shrink-0">
+              <img src="${item.img}" alt="${item.label}" class="w-full h-full object-cover">
+              ${isMarked ? '<div class="absolute inset-0 bg-[#D99B26]/60 backdrop-blur-[0.5px] flex items-center justify-center text-white"><i data-lucide="check" class="w-4 h-4 text-white"></i></div>' : ''}
             </div>
-            <strong class="text-[11px] sm:text-xs font-heading font-bold leading-tight ${isMarked ? 'text-white' : 'text-[#0A0C10]'}">${item.label}</strong>
-            <span class="text-[9px] font-mono ${isMarked ? 'text-white/90' : 'text-[#78716C]'} mt-0.5">${idx === 4 ? 'FREE STAMP' : 'Tap to Stamp'}</span>
+            <strong class="text-[10px] sm:text-xs font-heading font-bold leading-tight ${isMarked ? 'text-white' : 'text-[#0A0C10]'} line-clamp-1">${item.label}</strong>
+            <span class="text-[8px] sm:text-[9px] font-mono ${isMarked ? 'text-white/90' : 'text-[#78716C]'} mt-0.5">${idx === 4 ? 'FREE STAMP' : 'Tap to Stamp'}</span>
           </button>
         `;
       }).join('');
